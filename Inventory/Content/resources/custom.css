@@ -1,0 +1,19 @@
+﻿.px200 {
+    width: 200px !important;
+    max-width: 200px !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+}
+
+#ScanPreviewDiv p {
+    color: white;
+    text-align: center;
+    line-height: 190px;
+    font-size: medium;
+}
+.radio input[type=radio], .radio-inline input[type=radio] {
+    margin-right: -10px;
+}
+.radio {
+    padding-top: 4px !important;
+}

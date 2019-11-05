@@ -1,0 +1,64 @@
+﻿@model IPagedList<DOMoRR.Models.Procedures.User_List>
+@{
+    var options = new PagedListRenderOptions()
+    {
+        LinkToFirstPageFormat = Resources.Labels.first,
+        LinkToLastPageFormat = Resources.Labels.last
+    };
+    var _user = ViewBag.AppUser as DOMoRR.Models.ViewModels.UserWithRole;
+}
+
+<div class="table-scrollable">
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>@Labels.display_name</th>
+                <th>@Labels.username</th>
+                <th>@Labels.role</th>
+                @*<th>Station</th>
+                <th>Office</th>*@
+                <th>@Labels.active</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 1;}
+            @foreach (var row in Model)
+            {
+                <tr>
+                    <td>@(i++)</td>
+                    <td>@row.DisplayName</td>
+                    <td>@row.Username</td>
+                    <td>@row.UserRole</td>
+                    @*<td>@row.StationType</td>
+                    <td>@(row.StationTypeCode == "BP" ? row.BCP : row.Province)</td>*@
+                    <td><input type="checkbox" @(row.IsActive ? "checked" : "") disabled /></td>
+                    <td>
+                        @if (_user.HasAccess("Users", "Edit"))
+                        {
+                        <a href="javascript:;" data-id="@row.Id" class="btn default btn-xs blue-hoki editlnk" title="@Labels.edit">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        }
+                        @if (_user.HasAccess("Users", "Delete"))
+                        {
+                        <a href="javascript:;" data-id="@row.Id" class="btn default btn-xs red deletelnk" title="@Labels.delete">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        <a href="javascript:;" data-id="@row.Id" class="btn default btn-xs blue-hoki restorelnk" title="@Labels.restore">
+                            <i class="fa fa-share"></i>
+                        </a>
+                        <a href="javascript:;" data-id="@row.Id" class="btn default btn-xs blue-hoki changepass" title="@Labels.change_pass">
+                            <i class="fa fa-key"></i> @Labels.change_pass
+                        </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("List", new { page }), options)
+</div>

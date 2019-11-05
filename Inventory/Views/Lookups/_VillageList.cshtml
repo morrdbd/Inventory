@@ -1,0 +1,65 @@
+﻿@model IPagedList<DOMoRR.Models.Procedures.Village_List>
+@{
+    var options = new PagedListRenderOptions()
+    {
+        LinkToFirstPageFormat = Resources.Labels.first,
+        LinkToLastPageFormat = Resources.Labels.last
+    };
+    var _user = ViewBag.AppUser as DOMoRR.Models.ViewModels.UserWithRole;
+}
+
+<div class="table-scrollable">
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>@Labels.latitude</th>
+                <th>@Labels.longitude</th>
+                <th>@Labels.english_name</th>
+                <th>@Labels.dari_name</th>
+                <th>@Labels.pashtu_name</th>
+                <th>@Labels.province</th>
+                <th>@Labels.district</th>
+                <th>@Labels.active</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int num = 1;}
+            @foreach (var row in Model)
+            {
+                <tr>
+                    <td>@(num++)</td>
+                    <td>@row.Latitude</td>
+                    <td>@row.Longitude</td>
+                    <td>@row.EnName</td>
+                    <td>@row.DrName</td>
+                    <td>@row.PaName</td>
+                    <td>@row.ProvinceName</td>
+                    <td>@row.DistrictName</td>
+                    <td><input type="checkbox" @(row.IsActive ? "checked" : "") disabled /></td>
+                    <td>
+                        @if (_user.HasAccess("Lookups", "Edit"))
+                        {
+                        <a href="javascript:;" data-id="@row.VillageId" class="btn default btn-xs blue-hoki editlnk">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        }
+                        @if (_user.HasAccess("Lookups", "Delete"))
+                        {
+                        <a href="javascript:;" data-id="@row.VillageId" class="btn default btn-xs red deletelnk">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        <a href="javascript:;" data-id="@row.VillageId" class="btn default btn-xs blue-hoki restorelnk">
+                            <i class="fa fa-share"></i>
+                        </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("VillageList", new { page }), options)
+</div>

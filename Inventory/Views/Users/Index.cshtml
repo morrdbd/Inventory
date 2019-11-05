@@ -1,0 +1,585 @@
+﻿@model DOMoRR.Models.ViewModels.UserPageVM
+@{
+    ViewBag.Title = Labels.user_management;
+    var criteria = (DOMoRR.Models.ViewModels.User_SC)ViewBag.Criteria;
+    var rolesList = new SelectList(Model.Roles, "Name", "Name");
+    var _user = ViewBag.AppUser as DOMoRR.Models.ViewModels.UserWithRole;
+}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#tab_users">@Labels.user_management</a></li>
+    <li><a data-toggle="tab" href="#tab_roles">@Labels.RoleMgt</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="tab_users" class="tab-pane fade in active">
+        @if (_user.HasAccess("Users", "Add"))
+        {
+        <a class="btn default" id="addbtn" data-target="#form_div" data-toggle="modal" style="margin-bottom:10px"><i class="fa fa-plus"></i> @Labels.add_user</a>
+        }
+        <!-- BEGIN SEARCH FORM-->
+        <form method="post" action="@Url.Action("List")" id="search_form">
+            <div class="portlet box blue-hoki" style="margin-bottom:10px">
+                <div class="portlet-title">
+                    <div class="caption">@Labels.search_criteria</div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select name="StationType" class="form-control input-sm" id="_station_type">
+                                <option value="">Select</option>
+                                <option value="">option1</option>
+                                <option value="">option2</option>
+                                @*<option value="MoRR" @(criteria.StationType == "MoRR" ? "selected" : "")>@Labels.morr</option>
+                                <option value="DoRR" @(criteria.StationType == "DoRR" ? "selected" : "")>@Labels.dorr</option>
+                                <option value="BP" @(criteria.StationType == "BP" ? "selected" : "")>@Labels.border_point</option>*@
+
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            @*@Html.DropDownList("StationCode", ViewBag.suboffices as SelectList, string.Format("--{0}--", "Sub office"), new { @class = "form-control input-sm", @id = "_station_code" })*@
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" id="btnSearch" class="btn btn-sm" name="_search" value="true"><i class="fa fa-search"></i> @Labels.search</button>
+                            <button type="reset" id="btnReset" class="btn btn-sm">@Labels.reset</button>
+                        </div>
+                        <div class="col-md-2">
+                            <select name="PageSize" class="form-control input-sm pull-right" id="drpLimit" style="width:70px">
+                                <option value="10" @(criteria.PageSize == 10 ? "selected" : "")>10</option>
+                                <option value="20" @(criteria.PageSize == 20 ? "selected" : "")>20</option>
+                                <option value="50" @(criteria.PageSize == 50 ? "selected" : "")>50</option>
+                                <option value="100" @(criteria.PageSize == 100 ? "selected" : "")>100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+                <div class="caption">
+                    @Labels.users
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body" id="user-portlet">
+                @Html.Partial("_List", Model.Users)
+            </div>
+        </div>
+        <!-- END SAMPLE TABLE PORTLET-->
+    </div>
+    <div id="tab_roles" class="tab-pane fade">
+        @if (_user.HasAccess("Users", "Add"))
+        {
+        <a class="btn default" id="add_role_btn" data-target="#role_div" data-toggle="modal" style="margin-bottom:10px"><i class="fa fa-plus"></i> @Labels.AddNewRole</a>
+        }
+        <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+                <div class="caption">
+                    @Labels.ListOfRoles
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body" id="role-portlet">
+                <table class="table table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>@Labels.RoleID</th>
+                            <th>@Labels.RoleName</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="role_tbody">
+                        @foreach (var row in Model.Roles)
+                        {
+                            <tr>
+                                <td>@row.Id</td>
+                                <td>@row.Name</td>
+                                <td>
+                                    @if(_user.HasAccess("Users", "Edit"))
+                                    {
+                                    <a href="@Url.Action("LoadRole", new { id = row.Id })" class="btn btn-xs blue-hoki role_edit_link"><i class="fa fa-edit"></i> @Labels.edit</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--USER POPUP-->
+<form method="post" id="data_form" action="">
+    <div id="form_div" class="modal fade" tabindex="-1" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">@Labels.add_user</h4>
+                </div>
+                <div class="modal-body" id="form-portlet">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label>@Labels.display_name</label>
+                                <input type="text" name="DisplayName" id="display_name" class="form-control input-sm" placeholder="@Labels.display_name" data-msg="">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>@Labels.role</label>
+                                @Html.DropDownList("Role", rolesList, Labels.please_select, new { @class = "form-control input-sm", id = "role_drp", @required = "true", @data_msg = "" })
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>@Labels.username</label>
+                                <input type="text" name="UserName" id="username" dir="ltr" class="form-control input-sm" placeholder="@Labels.username" required data-msg="" data-msg-remote="@Labels.username_already_exists" data-rule-regex="^[a-zA-Z0-9_-]{3,16}$" data-msg-regex="@Labels.invalid_username">
+                            </div>
+                            <div class="form-group col-md-12" id="pass_div">
+                                <label for="password">@Labels.password</label>
+                                <input type="password" name="Password" id="password" dir="ltr" class="form-control input-sm" placeholder="@Labels.password" required data-msg="" data-rule-regex="@Html.Raw(@"((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})")" data-msg-regex="@Labels.pass_error">
+                            </div>
+                            <div class="form-group col-md-12" id="conf_div">
+                                <label for="PasswordConf">@Labels.pass_conf</label>
+                                <input type="password" name="pass_conf" id="pass_conf" dir="ltr" class="form-control input-sm" placeholder="@Labels.pass_conf" required data-msg="" data-rule-equalto="#password" data-msg-equalto="@Labels.confirm_does_not_match">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions right">
+                        <button type="button" class="btn default" data-dismiss="modal">@Labels.cancel</button>
+                        <button type="submit" class="btn green" id="btn-submit">@Labels.save</button>
+                        <input type="hidden" name="Id" id="user_id" value="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!--ROLE POPUP-->
+<form method="post" id="role_form" action="">
+    <div id="role_div" class="modal fade" tabindex="-1" data-backdrop="static">
+        <div class="modal-dialog" style="width:950px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">@Labels.AddNewRole</h4>
+                </div>
+                <div class="modal-body" id="form-portlet">
+                    <div class="form-body">
+                        <input type="text" name="RoleName" class="form-control input-sm" placeholder="@Labels.EnterRoleName" required data-rule-regex="^[a-zA-Z0-9_-]{3,16}$" data-msg=""/>
+                        <table id="module_table" class="table table-striped table-condensed table-bordered table-hover margin-top-10">
+                            <thead id="module_thead">
+                                <tr>
+                                    <th>@Labels.ModuleName</th>
+                                    <th><input type="checkbox" />@Labels.FullControl</th>
+                                    <th><input type="checkbox" /> @Labels.add</th>
+                                    <th><input type="checkbox" /> @Labels.edit</th>
+                                    <th><input type="checkbox" /> @Labels.search</th>
+                                    <th><input type="checkbox" /> @Labels.View</th>
+                                    <th><input type="checkbox" /> @Labels.delete</th>
+                                    <th><input type="checkbox" /> @Labels.print_preview</th>
+                                    <th><input type="checkbox" /> @Labels.Download</th>
+                                </tr>
+                            </thead>
+                            <tbody id="module_tbody">
+                                @{
+                                    int index = 0;
+                                    foreach (var row in Model.Menus)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @row.MenuName
+                                                <input type="hidden" name="Menus[@index][MenuId]" value="@row.MenuId" />
+                                            </td>
+                                            <td><input name="Menus[@index][FullControl]" type="checkbox" value="true" /></td>
+                                            <td><input name="Menus[@index][Add]" type="checkbox" value="true" /></td>
+                                            <td><input name="Menus[@index][Edit]" type="checkbox" value="true" /></td>
+                                            <td><input name="Menus[@index][Search]" type="checkbox" value="true" /></td>
+                                            <td><input name="Menus[@index][View]" type="checkbox" value="true" /></td>
+                                            <td><input name="Menus[@index][Delete]" type="checkbox" value="true" /></td>
+                                            <td><input name="Menus[@index][Print]" type="checkbox" value="true" /></td>
+                                            <td><input name="Menus[@index][Download]" type="checkbox" value="true" /></td>
+                                        </tr>
+                                        index++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-actions right">
+                        <button type="button" class="btn default" data-dismiss="modal">@Labels.cancel</button>
+                        <button type="submit" class="btn green" id="btn-submit-role">@Labels.save</button>
+                        <input type="hidden" name="RoleId" id="" value="0">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- CHANGE PASS POPUP -->
+
+<form id="pass_form">
+    <div id="pass_popup" class="modal fade" tabindex="-1" data-width="200" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">@Labels.change_pass</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>@Labels.type_new_pass</label>
+                            <input type="text" name="password" id="new_pass" class="form-control input-sm" dir="ltr" required data-msg="" data-rule-regex="@Html.Raw(@"((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})")" data-msg-regex="@Labels.pass_error">
+                        </div>
+                    </div>
+                    <div class="form-actions right">
+                        <button type="button" class="btn default" data-dismiss="modal">@Labels.cancel</button>
+                        <button type="submit" class="btn green">@Labels.save</button>
+                        <input type="hidden" name="id" id="pass_id" value="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts{
+
+    <script type="text/html" id="role_tr_temp">
+        <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+            <td>
+                <a href="{{href}}" class="btn btn-xs blue-hoki role_edit_link"><i class="fa fa-edit"></i> @Labels.edit</a>
+            </td>
+        </tr>
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#addbtn').click(function ()
+            {
+                $("#data_form").clearForm();
+                $('#data_form').attr('action', '@Url.Action("Create")');
+                $('.error').removeClass('error')
+                $('#data_form input').tooltip('destroy')
+                $('#user_id').val('0')
+                $('#pass_div , #conf_div').show();
+                $('#password, #pass_conf').prop('disabled', false);
+                $('#station_code').find('option').not('[value=""]').remove()
+            })
+
+            $('#data_form').validate({
+                rules: {
+                    UserName: {
+                        remote: {
+                            url: '@Url.Action("CheckUserName")',
+                            type: 'post',
+                            data: {
+                                username: function () {
+                                    return $('#username').val();
+                                },
+                                id: function () {
+                                    return $('#user_id').val();
+                                }
+                            }
+                        }
+                    }
+                },
+                submitHandler: function (form) {
+                    $('#btn-submit').button('loading');
+                    $(form).ajaxSubmit({
+                        success: function (response) {
+                            if (response == true) {
+                                $('#form_div').modal('hide');
+                                bootbox.alert('@(Labels.operation_done_suc)', function () {
+                                    $('#btn-submit').button('reset');
+                                    $('#search_form').trigger('submit', true);
+                                })
+                            }
+                        }
+                    })
+                }
+            });
+
+            $('body').on('click', '.editlnk', function () {
+
+                var id = $(this).data().id;
+                var url = '@Url.Action("Load")/' + id;
+
+                $('#data_form').attr('action', '@Url.Action("Update")');
+                $('#form_div').modal('show')
+                $('.error').removeClass('error')
+                $('#data_form input').tooltip('destroy')
+                $('#pass_div , #conf_div').hide();
+                $('#password , #pass_conf').prop('disabled', true);
+                $('#user_id').val(id);
+
+                $.get(url, function (row) {
+                    if (row != false) {
+                        $('#display_name').val(row.DisplayName)
+                        $('#username').val(row.UserName);
+                        $('#role_drp').val(row.Role);
+                        $('#station_type').val(row.StationType);
+                        $('#station_type').trigger('change', row.StationCode);
+                    }
+                })
+            })
+
+            $('body').on('click', '.deletelnk', function () {
+                var id = $(this).data().id;
+                bootbox.confirm('@Labels.are_you_sure', function (res) {
+                    if (res) {
+                        var url = '@Url.Action("Delete")/' + id;
+                        $.get(url, function (response) {
+                            $('#search_form').trigger('submit', true);
+                        })
+                    }
+                })
+            })
+
+            $('body').on('click', '.restorelnk', function () {
+                var id = $(this).data().id;
+                var url = '@Url.Action("Restore")/' + id;
+                $.get(url, function (response) {
+                    $('#search_form').trigger('submit', true);
+                })
+            })
+
+            $('body').on('click', '.changepass', function (e) {
+                e.preventDefault();
+                $('#pass_id').val($(this).data().id);
+                $('#pass_popup').modal('show')
+                $('#pass_form').validate().resetForm()
+                $('.error').removeClass('error')
+            })
+
+            $('#pass_form').validate({
+                submitHandler: function () {
+                    var url = '@Url.Action("ChangePass")';
+                    $.post(url, $('#pass_form').serialize(), function (response) {
+                        if (response == true) {
+                            $('#pass_popup').modal('hide')
+                            bootbox.alert('@Labels.pass_change_suc')
+                        }
+                    })
+                }
+            })
+
+            $('#station_type').change(function (e, param) {
+                var id = $(this).val()
+                if (id == 'MoRR') {
+                    $('#station_code').find('option').not('[value=""]').remove()
+                    $('#station_code').prop('disabled', true)
+                }
+                else {
+                    $('#station_code').prop('disabled', false)
+                    if (id == 'DoRR') {
+                        var url = '@Url.Action("ProvinceAjax", "LookupHelper")';
+                    }
+                    else if (id == 'BP') {
+                        var url = '@Url.Action("BCPAjax", "LookupHelper")';
+                    }
+                    $('#station_code').prop('disabled', true)
+                    $.get(url, function (data) {
+                        $('#station_code').find('option:not(:first)').remove();
+                        data.forEach(function (item) {
+                            $('#station_code').append('<option value="' + item.Value + '">' + item.Text + '</optoin>')
+                        })
+                        if (param != undefined) {
+                            $('#station_code').val(param)
+                        }
+                        $('#station_code').prop('disabled', false)
+                    })
+                }
+            })
+
+            //----------------------------------------------------------------
+            //---------------------search section-----------------------------
+            //----------------------------------------------------------------
+
+            $('#_station_type').change(function () {
+                var value = $(this).val();
+                if (['DoRR', 'BP'].indexOf(value) > -1) {
+                    if (value == 'DoRR') {
+                        var url = '@Url.Action("ProvinceAjax", "LookupHelper")';
+                    } else if (value == 'BP') {
+                        var url = '@Url.Action("BCPAjax", "LookupHelper")';
+                    }
+                    $('#_station_code').prop('disabled', true)
+                    $.get(url, function (data) {
+                        $('#_station_code').find('option:not(:first)').remove();
+                        data.forEach(function (item) {
+                            $('#_station_code').append('<option value="' + item.Value + '">' + item.Text + '</optoin>')
+                        })
+                        $('#_station_code').prop('disabled', false)
+                    })
+                } else {
+                    $('#_station_code').find('option:gt(0)').remove();
+                }
+            })
+
+            $('#drpLimit').change(function () {
+                $('#search_form').submit();
+            })
+
+            $('#btnReset').click(function (e) {
+                e.preventDefault();
+                $('#search_form').clearForm();
+                $('#search_form').submit();
+            })
+
+            $('#search_form').submit(function (e, param) {
+                e.preventDefault();
+                var url = (param) ? search_url : $(this).attr('action');
+                $(this).ajaxSubmit({
+                    url: url,
+                    beforeSubmit: function () {
+                        Metronic.blockUI({
+                            target: '#user-portlet',
+                            animate: true
+                        });
+                    },
+                    success: function (response) {
+                        $('#user-portlet').html(response);
+                        $(':checkbox').uniform();
+                        Metronic.unblockUI('#user-portlet');
+                    }
+                });
+            })
+
+            var search_url;
+            $('body').on('click', 'ul.pagination a', function (e) {
+                e.preventDefault();
+                search_url = $(this).attr('href');
+                if (!search_url) return;
+                $('#search_form').trigger('submit', search_url);
+            })
+        })
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#module_thead :checkbox').change(function () {
+                var index = $(this).index('#module_thead :checkbox');
+                var checked = $(this).is(':checked');
+                $('#module_tbody tr').each(function () {
+                    if (!$(this).find(':checkbox').eq(0).is(':checked') || index == 0) {
+                        $(this).find(':checkbox').eq(index).prop('checked', checked).uniform();
+                    }
+                    if (index == 0) {
+                        $(this).find(':checkbox').eq(0).trigger('change');
+                    }
+                })
+            })
+
+            $('#module_tbody tr').each(function () {
+                var tr = $(this);
+                $(this).find(':checkbox:eq(0)').change(function () {
+                    if ($(this).is(':checked')) {
+                        $(tr).find(':checkbox:gt(0)').prop('disabled', true).prop('checked', false).uniform();
+                    } else {
+                        $(tr).find(':checkbox:gt(0)').prop('disabled', false).uniform();
+                    }
+                })
+            })
+
+            $('#module_thead :checkbox:eq(0)').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#module_thead :checkbox:gt(0)').prop('disabled', true).prop('checked', false).uniform()
+                } else {
+                    $('#module_thead :checkbox:gt(0)').prop('disabled', false).uniform()
+                }
+            })
+
+            $('#add_role_btn').click(function () {
+                $('[name=RoleId]').val('0');
+                $('[name=RoleName]').val('').removeClass('error');
+                $('#module_table :checkbox').prop('checked', false).prop('disabled', false).uniform();
+            })
+
+            $('#role_form').validate({
+                submitHandler: function (form) {
+                    if ($('#module_tbody input:checked').length == 0) {
+                        toastr.error('@Labels.PleaseSelectCheckbox');
+                        return;
+                    }
+                    var data = $('#role_form').serializeJSON({
+                        parseAll: true,
+                        checkboxUncheckedValue: "false",
+                        useIntKeysAsArrayIndex: true,
+                    });
+                    $('#btn-submit-role').button("loading");
+                    var json = JSON.stringify(data);
+                    var url = $('[name=RoleId]').val() == '0' ? '@Url.Action("InsertRole")' : '@Url.Action("UpdateRole")';
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: json,
+                        contentType: 'application/json',
+                        success: function (response) {
+                            if (response == true) {
+                                toastr.success("@Labels.UserRoleUpdatedSuc");
+                                $('#role_div').modal('hide');
+                                loadRoles();
+                            } else {
+                                toastr.error('@Labels.UnableToUpdateRole')
+                            }
+                        },
+                        complete: function () {
+                            $('#btn-submit-role').button("reset");
+                        }
+                    })
+                }
+            })
+
+            $('body').on('click', '.role_edit_link', function (e) {
+                e.preventDefault();
+                $('#module_table :checkbox').prop('checked', false).prop('disabled', false).uniform();
+                var url = $(this).attr('href');
+                $.get(url, function (data) {
+                    if (data != false) {
+                        $('[name=RoleName]').val(data.RoleName);
+                        $('[name=RoleId]').val(data.RoleId);
+                        data.Access.forEach(function (row, index) {
+                            for (var key in row) {
+                                $('#module_tbody tr').eq(index).find(':checkbox[name="Menus[' + index + '][' + key + ']"]').prop('checked', row[key]).uniform();
+                            }
+                            $('#module_tbody tr').eq(index).find(':checkbox:eq(0)').trigger('change');
+                        })
+                    }
+                })
+                $('#role_div').modal('show');
+            })
+
+            function loadRoles() {
+                $.get('@Url.Action("GetRoles")', function (response) {
+                    $('#role_tbody').empty();
+                    $('#role_drp').find('option:not(:first)').remove();
+                    response.forEach(function (row) {
+                        var tr = $('#role_tr_temp').clone().html()
+                        .replace("{{id}}", row.Id)
+                        .replace("{{name}}", row.Name)
+                        .replace("{{href}}", '@Url.Action("LoadRole")/' + row.Id);
+                        $('#role_tbody').append(tr);
+                        $('#role_drp').append('<option value="' + row.Name + '">' + row.Name + '</option>');
+                    })
+                })
+            }
+        })
+    </script>
+}

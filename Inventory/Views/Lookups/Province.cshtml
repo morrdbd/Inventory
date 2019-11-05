@@ -1,0 +1,231 @@
+﻿@model IPagedList<DOMoRR.Models.Tables.Province>
+@{
+    ViewBag.Title = Labels.province_lkp;
+    var _user = ViewBag.AppUser as DOMoRR.Models.ViewModels.UserWithRole;
+    var Criteria = ViewData["Search"] as DOMoRR.Models.ViewModels.Province_SC;
+}
+@if (_user.HasAccess("Lookups", "Add"))
+{
+<a class="btn default" id="addbtn" data-target="#form_div" data-toggle="modal" style="margin-bottom:10px">
+    <i class="fa fa-plus"></i> @Labels.add_province</a>
+}
+
+<!-- BEGIN SEARCH FORM-->
+<form method="post" action="@Url.Action("ProvinceList")" id="search_form">
+    <div class="portlet box blue-hoki" style="margin-bottom:10px">
+        <div class="portlet-title">
+            <div class="caption">@Labels.search_criteria</div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" name="ProvinceName" value="@Criteria.ProvinceName" class="form-control input-sm" id="" placeholder="@Labels.enter_province_name" />
+                </div>
+                <div class="col-md-7">
+                    <button type="submit" id="btnSearch" class="btn btn-sm"><i class="fa fa-search"></i> @Labels.search</button>
+                    <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
+                </div>
+                <div class="col-md-2">
+                    <select name="PageSize" class="form-control input-sm pull-right" style="width:70px" id="drpLimit">
+                        <option value="10" @(Criteria.PageSize == 10 ? "selected" : "")>10</option>
+                        <option value="20" @(Criteria.PageSize == 20 ? "selected" : "")>20</option>
+                        <option value="50" @(Criteria.PageSize == 50 ? "selected" : "")>50</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- BEGIN LIST-->
+<div class="portlet box blue-hoki">
+    <div class="portlet-title">
+        <div class="caption">
+            @Labels.province_list
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body" id="list_div">
+        @Html.Partial("_ProvinceList", Model)
+    </div>
+</div>
+<!-- END SAMPLE TABLE PORTLET-->
+
+<div id="form_div" class="modal fade" tabindex="-1" data-width="200" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">@Labels.add_province</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-body">
+                            <form method="post" id="data_form" action="@Url.Action("SaveProvince")">
+                                <div class="form-group" id="prov_code_div">
+                                    <label>@Labels.province_code</label>
+                                    <input type="text" name="ProvinceCode" id="provcode" class="form-control input-sm" required data-msg="" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>@Labels.english_name</label>
+                                    <input type="text" name="EnName" id="enname" class="form-control input-sm" required data-msg="" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>@Labels.dari_name</label>
+                                    <input type="text" name="DrName" id="drname" class="form-control input-sm" required data-msg="" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>@Labels.pashtu_name</label>
+                                    <input type="text" name="PaName" id="paname" class="form-control input-sm" required data-msg="" placeholder="">
+                                </div>
+
+                                <div class="form-actions right">
+                                    <button type="button" class="btn default" data-dismiss="modal">@Labels.cancel</button>
+                                    <button type="submit" class="btn green" id="btn-submit">@Labels.save</button>
+                                </div>
+                                <input type="hidden" name="ProvinceId" id="rowid" value="0">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('#addbtn').click(function () {
+                $('#data_form').clearForm();
+                $('.error').removeClass('error')
+                $('#data_form input').tooltip('destroy')
+                $('#rowid').val('0')
+                $('#provcode').prop('disabled', false);
+                $('#prov_code_div').show();
+            })
+
+            $('#data_form').validate({
+                rules: {
+                    ProvinceCode: {
+                        required: true,
+                        remote: {
+                            url: '@Url.Action("CheckProvinceCode")',
+                            type: 'post',
+                            data: {
+                                ProvinceCode: function () {
+                                    return $('#provcode').val();
+                                },
+                                id: function () {
+                                    return $('#rowid').val();
+                                }
+                            }
+                        }
+                    }
+                },
+                messages: {
+                    ProvinceCode: {
+                        remote: "@Labels.duplicate_code"
+                    }
+                },
+                submitHandler: function (form) {
+                    $('#btn-submit').button('loading');
+                    $(form).ajaxSubmit({
+                        success: function (response) {
+                            $('#form_div').modal('hide');
+                            bootbox.alert('@Labels.operation_done_suc', function () {
+                                $('#btn-submit').button('reset');
+                                $('#search_form').trigger('submit', true);
+                            })
+                        }
+                    })
+                }
+            });
+
+            $('body').on('click', '.editlnk', function () {
+
+                var id = $(this).data().id;
+                var url = '@Url.Action("GetProvince")/' + id;
+
+                $('#form_div').modal('show')
+                $('.error').removeClass('error')
+                $('#data_form input').tooltip('destroy')
+                $('#rowid').val(id);
+                $('#provcode').prop('disabled', true);
+                $('#prov_code_div').hide();
+
+                $.get(url, function (row) {
+                    $('#enname').val(row.EnName);
+                    $('#drname').val(row.DrName);
+                    $('#paname').val(row.PaName);
+                })
+            })
+
+            $('body').on('click', '.deletelnk', function () {
+                var id = $(this).data().id;
+                bootbox.confirm('@Labels.are_you_sure', function (res) {
+                    if (res) {
+                        var url = '@Url.Action("DeleteRestoreProvince")/' + id + '?value=false';
+                        $.get(url, function (response) {
+                            $('#search_form').trigger('submit', true);
+                        })
+                    }
+                })
+            })
+
+            $('body').on('click', '.restorelnk', function () {
+                var id = $(this).data().id;
+                var url = '@Url.Action("DeleteRestoreProvince")/' + id + '?value=true';
+                $.get(url, function (response) {
+                    $('#search_form').trigger('submit', true);
+                })
+            })
+
+            $('#drpLimit').change(function () {
+                $('#search_form').submit();
+            })
+
+            $('#btnReset').click(function (e) {
+                e.preventDefault();
+                $('#search_form').clearForm();
+                $('#search_form').submit();
+            })
+
+            $('#search_form').submit(function (e, param) {
+                e.preventDefault();
+                var url = (param) ? search_url : $(this).attr('action');
+                $(this).ajaxSubmit({
+                    url: url,
+                    beforeSubmit: function () {
+                        Metronic.blockUI({
+                            target: '#list_div',
+                            animate: true
+                        });
+                    },
+                    success: function (response) {
+                        $('#list_div').html(response);
+                        $(':checkbox').uniform();
+                        Metronic.unblockUI('#list_div');
+                    }
+                });
+            })
+
+            var search_url;
+            $('body').on('click', 'ul.pagination a', function (e) {
+                e.preventDefault();
+                search_url = $(this).attr('href');
+                if (!search_url) return;
+                $('#search_form').trigger('submit', search_url);
+            })
+        })
+
+    </script>
+}

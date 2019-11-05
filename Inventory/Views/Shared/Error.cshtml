@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Error";
+    int err = ViewBag.Error ?? 520;
+    var title = "";
+    var message = "";
+
+    switch (err)
+    {
+        case 401:
+            title = "Access Denied";
+            message = "You are not authorized to access this page";
+            break;
+        case 404:
+            title = "Not Found";
+            message = "The page you are trying to access does not exist";
+            break;
+        case 500:
+            title = "Internal Error";
+            message = "There was an internal server error";
+            break;
+        default:
+            title = "Unknown Error";
+            message = "An unknown error was happened";
+            break;
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@err @title</title>
+    <link href="@Url.Content("~/Content/assets/admin/pages/css/error.css")" rel="stylesheet" />
+</head>
+<body class="page-md page-500-full-page">
+    <div class="row">
+        <div class="col-md-12 page-500">
+            <div class="number">
+                @err
+            </div>
+            <div class="details">
+                <h3>Oops! @title</h3>
+                <p>@message!</p>
+                <p><a href="javascript:;" onclick="window.history.back()">Back to previous page</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

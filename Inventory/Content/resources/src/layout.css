@@ -1,0 +1,52 @@
+﻿div.datepicker {
+    right: auto !important;
+}
+
+label {
+    font-size: 12px !important;
+}
+
+.tooltip-inner {
+    padding: 5px !important;
+    min-width: 150px !important;
+}
+
+input.error, select.error , textarea.error{
+    border-color: red !important;
+}
+
+.table-scroll .table-header th:last-child {
+    border-right: 1px solid #CCC;
+}
+
+.table-scroll .table-body td:last-child {
+    border-right: 1px solid #CCC;
+}
+
+.table-scroll .table-header th:first-child {
+    border-right: none;
+}
+
+.table-scroll .table-body td:first-child {
+    border-right: none;
+}
+
+.page-sidebar-menu a.disabled{
+    color: #808080 !important;
+    cursor: not-allowed;
+}
+
+div.ui-datepicker * {
+    font-size: 12px;
+}
+
+div.ui-datepicker{
+    z-index: 100000 !important;
+}
+#data_table th, #data_table td { white-space: nowrap; }
+
+label.bordered{
+    border-bottom:1px dotted #888;
+    display:block;
+    padding:3px 0;
+}

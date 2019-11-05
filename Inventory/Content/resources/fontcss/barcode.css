@@ -1,0 +1,10 @@
+
+@font-face {
+  font-family: 'Barcode';
+  font-style: normal;
+  font-weight: 700;
+  src:
+  		url(barcode/Code39AzaleaRegular3.eot) format('embedded-opentype'),
+  		url(barcode/Code39AzaleaRegular3.woff) format('woff'),
+  		url(barcode/Code39AzaleaRegular3.ttf) format('truetype');
+}

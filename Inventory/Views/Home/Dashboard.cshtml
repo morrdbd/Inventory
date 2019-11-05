@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Inventory";
+    var _lang = ViewBag.Lang;
+}
+
+<div class="row margin-top-20">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat blue-madison">
+            <div class="visual">
+                <i class="fa fa-file"></i>
+            </div>
+            <div class="details">
+                <div class="number">
+                   23
+                </div>
+                <div class="desc">
+                    Computers
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+
+    
+</div>
+<div class="portlet box blue-hoki">
+    <div class="portlet-title">
+        <div class="caption">
+            @Labels.GeneralFigures
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="allRequisition" dir="ltr" style="height:400px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        var charts_ajax_url = "@Url.Action("DashboardAjax","Home")";
+        var title_dir = ('@_lang' == 'english') ? 'ltr' : 'rtl';
+        var AllMVisitors = "@Labels.AllMVisitors";
+
+    </script>
+
+    @Scripts.Render("~/bundles/highcharts")
+
+    @*<script src="@Url.Content("~/Content/resources/highcharts/map.js")" type="text/javascript"></script>*@
+    @*<script src="@Url.Content("~/Content/resources/src/dashboard_charts.js")" type="text/javascript"></script>*@
+
+
+}

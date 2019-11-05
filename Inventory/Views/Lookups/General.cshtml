@@ -1,0 +1,223 @@
+﻿@{
+    ViewBag.Title = Labels.general_lookups;
+    var _user = ViewBag.AppUser as DOMoRR.Models.ViewModels.UserWithRole;
+}
+
+@if (_user.HasAccess("Lookups", "Add"))
+{
+<button class="btn margin-bottom-10" id="addvaluebtn">@Labels.add_lookup_value</button>
+}
+
+<!-- Lookup Value List -->
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+                <div class="caption">
+                    @Labels.lookup_values
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.DropDownList("LookupType", ViewBag.Lookups_drp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @id = "_lookup_type" })
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control input-sm" placeholder="@Labels.search" id="search_input" />
+                    </div>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-striped table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>@Labels.english_name</th>
+                                <th>@Labels.dari_name</th>
+                                <th>@Labels.pashtu_name</th>
+                                <th>@Labels.code</th>
+                                <th>@Labels.active</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="vlaue_list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- END SAMPLE TABLE PORTLET-->
+    </div>
+</div>
+
+<!-- Add Lookup value Div -->
+
+<div id="value_div" class="modal fade" tabindex="-1" data-width="200" data-backdrop="static">
+    <div class="modal-dialog">
+        <section class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">@Labels.add_lookup_value</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-body">
+                            <form method="post" id="value_form" action="@Url.Action("SaveLookupValue")">
+                                <div class="form-group">
+                                    <label>Lookup Type</label>
+                                    @Html.DropDownList("LookupCode", ViewBag.Lookups_drp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @required = "true", @data_msg = "", @id = "lookup_code" })
+                                </div>
+                                <div class="form-group" id="value_code_div">
+                                    <label>@Labels.code</label>
+                                    <input type="text" name="ValueCode" id="value_code" class="form-control input-sm" required data-msg="" data-msg-remote="@Labels.duplicate_code" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>@Labels.english_name</label>
+                                    <input type="text" name="EnName" id="en_name" class="form-control input-sm" required data-msg="" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>@Labels.dari_name</label>
+                                    <input type="text" name="DrName" id="dr_name" class="form-control input-sm" required data-msg="" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>@Labels.pashtu_name</label>
+                                    <input type="text" name="PaName" id="pa_name" class="form-control input-sm" required data-msg="" placeholder="">
+                                </div>
+                                <div class="form-actions right">
+                                    <button type="button" class="btn default" data-dismiss="modal">@Labels.cancel</button>
+                                    <button type="submit" class="btn green" id="btnsubmit">@Labels.save</button>
+                                </div>
+                                <input type="hidden" name="ValueId" id="v_rowid" value="0">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(function () {
+
+            //------------------Lookup Value Funcs-----------------
+
+            $('#addvaluebtn').click(function () {
+                $("#value_form").get(0).reset();
+                $('.error').removeClass('error')
+                $('#value_form').find('input , select').tooltip('destroy')
+                $('#value_div').modal('show');
+                $('#v_rowid').val('0');
+                $('#lookup_code').val($('#_lookup_type').val());
+                $('#value_code').prop('disabled', false);
+                $('#value_code_div').show();
+            })
+
+            $('#value_form').validate({
+                ignore: ':disabled',
+                rules: {
+                    ValueCode: {
+                        required: true,
+                        remote: {
+                            url: '@Url.Action("CheckValueCode")',
+                            type: 'post',
+                            data: {
+                                ValueCode: function () {
+                                    return $('#value_code').val();
+                                },
+                                id: function () {
+                                    return $('#v_rowid').val();
+                                }
+                            }
+                        }
+                    }
+                },
+                submitHandler: function (form) {
+                    $('#btnsubmit').button('loading');
+                    $(form).ajaxSubmit({
+                        success: function (response) {
+                            $('#value_div').modal('hide');
+                            toastr.success('@Labels.operation_done_suc');
+                            $('#btnsubmit').button('reset');
+                            load_lookup_values();
+                        },
+                        error: function () {
+                            $('#btnsubmit').button('reset');
+                        }
+                    })
+                }
+            });
+
+            $('#_lookup_type').change(function () {
+                load_lookup_values();
+            })
+
+            $('body').on('click', '.v_edit', function () {
+                $('#value_div').modal('show')
+                $('.error').removeClass('error')
+                $('#value_form').find('input , select').tooltip('destroy')
+
+                var id = $(this).data().id;
+                var url = '@Url.Action("GetLookupValue")/' + id;
+
+                $('#v_rowid').val(id);
+                $('#value_code').prop('disabled', true);
+                $('#value_code_div').hide();
+
+                $.get(url, function (row) {
+                    $('#en_name').val(row.EnName);
+                    $('#dr_name').val(row.DrName);
+                    $('#pa_name').val(row.PaName);
+                    $('#lookup_code').val(row.LookupCode);
+                })
+            })
+
+            $('body').on('click', '.v_delete', function () {
+                var id = $(this).data().id;
+                var url = '@Url.Action("DeleteRestoreLookupValue")/' + id + '?value=false';
+                bootbox.confirm('@Labels.are_you_sure', function (result) {
+                    if (result) {
+                        $.get(url, function () {
+                            load_lookup_values()
+                        })
+                    }
+                })
+            })
+
+            $('body').on('click', '.v_restore', function () {
+                var id = $(this).data().id;
+                var url = '@Url.Action("DeleteRestoreLookupValue")/' + id + '?value=true';
+                $.get(url, function () {
+                    load_lookup_values()
+                })
+            })
+
+            function load_lookup_values() {
+                var data = {
+                    LookupCode: $('#_lookup_type').val(),
+                    ValueName: $('#search_input').val().trim()
+                }
+                var url = '@Url.Action("LookupValueList")';
+                $.post(url, data, function (response) {
+                    $('#vlaue_list').html(response).find(':checkbox').uniform()
+                })
+
+            }
+
+            $('body').on('keyup', '#search_input', function (e) {
+                e.preventDefault();
+                if ($('#_lookup_type').val() != '') {
+                    load_lookup_values();
+                }
+            })
+        })
+
+    </script>
+}

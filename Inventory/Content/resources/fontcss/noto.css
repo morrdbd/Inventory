@@ -1,0 +1,33 @@
+/*
+ * Noto Naskh Arabic (Arabic) http://www.google.com/fonts/earlyaccess
+ */
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  font-style: normal;
+  font-weight: 400;
+  src: url(noto/NotoNaskhArabic-Regular.eot);
+  src: url(noto/NotoNaskhArabic-RegularIE.eot) format('embedded-opentype'),
+       url(noto/NotoNaskhArabic-Regular.woff2) format('woff2'),
+       url(noto/NotoNaskhArabic-Regular.woff) format('woff'),
+       url(noto/NotoNaskhArabic-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  font-style: normal;
+  font-weight: 700;
+  src: url(noto/NotoNaskhArabic-Bold.eot);
+  src: url(noto/NotoNaskhArabic-BoldIE.eot) format('embedded-opentype'),
+       url(noto/NotoNaskhArabic-Bold.woff2) format('woff2'),
+       url(noto/NotoNaskhArabic-Bold.woff) format('woff'),
+       url(noto/NotoNaskhArabic-Bold.ttf) format('truetype');
+}
+
+body, h1, h2, h3, h4, h5, h6, .page-title, .dropdown-menu, .tooltip, 
+.highcharts-title, .highcharts-axis-labels, .highcharts-legend-item, .highcharts-tooltip span ,
+.ui-datepicker-month , .ui-datepicker-calendar thead{
+    font-family: Noto Naskh Arabic !important;
+}
+
+div.highcharts-tooltip {
+    direction: rtl !important;
+}

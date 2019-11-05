@@ -1,0 +1,364 @@
+﻿@{
+    var _lang = (ViewContext.RouteData.Values["language"] ?? "en").ToString();
+    var _user = (DOMoRR.Models.ViewModels.UserWithRole)ViewBag.AppUser;
+    var route = new RouteValueDictionary();
+    foreach (var k in ViewContext.RouteData.Values.Keys)
+    {
+        route.Add(k, ViewContext.RouteData.Values[k]);
+    }
+    foreach (var k in Request.QueryString.AllKeys)
+    {
+        route.Add(k, Request.QueryString[k]);
+    }
+    route["language"] = "dr";
+    var DrLink = Url.RouteUrl(route);
+    route["language"] = "pa";
+    var PaLink = Url.RouteUrl(route);
+    route["language"] = "en";
+    var EnLink = Url.RouteUrl(route);
+    var Menu = ViewBag.Menu as List<DOMoRR.Models.ViewModels.MenuVM>;
+}
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" dir="@(_lang != "en" ? "rtl" : "")">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>DOMoRR | @ViewBag.Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    @Styles.Render(_lang == "en" ? "~/bundles/cssltr" : "~/bundles/cssrtl")
+    @Styles.Render("~/bundles/corecss")
+    @Styles.Render("~/bundles/customecss")
+    @RenderSection("styles", false)
+
+    <link rel="shortcut icon" href="@Url.Content("~/Content/resources/img/favicon.ico")" />
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+
+<body class="page-md page-header-fixed page-quick-sidebar-over-content ">
+    <!-- BEGIN HEADER -->
+    <div class="page-header md-shadow-z-1-i navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER -->
+        <div class="page-header-inner">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo" style="padding:0 5px;width:400px">
+                <a href="@Url.Action("Index", "Home")" style="text-decoration:none">
+                    <img style="height:30px;margin:5px" src="@Url.Content("~/Content/resources/img/morr.png")" alt="logo" class="logo-default" />
+                    <span style="color:#fff;font-weight:bold;">@Labels.SystemForDOMoRR</span>
+                </a>
+                <div class="menu-toggler sidebar-toggler hide">
+                    <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+                </div>
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+            </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+
+                    <!-- BEGIN USER LOGIN DROPDOWN -->
+                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                    <li class="dropdown dropdown-user">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <img alt="" class="img-circle" src="@Url.Content("~/Content/assets/admin/layout/img/user.png")" />
+                            <span class="username username-hide-on-mobile">
+                                @_user.AppUser.DisplayName
+                            </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            
+                            @if(_lang != "en")
+                            {
+                                <li>
+                                    <a href="@EnLink">
+                                        <i class="fa fa-language"></i> @Labels.english
+                                    </a>
+                                </li>
+                            }
+                            @if(_lang != "pa")
+                            {
+                                <li>
+                                    <a href="@PaLink">
+                                        <i class="fa fa-language"></i> @Labels.pashto
+                                    </a>
+                                </li>
+                            }
+                            @if(_lang != "dr")
+                            { 
+                                <li>
+                                    <a href="@DrLink">
+                                        <i class="fa fa-language"></i> @Labels.dari
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="divider">
+                            </li>
+                            <li>
+                                <a data-target="#change_pass_div" data-toggle="modal" id="change_pass_link">
+                                    <i class="icon-key"></i> @Labels.change_pass
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Logout", "Login")">
+                                    <i class="icon-logout"></i> @Labels.logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+        <!-- END HEADER INNER -->
+    </div>
+    <!-- END HEADER -->
+    <div class="clearfix">
+    </div>
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar-wrapper">
+            <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+            <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+            <div class="page-sidebar navbar-collapse collapse">
+                <!-- BEGIN SIDEBAR MENU -->
+                <ul class="page-sidebar-menu page-sidebar-menu-light " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                    <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+                    <li class="sidebar-toggler-wrapper">
+                        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                        <div class="sidebar-toggler">
+                        </div>
+                        <!-- END SIDEBAR TOGGLER BUTTON -->
+                    </li>
+                    @foreach (var menu in Menu.Where(x => x.SuperMenuId == 0))
+                    {
+                        if(!_user.HasAccess(menu.ModuleId, menu.ActionType))
+                        {
+                            continue;
+                        }
+                        <li class="@(menu.MenuId == ViewBag.ActiveMenu1 ? "active open" : "")">
+                            <a href="@(menu.HasSubMenu ? "javascript:;" : Url.Action(menu.Action, menu.Controller))">
+                                <i class="@menu.Icon"></i>
+                                <span class="title">@menu.Name</span>
+                                @if (menu.MenuId == ViewBag.ActiveMenu1)
+                                { <span class="selected"></span> }
+                                @if (menu.HasSubMenu)
+                                { <span class="arrow @(menu.MenuId == ViewBag.ActiveMenu1 ? "open" : "")"></span>}
+                            </a>
+                            @if (menu.HasSubMenu)
+                            {
+                                <ul class="sub-menu">
+                                @foreach (var menu2 in Menu.Where(x => x.SuperMenuId == menu.MenuId))
+                                {
+                                    if (!_user.HasAccess(menu2.ModuleId, menu2.ActionType))
+                                    {
+                                        continue;
+                                    }
+                                    <li class="@(menu2.MenuId == ViewBag.ActiveMenu2 ? "active open" : "")">
+                                        <a href="@(menu2.HasSubMenu ? "javascript:;" : Url.Action(menu2.Action, menu2.Controller))">
+                                            <i class="@menu2.Icon"></i>
+                                            @menu2.Name
+                                            @if (menu2.HasSubMenu)
+                                            { <span class="arrow @(false ? "open" : "")"></span>}
+                                        </a>
+                                        @if (menu2.HasSubMenu)
+                                        {
+                                            <ul class="sub-menu">
+                                                @foreach (var menu3 in Menu.Where(x => x.SuperMenuId == menu2.MenuId))
+                                                {
+                                                    if (!_user.HasAccess(menu3.ModuleId, menu3.ActionType))
+                                                    {
+                                                        continue;
+                                                    }
+                                                    <li class="@(menu3.MenuId == ViewBag.ActiveMenu3 ? "active" : "")">
+                                                        <a href="@Url.Action(menu3.Action, menu3.Controller)">
+                                                            <i class="@menu3.Icon"></i>
+                                                            @menu3.Name
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+                                }
+                                </ul>
+                            }
+                        </li>
+                    }
+                </ul>
+                <!-- END SIDEBAR MENU -->
+            </div>
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            <div class="page-content container-fluid">
+                <!-- BEGIN STYLE CUSTOMIZER -->
+                <!-- END STYLE CUSTOMIZER -->
+                <!-- BEGIN PAGE HEADER-->
+                <h3 class="page-title">
+                    @ViewBag.Title
+                </h3>
+                <!-- END PAGE HEADER-->
+                <!-- BEGIN PAGE CONTENT-->
+                @RenderBody()
+            </div>
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+    <div class="page-footer">
+        <div class="page-footer-inner">
+            2019 © @Labels.domorr
+        </div>
+        <div class="scroll-to-top">
+            <i class="icon-arrow-up"></i>
+        </div>
+        <button class="btn btn-xs pull-right" id="btn_update_sw" style="display:none">Update System</button>
+    </div>
+    <!-- END FOOTER -->
+
+    <!-- CHANGE PASSWORD POPUP -->
+    <form method="post" id="change_pass_form">
+        <div id="change_pass_div" class="modal fade" data-width="200" data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @if (_user.AppUser.PassNeedsChange == false)
+                        {
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        }
+                        <h4 class="modal-title">@Labels.change_pass</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label>@Labels.curr_pass</label>
+                                <input type="password" name="CurrPass" id="CurrPass" dir="ltr" class="form-control input-sm" required data-msg="" placeholder="رمز فعلی" data-msg-remote="رمز عبوری فعلی غلط است!">
+                            </div>
+                            <div class="form-group">
+                                <label>@Labels.new_pass</label>
+                                <input type="password" name="NewPass" id="NewPass" dir="ltr" class="form-control input-sm" required data-msg="" placeholder="رمز جدید" data-rule-regex="@Html.Raw(@"((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})")" data-msg-regex="رمز عبور باید ترکیبی از حروف بزرگ و کوچک. اعداد و سیمبول های خاص باشد!">
+                            </div>
+                            <div class="form-group">
+                                <label>@Labels.pass_conf</label>
+                                <input type="password" name="ConfPass" id="ConfPass" dir="ltr" class="form-control input-sm" required data-msg="" placeholder="تکرار رمز عبور" data-rule-equalto="#NewPass" data-msg-equalto="تکرار رمز عبور تطبیق نمی کند!">
+                            </div>
+
+                            <div class="form-actions right">
+                                @if (_user.AppUser.PassNeedsChange == false)
+                                {
+                                <button type="button" class="btn default" data-dismiss="modal">@Labels.cancel</button>
+                                }
+                                <button type="submit" class="btn green">@Labels.save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- CHANGE PASSWORD POPUP -->
+
+    <div id="offline_div" style="position:fixed;top:45px;width:100%;height:25px;background:red;opacity:.6;display:none;z-index:2000;">
+        <p id="offline_p" style="font-weight:bold;text-align:center;color:#fff;margin:5px auto;"></p>
+    </div>
+    <div id="sync_div" style="position:fixed;top:45px;width:100%;height:25px;background:green;opacity:.6;display:none;z-index:2000;">
+        <p id="sync_p" style="font-weight:bold;text-align:center;color:#fff;margin:5px auto;"></p>
+    </div>
+
+    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+    <!--[if lt IE 9]>
+    <script src="@Url.Action("~/Content/assets/global/plugins/respond.min.js")"></script>
+    <script src="@Url.Action("~/Content/assets/global/plugins/excanvas.min.js")"></script>
+    <![endif]-->
+    <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+    
+    @Scripts.Render("~/bundles/corejs")
+    @*<script src="@Url.Content("~/Content/resources/libs/jquery.cookie.js")"></script>
+    <script src="@Url.Content("~/Content/resources/libs/db.min.js")"></script>*@
+    <script>
+        var mainvars = {
+            lang: '@_lang',
+            pass_needs_change: '@_user.AppUser.PassNeedsChange',
+            username: '@_user.AppUser.UserName',
+            check_pass_url: '@Url.Action("CheckPassword", "Login")',
+            change_pass_url: '@Url.Action("ChangePass", "Login")',
+            logout_url: '@Url.Action("Logout", "Login")',
+            home_url: '@Url.Action("Index", "Home")',
+            pass_change_suc: '@Labels.pass_change_suc',
+            expand_panels: '@Labels.expand_panels',
+            collapse_panels: '@Labels.collapse_panels',
+            lookup_sync_msg: '@Labels.LookupSyncMsg',
+            yes: '@Labels.yes',
+            no: '@Labels.no',
+        };
+        $.extend(true, $.fn.dataTable.defaults, {
+            "language": {
+                "sProcessing": "@Labels.Loading",
+                "sZeroRecords": "@Labels.NoItemFound",
+                "emptyTable": "@Labels.NoItemFound",
+                "sInfoEmpty": "@Labels.Empty",
+                "sInfoPostFix": "",
+                "sSearch": "@Labels.search:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "@Labels.first",
+                    "sPrevious": "@Labels.Previous",
+                    "sNext": "@Labels.Next",
+                    "sLast": "@Labels.last"
+                }
+            }
+        });
+        var IS_ONLINE = true;
+        var ALLOW_OFFLINE = ('@ViewBag.OfflineAllowed' == 'true');
+    </script>
+    @*<script src="@Url.Content("~/Content/resources/src/db.js")"></script>*@
+    <script src="@Url.Content("~/Content/resources/src/main.js")"></script>
+    @*<script src="@Url.Content("~/Content/resources/src/app.js")"></script>*@
+
+    @RenderSection("scripts", false)
+
+    <script src="@Url.Content("~/Content/resources/ui-datepicker/scripts/jquery-1.6.2.min.js")"></script>
+    <script src="@Url.Content("~/Content/resources/ui-datepicker/scripts/jquery.ui.datepicker-cc.all.min.js")"></script>
+    <script src="~/Content/resources/ui-datepicker/scripts/jquery.ui.datetimepicker-addon.js"></script>
+    <script>
+        var ui = jQuery.noConflict(true);
+        ui('.shpicker').datepicker({
+            dateFormat: 'yy-mm-dd',
+            regional: mainvars.lang == 'en' ? '' : 'fa',
+            maxDate: new Date(),
+        });
+        ui('.shpicker_f').datepicker({
+            dateFormat: 'yy-mm-dd',
+            regional: mainvars.lang == 'en' ? '' : 'fa',
+        });
+        ui('.shTimepicker_f').timepicker();({
+            dateFormat: '',
+            showDate: false,
+            showSecond: true,
+            timeFormat: 'hh:mm',
+            regional: mainvars.lang == 'en' ? '' : 'fa',
+        });
+    </script>
+</body>
+<!-- END BODY -->
+</html>

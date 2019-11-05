@@ -1,0 +1,35 @@
+﻿@model List<DOMoRR.Models.Tables.LookupValue>
+@{
+    var _user = ViewBag.AppUser as DOMoRR.Models.ViewModels.UserWithRole;
+}
+
+@{ int num = 1;
+    foreach (var row in Model)
+    {
+        <tr>
+            <td>@(num++)</td>
+            <td>@row.EnName</td>
+            <td>@row.DrName</td>
+            <td>@row.PaName</td>
+            <td>@row.ValueCode</td>
+            <td><input type="checkbox" @(row.IsActive ? "checked" : "") disabled /></td>
+            <td>
+                @if(_user.HasAccess("Lookups", "Edit"))
+                {
+                <a href="javascript:;" data-id="@row.ValueId" class="btn default btn-xs blue-hoki v_edit">
+                    <i class="fa fa-edit"></i>
+                </a>
+                }
+                @if (_user.HasAccess("Lookups", "Delete"))
+                {
+                <a href="javascript:;" data-id="@row.ValueId" class="btn default btn-xs red v_delete">
+                    <i class="fa fa-trash"></i>
+                </a>
+                <a href="javascript:;" data-id="@row.ValueId" class="btn default btn-xs blue-hoki v_restore">
+                    <i class="fa fa-share"></i>
+                </a>
+                }
+            </td>
+        </tr>
+    }
+}

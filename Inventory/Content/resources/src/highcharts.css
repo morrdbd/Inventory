@@ -1,0 +1,19 @@
+﻿
+
+.highcharts-title {
+    font-size:12px !important;
+    font-weight: normal !important;
+}
+.highcharts-legend-item *{
+    font-size:10px !important;
+    font-weight: normal !important;
+}
+.highcharts-axis-labels *{
+    font-size: 10px !important;
+}
+ul.nav-tabs a {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: bold;
+}
+

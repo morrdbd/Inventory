@@ -1,0 +1,1011 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="action" xml:space="preserve">
+    <value>عملیات</value>
+  </data>
+  <data name="active" xml:space="preserve">
+    <value>فعال</value>
+  </data>
+  <data name="add" xml:space="preserve">
+    <value>درج</value>
+  </data>
+  <data name="add_benef" xml:space="preserve">
+    <value>اضافه کردن مستفید شونده</value>
+  </data>
+  <data name="add_border_point" xml:space="preserve">
+    <value>اضافه کردن نقطه مرزی</value>
+  </data>
+  <data name="add_country" xml:space="preserve">
+    <value>اضافه کردن کشور</value>
+  </data>
+  <data name="add_district" xml:space="preserve">
+    <value>اضافه کدرن ولسوالی</value>
+  </data>
+  <data name="add_lookup_type" xml:space="preserve">
+    <value>اضافه کردن نوع جدید</value>
+  </data>
+  <data name="add_lookup_value" xml:space="preserve">
+    <value>اضافه لوکاپ جدید</value>
+  </data>
+  <data name="add_province" xml:space="preserve">
+    <value>اضافه کرددن ولایت</value>
+  </data>
+  <data name="add_returnee" xml:space="preserve">
+    <value>وزارت</value>
+  </data>
+  <data name="add_user" xml:space="preserve">
+    <value>اضافه کردن کاربر</value>
+  </data>
+  <data name="add_value" xml:space="preserve">
+    <value>اضافه کردن مقدار</value>
+  </data>
+  <data name="add_village" xml:space="preserve">
+    <value>اضافه کردن قریه</value>
+  </data>
+  <data name="ADMIN" xml:space="preserve">
+    <value>مدیـــر سیستم</value>
+  </data>
+  <data name="administration" xml:space="preserve">
+    <value>مدیریت</value>
+  </data>
+  <data name="any" xml:space="preserve">
+    <value>هر کدام</value>
+  </data>
+  <data name="are_you_sure" xml:space="preserve">
+    <value>آیا شما مطمثن هستید؟</value>
+  </data>
+  <data name="back_to_list" xml:space="preserve">
+    <value>برگشت به لیست</value>
+  </data>
+  <data name="beneficiary" xml:space="preserve">
+    <value>مستفید شونده</value>
+  </data>
+  <data name="border_point_list" xml:space="preserve">
+    <value>لیست نقطه های مرزی</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>انصراف</value>
+  </data>
+  <data name="cant_select_ind_err" xml:space="preserve">
+    <value>شما نمی توانید انفرادی را انتخاب کنید. در حالیکه چندین عضو را وارد کرده اید!</value>
+  </data>
+  <data name="case_details" xml:space="preserve">
+    <value>معلومات قضیه</value>
+  </data>
+  <data name="case_photo" xml:space="preserve">
+    <value>تصویر این قضیه</value>
+  </data>
+  <data name="case_type" xml:space="preserve">
+    <value>نوع قضیه</value>
+  </data>
+  <data name="change_pass" xml:space="preserve">
+    <value>تغییر رمز عبور</value>
+  </data>
+  <data name="choose_an_option" xml:space="preserve">
+    <value>یک گزینه ره انتخاب نمایید!</value>
+  </data>
+  <data name="code" xml:space="preserve">
+    <value>کود</value>
+  </data>
+  <data name="collapse_panels" xml:space="preserve">
+    <value>بستن پنل ها</value>
+  </data>
+  <data name="commissions" xml:space="preserve">
+    <value>کمیسیون ها</value>
+  </data>
+  <data name="confirm_does_not_match" xml:space="preserve">
+    <value>تکرار رمز عبور تطبیق نمی کند!</value>
+  </data>
+  <data name="coordinate_duplicate" xml:space="preserve">
+    <value>مختصات تکراری است!</value>
+  </data>
+  <data name="country" xml:space="preserve">
+    <value>کشور</value>
+  </data>
+  <data name="country_list" xml:space="preserve">
+    <value>لیست کشورها</value>
+  </data>
+  <data name="country_lkp" xml:space="preserve">
+    <value>بخش کشور</value>
+  </data>
+  <data name="county_city" xml:space="preserve">
+    <value>شهرستان/ولسوالی</value>
+  </data>
+  <data name="curr_pass" xml:space="preserve">
+    <value>رمز فعلی</value>
+  </data>
+  <data name="curr_pass_wrong" xml:space="preserve">
+    <value>رمز عبوری فعلی غلط است!</value>
+  </data>
+  <data name="dari" xml:space="preserve">
+    <value>دری</value>
+  </data>
+  <data name="dari_name" xml:space="preserve">
+    <value>نام دری</value>
+  </data>
+  <data name="dashboard" xml:space="preserve">
+    <value>صفحه اصلی</value>
+  </data>
+  <data name="data_entry_report" xml:space="preserve">
+    <value>گزارش ثبت معلومات</value>
+  </data>
+  <data name="date" xml:space="preserve">
+    <value>تاریخ</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="detailed_report" xml:space="preserve">
+    <value>گزارش مفصل</value>
+  </data>
+  <data name="display_name" xml:space="preserve">
+    <value>نام نمایش</value>
+  </data>
+  <data name="district" xml:space="preserve">
+    <value>ولسوالی</value>
+  </data>
+  <data name="district_code" xml:space="preserve">
+    <value>کد ولسوالی</value>
+  </data>
+  <data name="district_list" xml:space="preserve">
+    <value>لیست ولسوالی ها</value>
+  </data>
+  <data name="district_lkp" xml:space="preserve">
+    <value>بخش ولسوالی</value>
+  </data>
+  <data name="dorr" xml:space="preserve">
+    <value>ریاست امور مهاجرین و عودت کنندگان</value>
+  </data>
+  <data name="duplicate_code" xml:space="preserve">
+    <value>کد تکراری</value>
+  </data>
+  <data name="duplicate_reg_no" xml:space="preserve">
+    <value>راجستر نمبر تکراری!</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>ویرایش</value>
+  </data>
+  <data name="EDITOR" xml:space="preserve">
+    <value>ویرایشگر</value>
+  </data>
+  <data name="english" xml:space="preserve">
+    <value>انگلیسی</value>
+  </data>
+  <data name="english_name" xml:space="preserve">
+    <value>نام انگلیسی</value>
+  </data>
+  <data name="enter_country_name" xml:space="preserve">
+    <value>نام کشور را وارد نمایید</value>
+  </data>
+  <data name="enter_district_name" xml:space="preserve">
+    <value>نام ولسوالی را وارد نمایید</value>
+  </data>
+  <data name="enter_province_name" xml:space="preserve">
+    <value>نام ولایت را وارد نمایید</value>
+  </data>
+  <data name="enter_village_name" xml:space="preserve">
+    <value>نام قریه را وارد نمایید</value>
+  </data>
+  <data name="ENTRY" xml:space="preserve">
+    <value>واردکننده معلومات</value>
+  </data>
+  <data name="expand_panels" xml:space="preserve">
+    <value>باز کردن پنل ها</value>
+  </data>
+  <data name="export" xml:space="preserve">
+    <value>صادرات</value>
+  </data>
+  <data name="export_excel" xml:space="preserve">
+    <value>ساختن Excel</value>
+  </data>
+  <data name="export_pdf" xml:space="preserve">
+    <value>ساختن PDF</value>
+  </data>
+  <data name="family_head_job" xml:space="preserve">
+    <value>شغل سرپرست فامیل</value>
+  </data>
+  <data name="female" xml:space="preserve">
+    <value>مونث</value>
+  </data>
+  <data name="first" xml:space="preserve">
+    <value>اولی</value>
+  </data>
+  <data name="general_lookups" xml:space="preserve">
+    <value>لوکاپ های عمومی</value>
+  </data>
+  <data name="host_country" xml:space="preserve">
+    <value>کشور میزبان</value>
+  </data>
+  <data name="info_insert_suc" xml:space="preserve">
+    <value>اطلاعات با موفقیت ثبت شد!</value>
+  </data>
+  <data name="info_update_suc" xml:space="preserve">
+    <value>اطلاعات با موفقیت اصلاح شد!</value>
+  </data>
+  <data name="inserted_by" xml:space="preserve">
+    <value>وارد شده توسط</value>
+  </data>
+  <data name="inserted_date" xml:space="preserve">
+    <value>وارد شده در تاریخ</value>
+  </data>
+  <data name="invalid_username" xml:space="preserve">
+    <value>نام کاربری غیر معتبر!</value>
+  </data>
+  <data name="ira" xml:space="preserve">
+    <value>جمهوری اسلامی افغانستان</value>
+  </data>
+  <data name="land_claims" xml:space="preserve">
+    <value>درخواست های زمین</value>
+  </data>
+  <data name="last" xml:space="preserve">
+    <value>آخری</value>
+  </data>
+  <data name="last_modified_by" xml:space="preserve">
+    <value>آخرین ویرایش توسط</value>
+  </data>
+  <data name="last_modified_date" xml:space="preserve">
+    <value>آخرین ویرایش در تاریخ</value>
+  </data>
+  <data name="latitude" xml:space="preserve">
+    <value>طول البلد</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="login_to_system" xml:space="preserve">
+    <value>ورود به سیستم</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>خروج</value>
+  </data>
+  <data name="longitude" xml:space="preserve">
+    <value>عرض البلد</value>
+  </data>
+  <data name="lookups" xml:space="preserve">
+    <value>لوکاپ ها</value>
+  </data>
+  <data name="lookup_types" xml:space="preserve">
+    <value>نوع ها</value>
+  </data>
+  <data name="lookup_values" xml:space="preserve">
+    <value>مقدار ها</value>
+  </data>
+  <data name="male" xml:space="preserve">
+    <value>مذکر</value>
+  </data>
+  <data name="morr" xml:space="preserve">
+    <value>وزارت امور مهاجرین و عودت کنندگان</value>
+  </data>
+  <data name="new_pass" xml:space="preserve">
+    <value>رمز جدید</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>خیر</value>
+  </data>
+  <data name="none" xml:space="preserve">
+    <value>هیچ کدام</value>
+  </data>
+  <data name="number_only" xml:space="preserve">
+    <value>فقط اعداد!</value>
+  </data>
+  <data name="operation_done_suc" xml:space="preserve">
+    <value>عملیات با موفقیت انجام شد!</value>
+  </data>
+  <data name="organization" xml:space="preserve">
+    <value>سازمان ها</value>
+  </data>
+  <data name="pashto" xml:space="preserve">
+    <value>پشتو</value>
+  </data>
+  <data name="pashtu_name" xml:space="preserve">
+    <value>نام پشتو</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>رمز عبور</value>
+  </data>
+  <data name="pass_change_suc" xml:space="preserve">
+    <value>رمز عبور با موفقیت تغییر کرد!</value>
+  </data>
+  <data name="pass_conf" xml:space="preserve">
+    <value>تکرار رمز عبور</value>
+  </data>
+  <data name="pass_error" xml:space="preserve">
+    <value>رمز عبور باید ترکیبی از حروف بزرگ و کوچک. اعداد و سیمبول های خاص باشد!</value>
+  </data>
+  <data name="please_select" xml:space="preserve">
+    <value>--انتخاب نمایید--</value>
+  </data>
+  <data name="print_preview" xml:space="preserve">
+    <value>نمایش پرینت</value>
+  </data>
+  <data name="province" xml:space="preserve">
+    <value>ولایت</value>
+  </data>
+  <data name="province_code" xml:space="preserve">
+    <value>کد ولایت</value>
+  </data>
+  <data name="province_list" xml:space="preserve">
+    <value>لیست ولایات</value>
+  </data>
+  <data name="province_lkp" xml:space="preserve">
+    <value>بخش ولایات</value>
+  </data>
+  <data name="province_state" xml:space="preserve">
+    <value>ولایت/صوبه</value>
+  </data>
+  <data name="registration" xml:space="preserve">
+    <value>ثبـــت</value>
+  </data>
+  <data name="registration_date" xml:space="preserve">
+    <value>تاریخ ثبت</value>
+  </data>
+  <data name="reports" xml:space="preserve">
+    <value>گزارشات</value>
+  </data>
+  <data name="REPORT" xml:space="preserve">
+    <value>کاربر گزارش دهی</value>
+  </data>
+  <data name="rep_returnee" xml:space="preserve">
+    <value>گزارشات عودت کنندگان</value>
+  </data>
+  <data name="required" xml:space="preserve">
+    <value>ضروری</value>
+  </data>
+  <data name="reset" xml:space="preserve">
+    <value>تنظیم مجدد</value>
+  </data>
+  <data name="restore" xml:space="preserve">
+    <value>بازیابی</value>
+  </data>
+  <data name="returns" xml:space="preserve">
+    <value>عودت ها</value>
+  </data>
+  <data name="role" xml:space="preserve">
+    <value>نقش</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>ذخیره</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>جستجو</value>
+  </data>
+  <data name="search_benef" xml:space="preserve">
+    <value>جستجوی مستفید شونده</value>
+  </data>
+  <data name="search_criteria" xml:space="preserve">
+    <value>معیارهای جستجو</value>
+  </data>
+  <data name="search_reintegration" xml:space="preserve">
+    <value>جستجوی استقرار مجدد</value>
+  </data>
+  <data name="search_returnee" xml:space="preserve">
+    <value>جستجوی عودت کننده</value>
+  </data>
+  <data name="select_district" xml:space="preserve">
+    <value>--انتخاب ولسوالی--</value>
+  </data>
+  <data name="select_province" xml:space="preserve">
+    <value>--انتخاب ولایت--</value>
+  </data>
+  <data name="station" xml:space="preserve">
+    <value>محل کار</value>
+  </data>
+  <data name="summary_report" xml:space="preserve">
+    <value>گزارش خلاصه</value>
+  </data>
+  <data name="SUPER" xml:space="preserve">
+    <value>کاربر فوق العاده</value>
+  </data>
+  <data name="text_only" xml:space="preserve">
+    <value>فقط حروف!</value>
+  </data>
+  <data name="type_new_pass" xml:space="preserve">
+    <value>رمز جدید را تایپ نمایید:</value>
+  </data>
+  <data name="unable_to_insert" xml:space="preserve">
+    <value>قادر به ثبت اطلاعات نشد!</value>
+  </data>
+  <data name="unable_to_update" xml:space="preserve">
+    <value>قادر به اصلاح اطلاعات نشد!</value>
+  </data>
+  <data name="username" xml:space="preserve">
+    <value>اسم کاربر</value>
+  </data>
+  <data name="username_already_exists" xml:space="preserve">
+    <value>نام کاربری قبلا ثبت شده است!</value>
+  </data>
+  <data name="users" xml:space="preserve">
+    <value>کاربر ها</value>
+  </data>
+  <data name="user_management" xml:space="preserve">
+    <value>مدیریت کاربران</value>
+  </data>
+  <data name="user_pass_req" xml:space="preserve">
+    <value>لطفا نام کاربری و رمز عبور را وارد کنید!</value>
+  </data>
+  <data name="user_pass_wrong" xml:space="preserve">
+    <value>نام کاربری یا رمز عبور اشتباه است!</value>
+  </data>
+  <data name="values" xml:space="preserve">
+    <value>مقدار ها</value>
+  </data>
+  <data name="village" xml:space="preserve">
+    <value>قریه</value>
+  </data>
+  <data name="village_list" xml:space="preserve">
+    <value>لیست قریه ها</value>
+  </data>
+  <data name="village_lkp" xml:space="preserve">
+    <value>بخش قریه</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>بلی</value>
+  </data>
+  <data name="AddNewRole" xml:space="preserve">
+    <value>درج نقش جدید</value>
+  </data>
+  <data name="ChartReports" xml:space="preserve">
+    <value>گزارشهای گرافی</value>
+  </data>
+  <data name="DataEntryReport" xml:space="preserve">
+    <value>گزارش میزان درج معلومات</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>دانلود</value>
+  </data>
+  <data name="EnterRoleName" xml:space="preserve">
+    <value>نام نقش را وارد کنید</value>
+  </data>
+  <data name="FullControl" xml:space="preserve">
+    <value>کنترل کامل</value>
+  </data>
+  <data name="ListOfRoles" xml:space="preserve">
+    <value>لیست نقش ها</value>
+  </data>
+  <data name="ModuleName" xml:space="preserve">
+    <value>نام بخش</value>
+  </data>
+  <data name="PleaseSelectCheckbox" xml:space="preserve">
+    <value>لطفا لااقل یک چک باکس را تیک نمایید</value>
+  </data>
+  <data name="ReturneeCharts" xml:space="preserve">
+    <value>گرافهای عودت کنندگان</value>
+  </data>
+  <data name="RoleID" xml:space="preserve">
+    <value>شناسه نقش</value>
+  </data>
+  <data name="RoleMgt" xml:space="preserve">
+    <value>مدیریت نقش ها</value>
+  </data>
+  <data name="RoleName" xml:space="preserve">
+    <value>نام نقش</value>
+  </data>
+  <data name="UnableToUpdateRole" xml:space="preserve">
+    <value>موفق به ثبت نقش کاربری نشد</value>
+  </data>
+  <data name="UserRoleUpdatedSuc" xml:space="preserve">
+    <value>نقش کاربری با موفقیت ثبت گردید</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>نمایش</value>
+  </data>
+  <data name="LookupSyncMsg" xml:space="preserve">
+    <value>معلومات سیستم برای استفاده آماده شد</value>
+  </data>
+  <data name="ReturneeSyncMsg" xml:space="preserve">
+    <value>تعداد (%s) قضیه عودت کنندگان با سرور مرکزی هماهنگ و ثبت شد</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>خالی</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>در حال پردازش...</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>بعدی</value>
+  </data>
+  <data name="NoItemFound" xml:space="preserve">
+    <value>هیچ موارد یافت نشد</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>قبلی</value>
+  </data>
+  <data name="AddNewRecord" xml:space="preserve">
+    <value>درج ریکارد جدید</value>
+  </data>
+  <data name="DBReg" xml:space="preserve">
+    <value>ثبت سیستم معلوماتی</value>
+  </data>
+  <data name="IdentifiedIDP" xml:space="preserve">
+    <value>بیجاشدگان تثبیت شده</value>
+  </data>
+  <data name="IDP" xml:space="preserve">
+    <value>بیجاشدگان داخلی</value>
+  </data>
+  <data name="ISQ" xml:space="preserve">
+    <value>اسلام قلعه</value>
+  </data>
+  <data name="KBL" xml:space="preserve">
+    <value>میدان هوایی</value>
+  </data>
+  <data name="ListOfRecords" xml:space="preserve">
+    <value>لیست ارقام عمومی</value>
+  </data>
+  <data name="MonthlyReturn" xml:space="preserve">
+    <value>عودت به شکل ماهوار</value>
+  </data>
+  <data name="OTH" xml:space="preserve">
+    <value>دیگر</value>
+  </data>
+  <data name="OtherCountries" xml:space="preserve">
+    <value>دیگر کشورها</value>
+  </data>
+  <data name="RecordDate" xml:space="preserve">
+    <value>تاریخ ارقام</value>
+  </data>
+  <data name="RecordsPerPage" xml:space="preserve">
+    <value>تعداد ریکارد در هر صفحه</value>
+  </data>
+  <data name="ReturnFromIranPak" xml:space="preserve">
+    <value>عودت از ایران و پاکستان</value>
+  </data>
+  <data name="ReturnFromOtherCountries" xml:space="preserve">
+    <value>عودت از دیگر کشورها</value>
+  </data>
+  <data name="GeneralFigures" xml:space="preserve">
+    <value>ارقـــام عمومی</value>
+  </data>
+  <data name="left" xml:space="preserve">
+    <value>چپ</value>
+  </data>
+  <data name="returneeInfo" xml:space="preserve">
+    <value>معلومات عودت کننده</value>
+  </data>
+  <data name="right" xml:space="preserve">
+    <value>راست</value>
+  </data>
+  <data name="capture" xml:space="preserve">
+    <value>گرفتن</value>
+  </data>
+  <data name="device_capturing" xml:space="preserve">
+    <value>گرفتن شروع شده، بروی دستگاه انگشت را قرار دهید  </value>
+  </data>
+  <data name="device_ready" xml:space="preserve">
+    <value>دستگاه اماده است، تکمه گرفتن بزنید</value>
+  </data>
+  <data name="device_stopped" xml:space="preserve">
+    <value>گرفتن  بند شد </value>
+  </data>
+  <data name="identified" xml:space="preserve">
+    <value>این نفر شناسائی شد</value>
+  </data>
+  <data name="identify" xml:space="preserve">
+    <value>شناسائی</value>
+  </data>
+  <data name="not_identified" xml:space="preserve">
+    <value>این نفر راجستر نیست</value>
+  </data>
+  <data name="selectFinger" xml:space="preserve">
+    <value>انگشت را انتخاب کنید</value>
+  </data>
+  <data name="NewBorn" xml:space="preserve">
+    <value>نوزاد </value>
+  </data>
+  <data name="oDistrict" xml:space="preserve">
+    <value>ولسوالی اصلی</value>
+  </data>
+  <data name="oProvince" xml:space="preserve">
+    <value>ولایت اصلی</value>
+  </data>
+  <data name="Tazkira" xml:space="preserve">
+    <value>تذکره</value>
+  </data>
+  <data name="DisplacedProvince" xml:space="preserve">
+    <value>ولایت فعلی</value>
+  </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>از تاریخ</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>تا تاریخ</value>
+  </data>
+  <data name="Cash" xml:space="preserve">
+    <value>نقدی</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>فعلی</value>
+  </data>
+  <data name="InKind" xml:space="preserve">
+    <value>غیر نقدی</value>
+  </data>
+  <data name="Origin" xml:space="preserve">
+    <value>اصلی</value>
+  </data>
+  <data name="FemaleF" xml:space="preserve">
+    <value>زن</value>
+  </data>
+  <data name="ReturneeStatisticRecords" xml:space="preserve">
+    <value>ارقام عمومی عودت کننده</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>مجموعه</value>
+  </data>
+  <data name="ReturneeNotRegistered" xml:space="preserve">
+    <value>ثبت نشده در سیستم معلومات</value>
+  </data>
+  <data name="SystemForDOMoRR" xml:space="preserve">
+    <value>سیستم ریاست دفتر </value>
+  </data>
+  <data name="registration_info" xml:space="preserve">
+    <value>معلومات ثبت</value>
+  </data>
+  <data name="Clients" xml:space="preserve">
+    <value>مراجعین</value>
+  </data>
+  <data name="FatherName" xml:space="preserve">
+    <value>نام پدر</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>نمبر تیلفون</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>بلاک</value>
+  </data>
+  <data name="ClientInfo" xml:space="preserve">
+    <value>معلومات مراجعین</value>
+  </data>
+  <data name="CurrentProvince" xml:space="preserve">
+    <value>ولایت فعلی</value>
+  </data>
+  <data name="DeliverBy" xml:space="preserve">
+    <value>مرجع ارسال شونده</value>
+  </data>
+  <data name="EnteranceDate" xml:space="preserve">
+    <value>تاریخ دخول</value>
+  </data>
+  <data name="MeetingDate" xml:space="preserve">
+    <value>تاریخ ملاقات</value>
+  </data>
+  <data name="MeetingOrganizer" xml:space="preserve">
+    <value>تنظیم کننده ملاقات</value>
+  </data>
+  <data name="MeetingTime" xml:space="preserve">
+    <value>وقت ملاقات</value>
+  </data>
+  <data name="MinisterVisitors" xml:space="preserve">
+    <value>ملاقاتی وزیر</value>
+  </data>
+  <data name="MinisterVisitorInfo" xml:space="preserve">
+    <value>معلومات ملاقات کننده</value>
+  </data>
+  <data name="NumberOfPerson" xml:space="preserve">
+    <value>تعداد نفر</value>
+  </data>
+  <data name="Occupation" xml:space="preserve">
+    <value>وظیفه</value>
+  </data>
+  <data name="OrderBy" xml:space="preserve">
+    <value>مرجع احکام دهنده</value>
+  </data>
+  <data name="OrderText" xml:space="preserve">
+    <value>متن احکام</value>
+  </data>
+  <data name="RequisitionAndRequesterInfo" xml:space="preserve">
+    <value>معلومات عریضه و عریضه کننده</value>
+  </data>
+  <data name="RequisitionDate" xml:space="preserve">
+    <value>تاریخ عریضه</value>
+  </data>
+  <data name="Requisitions" xml:space="preserve">
+    <value>عرایض</value>
+  </data>
+  <data name="ReturnTime" xml:space="preserve">
+    <value>ساعت برگشت</value>
+  </data>
+  <data name="TotalVisitors" xml:space="preserve">
+    <value>مجموعه مراجعین</value>
+  </data>
+  <data name="TypeOfDocument" xml:space="preserve">
+    <value>نوع سند</value>
+  </data>
+  <data name="VisitingDate" xml:space="preserve">
+    <value>تاریخ مراجعه</value>
+  </data>
+  <data name="VisitingOffice" xml:space="preserve">
+    <value>شعبه مربوط</value>
+  </data>
+  <data name="Minister" xml:space="preserve">
+    <value>وزیر</value>
+  </data>
+  <data name="Identity" xml:space="preserve">
+    <value>شهرت</value>
+  </data>
+  <data name="RequisitionType" xml:space="preserve">
+    <value>نوع سند</value>
+  </data>
+  <data name="SubmissionDate" xml:space="preserve">
+    <value>تاریخ تسلیمی</value>
+  </data>
+  <data name="DeliveredDate" xml:space="preserve">
+    <value>تاریخ صدور سند</value>
+  </data>
+  <data name="DocumentText" xml:space="preserve">
+    <value>مطلب سند</value>
+  </data>
+  <data name="Result" xml:space="preserve">
+    <value>نتیجه اجرات</value>
+  </data>
+  <data name="SentTo" xml:space="preserve">
+    <value>مرجع ارسال شونده</value>
+  </data>
+  <data name="SuggestedBy" xml:space="preserve">
+    <value>مرجع پشنهاد کننده</value>
+  </data>
+  <data name="SuggestionAndOrder" xml:space="preserve">
+    <value>احکام و پشنهاد ها</value>
+  </data>
+  <data name="SuggestionAndOrderInfo" xml:space="preserve">
+    <value>معلومات حکم ویا پیشنهاد</value>
+  </data>
+  <data name="TicketTitle" xml:space="preserve">
+    <value>تکت دخولی وزارت  امور مهاجرین و عودت کنندگان</value>
+  </data>
+  <data name="ReturnSource" xml:space="preserve">
+    <value>مرجع عودت</value>
+  </data>
+  <data name="SerialNumber" xml:space="preserve">
+    <value>شماره</value>
+  </data>
+  <data name="FinalSOAttachment" xml:space="preserve">
+    <value>کاپی نهایی</value>
+  </data>
+  <data name="ScanPreview" xml:space="preserve">
+    <value>نمایشی سکن</value>
+  </data>
+  <data name="ClientList" xml:space="preserve">
+    <value>لست مراجعین</value>
+  </data>
+  <data name="ClientSearch" xml:space="preserve">
+    <value>جستجو مراجعین</value>
+  </data>
+  <data name="MVisitorList" xml:space="preserve">
+    <value>لست ملاقاتی وزیر</value>
+  </data>
+  <data name="MVisitorSearch" xml:space="preserve">
+    <value>جستجو ملاقاتی وزیر</value>
+  </data>
+  <data name="MVisitorTicket" xml:space="preserve">
+    <value>تکت ملاقات وزیر وزارت امور مهاجرین و عودت</value>
+  </data>
+  <data name="RequisitionList" xml:space="preserve">
+    <value>لست عرایض</value>
+  </data>
+  <data name="RequisitionSearch" xml:space="preserve">
+    <value>جستجو عرایض</value>
+  </data>
+  <data name="SuggOrderList" xml:space="preserve">
+    <value>لست احکام و پیشنهاد ها</value>
+  </data>
+  <data name="SuggOrderSearch" xml:space="preserve">
+    <value>جستجو احکام و پیشنهاد</value>
+  </data>
+  <data name="AllMVisitors" xml:space="preserve">
+    <value>تمامی مراجعین وزارت</value>
+  </data>
+  <data name="SystemInfo" xml:space="preserve">
+    <value>معلومات درباره سیستم</value>
+  </data>
+  <data name="domorr" xml:space="preserve">
+    <value>ریاست دفتر وزارت امور مهاجرین و عودت کنندگان</value>
+  </data>
+  <data name="Archive" xml:space="preserve">
+    <value>ارشیف</value>
+  </data>
+  <data name="ArchivedDocumentList" xml:space="preserve">
+    <value>لست اسناد ارشیف شده</value>
+  </data>
+  <data name="ArchiveNumber" xml:space="preserve">
+    <value>نمبر ارشیف</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>ضمیمه</value>
+  </data>
+  <data name="Box" xml:space="preserve">
+    <value>دوسیه</value>
+  </data>
+  <data name="Cabinet" xml:space="preserve">
+    <value>الماری</value>
+  </data>
+  <data name="DocumentAndSuggestion" xml:space="preserve">
+    <value>اسناد او ارتباط</value>
+  </data>
+  <data name="DocumentInfo" xml:space="preserve">
+    <value>معلومات مکتوب</value>
+  </data>
+  <data name="DocumentPrveview" xml:space="preserve">
+    <value>نمایش اسناد</value>
+  </data>
+  <data name="IsSent" xml:space="preserve">
+    <value>صادر شده ؟</value>
+  </data>
+  <data name="IssueDate" xml:space="preserve">
+    <value>تاریخ صدور</value>
+  </data>
+  <data name="ReceiveDate" xml:space="preserve">
+    <value>تاریخ دریافتی</value>
+  </data>
+  <data name="SearchArchivedDocument" xml:space="preserve">
+    <value>جستجو اسناد ارشیف شده</value>
+  </data>
+  <data name="SearchSecretariatDocument" xml:space="preserve">
+    <value>جستجو اسناد سکرتریت</value>
+  </data>
+  <data name="Secretariat" xml:space="preserve">
+    <value>سکرتریت</value>
+  </data>
+  <data name="Sender" xml:space="preserve">
+    <value>مرجع ارسال کننده</value>
+  </data>
+  <data name="Shelf" xml:space="preserve">
+    <value>جعبه</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>خلص مطلب</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>مراجع کننده</value>
+  </data>
+  <data name="MinisterVisitor" xml:space="preserve">
+    <value>ملاقاتی وزیر</value>
+  </data>
+  <data name="Incoming" xml:space="preserve">
+    <value>وارده</value>
+  </data>
+  <data name="Issued" xml:space="preserve">
+    <value>صادره</value>
+  </data>
+  <data name="RegistrationType" xml:space="preserve">
+    <value>نوع ثبت</value>
+  </data>
+  <data name="DocumentNumber" xml:space="preserve">
+    <value>نمبر مکتوب</value>
+  </data>
+  <data name="NumberInBox" xml:space="preserve">
+    <value>شماره در دوسیه</value>
+  </data>
+  <data name="IsRelated" xml:space="preserve">
+    <value>ایا در موردی مکتوب قبلی است؟</value>
+  </data>
+  <data name="RelatedDocNumber" xml:space="preserve">
+    <value>نمبر مکتوب مربوطه</value>
+  </data>
+  <data name="IsRelatedH" xml:space="preserve">
+    <value>ایا مربوط است؟</value>
+  </data>
+  <data name="RelatedNumberH" xml:space="preserve">
+    <value>نمبر  مکتوب قبلی</value>
+  </data>
+</root>
