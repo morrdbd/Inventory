@@ -1,9 +1,9 @@
-﻿using DOMoRR.Models.Tables;
+﻿using Inventory.Models.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DOMoRR.Models.ViewModels
+namespace Inventory.Models.ViewModels
 {
     public class UserWithRole
     {

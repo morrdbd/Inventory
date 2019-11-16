@@ -1,9 +1,9 @@
-﻿@model DOMoRR.Models.ViewModels.UserPageVM
+﻿@model Inventory.Models.ViewModels.UserPageVM
 @{
     ViewBag.Title = Labels.user_management;
-    var criteria = (DOMoRR.Models.ViewModels.User_SC)ViewBag.Criteria;
+    var criteria = (Inventory.Models.ViewModels.User_SC)ViewBag.Criteria;
     var rolesList = new SelectList(Model.Roles, "Name", "Name");
-    var _user = ViewBag.AppUser as DOMoRR.Models.ViewModels.UserWithRole;
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
 
 <ul class="nav nav-tabs">

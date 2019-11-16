@@ -1,9 +1,9 @@
 ﻿using System.Data.Entity;
-using DOMoRR.Models.Tables;
+using Inventory.Models.Tables;
 
-namespace DOMoRR.Models
+namespace Inventory.Models
 {
-    public class DOMoRRDBContext : DbContext
+    public class InventoryDBContext : DbContext
     {
         public DbSet<ActivityLog> ActivityLogs { get; set; }
 
@@ -16,14 +16,14 @@ namespace DOMoRR.Models
 
 
 
-        public DOMoRRDBContext() : base("InventoryCONN")
+        public InventoryDBContext() : base("InventoryCONN")
         {
             Configuration.ValidateOnSaveEnabled = false;
         }
 
-        static DOMoRRDBContext()
+        static InventoryDBContext()
         {
-            Database.SetInitializer<DOMoRRDBContext>(null);
+            Database.SetInitializer<InventoryDBContext>(null);
         }
 
         

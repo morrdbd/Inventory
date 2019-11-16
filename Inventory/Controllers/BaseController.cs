@@ -1,6 +1,7 @@
-﻿using DOMoRR.Models;
-using DOMoRR.Models.Tables;
-using DOMoRR.Models.ViewModels;
+﻿using Inventory;
+using Inventory.Models;
+using Inventory.Models.Tables;
+using Inventory.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -9,7 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace DOMoRR.Controllers
+namespace Inventory.Controllers
 {
     public class BaseController : Controller
     {
@@ -40,7 +41,7 @@ namespace DOMoRR.Controllers
                     var Roles = UserManager.GetRoles(id);
                     if (Roles.Count != 0)
                     {
-                        var db = new DOMoRRDBContext();
+                        var db = new InventoryDBContext();
                         var sql = @"select a.* , m.Controller from
                                 RoleAccess a join Menus m on a.MenuId = m.MenuId
                                 join AspNetRoles r on a.RoleId = r.Id where m.MenuLevel = 1 and r.Name = @p0";
@@ -87,7 +88,7 @@ namespace DOMoRR.Controllers
 
         private void PopulateMenu()
         {
-            var db = new DOMoRRDBContext();
+            var db = new InventoryDBContext();
             var Menu = db.Database.SqlQuery<MenuVM>("Menu_List @p0", Language).ToList();
 
             ViewBag.Menu = Menu;

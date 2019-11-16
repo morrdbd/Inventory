@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(DOMoRR.Startup))]
-namespace DOMoRR
+[assembly: OwinStartupAttribute(typeof(Inventory.Startup))]
+namespace Inventory
 {
     public partial class Startup
     {

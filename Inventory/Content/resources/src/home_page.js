@@ -29,7 +29,7 @@
         }
     })
     /////////////////
-    var cookie = $.cookie("DOMoRR");
+    var cookie = $.cookie("Inventory");
     $('#login_link').text(cookie == undefined ? login_text : dashboard_text);
     $('#login_link').on('click', function (e) {
         e.preventDefault();

@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = Labels.general_lookups;
-    var _user = ViewBag.AppUser as DOMoRR.Models.ViewModels.UserWithRole;
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
 
 @if (_user.HasAccess("Lookups", "Add"))

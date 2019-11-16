@@ -1,6 +1,6 @@
-﻿using DOMoRR.Attributes;
-using DOMoRR.Models.Procedures;
-using DOMoRR.Models.Tables;
+﻿using Inventory.Attributes;
+using Inventory.Models.Procedures;
+using Inventory.Models.Tables;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web;
 using System.Web.Mvc;
 
-namespace DOMoRR.Models.ViewModels
+namespace Inventory.Models.ViewModels
 {
     public class User_SC
     {

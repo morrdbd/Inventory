@@ -1,5 +1,5 @@
 ﻿
-var DOMoRR = angular.module('DOMoRR', []);
+var Inventory = angular.module('Inventory', []);
 
-DOMoRR.controller('reports', function ReportsController($scope, $http) {
+Inventory.controller('reports', function ReportsController($scope, $http) {
 });

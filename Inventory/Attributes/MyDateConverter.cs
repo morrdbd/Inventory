@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
 
-namespace DOMoRR.Attributes
+namespace Inventory.Attributes
 {
     public class MyDateConverter : DateTimeConverterBase
     {

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace DOMoRR.Models.Tables
+namespace Inventory.Models.Tables
 {
     public class LookupValue
     {

@@ -1,26 +1,28 @@
-﻿using DOMoRR.Models;
+﻿using Inventory.Models;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
-using DOMoRR.Models.ViewModels;
-using DOMoRR.Models.Repositories;
+using Inventory.Models.ViewModels;
+using Inventory.Models.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using DOMoRR.Models.Procedures;
-using DOMoRR.Attributes;
+using Inventory.Models.Procedures;
+using Inventory.Attributes;
 using Microsoft.AspNet.Identity.EntityFramework;
-using DOMoRR.Models.Tables;
+using Inventory.Models.Tables;
+using Inventory.Controllers;
+using Inventory;
 
-namespace DOMoRR.Controllers
+namespace Inventory.Controllers
 {
     [AccessControl]
     public class UsersController : BaseController
     {
         public AdminRepository Repository { get; set; }
-        public DOMoRRDBContext db { get; set; }
+        public InventoryDBContext db { get; set; }
         private UserManager<ApplicationUser, int> UserManager
         {
             get
@@ -40,7 +42,7 @@ namespace DOMoRR.Controllers
         public UsersController()
         {
             Repository = new AdminRepository();
-            db = new DOMoRRDBContext();
+            db = new InventoryDBContext();
         }
 
         [AccessControl("View")]

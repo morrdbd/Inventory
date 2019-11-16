@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DOMoRR.Attributes
+namespace Inventory.Attributes
 {
     public static class Funcs
     {

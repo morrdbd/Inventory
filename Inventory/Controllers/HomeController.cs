@@ -1,20 +1,20 @@
-﻿using DOMoRR.Models;
+﻿using Inventory.Models;
 using System.Web.Mvc;
-using DOMoRR.Models.ViewModels;
-using DOMoRR.Models.Repositories;
-using DOMoRR.Attributes;
+using Inventory.Models.ViewModels;
+using Inventory.Models.Repositories;
+using Inventory.Attributes;
 using System.Linq;
-using DOMoRR.Models.Procedures;
+using Inventory.Models.Procedures;
 using System;
 using Newtonsoft.Json.Linq;
 using System.Dynamic;
 using Resources;
 
-namespace DOMoRR.Controllers
+namespace Inventory.Controllers
 {
     public class HomeController : BaseController
     {
-        private DOMoRRDBContext db = new DOMoRRDBContext();
+        private InventoryDBContext db = new InventoryDBContext();
         private ClientsRepocitory repo = new ClientsRepocitory();
         public ActionResult Index()
         {

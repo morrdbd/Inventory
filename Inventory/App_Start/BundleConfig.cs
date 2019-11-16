@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace DOMoRR.App_Start
+namespace Inventory.App_Start
 {
     public class BundleConfig
     {

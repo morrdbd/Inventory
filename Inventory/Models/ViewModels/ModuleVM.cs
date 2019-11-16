@@ -1,10 +1,10 @@
-﻿using DOMoRR.Models.Procedures;
+﻿using Inventory.Models.Procedures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DOMoRR.Models.ViewModels
+namespace Inventory.Models.ViewModels
 {
     public class ModuleVM
     {

@@ -1,11 +1,11 @@
-﻿@model IPagedList<DOMoRR.Models.Procedures.User_List>
+﻿@model IPagedList<Inventory.Models.Procedures.User_List>
 @{
     var options = new PagedListRenderOptions()
     {
         LinkToFirstPageFormat = Resources.Labels.first,
         LinkToLastPageFormat = Resources.Labels.last
     };
-    var _user = ViewBag.AppUser as DOMoRR.Models.ViewModels.UserWithRole;
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
 
 <div class="table-scrollable">

@@ -6,7 +6,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace DOMoRR.Attributes
+namespace Inventory.Attributes
 {
     public class JsonNetResult : ActionResult
     {

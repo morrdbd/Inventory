@@ -1,7 +1,8 @@
-﻿using DOMoRR.Attributes;
-using DOMoRR.Controllers;
-using DOMoRR.Models;
-using DOMoRR.Models.Tables;
+﻿using Inventory;
+using Inventory.Attributes;
+using Inventory.Controllers;
+using Inventory.Models;
+using Inventory.Models.Tables;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -9,12 +10,12 @@ using System;
 using System.Web;
 using System.Web.Mvc;
 
-namespace DOMoRR.Controllers
+namespace Inventory.Controllers
 {
     [AccessControl]
     public class LoginController : BaseController
     {
-        private DOMoRRDBContext db { get; set; }
+        private InventoryDBContext db { get; set; }
         private UserManager<ApplicationUser, int> UserManager
         {
             get
@@ -39,7 +40,7 @@ namespace DOMoRR.Controllers
 
         public LoginController()
         {
-            db = new DOMoRRDBContext();
+            db = new InventoryDBContext();
         }
 
         [AllowAnonymous]

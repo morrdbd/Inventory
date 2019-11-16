@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace DOMoRR.Models.Tables
+namespace Inventory.Models.Tables
 {
     public class ActivityLog
     {

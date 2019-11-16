@@ -1,6 +1,6 @@
 ﻿@{
     var _lang = (ViewContext.RouteData.Values["language"] ?? "en").ToString();
-    var _user = (DOMoRR.Models.ViewModels.UserWithRole)ViewBag.AppUser;
+    var _user = (Inventory.Models.ViewModels.UserWithRole)ViewBag.AppUser;
     var route = new RouteValueDictionary();
     foreach (var k in ViewContext.RouteData.Values.Keys)
     {
@@ -16,7 +16,7 @@
     var PaLink = Url.RouteUrl(route);
     route["language"] = "en";
     var EnLink = Url.RouteUrl(route);
-    var Menu = ViewBag.Menu as List<DOMoRR.Models.ViewModels.MenuVM>;
+    var Menu = ViewBag.Menu as List<Inventory.Models.ViewModels.MenuVM>;
 }
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -27,7 +27,7 @@
 <!-- BEGIN HEAD -->
 <head>
     <meta charset="utf-8" />
-    <title>DOMoRR | @ViewBag.Title</title>
+    <title>Inventory | @ViewBag.Title</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">

@@ -1,16 +1,16 @@
-﻿using DOMoRR.Models.Procedures;
-using DOMoRR.Models.Tables;
-using DOMoRR.Models.ViewModels;
+﻿using Inventory.Models.Procedures;
+using Inventory.Models.Tables;
+using Inventory.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DOMoRR.Models.Repositories
+namespace Inventory.Models.Repositories
 {
     public class AdminRepository
     {
-        DOMoRRDBContext db = new DOMoRRDBContext();
+        InventoryDBContext db = new InventoryDBContext();
 
         public List<User_List> UserList(User_SC s, string lang)
         {

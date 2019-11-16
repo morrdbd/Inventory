@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace DOMoRR.Models.ViewModels
+namespace Inventory.Models.ViewModels
 {
     public class User_VM
     {

@@ -1,4 +1,4 @@
-﻿using DOMoRR.Models;
+﻿using Inventory.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace DOMoRR.Attributes
+namespace Inventory.Attributes
 {
     public class AccessControlAttribute : AuthorizeAttribute
     {
@@ -68,7 +68,7 @@ namespace DOMoRR.Attributes
                 var roleObj = RoleManager.FindByName(UserRoles[0]);
                 if (roleObj != null)
                 {
-                    var db = new DOMoRRDBContext();
+                    var db = new InventoryDBContext();
                     var controller = httpContext.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
                     var sql = "select MenuId from Menus where MenuLevel = 1 and Controller = @p0";
                     int menuId = db.Database.SqlQuery<int>(sql, controller).FirstOrDefault();

@@ -1,12 +1,12 @@
-﻿using DOMoRR.Attributes;
-using DOMoRR.Models.Tables;
+﻿using Inventory.Attributes;
+using Inventory.Models.Tables;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace DOMoRR.Models.ViewModels
+namespace Inventory.Models.ViewModels
 {
     public class ReturneeSyncVM
     {

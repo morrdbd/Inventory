@@ -10,7 +10,7 @@ using System.Net.Http.Formatting;
 using Newtonsoft.Json;
 using System.Web.Http.Cors;
 
-namespace DOMoRR
+namespace Inventory
 {
     public static class WebApiConfig
     {

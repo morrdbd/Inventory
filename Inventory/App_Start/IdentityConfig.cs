@@ -5,9 +5,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using DOMoRR.Models;
+using Inventory.Models;
 
-namespace DOMoRR
+namespace Inventory
 {
     public class EmailService : IIdentityMessageService
     {
