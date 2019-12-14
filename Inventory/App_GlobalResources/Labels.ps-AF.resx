@@ -747,8 +747,8 @@
   <data name="Total" xml:space="preserve">
     <value>مجموعه</value>
   </data>
-  <data name="SystemForDOMoRR" xml:space="preserve">
-    <value>دریاست دفتر سیستم</value>
+  <data name="SystemForInventory" xml:space="preserve">
+    <value>د جنسی مدیریت سیستم</value>
   </data>
   <data name="Clients" xml:space="preserve">
     <value>مراجعین</value>

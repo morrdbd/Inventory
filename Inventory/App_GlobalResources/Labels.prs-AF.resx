@@ -753,8 +753,8 @@
   <data name="ReturneeNotRegistered" xml:space="preserve">
     <value>ثبت نشده در سیستم معلومات</value>
   </data>
-  <data name="SystemForDOMoRR" xml:space="preserve">
-    <value>سیستم ریاست دفتر </value>
+  <data name="SystemForInventory" xml:space="preserve">
+    <value>سیستم مدیریت جنسی </value>
   </data>
   <data name="registration_info" xml:space="preserve">
     <value>معلومات ثبت</value>

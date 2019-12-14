@@ -654,8 +654,8 @@
   <data name="Total" xml:space="preserve">
     <value>Total</value>
   </data>
-  <data name="SystemForDOMoRR" xml:space="preserve">
-    <value>System For Directorate Of MoRR</value>
+  <data name="SystemForInventory" xml:space="preserve">
+    <value>System For MoRR Inventory</value>
   </data>
   <data name="registration_info" xml:space="preserve">
     <value>Registration Information</value>

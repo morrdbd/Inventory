@@ -104,6 +104,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Excel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Excel.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Tools.Excel.v9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -290,6 +298,8 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\DistributionTicketPC5Controller.cs" />
+    <Compile Include="Controllers\ReceiptReportMem7Controller.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2922,6 +2932,10 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="ApplicationInsights.config" />
+    <Content Include="Views\DistributionTicketPC5\Form.cshtml" />
+    <Content Include="Views\ReceiptReportMem7\Form.cshtml" />
+    <Content Include="Templates\DistributionTicketPC5.xlsx" />
+    <Content Include="Templates\ReceiptReportMem7.xlsx" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -2986,7 +3000,6 @@
     <Content Include="Content\resources\trumbowyg\plugins\mention\ui\sass\trumbowyg.mention.scss" />
     <Content Include="Content\resources\trumbowyg\ui\sass\trumbowyg.scss" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
-    <Content Include="Views\Shared\_VisitorTicket.cshtml" />
     <None Include="Properties\PublishProfiles\ARIS DEPLOYMENT.pubxml">
       <SubType>Designer</SubType>
     </None>
@@ -3001,7 +3014,6 @@
     <Folder Include="Content\assets_rtl\frontend\pages\temp\" />
     <Folder Include="HelperCode\" />
     <Folder Include="Resources\" />
-    <Folder Include="Templates\" />
     <Folder Include="Uploads\" />
     <Folder Include="Views\Help\" />
   </ItemGroup>

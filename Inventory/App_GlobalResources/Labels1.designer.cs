@@ -2221,11 +2221,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to System For Directorate Of MoRR.
+        ///   Looks up a localized string similar to System For MoRR Inventory.
         /// </summary>
-        internal static string SystemForDOMoRR {
+        internal static string SystemForInventory {
             get {
-                return ResourceManager.GetString("SystemForDOMoRR", resourceCulture);
+                return ResourceManager.GetString("SystemForInventory", resourceCulture);
             }
         }
         
