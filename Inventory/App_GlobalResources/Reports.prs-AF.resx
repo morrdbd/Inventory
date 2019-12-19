@@ -117,16 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Client" xml:space="preserve">
-    <value>مراجعین</value>
-  </data>
-  <data name="MinisterVisitor" xml:space="preserve">
-    <value>د وزیر ملاقاتی</value>
-  </data>
-  <data name="OrderSugg" xml:space="preserve">
-    <value>احکام وپیشنهاد ها</value>
-  </data>
-  <data name="Requisition" xml:space="preserve">
-    <value>عرایض</value>
-  </data>
 </root>

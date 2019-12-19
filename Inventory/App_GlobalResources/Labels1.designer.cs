@@ -187,47 +187,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All Ministry Visitors.
-        /// </summary>
-        internal static string AllMVisitors {
-            get {
-                return ResourceManager.GetString("AllMVisitors", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Any.
         /// </summary>
         internal static string any {
             get {
                 return ResourceManager.GetString("any", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Archive.
-        /// </summary>
-        internal static string Archive {
-            get {
-                return ResourceManager.GetString("Archive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Archived Document List.
-        /// </summary>
-        internal static string ArchivedDocumentList {
-            get {
-                return ResourceManager.GetString("ArchivedDocumentList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Archive Number.
-        /// </summary>
-        internal static string ArchiveNumber {
-            get {
-                return ResourceManager.GetString("ArchiveNumber", resourceCulture);
             }
         }
         
@@ -277,15 +241,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Border Point.
-        /// </summary>
-        internal static string border_point {
-            get {
-                return ResourceManager.GetString("border_point", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Box.
         /// </summary>
         internal static string Box {
@@ -309,42 +264,6 @@ namespace Resources {
         internal static string cancel {
             get {
                 return ResourceManager.GetString("cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Capture.
-        /// </summary>
-        internal static string capture {
-            get {
-                return ResourceManager.GetString("capture", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Case Details.
-        /// </summary>
-        internal static string case_details {
-            get {
-                return ResourceManager.GetString("case_details", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Case Photo.
-        /// </summary>
-        internal static string case_photo {
-            get {
-                return ResourceManager.GetString("case_photo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Case Type.
-        /// </summary>
-        internal static string case_type {
-            get {
-                return ResourceManager.GetString("case_type", resourceCulture);
             }
         }
         
@@ -381,51 +300,6 @@ namespace Resources {
         internal static string choose_an_option {
             get {
                 return ResourceManager.GetString("choose_an_option", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Client.
-        /// </summary>
-        internal static string Client {
-            get {
-                return ResourceManager.GetString("Client", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Client Information.
-        /// </summary>
-        internal static string ClientInfo {
-            get {
-                return ResourceManager.GetString("ClientInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Client List.
-        /// </summary>
-        internal static string ClientList {
-            get {
-                return ResourceManager.GetString("ClientList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clients.
-        /// </summary>
-        internal static string Clients {
-            get {
-                return ResourceManager.GetString("Clients", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Client Search.
-        /// </summary>
-        internal static string ClientSearch {
-            get {
-                return ResourceManager.GetString("ClientSearch", resourceCulture);
             }
         }
         
@@ -619,33 +493,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Capturing started, put the finger on the device.
-        /// </summary>
-        internal static string device_capturing {
-            get {
-                return ResourceManager.GetString("device_capturing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Device is ready now, click capture.
-        /// </summary>
-        internal static string device_ready {
-            get {
-                return ResourceManager.GetString("device_ready", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Capturing stopped.
-        /// </summary>
-        internal static string device_stopped {
-            get {
-                return ResourceManager.GetString("device_stopped", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Displaced Province.
         /// </summary>
         internal static string DisplacedProvince {
@@ -700,15 +547,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Document And Suggestion.
-        /// </summary>
-        internal static string DocumentAndSuggestion {
-            get {
-                return ResourceManager.GetString("DocumentAndSuggestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Document Information.
         /// </summary>
         internal static string DocumentInfo {
@@ -750,15 +588,6 @@ namespace Resources {
         internal static string DocumentText {
             get {
                 return ResourceManager.GetString("DocumentText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ministry of Refugees and Repatriations Directorate.
-        /// </summary>
-        internal static string domorr {
-            get {
-                return ResourceManager.GetString("domorr", resourceCulture);
             }
         }
         
@@ -1015,15 +844,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This person has been identified.
-        /// </summary>
-        internal static string identified {
-            get {
-                return ResourceManager.GetString("identified", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Identify.
         /// </summary>
         internal static string identify {
@@ -1038,15 +858,6 @@ namespace Resources {
         internal static string Identity {
             get {
                 return ResourceManager.GetString("Identity", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Internal Displaced People.
-        /// </summary>
-        internal static string IDP {
-            get {
-                return ResourceManager.GetString("IDP", resourceCulture);
             }
         }
         
@@ -1101,6 +912,15 @@ namespace Resources {
         internal static string invalid_username {
             get {
                 return ResourceManager.GetString("invalid_username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory.
+        /// </summary>
+        internal static string Inventory {
+            get {
+                return ResourceManager.GetString("Inventory", resourceCulture);
             }
         }
         
@@ -1195,15 +1015,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Latitude.
-        /// </summary>
-        internal static string latitude {
-            get {
-                return ResourceManager.GetString("latitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Left.
         /// </summary>
         internal static string left {
@@ -1267,15 +1078,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Longitude.
-        /// </summary>
-        internal static string longitude {
-            get {
-                return ResourceManager.GetString("longitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Lookups.
         /// </summary>
         internal static string lookups {
@@ -1321,65 +1123,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Meeting Date.
-        /// </summary>
-        internal static string MeetingDate {
-            get {
-                return ResourceManager.GetString("MeetingDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Meeting Organizer.
-        /// </summary>
-        internal static string MeetingOrganizer {
-            get {
-                return ResourceManager.GetString("MeetingOrganizer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Meeting Time.
-        /// </summary>
-        internal static string MeetingTime {
-            get {
-                return ResourceManager.GetString("MeetingTime", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Minister.
         /// </summary>
         internal static string Minister {
             get {
                 return ResourceManager.GetString("Minister", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Minister Visitor.
-        /// </summary>
-        internal static string MinisterVisitor {
-            get {
-                return ResourceManager.GetString("MinisterVisitor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Minister Visitor Information.
-        /// </summary>
-        internal static string MinisterVisitorInfo {
-            get {
-                return ResourceManager.GetString("MinisterVisitorInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Minister Visitors.
-        /// </summary>
-        internal static string MinisterVisitors {
-            get {
-                return ResourceManager.GetString("MinisterVisitors", resourceCulture);
             }
         }
         
@@ -1402,47 +1150,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minister Visitor List.
-        /// </summary>
-        internal static string MVisitorList {
-            get {
-                return ResourceManager.GetString("MVisitorList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Minister Visitor Search.
-        /// </summary>
-        internal static string MVisitorSearch {
-            get {
-                return ResourceManager.GetString("MVisitorSearch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  Ministry Of Returnee and repatriation Minister Visitor Ticket.
-        /// </summary>
-        internal static string MVisitorTicket {
-            get {
-                return ResourceManager.GetString("MVisitorTicket", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New born.
-        /// </summary>
-        internal static string NewBorn {
-            get {
-                return ResourceManager.GetString("NewBorn", resourceCulture);
             }
         }
         
@@ -1515,15 +1227,6 @@ namespace Resources {
         internal static string NumberInBox {
             get {
                 return ResourceManager.GetString("NumberInBox", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Number Of Person.
-        /// </summary>
-        internal static string NumberOfPerson {
-            get {
-                return ResourceManager.GetString("NumberOfPerson", resourceCulture);
             }
         }
         
@@ -1852,74 +1555,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Returnee Reports.
-        /// </summary>
-        internal static string rep_returnee {
-            get {
-                return ResourceManager.GetString("rep_returnee", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Required.
         /// </summary>
         internal static string required {
             get {
                 return ResourceManager.GetString("required", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Requisition And Requeste Information.
-        /// </summary>
-        internal static string RequisitionAndRequesterInfo {
-            get {
-                return ResourceManager.GetString("RequisitionAndRequesterInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Requisition Date.
-        /// </summary>
-        internal static string RequisitionDate {
-            get {
-                return ResourceManager.GetString("RequisitionDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Requisition List.
-        /// </summary>
-        internal static string RequisitionList {
-            get {
-                return ResourceManager.GetString("RequisitionList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Requisitions.
-        /// </summary>
-        internal static string Requisitions {
-            get {
-                return ResourceManager.GetString("Requisitions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Requisition Search.
-        /// </summary>
-        internal static string RequisitionSearch {
-            get {
-                return ResourceManager.GetString("RequisitionSearch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Requisition Type.
-        /// </summary>
-        internal static string RequisitionType {
-            get {
-                return ResourceManager.GetString("RequisitionType", resourceCulture);
             }
         }
         
@@ -1947,24 +1587,6 @@ namespace Resources {
         internal static string Result {
             get {
                 return ResourceManager.GetString("Result", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Return Source.
-        /// </summary>
-        internal static string ReturnSource {
-            get {
-                return ResourceManager.GetString("ReturnSource", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Return Time.
-        /// </summary>
-        internal static string ReturnTime {
-            get {
-                return ResourceManager.GetString("ReturnTime", resourceCulture);
             }
         }
         
@@ -2050,29 +1672,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search Secretariat Document.
-        /// </summary>
-        internal static string SearchSecretariatDocument {
-            get {
-                return ResourceManager.GetString("SearchSecretariatDocument", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Search Criteria.
         /// </summary>
         internal static string search_criteria {
             get {
                 return ResourceManager.GetString("search_criteria", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Secretariat.
-        /// </summary>
-        internal static string Secretariat {
-            get {
-                return ResourceManager.GetString("Secretariat", resourceCulture);
             }
         }
         
@@ -2149,51 +1753,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Suggested By.
-        /// </summary>
-        internal static string SuggestedBy {
-            get {
-                return ResourceManager.GetString("SuggestedBy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Suggestion And Order.
-        /// </summary>
-        internal static string SuggestionAndOrder {
-            get {
-                return ResourceManager.GetString("SuggestionAndOrder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Suggestion or Order Information.
-        /// </summary>
-        internal static string SuggestionAndOrderInfo {
-            get {
-                return ResourceManager.GetString("SuggestionAndOrderInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Suggestion Order List.
-        /// </summary>
-        internal static string SuggOrderList {
-            get {
-                return ResourceManager.GetString("SuggOrderList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Suggestion and Order Search.
-        /// </summary>
-        internal static string SuggOrderSearch {
-            get {
-                return ResourceManager.GetString("SuggOrderSearch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Summary.
         /// </summary>
         internal static string Summary {
@@ -2257,15 +1816,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enterance Ticket to Ministry of Returnee and repatriation.
-        /// </summary>
-        internal static string TicketTitle {
-            get {
-                return ResourceManager.GetString("TicketTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to To Date.
         /// </summary>
         internal static string ToDate {
@@ -2280,15 +1830,6 @@ namespace Resources {
         internal static string Total {
             get {
                 return ResourceManager.GetString("Total", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total Visitors.
-        /// </summary>
-        internal static string TotalVisitors {
-            get {
-                return ResourceManager.GetString("TotalVisitors", resourceCulture);
             }
         }
         
@@ -2415,24 +1956,6 @@ namespace Resources {
         internal static string View {
             get {
                 return ResourceManager.GetString("View", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to VisitingDate.
-        /// </summary>
-        internal static string VisitingDate {
-            get {
-                return ResourceManager.GetString("VisitingDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Visiting Office.
-        /// </summary>
-        internal static string VisitingOffice {
-            get {
-                return ResourceManager.GetString("VisitingOffice", resourceCulture);
             }
         }
         

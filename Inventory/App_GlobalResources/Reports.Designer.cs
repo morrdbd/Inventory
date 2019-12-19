@@ -59,41 +59,5 @@ namespace Resources {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Client.
-        /// </summary>
-        internal static string Client {
-            get {
-                return ResourceManager.GetString("Client", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Minister Visitor.
-        /// </summary>
-        internal static string MinisterVisitor {
-            get {
-                return ResourceManager.GetString("MinisterVisitor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Order and Suggestions.
-        /// </summary>
-        internal static string OrderSugg {
-            get {
-                return ResourceManager.GetString("OrderSugg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Requisition.
-        /// </summary>
-        internal static string Requisition {
-            get {
-                return ResourceManager.GetString("Requisition", resourceCulture);
-            }
-        }
     }
 }

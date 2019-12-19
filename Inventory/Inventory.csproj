@@ -3015,7 +3015,6 @@
     <Folder Include="HelperCode\" />
     <Folder Include="Resources\" />
     <Folder Include="Uploads\" />
-    <Folder Include="Views\Help\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

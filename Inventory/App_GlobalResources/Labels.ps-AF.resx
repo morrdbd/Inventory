@@ -129,9 +129,6 @@
   <data name="add_benef" xml:space="preserve">
     <value> د ګټه اخیستونکی ثبتول</value>
   </data>
-  <data name="add_border_point" xml:space="preserve">
-    <value>صفري نقطه اضافه کړی</value>
-  </data>
   <data name="add_country" xml:space="preserve">
     <value>هیواد اضافه کړی</value>
   </data>
@@ -149,9 +146,6 @@
   </data>
   <data name="add_reintergration_error" xml:space="preserve">
     <value>ریکارډ غوړه کړئ اود بیا میشته کیدنې فورمې ځای کیکاږئ</value>
-  </data>
-  <data name="add_returnee" xml:space="preserve">
-    <value>د راستنیدونکی ثبتول</value>
   </data>
   <data name="add_user" xml:space="preserve">
     <value>نوی کاروونکی اضافه کړی</value>
@@ -182,15 +176,6 @@
   </data>
   <data name="cancel" xml:space="preserve">
     <value>لغوه کول</value>
-  </data>
-  <data name="case_details" xml:space="preserve">
-    <value>قضيې تفصیل</value>
-  </data>
-  <data name="case_photo" xml:space="preserve">
-    <value>د قضیې عکس</value>
-  </data>
-  <data name="case_type" xml:space="preserve">
-    <value>د قضیی ډول</value>
   </data>
   <data name="change_pass" xml:space="preserve">
     <value>رمز بدل کړی </value>
@@ -327,9 +312,6 @@
   <data name="general_lookups" xml:space="preserve">
     <value>عمومي لټون</value>
   </data>
-  <data name="host_country" xml:space="preserve">
-    <value>کوربه هېواد</value>
-  </data>
   <data name="info_insert_suc" xml:space="preserve">
     <value>معلومات په برياليتوب سره داخل شول!</value>
   </data>
@@ -348,9 +330,6 @@
   <data name="ira" xml:space="preserve">
     <value>د افغانستان اسلامی جمهوری دولت </value>
   </data>
-  <data name="land_claims" xml:space="preserve">
-    <value>د ځمکې غوښتنه</value>
-  </data>
   <data name="last" xml:space="preserve">
     <value>اخر</value>
   </data>
@@ -360,9 +339,6 @@
   <data name="last_modified_date" xml:space="preserve">
     <value>د اصلاح کېدو وروستۍ نېټه:</value>
   </data>
-  <data name="latitude" xml:space="preserve">
-    <value>عرض البلد</value>
-  </data>
   <data name="login" xml:space="preserve">
     <value>ننوتل</value>
   </data>
@@ -371,9 +347,6 @@
   </data>
   <data name="logout" xml:space="preserve">
     <value>بیرته وتل</value>
-  </data>
-  <data name="longitude" xml:space="preserve">
-    <value>طول البلد</value>
   </data>
   <data name="lookups" xml:space="preserve">
     <value>لټون</value>
@@ -459,26 +432,11 @@
   <data name="registration_info" xml:space="preserve">
     <value>د نوم لېکنې معلومات</value>
   </data>
-  <data name="reintegration_not_exist_error" xml:space="preserve">
-    <value>ددې قضیې لپاره د بیا میشته کیدنې فورمه نه ده ثبت شوی، تاسو کولای شی چې بله نوی اضافه کړئ</value>
-  </data>
-  <data name="reintegration_questionnaire" xml:space="preserve">
-    <value>د بیا میشته کیدنې پوښتنلیک</value>
-  </data>
-  <data name="reintegration_summary_report" xml:space="preserve">
-    <value>د بیامېشته کېدنې لنډ راپور</value>
-  </data>
   <data name="reports" xml:space="preserve">
     <value>راپور</value>
   </data>
   <data name="REPORT" xml:space="preserve">
     <value>کاروونکی راپور</value>
-  </data>
-  <data name="rep_reintegration" xml:space="preserve">
-    <value>د بیامیشته کیدنې راپور</value>
-  </data>
-  <data name="rep_returnee" xml:space="preserve">
-    <value>د راستنیدنې راپور</value>
   </data>
   <data name="required" xml:space="preserve">
     <value>غوښتل شوی</value>
@@ -488,9 +446,6 @@
   </data>
   <data name="restore" xml:space="preserve">
     <value>بیرته وروستني حالت ته بیول</value>
-  </data>
-  <data name="returns" xml:space="preserve">
-    <value>راستنېدنه</value>
   </data>
   <data name="role" xml:space="preserve">
     <value>نقش</value>
@@ -506,12 +461,6 @@
   </data>
   <data name="search_criteria" xml:space="preserve">
     <value>د لټولو معیارونه </value>
-  </data>
-  <data name="search_reintegration" xml:space="preserve">
-    <value>د بیا پیوستون لټول</value>
-  </data>
-  <data name="search_returnee" xml:space="preserve">
-    <value>د راستنیدونکی لټول</value>
   </data>
   <data name="select_district" xml:space="preserve">
     <value>--ولسوالۍ غوره کړۍ--</value>
@@ -576,9 +525,6 @@
   <data name="yes" xml:space="preserve">
     <value>بلی</value>
   </data>
-  <data name="registration_location" xml:space="preserve">
-    <value>د راجستر ځای</value>
-  </data>
   <data name="AddNewRole" xml:space="preserve">
     <value>د نوې دندې اضافه کول</value>
   </data>
@@ -605,9 +551,6 @@
   </data>
   <data name="PleaseSelectCheckbox" xml:space="preserve">
     <value>مهرباني وکړئ لږترلږه د خوښ- بکسونو څخه یو غوره کړئ</value>
-  </data>
-  <data name="ReintegrationCharts" xml:space="preserve">
-    <value>د بیامېشته کېدنې چارټونه</value>
   </data>
   <data name="RoleID" xml:space="preserve">
     <value>د دندو پیژندګلوي</value>
@@ -657,9 +600,6 @@
   <data name="DBReg" xml:space="preserve">
     <value>ثبت سیستم معلوماتی</value>
   </data>
-  <data name="IDP" xml:space="preserve">
-    <value>داخلی بیځایه شوی</value>
-  </data>
   <data name="ListOfRecords" xml:space="preserve">
     <value>لیست ارقام عمومی</value>
   </data>
@@ -674,9 +614,6 @@
   </data>
   <data name="RecordsPerPage" xml:space="preserve">
     <value>تعداد ریکارد در هر صفحه</value>
-  </data>
-  <data name="TRK" xml:space="preserve">
-    <value>تورخم</value>
   </data>
   <data name="GeneralFigures" xml:space="preserve">
     <value>ارقـــام عمومی</value>
@@ -735,9 +672,6 @@
   <data name="Current" xml:space="preserve">
     <value>فعلی</value>
   </data>
-  <data name="InKind" xml:space="preserve">
-    <value>غیر نقدی</value>
-  </data>
   <data name="Origin" xml:space="preserve">
     <value>اصلی</value>
   </data>
@@ -749,9 +683,6 @@
   </data>
   <data name="SystemForInventory" xml:space="preserve">
     <value>د جنسی مدیریت سیستم</value>
-  </data>
-  <data name="Clients" xml:space="preserve">
-    <value>مراجعین</value>
   </data>
   <data name="FatherName" xml:space="preserve">
     <value>د پلار نوم</value>
@@ -765,9 +696,6 @@
   <data name="Block" xml:space="preserve">
     <value>بلاک</value>
   </data>
-  <data name="ClientInfo" xml:space="preserve">
-    <value>مراجعین معلومات </value>
-  </data>
   <data name="CurrentProvince" xml:space="preserve">
     <value>اوسنی ولایت</value>
   </data>
@@ -776,24 +704,6 @@
   </data>
   <data name="EnteranceDate" xml:space="preserve">
     <value>د دخول نیټه</value>
-  </data>
-  <data name="MeetingDate" xml:space="preserve">
-    <value>د ملاقات نیټه</value>
-  </data>
-  <data name="MeetingOrganizer" xml:space="preserve">
-    <value>د ملاقات برابرونکی</value>
-  </data>
-  <data name="MeetingTime" xml:space="preserve">
-    <value>د ملاقات وخت</value>
-  </data>
-  <data name="MinisterVisitors" xml:space="preserve">
-    <value>وزیر سره لیدونکی</value>
-  </data>
-  <data name="MinisterVisitorInfo" xml:space="preserve">
-    <value>دملاقات کوونکی معلومات</value>
-  </data>
-  <data name="NumberOfPerson" xml:space="preserve">
-    <value>کسانو تعداد</value>
   </data>
   <data name="Occupation" xml:space="preserve">
     <value>دنده</value>
@@ -804,38 +714,17 @@
   <data name="OrderText" xml:space="preserve">
     <value>د حکم متن</value>
   </data>
-  <data name="RequisitionAndRequesterInfo" xml:space="preserve">
-    <value>د عریضی او عریضی کوونکی معلومات</value>
-  </data>
-  <data name="RequisitionDate" xml:space="preserve">
-    <value>د عریضی نیټه</value>
-  </data>
-  <data name="Requisitions" xml:space="preserve">
-    <value>عریضی</value>
-  </data>
   <data name="ReturnTime" xml:space="preserve">
     <value>د بیرته ستنیدو نیټه</value>
   </data>
-  <data name="TotalVisitors" xml:space="preserve">
-    <value>ټول راغلی</value>
-  </data>
   <data name="TypeOfDocument" xml:space="preserve">
     <value>د اسنادو ډول</value>
-  </data>
-  <data name="VisitingDate" xml:space="preserve">
-    <value>مراجعه نیټه</value>
-  </data>
-  <data name="VisitingOffice" xml:space="preserve">
-    <value>اړونده شعبه</value>
   </data>
   <data name="Minister" xml:space="preserve">
     <value>وزیر</value>
   </data>
   <data name="Identity" xml:space="preserve">
     <value>شهرت</value>
-  </data>
-  <data name="RequisitionType" xml:space="preserve">
-    <value>د سند ‌‌ډول</value>
   </data>
   <data name="SubmissionDate" xml:space="preserve">
     <value>د تسلیمی نیټه</value>
@@ -855,18 +744,6 @@
   <data name="SuggestedBy" xml:space="preserve">
     <value>غوښتونکی مرجع</value>
   </data>
-  <data name="SuggestionAndOrder" xml:space="preserve">
-    <value>احکام و پیشنهاد ها</value>
-  </data>
-  <data name="SuggestionAndOrderInfo" xml:space="preserve">
-    <value>د حکم یا غوښتنی معلومات</value>
-  </data>
-  <data name="TicketTitle" xml:space="preserve">
-    <value>وزارت مهاچرینو ته د داخلیدو تکت</value>
-  </data>
-  <data name="ReturnSource" xml:space="preserve">
-    <value>د ستنیدو مرجع</value>
-  </data>
   <data name="SerialNumber" xml:space="preserve">
     <value>شماره</value>
   </data>
@@ -876,41 +753,8 @@
   <data name="ScanPreview" xml:space="preserve">
     <value>د سکن لید</value>
   </data>
-  <data name="ClientList" xml:space="preserve">
-    <value>مراجعینو لست</value>
-  </data>
-  <data name="ClientSearch" xml:space="preserve">
-    <value>د مراجعینو لټون</value>
-  </data>
-  <data name="MVisitorList" xml:space="preserve">
-    <value>د وزیر ملاقاتی لست</value>
-  </data>
-  <data name="MVisitorSearch" xml:space="preserve">
-    <value>د وزیر ملاقاتی لټون</value>
-  </data>
-  <data name="MVisitorTicket" xml:space="preserve">
-    <value>د مهاجرینو او راستنیدونکو چارو د وزیر سره دلیدلو تکت</value>
-  </data>
-  <data name="RequisitionList" xml:space="preserve">
-    <value>د عرایضو لست</value>
-  </data>
-  <data name="RequisitionSearch" xml:space="preserve">
-    <value>د عرایضو لټون</value>
-  </data>
-  <data name="SuggOrderList" xml:space="preserve">
-    <value>د احکامو او غوښتنو لست</value>
-  </data>
-  <data name="SuggOrderSearch" xml:space="preserve">
-    <value>د غوښتنو او احکامو لټون</value>
-  </data>
-  <data name="AllMVisitors" xml:space="preserve">
-    <value>د وزارت ټول مراجعین</value>
-  </data>
   <data name="SystemInfo" xml:space="preserve">
     <value>د سیستم په باره کی معلومات</value>
-  </data>
-  <data name="domorr" xml:space="preserve">
-    <value>د کډوالو او راستنیدونکو چارو د وزارت ریاست دفتر</value>
   </data>
   <data name="Archive" xml:space="preserve">
     <value>ارشیف</value>
@@ -930,9 +774,6 @@
   <data name="Cabinet" xml:space="preserve">
     <value>الماری </value>
   </data>
-  <data name="DocumentAndSuggestion" xml:space="preserve">
-    <value>اسناد وارتباط</value>
-  </data>
   <data name="DocumentInfo" xml:space="preserve">
     <value>مکتوب معلومات</value>
   </data>
@@ -951,12 +792,6 @@
   <data name="SearchArchivedDocument" xml:space="preserve">
     <value>د ارشیف شوی اسنادو لټون </value>
   </data>
-  <data name="SearchSecretariatDocument" xml:space="preserve">
-    <value>د سکرتریت د اسنادو لټون</value>
-  </data>
-  <data name="Secretariat" xml:space="preserve">
-    <value>سکرتریت</value>
-  </data>
   <data name="Sender" xml:space="preserve">
     <value>لیږونکی مرجع</value>
   </data>
@@ -965,12 +800,6 @@
   </data>
   <data name="Summary" xml:space="preserve">
     <value>د مطلب خلاصه</value>
-  </data>
-  <data name="Client" xml:space="preserve">
-    <value>مراجع کوونکی</value>
-  </data>
-  <data name="MinisterVisitor" xml:space="preserve">
-    <value>وزیر سره لیدونکې</value>
   </data>
   <data name="Incoming" xml:space="preserve">
     <value>وارده</value>
@@ -998,5 +827,8 @@
   </data>
   <data name="RelatedNumberH" xml:space="preserve">
     <value>اړوند مکتوب نمبر</value>
+  </data>
+  <data name="Inventory" xml:space="preserve">
+    <value>جنسی</value>
   </data>
 </root>
