@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Inventory.Models.Tables;
+using Inventory.Models.ViewModels;
 
 namespace Inventory.Models
 {
@@ -14,6 +15,13 @@ namespace Inventory.Models
 
         public DbSet<RoleAccess> RoleAccess { get; set; }
 
+        public DbSet<DistributionTicketPC5> DistributionTicketPC5s { get; set; }
+
+        public DbSet<TicketItem> TicketItems { get; set; }
+
+        public DbSet<DistTicketPC5ViewModels> DistTicketPC5ViewModels { get; set; }
+
+        public DbSet<ReceiptReportMem7> ReceiptReportMem7s { get; set; }
 
 
         public InventoryDBContext() : base("InventoryCONN")
@@ -26,6 +34,5 @@ namespace Inventory.Models
             Database.SetInitializer<InventoryDBContext>(null);
         }
 
-        
     }
 }

@@ -304,10 +304,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tables\DistributionTicketPC5.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InventoryContext.cs" />
     <Compile Include="Models\Procedures\RecordUserInfo.cs" />
     <Compile Include="Models\Procedures\User_List.cs" />
+    <Compile Include="Models\Tables\ReceiptReportMem7.cs" />
     <Compile Include="Models\Repositories\ClientsRepocitory.cs" />
     <Compile Include="Models\Tables\ActivityLog.cs" />
     <Compile Include="Models\Tables\FollowUp.cs" />
@@ -316,6 +318,8 @@
     <Compile Include="Models\Repositories\AdminRepository.cs" />
     <Compile Include="Models\Tables\RoleAccess.cs" />
     <Compile Include="Models\Tables\SigninLog.cs" />
+    <Compile Include="Models\Tables\TicketItem.cs" />
+    <Compile Include="Models\ViewModels\DistTicketPC5ViewModels.cs" />
     <Compile Include="Models\ViewModels\MenuVM.cs" />
     <Compile Include="Models\ViewModels\RoleFormVM.cs" />
     <Compile Include="Models\ViewModels\ModuleVM.cs" />
@@ -2932,10 +2936,11 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="ApplicationInsights.config" />
-    <Content Include="Views\DistributionTicketPC5\Form.cshtml" />
     <Content Include="Views\ReceiptReportMem7\Form.cshtml" />
     <Content Include="Templates\DistributionTicketPC5.xlsx" />
     <Content Include="Templates\ReceiptReportMem7.xlsx" />
+    <Content Include="Views\DistributionTicketPC5\Form1.cshtml" />
+    <Content Include="Views\DistributionTicketPC5\Form.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

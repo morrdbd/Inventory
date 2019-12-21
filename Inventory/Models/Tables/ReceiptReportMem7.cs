@@ -1,12 +1,12 @@
-namespace DOMoRR.Models
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Spatial;
 
-    public partial class ReceiptReportMem7
+namespace Inventory.Models
+{
+    public class ReceiptReportMem7
     {
         public int Id { get; set; }
 
