@@ -15,5 +15,10 @@ namespace DOMoRR.Controllers
         {
             return View("Form");
         }
+        public ActionResult ViewPC5()
+        {
+            return View();
+        }
+       
     }
 }

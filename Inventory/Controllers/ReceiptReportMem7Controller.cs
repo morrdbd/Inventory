@@ -15,5 +15,11 @@ namespace DOMoRR.Controllers
         {
             return View("Form");
         }
+        public ActionResult ViewMem7()
+        {
+
+
+            return View();
+        }
     }
 }
