@@ -3,85 +3,276 @@
 @{
     ViewBag.Title = "Distribution Ticket (PC-5 Form)";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TicketNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TicketNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TicketNumber, "", new { @class = "text-danger" })
+<form id="pc_5_record_form" autocomplete="off" method="POST" enctype="multipart/form-data">
+    <div class="portlet box blue-hoki margin-bottom-10">
+        <div class="portlet-title">
+            <div class="caption">
+                Ticket & Request Information
             </div>
         </div>
+        <div class="portlet-body">
+            <section class="row">
+                <div class="col-md-4 form-group">
+                    <label>Ticket Number</label>
+                    <div class="col-md-8">
+                        <input type="text" name="TicketNumber" id="TicketNumber" value="@Model.TicketNumber" class="form-control" required data-msg="" placeholder="">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Ticket Issed Date</label>
+                    <div class="col-md-8">
+                        <input type="text" name="TicketIssuedDate" id="TicketIssuedDate" value="" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Warehouse</label>
+                    <div class="col-md-8">
+                        <input type="text" name="Warehouse" id="Warehouse" value="@Model.Warehouse" class="form-control" required data-msg="" placeholder="">
+                    </div>
+                </div>
+            </section>
+            <section class="row">
+                <div class="col-md-4 form-group">
+                    <label>Request Number</label>
+                    <div class="col-md-8">
+                        <input type="text" name="RequestNumber" id="RequestNumber" class="form-control" required data-msg="" placeholder="">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Request Date</label>
+                    <div class="col-md-8">
+                        <input type="text" name="RequestDate" id="RequestDate" value="" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Requester</label>
+                    <div class="col-md-8">
+                        <input type="text" name="Requester" id="Requester" value="@Model.Requester" class="form-control" required data-msg="" placeholder="">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <a href="#popup_record" data-toggle="modal" class="btn btn-circle btn-success margin-bottom-10"><i class="fa fa-plus-circle"></i>Add Item</a>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DistributionDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DistributionDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DistributionDate, "", new { @class = "text-danger" })
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+            <div class="caption">
+                Ticket Items
+            </div>
+            <div class="actions" id="data_table_actions">
             </div>
         </div>
+        <div class="portlet-body" id="list_div" style="overflow:auto">
+            <table class="table table-striped table-hover table-condensed" id="data_table">
+                <thead>
+                    <tr>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Details</th>
+                        <th>Unit Price</th>
+                        <th>Total Price</th>
+                        <th>Deal With Account</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.TicketItems != null)
+                    {
+                        int i = 0;
+                        foreach (var item in Model.TicketItems)
+                        {
+                            i++;
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.UnitName</td>
+                                <td>@item.Details</td>
+                                <td>@item.UnitPrice</td>
+                                <td>@item.Quantity * @item.UnitPrice</td>
+                                <td>@i</td>
+                                <td>@i-1</td>
+                            </tr>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Distributor, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Distributor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Distributor, "", new { @class = "text-danger" })
-            </div>
+                        }
+                    }
+                </tbody>
+            </table>
+
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RequestNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+    </div>
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Details</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RequestNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RequestNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RequestingDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RequestingDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RequestingDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RequestingBranch, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RequestingBranch, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RequestingBranch, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Details, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Details</textarea>
             </div>
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <section class="row">
+        <div class="col-md-5">
+            <button type="submit" class="btn btn-sm blue">Submit Form</button>
+            <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
+        </div>
+    </section>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+</form>
+
+<form id="item_form" action="@Url.Action("Save")" method="post" autocomplete="off" enctype="multipart/form-data">
+    <div class="modal fade" id="popup_record" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width:800px;">
+            <div class="modal-content">
+                @*<div class="modal-header">
+                       Model Title
+                    </div>*@
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="portlet box blue-hoki margin-bottom-10">
+                            <div class="portlet-title">
+                                <div class="caption">Item Detail</div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label>Quantity</label>
+                                        <div class="col-md-8">
+                                            <input type="text" name="Quantity" id="Quantity" class="form-control" required data-msg="" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Unit</label>
+                                        <div class="col-md-8">
+                                            <input type="text" name="unit" id="unit" class="form-control" required data-msg="" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label>Unit Price</label>
+                                        <div class="col-md-8">
+                                            <input type="text" name="UnitPrice" id="UnitPrice" class="form-control" required data-msg="" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Deal With Account</label>
+                                        <div class="col-md-8">
+                                            <input type="text" name="DealWithAccount" id="DealWithAccount" class="form-control" required data-msg="" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <label>Item Details</label>
+                                        <div class="col-md-10">
+                                            <textarea type="text" name="ItemDetails" id="ItemDetails" class="form-control" required data-msg="" placeholder=""></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>
+                    <button type="button" class="btn btn-sm default" data-dismiss="modal">@Labels.cancel</button>
+                    <input type="hidden" name="ID" id="ID" value="0" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts{
+    <script>
+        $(function () {
+            @*$("#record_form").validate({
+                submitHandler: function () {
+                    $("#record_form").ajaxSubmit({
+                        beforeSubmit: function(){
+                            $('#btn_submit').button('loading');
+                        },
+                        success: function (response) {
+                            if (response != false) {
+                                toastr.success("@Labels.operation_done_suc");
+                            } else {
+                                toastr.error("@Labels.unable_to_update");
+                            }
+                        },
+                        error: function(){
+                            toastr.error("@Labels.unable_to_update");
+                        },
+                        complete: function () {
+                            $('#popup_record').modal('hide');
+                            $('#btn_submit').button('reset');
+                            $('#ID').button(0);
+                            
+                        }
+                    })
+                }
+            })*@
+            ///////////////////////send form ///////////////
+            $("#btn_submit").click(function (event) {
+                event.preventDefault();
+                var form = $('#fileUploadForm')[0];
+                var data = new FormData(form);
+                data.append("CustomField", "This is some extra data, testing");
+                $("#btnSubmit").prop("disabled", true);
+
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "/upload.php",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 800000,
+                    success: function (data) {
+
+                        $("#output").text(data);
+                        console.log("SUCCESS : ", data);
+                        $("#btnSubmit").prop("disabled", false);
+
+                    },
+                    error: function (e) {
+
+                        $("#output").text(e.responseText);
+                        console.log("ERROR : ", e);
+                        $("#btnSubmit").prop("disabled", false);
+
+                    }
+                });
+
+            });
+
+
+
+            $('#search_form').submit(function (e, param) {
+                e.preventDefault();
+                
+            })
+
+            $('#btnReset').click(function (e) {
+                e.preventDefault();
+                $('#search_form').clearForm();
+                
+            })
+
+
+
+            $("#popup_record").on("hide.bs.modal", function (e) {
+                $("#record_form").clearForm();
+                $("#record_form").find("[name=ID]").val(0);
+
+            })
+            $("#popup_record").on('show.bs.modal', function () {
+
+            });
+    })
+
+    </script>
 }
