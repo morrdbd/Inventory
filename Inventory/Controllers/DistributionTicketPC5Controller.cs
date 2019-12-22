@@ -1,5 +1,6 @@
 ﻿using Inventory.Attributes;
 using Inventory.Controllers;
+using Inventory.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace DOMoRR.Controllers
         //[AccessControl("Add")]
         public ActionResult Add()
         {
-            return View("Form");
+            var model = new DistTicketPC5ViewModels();
+            return View("Form",model);
         }
         public ActionResult ViewPC5()
         {

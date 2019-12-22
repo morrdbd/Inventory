@@ -12,17 +12,17 @@ namespace Inventory.Models
 
         public int? TicketNumber { get; set; }
 
-        public DateTime? DistributionDate { get; set; }
+        public DateTime? TicketIssuedDate { get; set; }
 
-        [StringLength(50)]
-        public string Distributor { get; set; }
+        [StringLength(500)]
+        public string Warehouse { get; set; }
 
         public int? RequestNumber { get; set; }
 
         public DateTime? RequestingDate { get; set; }
 
-        [StringLength(250)]
-        public string RequestingBranch { get; set; }
+        [StringLength(500)]
+        public string Requester { get; set; }
 
         [StringLength(250)]
         public string Details { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -10,7 +11,9 @@ namespace Inventory.Models.Tables
         public int ID { get; set; }
         public int Quantity { get; set; }
         public int UnitID { get; set; }
-        public string Details { get; set; }
+        [NotMapped]
+        public string UnitName { get; set; }
+        public string ItemDetails { get; set; }
         public int UnitPrice { get; set; }
         public string DealWithAccount { get; set; }
     }
