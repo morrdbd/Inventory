@@ -1,11 +1,12 @@
-﻿@model Inventory.Models.ViewModels.DistTicketPC5ViewModels
+﻿@model Inventory.Models.ViewModels.DistTicket_VM
 
 @{
     ViewBag.Title = "Distribution Ticket (PC-5 Form)";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
-<form id="pc_5_record_form" autocomplete="off" method="POST" enctype="multipart/form-data">
+<form action="@Url.Action(Model.Ticket.Id == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
+    <input type="hidden" value="@Model.Ticket.Id" />
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
             <div class="caption">
@@ -17,19 +18,19 @@
                 <div class="col-md-4 form-group">
                     <label>Ticket Number</label>
                     <div class="col-md-8">
-                        <input type="text" name="TicketNumber" id="TicketNumber" value="@Model.TicketNumber" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="TicketNumber" id="TicketNumber" value="@Model.Ticket.TicketNumber" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
                     <label>Ticket Issed Date</label>
                     <div class="col-md-8">
-                        <input type="text" name="TicketIssuedDate" id="TicketIssuedDate" value="" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                        <input type="text" name="TicketIssuedDate" id="TicketIssuedDate" value="@Model.Ticket.TicketIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
                     <label>Warehouse</label>
                     <div class="col-md-8">
-                        <input type="text" name="Warehouse" id="Warehouse" value="@Model.Warehouse" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="Warehouse" id="Warehouse" value="@Model.Ticket.Warehouse" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
@@ -37,41 +38,41 @@
                 <div class="col-md-4 form-group">
                     <label>Request Number</label>
                     <div class="col-md-8">
-                        <input type="text" name="RequestNumber" id="RequestNumber" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="RequestNumber" id="RequestNumber" value="@Model.Ticket.RequestNumber" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
                     <label>Request Date</label>
                     <div class="col-md-8">
-                        <input type="text" name="RequestDate" id="RequestDate" value="" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                        <input type="text" name="RequestDate" id="RequestDate" value="@Model.Ticket.RequestingDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
                     <label>Requester</label>
                     <div class="col-md-8">
-                        <input type="text" name="Requester" id="Requester" value="@Model.Requester" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="Requester" id="Requester" value="@Model.Ticket.Requester" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
         </div>
     </div>
-    <a href="#popup_record" data-toggle="modal" class="btn btn-circle btn-success margin-bottom-10"><i class="fa fa-plus-circle"></i>Add Item</a>
 
-    <div class="portlet box blue-hoki">
+    <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
-            <div class="caption">
-                Ticket Items
-            </div>
-            <div class="actions" id="data_table_actions">
+            <div class="caption">Ticket Items</div>
+            <div class="actions">
+                <a href="javascript:;" class="btn btn-xs btn-circle blue-steel" id="btn_add_item">
+                    <i class="fa fa-plus"></i> Add Item
+                </a>
             </div>
         </div>
-        <div class="portlet-body" id="list_div" style="overflow:auto">
-            <table class="table table-striped table-hover table-condensed" id="data_table">
-                <thead>
+        <div class="portlet-body">
+            <table class="table table-striped table-condensed">
+                <thead id="thead_attendee">
                     <tr>
                         <th>Quantity</th>
                         <th>Unit</th>
-                        <th>Details</th>
+                        <th>Item Detail</th>
                         <th>Unit Price</th>
                         <th>Total Price</th>
                         <th>Deal With Account</th>
@@ -79,199 +80,226 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
-                    @if (Model.TicketItems != null)
-                    {
-                        int i = 0;
-                        foreach (var item in Model.TicketItems)
+                <tbody id="tbody_item">
+                    @{
+                        int index = 0;
+                        if (Model.TicketItemData != null)
                         {
-                            i++;
-                            <tr>
-                                <td>@i</td>
-                                <td>@item.Quantity</td>
-                                <td>@item.UnitName</td>
-                                <td>@item.Details</td>
-                                <td>@item.UnitPrice</td>
-                                <td>@item.Quantity * @item.UnitPrice</td>
-                                <td>@i</td>
-                                <td>@i-1</td>
-                            </tr>
-
+                            foreach (var item in Model.TicketItemData)
+                            {
+                                <tr>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.UnitName</td>
+                                    <td>@item.ItemDetails</td>
+                                    <td>@item.UnitPrice</td>
+                                    <td>@item.Quantity * @item.UnitPrice</td>
+                                    <td>
+                                        <a href="javascript:;" class="btn btn-xs btn-info attendee_edit" data-index="@index"><i class="fa fa-edit"></i></a>
+                                        <a href="javascript:;" class="btn btn-xs btn-danger attendee_delete" data-index="@index" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                index++;
+                            }
                         }
+
                     }
                 </tbody>
             </table>
-
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12 form-group">
             <label>Details</label>
             <div class="col-md-10">
-                <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Details</textarea>
+                <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Ticket.Details</textarea>
             </div>
         </div>
     </div>
 
     <section class="row">
         <div class="col-md-5">
-            <button type="submit" class="btn btn-sm blue">Submit Form</button>
+            <button type="submit" class="btn btn-sm blue" id="btn_submit">Submit Form</button>
             <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
         </div>
     </section>
 
 </form>
 
-<form id="item_form" action="@Url.Action("Save")" method="post" autocomplete="off" enctype="multipart/form-data">
-    <div class="modal fade" id="popup_record" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog" style="width:800px;">
+<form id="item_form" method="post" action="" autocomplete="off">
+    <div class="modal fade" id="item_modal" tabindex="-1" data-backdrop="static">
+        <div class="modal-dialog">
             <div class="modal-content">
-                @*<div class="modal-header">
-                       Model Title
-                    </div>*@
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Add new Item</h4>
+                </div>
                 <div class="modal-body">
-                    <div class="form-horizontal">
-                        <div class="portlet box blue-hoki margin-bottom-10">
-                            <div class="portlet-title">
-                                <div class="caption">Item Detail</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="text" name="Quantity" class="form-control input-sm" required data-msg="" />
                             </div>
-                            <div class="portlet-body">
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label>Quantity</label>
-                                        <div class="col-md-8">
-                                            <input type="text" name="Quantity" id="Quantity" class="form-control" required data-msg="" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Unit</label>
-                                        <div class="col-md-8">
-                                            <input type="text" name="unit" id="unit" class="form-control" required data-msg="" placeholder="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label>Unit Price</label>
-                                        <div class="col-md-8">
-                                            <input type="text" name="UnitPrice" id="UnitPrice" class="form-control" required data-msg="" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Deal With Account</label>
-                                        <div class="col-md-8">
-                                            <input type="text" name="DealWithAccount" id="DealWithAccount" class="form-control" required data-msg="" placeholder="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 form-group">
-                                        <label>Item Details</label>
-                                        <div class="col-md-10">
-                                            <textarea type="text" name="ItemDetails" id="ItemDetails" class="form-control" required data-msg="" placeholder=""></textarea>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label>Unit</label>
+                                <input type="text" name="Unit" class="form-control input-sm" required data-msg="" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Unit Price</label>
+                                <input type="text" name="UnitPrice" class="form-control input-sm" data-rule-digits="true" data-msg="" />
+                            </div>
+                            <div class="form-group">
+                                <label>Deal With Account</label>
+                                <input type="text" name="DealWithAccount" class="form-control input-sm" data-msg="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>Item Details</label>
+                            <div class="col-md-10">
+                                <textarea type="text" name="ItemDetails" id="ItemDetails" class="form-control" required data-msg="" placeholder=""></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>
-                    <button type="button" class="btn btn-sm default" data-dismiss="modal">@Labels.cancel</button>
-                    <input type="hidden" name="ID" id="ID" value="0" />
+                    <button type="button" class="btn default btn-sm" data-dismiss="modal">@Labels.cancel</button>
+                    <button type="submit" class="btn green btn-sm">@Labels.save</button>
+                    <input type="hidden" name="index" value="-1">
+                    <input type="hidden" name="ItemID" value="0">
                 </div>
             </div>
         </div>
     </div>
 </form>
 
+
 @section scripts{
+    <script type="text/html" id="temp_item">
+        <tr>
+            <td>{{Quantity}}</td>
+            <td>{{Unit}}</td>
+            <td>{{ItemDetails}}</td>
+            <td>{{UnitPrice}}</td>
+            <td>{{TotalPrice}}</td>
+            <td>{{DealWithAccount}}</td>
+            <td>
+                <a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="{{index}}"><i class="fa fa-edit"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="{{index}}" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    </script>
     <script>
         $(function () {
-            @*$("#record_form").validate({
-                submitHandler: function () {
-                    $("#record_form").ajaxSubmit({
-                        beforeSubmit: function(){
-                            $('#btn_submit').button('loading');
-                        },
+            var TicketItems = [];
+            var TicketID = '@Model.Ticket.Id';
+            if (TicketID != '0') {
+                var model = JSON.parse($("#model_json").val());
+                TicketItems = model.TicketItems;
+            }
+
+            // FORM VALIDATION AND SUBMISSION
+            $('#main_form').validate({
+                submitHandler: function (form) {
+                    var data = $('#main_form').serializeJSON({
+                        parseAll: true,
+                        useIntKeysAsArrayIndex: true,
+                    });
+                    data['TicketItems'] = TicketItems.filter(function (obj) { return obj != null; });
+                    if (data['TicketItems'].length == 0) {
+                        toastr.error('Please Add Item');
+                        return;
+                    }
+                    console.log("data is >>>>>> "+JSON.stringify(data));
+                    var formData = ObjectToFormData(data);
+                    console.log("formData is >>>>>> " + JSON.stringify(formData));
+                    //******************
+                    Metronic.blockUI({ animate: true });
+                    $.ajax({
+                        url: $('#main_form').attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
                         success: function (response) {
                             if (response != false) {
-                                toastr.success("@Labels.operation_done_suc");
+                                bootbox.alert('@Labels.operation_done_suc', function () {
+                                    window.location.href = '@Url.Action("View")/' + response;
+                                })
                             } else {
-                                toastr.error("@Labels.unable_to_update");
+                                toastr.error('@Labels.unable_to_update');
                             }
                         },
-                        error: function(){
-                            toastr.error("@Labels.unable_to_update");
-                        },
                         complete: function () {
-                            $('#popup_record').modal('hide');
-                            $('#btn_submit').button('reset');
-                            $('#ID').button(0);
-                            
+                            Metronic.unblockUI();
                         }
                     })
                 }
-            })*@
-            ///////////////////////send form ///////////////
-            $("#btn_submit").click(function (event) {
-                event.preventDefault();
-                var form = $('#fileUploadForm')[0];
-                var data = new FormData(form);
-                data.append("CustomField", "This is some extra data, testing");
-                $("#btnSubmit").prop("disabled", true);
+            })
 
-                $.ajax({
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    url: "/upload.php",
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    timeout: 800000,
-                    success: function (data) {
+            $('body').on('click', '#btn_add_item', function (e) {
+                e.preventDefault();
+                $('#item_modal').modal('show');
+                $('#item_form').clearForm();
+                $('#item_form [name=ItemID]').val('0');
+                $('#item_form [name=index]').val('-1');
+            })
 
-                        $("#output").text(data);
-                        console.log("SUCCESS : ", data);
-                        $("#btnSubmit").prop("disabled", false);
+            $('body').on('click', '.item_edit', function (e) {
+                e.preventDefault();
+                $('#item_modal').modal('show');
+                var index = $(this).data().index;
+                var row = TicketItems[index];
+                $('#item_form [name=Quantity]').val(row.Quantity);
+                $('#item_form [name=Unit]').val(row.Unit);
+                $('#item_form [name=ItemDetails]').val(row.ItemDetails);
+                $('#item_form [name=UnitPrice]').val(row.UnitPrice);
+                $('#item_form [name=DealWithAccount]').val(row.DealWithAccount);
+                $('#item_form [name=ItemID]').val(row.ItemID);
+                $('#item_form [name=index]').val(index);
+            })
 
-                    },
-                    error: function (e) {
-
-                        $("#output").text(e.responseText);
-                        console.log("ERROR : ", e);
-                        $("#btnSubmit").prop("disabled", false);
-
+            $('#item_form').validate({
+                submitHandler: function (form) {
+                    var row = $(form).serializeJSON();
+                    var _index = (row.index == -1) ? TicketItems.length : row.index;
+                    var tr = $('#temp_item').clone().html()
+                    .replace("{{Quantity}}", row.Quantity)
+                    .replace("{{Unit}}", row.Unit)
+                    .replace("{{ItemDetails}}", row.ItemDetails)
+                    .replace("{{UnitPrice}}", row.UnitPrice)
+                    .replace("{{TotalPrice}}", row.Quantity * row.UnitPrice)
+                    .replace("{{DealWithAccount}}", row.DealWithAccount)
+                    .replace("{{index}}", _index);
+                    if (row.index == -1) {
+                        $('#tbody_item').append(tr);
+                        $('#item_form').clearForm();
+                        $('#item_form input:first').focus();
+                        TicketItems.push(row);
+                    } else {
+                        $('#tbody_item').find('[data-index=' + row.index + ']').closest('tr').replaceWith(tr);
+                        $('#item_modal').modal('hide');
+                        TicketItems[row.index] = row;
                     }
-                });
-
-            });
-
-
-
-            $('#search_form').submit(function (e, param) {
-                e.preventDefault();
-                
+                }
             })
 
-            $('#btnReset').click(function (e) {
-                e.preventDefault();
-                $('#search_form').clearForm();
-                
+            $('body').on('click', '.item_delete', function (e) {
+                e.preventDefault()
+                $(this).confirmation('show');
+            })
+
+            $('body').on('confirmed.bs.confirmation', '.item_delete', function (e) {
+                var index = $(this).data().index;
+                TicketItems[index] = null;
+                $(this).closest('tr').remove();
             })
 
 
-
-            $("#popup_record").on("hide.bs.modal", function (e) {
-                $("#record_form").clearForm();
-                $("#record_form").find("[name=ID]").val(0);
-
-            })
-            $("#popup_record").on('show.bs.modal', function () {
-
-            });
     })
 
     </script>

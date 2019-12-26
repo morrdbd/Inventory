@@ -14,12 +14,18 @@ namespace Inventory.Models
 
         public DateTime? TicketIssuedDate { get; set; }
 
+        [NotMapped]
+        public string TicketIssuedDateForm { get; set; }
+
         [StringLength(500)]
         public string Warehouse { get; set; }
 
         public int? RequestNumber { get; set; }
 
         public DateTime? RequestingDate { get; set; }
+
+        [NotMapped]
+        public string RequestingDateForm { get; set; }
 
         [StringLength(500)]
         public string Requester { get; set; }
@@ -33,6 +39,8 @@ namespace Inventory.Models
 
         [Column(TypeName = "date")]
         public DateTime? InsertedDate { get; set; }
+        [NotMapped]
+        public string InsertedDateForm { get; set; }
 
         public int? LastUpdatedBy { get; set; }
 
