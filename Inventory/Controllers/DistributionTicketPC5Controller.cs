@@ -1,6 +1,7 @@
 ﻿using Inventory.Attributes;
 using Inventory.Controllers;
 using Inventory.Models;
+using Inventory.Models.Procedures;
 using Inventory.Models.Repositories;
 using Inventory.Models.Tables;
 using Inventory.Models.ViewModels;
@@ -19,27 +20,30 @@ namespace Inventory.Controllers
     {
         InventoryDBContext db = new InventoryDBContext();
         AdminRepository AdminRepo = new AdminRepository();
-        //[AccessControl("Add")]
+        [AccessControl("Add")]
         public ActionResult Add()
         {
-            var model = CreateModel(0);
-            return View("Form",model);
+            return View("Form", new Ticket_VM());
         }
-        private DistTicket_VM CreateModel(int id)
+        private Ticket_VM CreateModel(Ticket _ticket)
         {
-            var _Ticket = db.DistributionTicketPC5.Where(t=>t.Id == id).SingleOrDefault();
-
-
-            return new DistTicket_VM
+            return new Ticket_VM
             {
-                Ticket = _Ticket ?? new DistributionTicketPC5(),
-                TicketItemData = db.TicketItem.Where(i=>i.TicketID == id).ToList()
+                TicketID = _ticket.TicketID,
+                TicketNumber = _ticket.TicketNumber,
+                TicketIssuedDateVM = _ticket.TicketIssuedDate.ToDateString(Language),
+                Warehouse = _ticket.Warehouse,
+                RequestNumber = _ticket.RequestNumber,
+                RequestDateVM = _ticket.RequestDate.ToDateString(Language),
+                Requester = _ticket.Requester,
+                Details = _ticket.Details,
+                TicketItems = db.Database.SqlQuery<Ticket_Items>("Ticket_Items @p0, @p1", _ticket.TicketID, Language).ToList(),
             };
         }
 
         [HttpPost]
         [AccessControl("Add")]
-        public JsonResult Insert(DistTicket_VM model)
+        public JsonResult Insert(Ticket_Form_VM model)
         {
             if (ModelState.IsValid == false)
             {
@@ -50,27 +54,27 @@ namespace Inventory.Controllers
             {
                 try
                 {
-                    var Ticket = new DistributionTicketPC5
+                    var Ticket = new Ticket
                     {
-                        TicketNumber = model.Ticket.TicketNumber,
-                        TicketIssuedDate = model.Ticket.TicketIssuedDateForm.ToDate(Language),
-                        Warehouse = model.Ticket.Warehouse,
-                        RequestNumber = model.Ticket.RequestNumber,
-                        RequestingDate = model.Ticket.RequestingDateForm.ToDate(Language),
-                        Requester = model.Ticket.Requester,
-                        Details = model.Ticket.Details,
+                        TicketNumber = model.TicketNumber,
+                        TicketIssuedDate = model.TicketIssuedDateVM.ToDate(Language),
+                        Warehouse = model.Warehouse,
+                        RequestNumber = model.RequestNumber,
+                        RequestDate = model.RequestDateVM.ToDate(Language),
+                        Requester = model.Requester,
+                        Details = model.Details,
                         InsertedBy = AppUser.Id,
                         InsertedDate = DateTime.Now,
                         IsActive = true,
                     };
-                 
-                    db.DistributionTicketPC5.Add(Ticket);
+
+                    db.Tickets.Add(Ticket);
                     db.SaveChanges();
 
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "DistributionTicketPC5",
-                        ModfiedId = Ticket.Id,
+                        ModifiedTable = "Ticket",
+                        ModfiedId = Ticket.TicketID,
                         Action = "Insert",
                         UserId = AppUser.Id,
                         ModifiedTime = DateTime.Now,
@@ -78,13 +82,13 @@ namespace Inventory.Controllers
                     });
                     db.SaveChanges();
 
-                    if (model.TicketItemData != null)
+                    if (model.TicketItems != null)
                     {
-                        foreach (var row in model.TicketItemData)
+                        foreach (var row in model.TicketItems)
                         {
                             if (row != null)
                             {
-                                row.TicketID = Ticket.Id;
+                                row.TicketID = Ticket.TicketID;
                                 row.InsertedBy = AppUser.Id;
                                 row.InsertedDate = DateTime.Now;
                                 row.IsActive = true;
@@ -106,7 +110,7 @@ namespace Inventory.Controllers
                     }
 
                     trans.Commit();
-                    return Json(Ticket.Id);
+                    return Json(Ticket.TicketID);
                 }
                 catch (Exception e)
                 {
@@ -118,19 +122,18 @@ namespace Inventory.Controllers
         }
 
         [AccessControl("Search")]
-        public ActionResult Search(TicketSearch search)
+        [HttpGet]
+        public ActionResult Search()
         {
-         
-            ViewBag.search = search;
-            return View();
+            ViewBag.search = new TicketSearch();
+            return View("Search");
         }
 
         public JsonResult ListPartial(TicketSearch search)
         {
-            Response.Cookies.Add(new HttpCookie("prc_search", JsonConvert.SerializeObject(search)));
             var DateFrom = search.DateFrom.ToDate(Language);
             var DateTo = search.DateTo.ToDate(Language);
-            var data = db.DistributionTicketPC5.ToList();
+            var data = db.Tickets.ToList();
             return Json(new
             {
                 data = data.Skip(search.start).Take(search.length).ToList(),
@@ -140,17 +143,21 @@ namespace Inventory.Controllers
             });
         }
 
-
         [AccessControl("View")]
         public ActionResult View(int id = 0)
         {
-            var model = CreateModel(id);
+            var ticket = db.Tickets.SingleOrDefault(t => t.TicketID == id);
+            if(ticket == null)
+            {
+                return HttpNotFound();
+            }
+            var model = CreateModel(ticket);
             return View(model);
         }
 
         [HttpPost]
         [AccessControl("Edit")]
-        public JsonResult Update(DistTicket_VM model)
+        public JsonResult Update(Ticket_Form_VM model)
         {
             if (ModelState.IsValid == false)
             {
@@ -161,25 +168,25 @@ namespace Inventory.Controllers
             {
                 try
                 {
-                    var Ticket = db.DistributionTicketPC5.Find(model.Ticket.Id);
+                    var Ticket = db.Tickets.Find(model.TicketID);
                     if (Ticket == null) return Json(false);
-                    Ticket.TicketNumber = model.Ticket.TicketNumber;
-                    Ticket.TicketIssuedDate = model.Ticket.TicketIssuedDateForm.ToDate(Language);
-                    Ticket.Warehouse = model.Ticket.Warehouse;
-                    Ticket.RequestNumber = model.Ticket.RequestNumber;
-                    Ticket.RequestingDate = model.Ticket.RequestingDateForm.ToDate(Language);
-                    Ticket.Requester = model.Ticket.Requester;
-                    Ticket.Details = model.Ticket.Details;
+                    Ticket.TicketNumber = model.TicketNumber;
+                    Ticket.TicketIssuedDate = model.TicketIssuedDateVM.ToDate(Language);
+                    Ticket.Warehouse = model.Warehouse;
+                    Ticket.RequestNumber = model.RequestNumber;
+                    Ticket.RequestDate = model.RequestDateVM.ToDate(Language);
+                    Ticket.Requester = model.Requester;
+                    Ticket.Details = model.Details;
                     Ticket.IsActive = true;
                     Ticket.LastUpdatedBy = AppUser.Id;
                     Ticket.LastUpdatedDate = DateTime.Now;
-                   
+
                     db.SaveChanges();
 
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "DistributionTicketPC5",
-                        ModfiedId = Ticket.Id,
+                        ModifiedTable = "Ticket",
+                        ModfiedId = Ticket.TicketID,
                         Action = "Update",
                         UserId = AppUser.Id,
                         ModifiedTime = DateTime.Now,
@@ -187,18 +194,18 @@ namespace Inventory.Controllers
                     });
                     db.SaveChanges();
 
-                    db.TicketItem.Where(x => x.TicketID == Ticket.Id).ToList().ForEach(x => x.IsActive = false);
+                    db.TicketItem.Where(x => x.TicketID == Ticket.TicketID).ToList().ForEach(x => x.IsActive = false);
                     db.SaveChanges();
-                    if (model.TicketItemData != null)
+                    if (model.TicketItems != null)
                     {
-                        foreach (var row in model.TicketItemData)
+                        foreach (var row in model.TicketItems)
                         {
                             if (row != null)
                             {
                                 string action = row.ID == 0 ? "Insert" : "Update";
                                 if (row.ID == 0)
                                 {
-                                    row.TicketID = Ticket.Id;
+                                    row.TicketID = Ticket.TicketID;
                                     row.InsertedBy = AppUser.Id;
                                     row.InsertedDate = DateTime.Now;
                                     row.IsActive = true;
@@ -235,7 +242,7 @@ namespace Inventory.Controllers
                         }
                     }
                     trans.Commit();
-                    return Json(Ticket.Id);
+                    return Json(Ticket.TicketID);
                 }
                 catch (Exception e)
                 {
@@ -251,13 +258,13 @@ namespace Inventory.Controllers
         {
             try
             {
-                var obj = db.DistributionTicketPC5.Find(id);
+                var obj = db.Tickets.Find(id);
                 if (obj != null)
                 {
                     obj.IsActive = false;
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "DistributionTicketPC5",
+                        ModifiedTable = "Ticket",
                         ModfiedId = id,
                         Action = "Delete",
                         UserId = AppUser.Id,
@@ -277,8 +284,12 @@ namespace Inventory.Controllers
         [AccessControl("Edit")]
         public ActionResult Edit(int id = 0)
         {
-            var model = CreateModel(id);
-
+            var ticket = db.Tickets.SingleOrDefault(t => t.TicketID == id);
+            if (ticket == null)
+            {
+                return HttpNotFound();
+            }
+            var model = CreateModel(ticket);
             return View("Form", model);
         }
     }

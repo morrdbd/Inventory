@@ -1,5 +1,6 @@
 ﻿
 var ObjectToFormData = function (obj, form, prepend) {
+    console.log("obj is >>>>>>>>>>>>>"+ JSON.stringify(obj));
     prepend = prepend || "";
     var fd = form || new FormData();
 

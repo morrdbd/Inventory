@@ -16,9 +16,6 @@ namespace Inventory.Models.Tables
 
         public int UnitID { get; set; }
 
-        [NotMapped]
-        public string UnitName { get; set; }
-
         public string ItemDetails { get; set; }
 
         public int UnitPrice { get; set; }
@@ -31,9 +28,6 @@ namespace Inventory.Models.Tables
 
         [Column(TypeName = "date")]
         public DateTime? InsertedDate { get; set; }
-
-        [NotMapped]
-        public string InsertedDateForm { get; set; }
 
         public int? LastUpdatedBy { get; set; }
 

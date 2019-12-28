@@ -1,12 +1,13 @@
-﻿@model Inventory.Models.ViewModels.DistTicket_VM
+﻿@model Inventory.Models.ViewModels.Ticket_VM
 
 @{
     ViewBag.Title = "Distribution Ticket (PC-5 Form)";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
+    string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
 }
-<form action="@Url.Action(Model.Ticket.Id == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
-    <input type="hidden" value="@Model.Ticket.Id" />
+<form action="@Url.Action(Model.TicketID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
+    <input type="hidden" value="@Model.TicketID" />
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
             <div class="caption">
@@ -18,19 +19,19 @@
                 <div class="col-md-4 form-group">
                     <label>Ticket Number</label>
                     <div class="col-md-8">
-                        <input type="text" name="TicketNumber" id="TicketNumber" value="@Model.Ticket.TicketNumber" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="TicketNumber" id="TicketNumber" value="@Model.TicketNumber" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
                     <label>Ticket Issed Date</label>
                     <div class="col-md-8">
-                        <input type="text" name="TicketIssuedDate" id="TicketIssuedDate" value="@Model.Ticket.TicketIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                        <input type="text" name="TicketIssuedDateVM" id="TicketIssuedDateVM" value="@Model.TicketIssuedDateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
                     <label>Warehouse</label>
                     <div class="col-md-8">
-                        <input type="text" name="Warehouse" id="Warehouse" value="@Model.Ticket.Warehouse" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="Warehouse" id="Warehouse" value="@Model.Warehouse" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
@@ -38,19 +39,19 @@
                 <div class="col-md-4 form-group">
                     <label>Request Number</label>
                     <div class="col-md-8">
-                        <input type="text" name="RequestNumber" id="RequestNumber" value="@Model.Ticket.RequestNumber" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="RequestNumber" id="RequestNumber" value="@Model.RequestNumber" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
                     <label>Request Date</label>
                     <div class="col-md-8">
-                        <input type="text" name="RequestDate" id="RequestDate" value="@Model.Ticket.RequestingDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                        <input type="text" name="RequestDateVM" id="RequestDateVM" value="@Model.RequestDateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
                     <label>Requester</label>
                     <div class="col-md-8">
-                        <input type="text" name="Requester" id="Requester" value="@Model.Ticket.Requester" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="Requester" id="Requester" value="@Model.Requester" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
@@ -83,9 +84,9 @@
                 <tbody id="tbody_item">
                     @{
                         int index = 0;
-                        if (Model.TicketItemData != null)
+                        if (Model.TicketItems != null)
                         {
-                            foreach (var item in Model.TicketItemData)
+                            foreach (var item in Model.TicketItems)
                             {
                                 <tr>
                                     <td>@item.Quantity</td>
@@ -93,6 +94,7 @@
                                     <td>@item.ItemDetails</td>
                                     <td>@item.UnitPrice</td>
                                     <td>@item.Quantity * @item.UnitPrice</td>
+                                    <td>@item.DealWithAccount</td>
                                     <td>
                                         <a href="javascript:;" class="btn btn-xs btn-info attendee_edit" data-index="@index"><i class="fa fa-edit"></i></a>
                                         <a href="javascript:;" class="btn btn-xs btn-danger attendee_delete" data-index="@index" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>
@@ -112,7 +114,7 @@
         <div class="col-md-12 form-group">
             <label>Details</label>
             <div class="col-md-10">
-                <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Ticket.Details</textarea>
+                <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Details</textarea>
             </div>
         </div>
     </div>
@@ -194,11 +196,12 @@
         </tr>
     </script>
     <script>
+        var model = @Html.Raw(Json.Encode(Model));
         $(function () {
             var TicketItems = [];
-            var TicketID = '@Model.Ticket.Id';
+            var TicketID = '@Model.TicketID';
             if (TicketID != '0') {
-                var model = JSON.parse($("#model_json").val());
+                //var model = JSON.parse($("#model_json").val());
                 TicketItems = model.TicketItems;
             }
 
@@ -303,4 +306,6 @@
     })
 
     </script>
+
+    <script src="~/Content/resources/src/main.js"></script>
 }

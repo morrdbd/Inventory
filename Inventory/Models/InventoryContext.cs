@@ -15,7 +15,7 @@ namespace Inventory.Models
 
         public DbSet<RoleAccess> RoleAccess { get; set; }
 
-        public DbSet<DistributionTicketPC5> DistributionTicketPC5 { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
 
         public DbSet<TicketItem> TicketItem { get; set; }
 

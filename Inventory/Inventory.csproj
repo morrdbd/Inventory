@@ -13,8 +13,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DOMoRR</RootNamespace>
-    <AssemblyName>DOMoRR</AssemblyName>
+    <RootNamespace>Inventory</RootNamespace>
+    <AssemblyName>Inventory</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -304,7 +304,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tables\DistributionTicketPC5.cs" />
+    <Compile Include="Models\Procedures\Ticket_Items.cs" />
+    <Compile Include="Models\Tables\Ticket.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InventoryContext.cs" />
     <Compile Include="Models\Procedures\RecordUserInfo.cs" />
@@ -319,7 +320,7 @@
     <Compile Include="Models\Tables\RoleAccess.cs" />
     <Compile Include="Models\Tables\SigninLog.cs" />
     <Compile Include="Models\Tables\TicketItem.cs" />
-    <Compile Include="Models\ViewModels\DistTicket_VM.cs" />
+    <Compile Include="Models\ViewModels\Ticket_VM.cs" />
     <Compile Include="Models\ViewModels\MenuVM.cs" />
     <Compile Include="Models\ViewModels\RoleFormVM.cs" />
     <Compile Include="Models\ViewModels\ModuleVM.cs" />
@@ -2940,6 +2941,8 @@
     <Content Include="Templates\DistributionTicketPC5.xlsx" />
     <Content Include="Templates\ReceiptReportMem7.xlsx" />
     <Content Include="Views\DistributionTicketPC5\Form.cshtml" />
+    <Content Include="Views\DistributionTicketPC5\View.cshtml" />
+    <Content Include="Views\DistributionTicketPC5\Search.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
