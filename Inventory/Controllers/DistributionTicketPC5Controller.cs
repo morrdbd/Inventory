@@ -17,5 +17,10 @@ namespace DOMoRR.Controllers
             var model = new DistTicketPC5ViewModels();
             return View("Form",model);
         }
+        public ActionResult ViewPC5()
+        {
+            return View();
+        }
+       
     }
 }
