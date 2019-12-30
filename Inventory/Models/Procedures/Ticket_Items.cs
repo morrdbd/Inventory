@@ -15,5 +15,6 @@ namespace Inventory.Models.Procedures
         public int TotalPrice { get; set; }
         public string DealWithAccount { get; set; }
         public string UnitName { get; set; }
+        public int UnitID { get; set; }
     }
 }

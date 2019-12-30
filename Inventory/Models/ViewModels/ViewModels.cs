@@ -49,13 +49,22 @@ namespace Inventory.Models.ViewModels
         [StringLength(500)]
         public string Requester { get; set; }
 
-        [StringLength(250)]
         public string Details { get; set; }
 
         public TicketItem[] TicketItems { get; set; }
     }
 
     public class TicketSearch
+    {
+        public string DateFrom { get; set; }
+        public string DateTo { get; set; }
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
+    public class Receipt_Report_Search
     {
         public string DateFrom { get; set; }
         public string DateTo { get; set; }

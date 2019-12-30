@@ -1,98 +1,168 @@
 ﻿@model Inventory.Models.ViewModels.Ticket_VM
 @{
-    ViewBag.Title = "تکت توزیع تحویلخانه";
+    //ViewBag.Title = "تکت توزیع تحویلخانه";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var search = ViewBag.search as Inventory.Models.ViewModels.TicketSearch;
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
+<div class="margin-bottom-10">
+    @if (_user.HasAccess("DistributionTicketPC5", "Search"))
+    {
+        <a href="@Url.Action("Search")" class="btn btn-sm">@Labels.back_to_list</a>
+    }
+    @if (_user.HasAccess("DistributionTicketPC5", "Edit"))
+    {
+        <a href="@Url.Action("Edit", new { id = Model.TicketID })" class="btn btn-sm blue"><i class="fa fa-edit"></i> @Labels.edit</a>
+    }
+    @if (_user.HasAccess("DistributionTicketPC5", "Print"))
+    {
+        <a href="@Url.Action("Print", new { id = Model.TicketID })" class="btn btn-sm btn-success" id="btn_print"><i class="fa fa-print"></i> @Labels.print_preview</a>
+    }
+    @if (_user.HasAccess("DistributionTicketPC5", "Delete"))
+    {
+        <a href="@Url.Action("Delete", new { id = Model.TicketID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.delete</a>
+    }
+</div>
+<div id="print_area">
+    <div style="direction:rtl;">
+        <table style="width:100%;">
+            <thead>
+                <tr>
+                    <th style="text-align:right; width:20%;"><h3>فورمه ف س (۵)</h3></th>
+                    <th style="text-align:right; width:80%"><h3>تکت توزیع تحویلخانه</h3></th>
+                </tr>
+            </thead>
+        </table>
 
-<table border="1" width="800" class="table table-striped table-condensed table-bordered">
-    <caption> فورمه ف س (۵) </caption>
-    <thead class="thead-light">
-        <tr>
-            <th colspan="2">۱- نمبر تکت</th>
-            <td colspan="2">@Model.TicketNumber</td>
-            <th colspan="1">۴- نمبر درخواست</th>
-            <td colspan="2">@Model.RequestNumber</td>
-        </tr>
-        <tr>
-            <th colspan="2">۲-تاریخ</th>
-            <td colspan="2">@Model.TicketIssuedDateVM</td>
-            <th colspan="1">۵-تاریخ</th>
-            <td colspan="2">@Model.RequestDateVM</td>
-        </tr>
-        <tr>
-            <th colspan="2">۳-تحویلخانه توزیع کننده </th>
-            <td colspan="2">@Model.Warehouse</td>
-            <th colspan="1">۶-شعبه درخواست کننده </th>
-            <td colspan="2">@Model.Requester</td>
-        </tr>
-        <tr>
-            <th align="center">مقدار </th>
-            <th align="center">تبص ذخیره </th>
-            <th colspan="2" style="text-align:center;"> تفصیــــــــــلات جنس </th>
-            <th align="center"> قیمت واحد </th>
-            <th align="center">قیمت مجموعی </th>
-            <th align="center">معامله شده به حساب </th>
-        </tr>
-        <tr>
-            <th>۷</th>
-            <th>۸</th>
-            <th colspan="2">۹</th>
-            <th>۱۰</th>
-            <th>۱۱</th>
-            <th>۱۲</th>
-        </tr>
-    </thead>   
-    <tbody>
-        @foreach (var item in Model.TicketItems)
-        {
-            <tr>
-                <td>@item.Quantity</td>
-                <td>@item.UnitName</td>
-                <td width="40%" colspan="2" style="text-align:center;">@item.ItemDetails</td>
-                <td width="10%">@item.UnitPrice</td>
-                <td>@item.TotalPrice</td>
-                <td>@item.DealWithAccount</td>
-            </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <td></td>
-            <td></td>
-            <th colspan="2" style="text-align:center;"> ۱۳- مجموع کل  </th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td colspan="2">۱۴-امضاء آمر تحویلخانه</td>
-            <td colspan="2"></td>
-            <td colspan="2">۱۵-امضاء گیرنده</td>
-            <td colspan="3"></td>
-        </tr>
-        <tr>
-            <th colspan="5">۱۶-اندارج:تمام اجناس درکارت های ثبت ذخیره درج گریده است جنس</th>
-            <td colspan="2"></td>
-        </tr>
-        <tr>
-            <th colspan="2">امضاء</th>
-            <td colspan="2"></td>
-            <td colspan="1">تاریخ</td>
-            <td colspan="2"></td>
-        </tr>
-        <tr>
-            <th colspan="7">کاتب اندراج</th>
-        </tr>
-        <tr>
-            <th colspan="7">توریع فورمه دریک اصل و دو کاپی ترتیب شود</th>
-        </tr>
-        <tr>
-            <th colspan="7">الف اصل به درخواست کننده داده شود</th>
-        </tr>
-        <tr>
-            <th colspan="3">امضاء ترتیب گننده</th>
-            <th colspan="4"></th>
-        </tr>
-    </tfoot>
-</table>
+        <table border="1" width="700" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse;">
+            <thead class="thead-light">
+                <tr>
+                    <th colspan="1">۱- نمبر تکت</th>
+                    <td colspan="2">@Model.TicketNumber</td>
+                    <th colspan="2">۴- نمبر درخواست</th>
+                    <td colspan="2">@Model.RequestNumber</td>
+                </tr>
+                <tr>
+                    <th colspan="1">۲-تاریخ</th>
+                    <td colspan="2">@Model.TicketIssuedDateVM</td>
+                    <th colspan="2">۵-تاریخ</th>
+                    <td colspan="2">@Model.RequestDateVM</td>
+                </tr>
+                <tr>
+                    <th colspan="1">۳-تحویلخانه توزیع کننده </th>
+                    <td colspan="2" style="word-wrap:normal;">@Model.Warehouse</td>
+                    <th colspan="2">۶-شعبه درخواست کننده</th>
+                    <td colspan="2" style="word-wrap:normal;">@Model.Requester</td>
+                </tr>
+                <tr>
+                    <th align="center" width="10%">مقدار </th>
+                    <th align="center" width="10%">تبص ذخیره </th>
+                    <th colspan="2" width="40%" style="text-align:center;"> تفصیــــــــــلات جنس </th>
+                    <th align="center" width="10%"> قیمت واحد </th>
+                    <th align="center" width="10%">قیمت مجموعی </th>
+                    <th align="center" width="20%">معامله شده به حساب </th>
+                </tr>
+                <tr>
+                    <th>۷</th>
+                    <th>۸</th>
+                    <th colspan="2">۹</th>
+                    <th>۱۰</th>
+                    <th>۱۱</th>
+                    <th>۱۲</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TicketItems)
+                {
+                    <tr>
+                        <td>@item.Quantity</td>
+                        <td>@item.UnitName</td>
+                        <td colspan="2" style="text-align:center; word-wrap:normal;">@item.ItemDetails</td>
+                        <td>@item.UnitPrice</td>
+                        <td>@item.TotalPrice</td>
+                        <td>@item.DealWithAccount</td>
+                    </tr>
+                }
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th colspan="2" style="text-align:center; word-wrap:normal;">@Model.Details</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th colspan="2" style="text-align:center;"> ۱۳- مجموع کل  </th>
+                    <th></th>
+                    <th>@Model.TicketItems.Sum(t => t.TotalPrice)</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+        <table id="tbl_auth" style="width:100%; margin-top:15px;">
+            <thead>
+                <tr>
+                    <th colspan="2" style="text-align:right; padding-top:5px;">۱۴-امضاء آمر تحویلخانه</th>
+                    <td colspan="2" style="text-align:right; padding-top:5px;"></td>
+                    <td colspan="2" style="text-align:right;">۱۵-امضاء گیرنده</td>
+                    <td colspan="3" style="text-align:right; padding-top:5px;"></td>
+                </tr>
+                <tr>
+                    <th colspan="5" style="text-align:right;">۱۶- اندارج:تمام اجناس درکارت های ثبت ذخیره درج گریده است جنس</th>
+                    <th colspan="2" style="text-align:right; padding-top:5px;"></th>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align:right; padding-top:5px;">امضاء</th>
+                    <th colspan="2" style="text-align:right; padding-top:5px;"></th>
+                    <th colspan="1" style="text-align:right; padding-top:5px;">تاریخ</th>
+                    <th colspan="2" style="text-align:right; padding-top:5px;"></th>
+                </tr>
+                <tr>
+                    <th colspan="7" style="text-align:right; padding-top:5px;">کاتب اندراج</th>
+                </tr>
+                <tr>
+                    <th colspan="7" style="text-align:right; padding-top:5px;">توریع فورمه دریک اصل و دو کاپی ترتیب شود</th>
+                </tr>
+                <tr>
+                    <th colspan="7" style="text-align:right; padding-top:5px;">الف اصل به درخواست کننده داده شود</th>
+                </tr>
+                <tr>
+                    <th colspan="3" style="text-align:right; padding-top:5px;">امضاء ترتیب گننده</th>
+                    <th colspan="4" style="text-align:right; padding-top:5px;"></th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('body').on('click', '#btn_delete', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                bootbox.confirm('@Labels.are_you_sure', function (result) {
+                    if (result == true) {
+                        $.get(url, function (response) {
+                            if (response == true) {
+                                window.location.href = '@Url.Action("Search")';
+                            }
+                        })
+                    }
+                })
+            })
+            $('body').on('click', '#btn_print', function (e) {
+                e.preventDefault();
+                var divToPrint = $("#print_area").html();
+                var newWin = window.open("");
+                newWin.document.write(divToPrint);
+                newWin.print();
+                newWin.close();
+            })
+        })
+    </script>
+}

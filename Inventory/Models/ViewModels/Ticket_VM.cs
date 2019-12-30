@@ -27,7 +27,6 @@ namespace Inventory.Models.ViewModels
         [StringLength(500)]
         public string Requester { get; set; }
 
-        [StringLength(250)]
         public string Details { get; set; }
 
         public List<Ticket_Items> TicketItems { get; set; }

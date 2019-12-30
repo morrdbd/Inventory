@@ -15,8 +15,8 @@ namespace Inventory.Models
 
         public DateTime? TicketIssuedDate { get; set; }
 
-        [NotMapped]
-        public string TicketIssuedDateForm { get; set; }
+        //[NotMapped]
+        //public string TicketIssuedDateForm { get; set; }
 
         [StringLength(500)]
         public string Warehouse { get; set; }
@@ -25,13 +25,12 @@ namespace Inventory.Models
 
         public DateTime? RequestDate { get; set; }
 
-        [NotMapped]
-        public string RequestDateForm { get; set; }
+        //[NotMapped]
+        //public string RequestDateForm { get; set; }
 
         [StringLength(500)]
         public string Requester { get; set; }
 
-        [StringLength(250)]
         public string Details { get; set; }
 
         public bool IsActive { get; set; }

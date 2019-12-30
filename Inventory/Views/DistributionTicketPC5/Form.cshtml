@@ -7,7 +7,7 @@
     string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
 }
 <form action="@Url.Action(Model.TicketID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
-    <input type="hidden" value="@Model.TicketID" />
+    <input type="hidden" name="TicketID" value="@Model.TicketID" />
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
             <div class="caption">
@@ -93,17 +93,16 @@
                                     <td>@item.UnitName</td>
                                     <td>@item.ItemDetails</td>
                                     <td>@item.UnitPrice</td>
-                                    <td>@item.Quantity * @item.UnitPrice</td>
+                                    <td>@item.TotalPrice</td>
                                     <td>@item.DealWithAccount</td>
                                     <td>
-                                        <a href="javascript:;" class="btn btn-xs btn-info attendee_edit" data-index="@index"><i class="fa fa-edit"></i></a>
-                                        <a href="javascript:;" class="btn btn-xs btn-danger attendee_delete" data-index="@index" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>
+                                        <a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>
+                                        <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="@index" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 index++;
                             }
                         }
-
                     }
                 </tbody>
             </table>
@@ -141,17 +140,17 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quantity</label>
-                                <input type="text" name="Quantity" class="form-control input-sm" required data-msg="" />
+                                <input type="number" name="Quantity" class="form-control input-sm" required data-msg="" />
                             </div>
                             <div class="form-group">
                                 <label>Unit</label>
-                                <input type="text" name="Unit" class="form-control input-sm" required data-msg="" />
+                                @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control", id = "UnitID", @required = "required" })
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Unit Price</label>
-                                <input type="text" name="UnitPrice" class="form-control input-sm" data-rule-digits="true" data-msg="" />
+                                <input type="number" name="UnitPrice" class="form-control input-sm" data-rule-digits="true" data-msg="" />
                             </div>
                             <div class="form-group">
                                 <label>Deal With Account</label>
@@ -172,7 +171,7 @@
                     <button type="button" class="btn default btn-sm" data-dismiss="modal">@Labels.cancel</button>
                     <button type="submit" class="btn green btn-sm">@Labels.save</button>
                     <input type="hidden" name="index" value="-1">
-                    <input type="hidden" name="ItemID" value="0">
+                    <input type="hidden" name="ID" value="0">
                 </div>
             </div>
         </div>
@@ -184,7 +183,7 @@
     <script type="text/html" id="temp_item">
         <tr>
             <td>{{Quantity}}</td>
-            <td>{{Unit}}</td>
+            <td>{{UnitName}}</td>
             <td>{{ItemDetails}}</td>
             <td>{{UnitPrice}}</td>
             <td>{{TotalPrice}}</td>
@@ -257,8 +256,9 @@
                 $('#item_modal').modal('show');
                 var index = $(this).data().index;
                 var row = TicketItems[index];
+                console.log("row is >>>>>>>"+JSON.stringify(row));
                 $('#item_form [name=Quantity]').val(row.Quantity);
-                $('#item_form [name=Unit]').val(row.Unit);
+                $('#item_form [name=UnitID]').val(row.UnitID);
                 $('#item_form [name=ItemDetails]').val(row.ItemDetails);
                 $('#item_form [name=UnitPrice]').val(row.UnitPrice);
                 $('#item_form [name=DealWithAccount]').val(row.DealWithAccount);
@@ -272,7 +272,7 @@
                     var _index = (row.index == -1) ? TicketItems.length : row.index;
                     var tr = $('#temp_item').clone().html()
                     .replace("{{Quantity}}", row.Quantity)
-                    .replace("{{Unit}}", row.Unit)
+                    .replace("{{UnitName}}", $('#item_form [name=UnitID] option:selected').text())
                     .replace("{{ItemDetails}}", row.ItemDetails)
                     .replace("{{UnitPrice}}", row.UnitPrice)
                     .replace("{{TotalPrice}}", row.Quantity * row.UnitPrice)
@@ -286,8 +286,11 @@
                     } else {
                         $('#tbody_item').find('[data-index=' + row.index + ']').closest('tr').replaceWith(tr);
                         $('#item_modal').modal('hide');
+                        console.log("row in item form valided +++++++"+JSON.stringify(row));
                         TicketItems[row.index] = row;
                     }
+                    console.log("TicketItems are +++++++++"+JSON.stringify(TicketItems));
+
                 }
             })
 
@@ -301,11 +304,8 @@
                 TicketItems[index] = null;
                 $(this).closest('tr').remove();
             })
-
-
     })
 
     </script>
 
-    <script src="~/Content/resources/src/main.js"></script>
 }

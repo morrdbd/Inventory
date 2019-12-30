@@ -23,8 +23,17 @@ namespace Inventory.Controllers
         [AccessControl("Add")]
         public ActionResult Add()
         {
+            CreateDropDown();
             return View("Form", new Ticket_VM());
         }
+
+        private void CreateDropDown()
+        {
+            var unitList = db.LookupValues.Where(l => l.LookupCode == "UNIT" && l.IsActive == true).OrderBy(l=>l.ForOrdering).Select(l =>
+             new { l.ValueId, UnitName = Language == "prs" ? l.DrName : Language == "ps" ? l.PaName : l.EnName }).ToList();
+            ViewBag.UnitDrp = new SelectList(unitList, "ValueId", "UnitName");
+        }
+
         private Ticket_VM CreateModel(Ticket _ticket)
         {
             return new Ticket_VM
@@ -129,11 +138,22 @@ namespace Inventory.Controllers
             return View("Search");
         }
 
+        [AccessControl("Search")]
         public JsonResult ListPartial(TicketSearch search)
         {
             var DateFrom = search.DateFrom.ToDate(Language);
             var DateTo = search.DateTo.ToDate(Language);
-            var data = db.Tickets.ToList();
+            var _tickets = db.Tickets.Where(t=>t.IsActive == true).ToList();
+            var data = _tickets.Select(t => new
+            {
+                t.TicketID,
+                t.TicketNumber,
+                TicketIssuedDate = t.TicketIssuedDate.ToDateString(Language),
+                t.Warehouse,
+                t.RequestNumber,
+                RequestDate = t.RequestDate.ToDateString(Language),
+                t.Requester
+            }).ToList();
             return Json(new
             {
                 data = data.Skip(search.start).Take(search.length).ToList(),
@@ -146,7 +166,7 @@ namespace Inventory.Controllers
         [AccessControl("View")]
         public ActionResult View(int id = 0)
         {
-            var ticket = db.Tickets.SingleOrDefault(t => t.TicketID == id);
+            var ticket = db.Tickets.Where(t=>t.IsActive == true).SingleOrDefault(t => t.TicketID == id);
             if(ticket == null)
             {
                 return HttpNotFound();
@@ -241,15 +261,15 @@ namespace Inventory.Controllers
                             }
                         }
                     }
-                    trans.Commit();
-                    return Json(Ticket.TicketID);
-                }
+            trans.Commit();
+            return Json(Ticket.TicketID);
+        }
                 catch (Exception e)
                 {
                     trans.Rollback();
                     Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-                }
-            }
+    }
+}
             return Json(false);
         }
 
@@ -284,6 +304,7 @@ namespace Inventory.Controllers
         [AccessControl("Edit")]
         public ActionResult Edit(int id = 0)
         {
+            CreateDropDown();
             var ticket = db.Tickets.SingleOrDefault(t => t.TicketID == id);
             if (ticket == null)
             {
@@ -292,5 +313,6 @@ namespace Inventory.Controllers
             var model = CreateModel(ticket);
             return View("Form", model);
         }
+
     }
 }

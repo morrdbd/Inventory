@@ -19,7 +19,7 @@ namespace Inventory.Models
 
         public DbSet<TicketItem> TicketItem { get; set; }
 
-        public DbSet<ReceiptReportMem7> ReceiptReportMem7s { get; set; }
+        public DbSet<ReceiptReport> ReceiptReports { get; set; }
 
 
         public InventoryDBContext() : base("InventoryCONN")
