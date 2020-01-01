@@ -29,7 +29,7 @@ namespace Inventory.Models.ViewModels
 
         public string Details { get; set; }
 
-        public List<Ticket_Items> TicketItems { get; set; }
+        public List<Ticket_Item> TicketItems { get; set; }
     }
     
 

@@ -1,4 +1,4 @@
-﻿@*@model Inventory.Models.ReceiptReportMem7*@
+﻿@model Inventory.Models.ViewModels.ReceiptReportVM
 @{
     //ViewBag.Title = "ViewMem7";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -25,7 +25,7 @@
 
 <div id="print_area">
     <div style="direction:rtl;">
-        <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%">
+        <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%;">
             <thead>
                 <tr>
                     <td colspan="9">
@@ -41,36 +41,36 @@
                 </tr>
                 <tr>
                     <th colspan="2" style="text-align:right; word-wrap:normal;"> نمبر راپور</th>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;"></th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.ReportNumber</th>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">:اداره</th>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;"> وزارت امور مهاجرین وعودت کننده گان</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.Organization</th>
 
                 </tr>
                 <tr>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">تاریخ</th>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;"></th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.ReceiptDateVM</th>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">محل تسلیمی</th>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;"></th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.DeliveryPlace</th>
 
                 </tr>
                 <tr>
                     <th colspan="2" style="text-align:right; word-wrap:normal; width:20%"> نمبر سند فرمایش بل </th>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;"> </th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.SuggBillNumber</th>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">اخذ گردید از قرار دادی</th>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;"></th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.ObtainedFromContractor</th>
                 </tr>
                 <tr>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">تاریخ م 3</th>
-                    <th colspan="7" style="text-align:right; word-wrap:normal;">1398-01-02</th>
+                    <th colspan="7" style="text-align:right; word-wrap:normal;">@Model.Mem3DateVM</th>
 
                 </tr>
                 <tr>
-                    <th style="text-align:center;">مقدار</th>
-                    <th style="text-align:center;"> واحـــد</th>
-                    <th colspan="3" style="text-align:center;">تشریحــــــــــــات</th>
-                    <th style="text-align:center;"> فیات</th>
-                    <th style="text-align:center;"> مبلغ</th>
-                    <th colspan="2" style="text-align:center;"> ملاحظات</th>
+                    <th style="text-align:center; word-wrap:normal; word-wrap:normal;  width:5%;">مقدار</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;  width:10%;"> واحـــد</th>
+                    <th colspan="3" style="text-align:center; word-wrap:normal; width:40%;">تشریحــــــــــــات</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;  width:10%;"> فیات</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;  width:15%;"> مبلغ</th>
+                    <th colspan="2" style="text-align:center; word-wrap:normal; width:20%;"> ملاحظات</th>
                 </tr>
                 <tr>
                     <th style="text-align:center;">۷</th>
@@ -82,18 +82,22 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach (var item in Model.ReceiptReportItems)
+                {
+                    <tr>
+                        <th>@item.Quantity</th>
+                        <th>@item.UnitName</th>
+                        <th colspan="3">@item.ItemDetails</th>
+                        <th>@item.UnitPrice</th>
+                        <th>@item.TotalPrice</th>
+                        <th colspan="2">@item.Remarks</th>
+                    </tr>
+
+                }
                 <tr>
                     <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
                     <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                    <th colspan="3" style="text-align:center; word-wrap:normal; width:40%;">&nbsp;</th>
-                    <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                    <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                    <th colspan="2" style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                </tr>
-                <tr>
-                    <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                    <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                    <th colspan="3" style="text-align:center; word-wrap:normal; width:40%;">&nbsp;</th>
+                    <th colspan="3" style="text-align:center; word-wrap:normal; width:40%;">@Model.Details</th>
                     <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
                     <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
                     <th colspan="2" style="text-align:center; word-wrap:normal;">&nbsp;</th>
@@ -103,7 +107,7 @@
                     <th style="text-align:center;"></th>
                     <th colspan="3" style="text-align:center;"> ۱۳ مجموع قیمت</th>
                     <th style="text-align:center;">&nbsp;</th>
-                    <th style="text-align:center;">&nbsp;</th>
+                    <th style="text-align:center;">@Model.ReceiptReportItems.Sum(i=>i.TotalPrice)</th>
                     <th colspan="2" style="text-align:center;">افغانی </th>
                 </tr>
             </tbody>
@@ -116,9 +120,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th colspan="2"> محل امضاء ۱۴ </th>
+                    <th colspan="2" style="padding-top:15px; padding-bottom:15px; text-align:'center right';"> محل امضاء ۱۴ </th>
                     <th colspan="2"></th>
-                    <th colspan="2"> هویت ۱۵</th>
+                    <th colspan="2" style="padding-top:15px; padding-bottom:15px; text-align:'center right';"> هویت ۱۵</th>
                     <th colspan="3"></th>
                 </tr>
             </tfoot>

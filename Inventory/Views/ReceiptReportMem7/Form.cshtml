@@ -7,7 +7,7 @@
     string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
 }
 <form action="@Url.Action(Model.ReceiptReportID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
-    <input type="hidden" name="TicketID" value="@Model.ReceiptReportID" />
+    <input type="hidden" name="ReceiptReportID" id="ReceiptReportID" value="@Model.ReceiptReportID" />
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
             <div class="caption">
@@ -16,47 +16,49 @@
         </div>
         <div class="portlet-body">
             <section class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-6 form-group">
                     <label>Report Number</label>
                     <div class="col-md-8">
                         <input type="text" name="ReportNumber" id="ReportNumber" value="@Model.ReportNumber" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
-                <div class="col-md-4 form-group">
+                <div class="col-md-6 form-group">
                     <label>Organization</label>
                     <div class="col-md-8">
-                        <input type="text" name="Warehouse" id="Warehouse" value="@Model.Organization" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="Organization" id="Organization" value="@Model.Organization" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
-                <div class="col-md-4 form-group">
+            </section>
+            <section>
+                <div class="col-md-6 form-group">
                     <label>Receipt Date</label>
                     <div class="col-md-8">
                         <input type="text" name="ReceiptDateVM" id="ReceiptDateVM" value="@Model.ReceiptDateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
-            </section>
-            <section class="row">
-                <div class="col-md-4 form-group">
-                    <label>Submission Place</label>
+                <div class="col-md-6 form-group">
+                    <label>Delivery Place</label>
                     <div class="col-md-8">
-                        <input type="text" name="Submission Place" id="Submission Place" value="@Model.SubmissionPlace" class="form-control" required data-msg="" placeholder="">
-                    </div>
-                </div>
-                <div class="col-md-4 form-group">
-                    <label>Order Number</label>
-                    <div class="col-md-8">
-                        <input type="text" name="OrderNumber" id="OrderNumber" value="@Model.OrderNumber" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
-                    </div>
-                </div>
-                <div class="col-md-4 form-group">
-                    <label>From Contract</label>
-                    <div class="col-md-8">
-                        <input type="text" name="FromContract" id="FromContract" value="@Model.FromContract" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="DeliveryPlace" id="DeliveryPlace" value="@Model.DeliveryPlace" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
             <section class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-6 form-group">
+                    <label>Suggestion Bill Number</label>
+                    <div class="col-md-8">
+                        <input type="text" name="SuggBillNumber" id="SuggBillNumber" value="@Model.SuggBillNumber" class="form-control" required data-msg="" placeholder="">
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Obtained From Contractor</label>
+                    <div class="col-md-8">
+                        <input type="text" name="ObtainedFromContractor" id="ObtainedFromContractor" value="@Model.ObtainedFromContractor" class="form-control" required data-msg="" placeholder="">
+                    </div>
+                </div>
+            </section>
+            <section class="row">
+                <div class="col-md-6 form-group">
                     <label>Mem 3 Date</label>
                     <div class="col-md-8">
                         <input type="text" name="Mem3DateVM" id="Mem3DateVM" value="@Model.Mem3DateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
@@ -68,7 +70,7 @@
 
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
-            <div class="caption">Ticket Items</div>
+            <div class="caption">Receipt Report Items</div>
             <div class="actions">
                 <a href="javascript:;" class="btn btn-xs btn-circle blue-steel" id="btn_add_item">
                     <i class="fa fa-plus"></i> Add Item
@@ -195,7 +197,7 @@
             <td>{{ItemDetails}}</td>
             <td>{{UnitPrice}}</td>
             <td>{{TotalPrice}}</td>
-            <td>{{DealWithAccount}}</td>
+            <td>{{Remarks}}</td>
             <td>
                 <a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="{{index}}"><i class="fa fa-edit"></i></a>
                 <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="{{index}}" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>
@@ -205,11 +207,11 @@
     <script>
         var model = @Html.Raw(Json.Encode(Model));
         $(function () {
-            var TicketItems = [];
-            var TicketID = '@Model.ReceiptReportID';
-            if (TicketID != '0') {
+            var ReceiptReportItems = [];
+            var ReceiptReportID = '@Model.ReceiptReportID';
+            if (ReceiptReportID != '0') {
                 //var model = JSON.parse($("#model_json").val());
-                TicketItems = model.TicketItems;
+                ReceiptReportItems = model.ReceiptReportItems;
             }
 
             // FORM VALIDATION AND SUBMISSION
@@ -219,8 +221,8 @@
                         parseAll: true,
                         useIntKeysAsArrayIndex: true,
                     });
-                    data['TicketItems'] = TicketItems.filter(function (obj) { return obj != null; });
-                    if (data['TicketItems'].length == 0) {
+                    data['ReceiptReportItems'] = ReceiptReportItems.filter(function (obj) { return obj != null; });
+                    if (data['ReceiptReportItems'].length == 0) {
                         toastr.error('Please Add Item');
                         return;
                     }
@@ -263,13 +265,13 @@
                 e.preventDefault();
                 $('#item_modal').modal('show');
                 var index = $(this).data().index;
-                var row = TicketItems[index];
+                var row = ReceiptReportItems[index];
                 console.log("row is >>>>>>>"+JSON.stringify(row));
                 $('#item_form [name=Quantity]').val(row.Quantity);
                 $('#item_form [name=UnitID]').val(row.UnitID);
                 $('#item_form [name=ItemDetails]').val(row.ItemDetails);
                 $('#item_form [name=UnitPrice]').val(row.UnitPrice);
-                $('#item_form [name=DealWithAccount]').val(row.DealWithAccount);
+                $('#item_form [name=Remarks]').val(row.Remarks);
                 $('#item_form [name=ItemID]').val(row.ItemID);
                 $('#item_form [name=index]').val(index);
             })
@@ -277,27 +279,25 @@
             $('#item_form').validate({
                 submitHandler: function (form) {
                     var row = $(form).serializeJSON();
-                    var _index = (row.index == -1) ? TicketItems.length : row.index;
+                    var _index = (row.index == -1) ? ReceiptReportItems.length : row.index;
                     var tr = $('#temp_item').clone().html()
                     .replace("{{Quantity}}", row.Quantity)
                     .replace("{{UnitName}}", $('#item_form [name=UnitID] option:selected').text())
                     .replace("{{ItemDetails}}", row.ItemDetails)
                     .replace("{{UnitPrice}}", row.UnitPrice)
                     .replace("{{TotalPrice}}", row.Quantity * row.UnitPrice)
-                    .replace("{{DealWithAccount}}", row.DealWithAccount)
+                    .replace("{{Remarks}}", row.Remarks)
                     .replace("{{index}}", _index);
                     if (row.index == -1) {
                         $('#tbody_item').append(tr);
                         $('#item_form').clearForm();
                         $('#item_form input:first').focus();
-                        TicketItems.push(row);
+                        ReceiptReportItems.push(row);
                     } else {
                         $('#tbody_item').find('[data-index=' + row.index + ']').closest('tr').replaceWith(tr);
                         $('#item_modal').modal('hide');
-                        console.log("row in item form valided +++++++"+JSON.stringify(row));
-                        TicketItems[row.index] = row;
+                        ReceiptReportItems[row.index] = row;
                     }
-                    console.log("TicketItems are +++++++++"+JSON.stringify(TicketItems));
 
                 }
             })
@@ -309,7 +309,7 @@
 
             $('body').on('confirmed.bs.confirmation', '.item_delete', function (e) {
                 var index = $(this).data().index;
-                TicketItems[index] = null;
+                ReceiptReportItems[index] = null;
                 $(this).closest('tr').remove();
             })
     })

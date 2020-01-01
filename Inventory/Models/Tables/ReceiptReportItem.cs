@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace Inventory.Models.ViewModels
+namespace Inventory.Models.Tables
 {
-    public class ReceiptReportItems
+    public class ReceiptReportItem
     {
         public int ID { get; set; }
 
@@ -14,9 +14,9 @@ namespace Inventory.Models.ViewModels
 
         public int Quantity { get; set; }
 
-        public int UnitID { get; set; }
-
         public string ItemDetails { get; set; }
+
+        public int UnitID { get; set; }
 
         public int UnitPrice { get; set; }
 

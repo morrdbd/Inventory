@@ -46,7 +46,7 @@ namespace Inventory.Controllers
                 RequestDateVM = _ticket.RequestDate.ToDateString(Language),
                 Requester = _ticket.Requester,
                 Details = _ticket.Details,
-                TicketItems = db.Database.SqlQuery<Ticket_Items>("Ticket_Items @p0, @p1", _ticket.TicketID, Language).ToList(),
+                TicketItems = db.Database.SqlQuery<Ticket_Item>("Ticket_Items @p0, @p1", _ticket.TicketID, Language).ToList(),
             };
         }
 
@@ -63,7 +63,7 @@ namespace Inventory.Controllers
             {
                 try
                 {
-                    var Ticket = new Ticket
+                    var _Ticket = new Ticket
                     {
                         TicketNumber = model.TicketNumber,
                         TicketIssuedDate = model.TicketIssuedDateVM.ToDate(Language),
@@ -77,17 +77,17 @@ namespace Inventory.Controllers
                         IsActive = true,
                     };
 
-                    db.Tickets.Add(Ticket);
+                    db.Tickets.Add(_Ticket);
                     db.SaveChanges();
 
                     db.ActivityLogs.Add(new ActivityLog
                     {
                         ModifiedTable = "Ticket",
-                        ModfiedId = Ticket.TicketID,
+                        ModfiedId = _Ticket.TicketID,
                         Action = "Insert",
                         UserId = AppUser.Id,
                         ModifiedTime = DateTime.Now,
-                        ModifiedData = JsonConvert.SerializeObject(Ticket),
+                        ModifiedData = JsonConvert.SerializeObject(_Ticket),
                     });
                     db.SaveChanges();
 
@@ -97,7 +97,7 @@ namespace Inventory.Controllers
                         {
                             if (row != null)
                             {
-                                row.TicketID = Ticket.TicketID;
+                                row.TicketID = _Ticket.TicketID;
                                 row.InsertedBy = AppUser.Id;
                                 row.InsertedDate = DateTime.Now;
                                 row.IsActive = true;
@@ -106,7 +106,7 @@ namespace Inventory.Controllers
 
                                 db.ActivityLogs.Add(new ActivityLog
                                 {
-                                    ModifiedTable = "TicketItemData",
+                                    ModifiedTable = "TicketItem",
                                     ModfiedId = row.ID,
                                     Action = "Insert",
                                     UserId = AppUser.Id,
@@ -119,7 +119,7 @@ namespace Inventory.Controllers
                     }
 
                     trans.Commit();
-                    return Json(Ticket.TicketID);
+                    return Json(_Ticket.TicketID);
                 }
                 catch (Exception e)
                 {

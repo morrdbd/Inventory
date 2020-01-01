@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Inventory.Models.Procedures
 {
-    public class Receipt_Report_Items
+    public class Receipt_Report_Item
     {
         public int ID { get; set; }
         public int ReceiptReportID { get; set; }

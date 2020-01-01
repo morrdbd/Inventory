@@ -21,6 +21,8 @@ namespace Inventory.Models
 
         public DbSet<ReceiptReport> ReceiptReports { get; set; }
 
+        public DbSet<ReceiptReportItem> ReceiptReportItems { get; set; }
+
 
         public InventoryDBContext() : base("InventoryCONN")
         {

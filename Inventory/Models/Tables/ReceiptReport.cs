@@ -18,16 +18,16 @@ namespace Inventory.Models
         [Column(TypeName = "date")]
         public DateTime? ReceiptDate { get; set; }
 
-        public int? OrderNumber { get; set; }
+        public int? SuggBillNumber { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? Mem3DateVM { get; set; }
+        public DateTime? Mem3Date { get; set; }
 
         [StringLength(500)]
-        public string SubmissionPlace { get; set; }
+        public string DeliveryPlace { get; set; }
 
         [StringLength(500)]
-        public string FromContract { get; set; }
+        public string ObtainedFromContractor { get; set; }
 
         public string Details { get; set; }
 

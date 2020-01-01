@@ -19,19 +19,19 @@ namespace Inventory.Models.ViewModels
 
         public string ReceiptDateVM { get; set; }
 
-        public int? OrderNumber { get; set; }
+        public int? SuggBillNumber { get; set; }
 
         public string Mem3DateVM { get; set; }
 
-        [StringLength(50)]
-        public string SubmissionPlace { get; set; }
+        [StringLength(500)]
+        public string DeliveryPlace { get; set; }
 
-        [StringLength(50)]
-        public string FromContract { get; set; }
+        [StringLength(500)]
+        public string ObtainedFromContractor { get; set; }
 
         public string Details { get; set; }
 
-        public List<Receipt_Report_Items> ReceiptReportItems { get; set; }
+        public List<Receipt_Report_Item> ReceiptReportItems { get; set; }
 
     }
 }

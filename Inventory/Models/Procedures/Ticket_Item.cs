@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Inventory.Models.Procedures
 {
-    public class Ticket_Items
+    public class Ticket_Item
     {
         public int ID { get; set; }
         public int TicketID { get; set; }

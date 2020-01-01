@@ -216,9 +216,7 @@
                         toastr.error('Please Add Item');
                         return;
                     }
-                    console.log("data is >>>>>> "+JSON.stringify(data));
                     var formData = ObjectToFormData(data);
-                    console.log("formData is >>>>>> " + JSON.stringify(formData));
                     //******************
                     Metronic.blockUI({ animate: true });
                     $.ajax({

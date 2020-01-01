@@ -54,6 +54,32 @@ namespace Inventory.Models.ViewModels
         public TicketItem[] TicketItems { get; set; }
     }
 
+    public class Receipt_Report_Form_VM
+    {
+        public int ReceiptReportID { get; set; }
+
+        public int? ReportNumber { get; set; }
+
+        [StringLength(200)]
+        public string Organization { get; set; }
+
+        public string ReceiptDateVM { get; set; }
+
+        public int? SuggBillNumber { get; set; }
+
+        public string Mem3DateVM { get; set; }
+
+        [StringLength(500)]
+        public string DeliveryPlace { get; set; }
+
+        [StringLength(500)]
+        public string ObtainedFromContractor { get; set; }
+
+        public string Details { get; set; }
+
+        public ReceiptReportItem[] ReceiptReportItems { get; set; }
+    }
+
     public class TicketSearch
     {
         public string DateFrom { get; set; }
