@@ -296,9 +296,11 @@
     <Compile Include="Attributes\MyDateConverter.cs" />
     <Compile Include="Attributes\MyFilter.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\DistributionTicketPC5Controller.cs" />
+    <Compile Include="Controllers\LookupsController.cs" />
     <Compile Include="Controllers\ReceiptReportMem7Controller.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -306,6 +308,9 @@
     </Compile>
     <Compile Include="Models\Procedures\Receipt_Report_Item.cs" />
     <Compile Include="Models\Procedures\Ticket_Item.cs" />
+    <Compile Include="Models\Tables\Employee.cs" />
+    <Compile Include="Models\Tables\Item.cs" />
+    <Compile Include="Models\Tables\Branch.cs" />
     <Compile Include="Models\Tables\ReceiptReportItem.cs" />
     <Compile Include="Models\Tables\Ticket.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -2949,6 +2954,11 @@
     <Content Include="Views\DistributionTicketPC5\Search.cshtml" />
     <Content Include="Views\ReceiptReportMem7\View.cshtml" />
     <Content Include="Views\ReceiptReportMem7\Search.cshtml" />
+    <Content Include="Views\Lookups\_ItemList.cshtml" />
+    <Content Include="Views\Lookups\Item.cshtml" />
+    <Content Include="Views\DistributionTicketPC5\ItemInUse.cshtml" />
+    <Content Include="Views\ReceiptReportMem7\ItemInWarehouse.cshtml" />
+    <Content Include="Views\Employee\Search.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

@@ -23,6 +23,12 @@ namespace Inventory.Models
 
         public DbSet<ReceiptReportItem> ReceiptReportItems { get; set; }
 
+        public DbSet<Branch> Branches { get; set; }
+
+        public DbSet<Item> Items { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+
 
         public InventoryDBContext() : base("InventoryCONN")
         {

@@ -149,6 +149,7 @@ namespace DOMoRR.Controllers
             return View("Search");
         }
 
+        [AccessControl("Search")]
         public JsonResult ListPartial(Receipt_Report_Search search)
         {
             var DateFrom = search.DateFrom.ToDate(Language);
@@ -324,6 +325,39 @@ namespace DOMoRR.Controllers
             }
             var model = CreateModel(_ReceiptReport);
             return View("Form", model);
+        }
+
+        [AccessControl("Search")]
+        public ActionResult ItemInWarehouse()
+        {
+            ViewBag.search = new Item_In_Warehouse_Search();
+            return View("ItemInWarehouse");
+        }
+
+        [AccessControl("Search")]
+        public JsonResult ListItemInWarehouse(Item_In_Warehouse_Search search)
+        {
+            var DateFrom = search.DateFrom.ToDate(Language);
+            var DateTo = search.DateTo.ToDate(Language);
+            var _Receipts = db.ReceiptReports.Where(t => t.IsActive == true).ToList();
+            var data = _Receipts.Select(r => new
+            {
+                r.ReceiptReportID,
+                r.ReportNumber,
+                r.Organization,
+                ReceiptDate = r.ReceiptDate.ToDateString(Language),
+                r.DeliveryPlace,
+                r.SuggBillNumber,
+                r.ObtainedFromContractor,
+                Mem3DateVM = r.Mem3Date.ToDateString(Language),
+            }).ToList();
+            return Json(new
+            {
+                data = data.Skip(search.start).Take(search.length).ToList(),
+                recordsTotal = data.Count,
+                recordsFiltered = data.Count,
+                draw = search.draw,
+            });
         }
 
     }

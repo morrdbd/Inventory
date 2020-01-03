@@ -1,6 +1,6 @@
 ﻿@model Inventory.Models.ViewModels.ReceiptReportVM
 @{
-    //ViewBag.Title = "ViewMem7";
+    ViewBag.Title = Labels.ReceiptReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
@@ -32,45 +32,45 @@
                         <table style="width:100%">
                             <thead>
                                 <tr>
-                                    <th colspan="3" style="text-align:right; border-right:none;">فورمه م ۷</th>
-                                    <th colspan="6" style="text-align:right; border-right:none;">راپور رسیدات</th>
+                                    <th colspan="3" style="text-align:right; border-right:none;">@Labels.Mem7Form</th>
+                                    <th colspan="6" style="text-align:right; border-right:none;">@Labels.ReceiptReport</th>
                                 </tr>
                             </thead>
                         </table>
                     </td>
                 </tr>
                 <tr>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;"> نمبر راپور</th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.ReportNumber</th>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.ReportNumber</th>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;">:اداره</th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.organization</th>
                     <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.Organization</th>
 
                 </tr>
                 <tr>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;">تاریخ</th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.date</th>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.ReceiptDateVM</th>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;">محل تسلیمی</th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.DeliveryPlace</th>
                     <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.DeliveryPlace</th>
 
                 </tr>
                 <tr>
-                    <th colspan="2" style="text-align:right; word-wrap:normal; width:20%"> نمبر سند فرمایش بل </th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal; width:20%">@Labels.SuggestionBillNumber </th>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.SuggBillNumber</th>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;">اخذ گردید از قرار دادی</th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.ObtainedFromContractor</th>
                     <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.ObtainedFromContractor</th>
                 </tr>
                 <tr>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;">تاریخ م 3</th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.Mem3Date</th>
                     <th colspan="7" style="text-align:right; word-wrap:normal;">@Model.Mem3DateVM</th>
 
                 </tr>
                 <tr>
-                    <th style="text-align:center; word-wrap:normal; word-wrap:normal;  width:5%;">مقدار</th>
-                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;  width:10%;"> واحـــد</th>
-                    <th colspan="3" style="text-align:center; word-wrap:normal; width:40%;">تشریحــــــــــــات</th>
-                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;  width:10%;"> فیات</th>
-                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;  width:15%;"> مبلغ</th>
-                    <th colspan="2" style="text-align:center; word-wrap:normal; width:20%;"> ملاحظات</th>
+                    <th style="text-align:center; word-wrap:normal; word-wrap:normal;  width:5%;">@Labels.Quantity</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;  width:10%;">@Labels.Unit</th>
+                    <th colspan="3" style="text-align:center; word-wrap:normal; width:40%;">@Labels.ItemDetails</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;  width:10%;">@Labels.UnitPrice</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;  width:15%;">@Labels.TotalPrice</th>
+                    <th colspan="2" style="text-align:center; word-wrap:normal; width:20%;">@Labels.Remarks</th>
                 </tr>
                 <tr>
                     <th style="text-align:center;">۷</th>

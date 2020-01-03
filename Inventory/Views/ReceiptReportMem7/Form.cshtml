@@ -1,7 +1,7 @@
 ﻿@model Inventory.Models.ViewModels.ReceiptReportVM
 
 @{
-    ViewBag.Title = "Receipt Report (Mem-7 Form)";
+    ViewBag.Title = Labels.ReceiptReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
     string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
@@ -11,19 +11,19 @@
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
             <div class="caption">
-                Receipt Report Information
+               @Labels.ReceiptReportInfo
             </div>
         </div>
         <div class="portlet-body">
             <section class="row">
                 <div class="col-md-6 form-group">
-                    <label>Report Number</label>
+                    <label>@Labels.ReportNumber</label>
                     <div class="col-md-8">
                         <input type="text" name="ReportNumber" id="ReportNumber" value="@Model.ReportNumber" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label>Organization</label>
+                    <label>@Labels.organization</label>
                     <div class="col-md-8">
                         <input type="text" name="Organization" id="Organization" value="@Model.Organization" class="form-control" required data-msg="" placeholder="">
                     </div>
@@ -31,13 +31,13 @@
             </section>
             <section>
                 <div class="col-md-6 form-group">
-                    <label>Receipt Date</label>
+                    <label>@Labels.ReceiptDate</label>
                     <div class="col-md-8">
                         <input type="text" name="ReceiptDateVM" id="ReceiptDateVM" value="@Model.ReceiptDateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label>Delivery Place</label>
+                    <label>@Labels.DeliveryPlace</label>
                     <div class="col-md-8">
                         <input type="text" name="DeliveryPlace" id="DeliveryPlace" value="@Model.DeliveryPlace" class="form-control" required data-msg="" placeholder="">
                     </div>
@@ -45,13 +45,13 @@
             </section>
             <section class="row">
                 <div class="col-md-6 form-group">
-                    <label>Suggestion Bill Number</label>
+                    <label>@Labels.SuggestionBillNumber</label>
                     <div class="col-md-8">
                         <input type="text" name="SuggBillNumber" id="SuggBillNumber" value="@Model.SuggBillNumber" class="form-control" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label>Obtained From Contractor</label>
+                    <label>@Labels.ObtainedFromContractor</label>
                     <div class="col-md-8">
                         <input type="text" name="ObtainedFromContractor" id="ObtainedFromContractor" value="@Model.ObtainedFromContractor" class="form-control" required data-msg="" placeholder="">
                     </div>
@@ -59,7 +59,7 @@
             </section>
             <section class="row">
                 <div class="col-md-6 form-group">
-                    <label>Mem 3 Date</label>
+                    <label>@Labels.Mem3Date</label>
                     <div class="col-md-8">
                         <input type="text" name="Mem3DateVM" id="Mem3DateVM" value="@Model.Mem3DateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
@@ -70,10 +70,10 @@
 
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
-            <div class="caption">Receipt Report Items</div>
+            <div class="caption">@Labels.ReceiptReportItems</div>
             <div class="actions">
                 <a href="javascript:;" class="btn btn-xs btn-circle blue-steel" id="btn_add_item">
-                    <i class="fa fa-plus"></i> Add Item
+                    <i class="fa fa-plus"></i> @Labels.AddItem
                 </a>
             </div>
         </div>
@@ -81,12 +81,12 @@
             <table class="table table-striped table-condensed">
                 <thead id="thead_attendee">
                     <tr>
-                        <th>Quantity</th>
-                        <th>Unit</th>
-                        <th>Item Detail</th>
-                        <th>Unit Price</th>
-                        <th>Total Price</th>
-                        <th>Remarks</th>
+                        <th>@Labels.Quantity</th>
+                        <th>@Labels.Unit</th>
+                        <th>@Labels.ItemDetails</th>
+                        <th>@Labels.UnitPrice</th>
+                        <th>@Labels.TotalPrice</th>
+                        <th>@Labels.Remarks</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -121,7 +121,7 @@
 
     <div class="row">
         <div class="col-md-12 form-group">
-            <label>Details</label>
+            <label>@Labels.Details</label>
             <div class="col-md-10">
                 <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Details</textarea>
             </div>
@@ -130,11 +130,10 @@
 
     <section class="row">
         <div class="col-md-5">
-            <button type="submit" class="btn btn-sm blue" id="btn_submit">Submit Form</button>
+            <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>
             <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
         </div>
     </section>
-
 </form>
 
 <form id="item_form" method="post" action="" autocomplete="off">
@@ -143,34 +142,34 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Add new Item</h4>
+                    <h4 class="modal-title">@Labels.AddItem</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Quantity</label>
+                                <label>@Labels.Quantity</label>
                                 <input type="number" name="Quantity" class="form-control input-sm" required data-msg="" />
                             </div>
                             <div class="form-group">
-                                <label>Unit</label>
+                                <label>@Labels.Unit</label>
                                 @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control", id = "UnitID", @required = "required" })
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Unit Price</label>
+                                <label>@Labels.UnitPrice</label>
                                 <input type="number" name="UnitPrice" class="form-control input-sm" data-rule-digits="true" data-msg="" />
                             </div>
                             <div class="form-group">
-                                <label>Remarks</label>
+                                <label>@Labels.Remarks</label>
                                 <input type="text" name="Remarks" class="form-control input-sm" data-msg="" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label>Item Details</label>
+                            <label>@Labels.ItemDetails</label>
                             <div class="col-md-10">
                                 <textarea type="text" name="ItemDetails" id="ItemDetails" class="form-control" required data-msg="" placeholder=""></textarea>
                             </div>

@@ -831,4 +831,109 @@
   <data name="Inventory" xml:space="preserve">
     <value>جنسی</value>
   </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>جنس اضافه کول</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>مقدار</value>
+  </data>
+  <data name="DealWithAccount" xml:space="preserve">
+    <value>په حسات معامله شو</value>
+  </data>
+  <data name="DeliveryPlace" xml:space="preserve">
+    <value>محل تسلیمی</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>تفصیل</value>
+  </data>
+  <data name="DistributionTicket" xml:space="preserve">
+    <value>د توزیع تکت</value>
+  </data>
+  <data name="DistributionTicketList" xml:space="preserve">
+    <value>د توزیع تکت لست</value>
+  </data>
+  <data name="ItemDetails" xml:space="preserve">
+    <value>جنسی تفصیل</value>
+  </data>
+  <data name="Mem3Date" xml:space="preserve">
+    <value>م ۳ تاریخ</value>
+  </data>
+  <data name="Mem7Form" xml:space="preserve">
+    <value>م ۷ فارم</value>
+  </data>
+  <data name="ObtainedFromContractor" xml:space="preserve">
+    <value>اخستل شوی د قراردادی څخه</value>
+  </data>
+  <data name="PC5Form" xml:space="preserve">
+    <value>ف س ۵ فارم</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>مقدار</value>
+  </data>
+  <data name="ReceiptDate" xml:space="preserve">
+    <value>رسید تاریخ</value>
+  </data>
+  <data name="ReceiptReport" xml:space="preserve">
+    <value>د رسیداتو راپور</value>
+  </data>
+  <data name="ReceiptReportInfo" xml:space="preserve">
+    <value>درسیداتو راپور معلومات</value>
+  </data>
+  <data name="ReceiptReportItems" xml:space="preserve">
+    <value>رسیداتو راپور اجناس</value>
+  </data>
+  <data name="Remarks" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="ReportNumber" xml:space="preserve">
+    <value>راپور نمبر</value>
+  </data>
+  <data name="RequestDate" xml:space="preserve">
+    <value>غوښتنی نیټه</value>
+  </data>
+  <data name="Requester" xml:space="preserve">
+    <value>غوښتونکی</value>
+  </data>
+  <data name="RequestNumber" xml:space="preserve">
+    <value>غوښتنی نمبر</value>
+  </data>
+  <data name="SearchReport" xml:space="preserve">
+    <value>راپور لټون</value>
+  </data>
+  <data name="SearchTicket" xml:space="preserve">
+    <value>د تکټ لټون</value>
+  </data>
+  <data name="SuggestionBillNumber" xml:space="preserve">
+    <value>د فرمایش د سند د بیل نمبر</value>
+  </data>
+  <data name="TicketAndRequestInfo" xml:space="preserve">
+    <value>د تکت او دراخواست معلومات</value>
+  </data>
+  <data name="TicketIssedDate" xml:space="preserve">
+    <value>تکت تاریخ</value>
+  </data>
+  <data name="TicketItems" xml:space="preserve">
+    <value>دتکت اجناس</value>
+  </data>
+  <data name="TicketNumber" xml:space="preserve">
+    <value>تکت نمبر</value>
+  </data>
+  <data name="TotalPrice" xml:space="preserve">
+    <value>مجموعه قیمت</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>واحد</value>
+  </data>
+  <data name="UnitPrice" xml:space="preserve">
+    <value>واحد قیمت</value>
+  </data>
+  <data name="Warehouse" xml:space="preserve">
+    <value>توزیع کوونکی تحویلخانه</value>
+  </data>
+  <data name="ItemInUse" xml:space="preserve">
+    <value>اجناس په استعمال کی</value>
+  </data>
+  <data name="ItemInWarehouse" xml:space="preserve">
+    <value>اجناس په تحویلخانه کی</value>
+  </data>
 </root>

@@ -1,30 +1,33 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
+using System.Linq;
+using System.Web;
 
-namespace Inventory.Models
+namespace Inventory.Models.Tables
 {
-    public class Ticket
+    public class Employee
     {
         [Key]
-        public int TicketID { get; set; }
+        public int EmployeeID { get; set; }
 
-        public int? TicketNumber { get; set; }
+        [StringLength(300)]
+        public string Name { get; set; }
 
-        public DateTime? TicketIssuedDate { get; set; }
+        [StringLength(300)]
+        public string FatherName { get; set; }
 
-        [StringLength(500)]
-        public string Warehouse { get; set; }
-
-        public int? RequestNumber { get; set; }
-
-        public DateTime? RequestDate { get; set; }
+        [NotMapped]
+        public string BranchName { get; set; }
 
         public int BranchID { get; set; }
 
-        public string Details { get; set; }
+        [StringLength(300)]
+        public string Occupation { get; set; }
+
+        [StringLength(20)]
+        public string PhoneNumber { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -39,5 +42,6 @@ namespace Inventory.Models
 
         [Column(TypeName = "date")]
         public DateTime? LastUpdatedDate { get; set; }
+
     }
 }

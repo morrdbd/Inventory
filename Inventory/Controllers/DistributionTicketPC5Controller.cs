@@ -32,6 +32,10 @@ namespace Inventory.Controllers
             var unitList = db.LookupValues.Where(l => l.LookupCode == "UNIT" && l.IsActive == true).OrderBy(l=>l.ForOrdering).Select(l =>
              new { l.ValueId, UnitName = Language == "prs" ? l.DrName : Language == "ps" ? l.PaName : l.EnName }).ToList();
             ViewBag.UnitDrp = new SelectList(unitList, "ValueId", "UnitName");
+
+            var branchList =  db.Branches.Where(d=>d.IsActive == true).OrderBy(d => d.ForOrdering).Select(d =>
+               new { d.BranchID, BranchName = Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName }).ToList();
+            ViewBag.BranchDrp = new SelectList(branchList, "BranchID", "BranchName");
         }
 
         private Ticket_VM CreateModel(Ticket _ticket)
@@ -44,7 +48,9 @@ namespace Inventory.Controllers
                 Warehouse = _ticket.Warehouse,
                 RequestNumber = _ticket.RequestNumber,
                 RequestDateVM = _ticket.RequestDate.ToDateString(Language),
-                Requester = _ticket.Requester,
+                BranchID = _ticket.BranchID,
+                BranchName = db.Branches.Where(r => r.IsActive == true && r.BranchID == _ticket.BranchID).Select(d =>
+                Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
                 Details = _ticket.Details,
                 TicketItems = db.Database.SqlQuery<Ticket_Item>("Ticket_Items @p0, @p1", _ticket.TicketID, Language).ToList(),
             };
@@ -70,7 +76,7 @@ namespace Inventory.Controllers
                         Warehouse = model.Warehouse,
                         RequestNumber = model.RequestNumber,
                         RequestDate = model.RequestDateVM.ToDate(Language),
-                        Requester = model.Requester,
+                        BranchID = model.BranchID,
                         Details = model.Details,
                         InsertedBy = AppUser.Id,
                         InsertedDate = DateTime.Now,
@@ -135,16 +141,41 @@ namespace Inventory.Controllers
         public ActionResult Search()
         {
             ViewBag.search = new TicketSearch();
+            CreateDropDown();
             return View("Search");
         }
 
         [AccessControl("Search")]
-        public JsonResult ListPartial(TicketSearch search)
+        public JsonResult ListPartial(TicketSearch model)
         {
-            var DateFrom = search.DateFrom.ToDate(Language);
-            var DateTo = search.DateTo.ToDate(Language);
-            var _tickets = db.Tickets.Where(t=>t.IsActive == true).ToList();
-            var data = _tickets.Select(t => new
+            var TicketIssuedDateFrom = model.DateFrom.ToDate(Language);
+            var TicketIssuedDateTo = model.DateTo.ToDate(Language);
+
+            var query = db.Tickets.Where(t=>t.IsActive == true);
+
+            if (model.RequestNumber != null && model.RequestNumber != 0)
+            {
+                query = query.Where(c => c.RequestNumber == model.RequestNumber);
+            }
+            if (model.TicketNumber != null && model.TicketNumber != 0)
+            {
+                query = query.Where(c => c.TicketNumber == model.TicketNumber);
+            }
+            if (model.BranchID != 0)
+            {
+                query = query.Where(c => c.BranchID == model.BranchID);
+            }
+            if (TicketIssuedDateFrom != null)
+            {
+                query = query.Where(c => c.TicketIssuedDate >= TicketIssuedDateFrom);
+            }
+            if (TicketIssuedDateTo != null)
+            {
+                query = query.Where(c => c.TicketIssuedDate <= TicketIssuedDateTo);
+            }
+            ViewBag.search = model;
+            var records = query.OrderBy(t=>t.TicketIssuedDate).ToList();
+            var data = records.Select(t => new
             {
                 t.TicketID,
                 t.TicketNumber,
@@ -152,14 +183,14 @@ namespace Inventory.Controllers
                 t.Warehouse,
                 t.RequestNumber,
                 RequestDate = t.RequestDate.ToDateString(Language),
-                t.Requester
+                BranchName = db.Branches.Where(r => r.IsActive == true && r.BranchID == t.BranchID).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault()
             }).ToList();
             return Json(new
             {
-                data = data.Skip(search.start).Take(search.length).ToList(),
+                data = data.Skip(model.start).Take(model.length).ToList(),
                 recordsTotal = data.Count,
                 recordsFiltered = data.Count,
-                draw = search.draw,
+                draw = model.draw,
             });
         }
 
@@ -195,7 +226,7 @@ namespace Inventory.Controllers
                     Ticket.Warehouse = model.Warehouse;
                     Ticket.RequestNumber = model.RequestNumber;
                     Ticket.RequestDate = model.RequestDateVM.ToDate(Language);
-                    Ticket.Requester = model.Requester;
+                    Ticket.BranchID = model.BranchID;
                     Ticket.Details = model.Details;
                     Ticket.IsActive = true;
                     Ticket.LastUpdatedBy = AppUser.Id;
@@ -312,6 +343,71 @@ namespace Inventory.Controllers
             }
             var model = CreateModel(ticket);
             return View("Form", model);
+        }
+
+        [AccessControl("Search")]
+        public ActionResult ItemInUse()
+        {
+            CreateDropDown();
+            ViewBag.search = new ItemInUseSearch();
+            return View("ItemInUse");
+        }
+
+        [AccessControl("Search")]
+        public JsonResult ListItemInUse(ItemInUseSearch model)
+        {
+            var TicketIssuedDateFrom = model.DateFrom.ToDate(Language);
+            var TicketIssuedDateTo = model.DateTo.ToDate(Language);
+
+            var query = db.Tickets.Where(t => t.IsActive == true);
+
+            if (model.TicketNumber != null && model.TicketNumber != 0)
+            {
+                query = query.Where(c => c.TicketNumber == model.TicketNumber);
+            }
+            if (model.BranchID != 0)
+            {
+                query = query.Where(c => c.BranchID == model.BranchID);
+            }
+            if (TicketIssuedDateFrom != null)
+            {
+                query = query.Where(c => c.TicketIssuedDate >= TicketIssuedDateFrom);
+            }
+            if (TicketIssuedDateTo != null)
+            {
+                query = query.Where(c => c.TicketIssuedDate <= TicketIssuedDateTo);
+            }
+            ViewBag.search = model;
+            var records = (from t in query
+                           join i in db.TicketItem
+                           on t.TicketID equals i.TicketID
+                           select new {
+                               t.TicketID,
+                               t.TicketNumber,
+                               t.TicketIssuedDate,
+                               t.BranchID,
+                               t.RequestDate,
+                               BranchName = db.Branches.Where(r => r.IsActive == true && r.BranchID == t.BranchID).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault(),
+                               i.ItemDetails,
+                               UnitName = db.LookupValues.Where(l=>l.IsActive == true && l.ValueId == i.UnitID).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault(),
+                               i.UnitPrice
+                           }).OrderBy(t => t.TicketIssuedDate).ToList();
+            //query.OrderBy(t => t.TicketIssuedDate).ToList();
+            var data = records.Select(t => new
+            {
+                t.TicketID,
+                t.TicketNumber,
+                TicketIssuedDate = t.TicketIssuedDate.ToDateString(Language),
+                RequestDate = t.RequestDate.ToDateString(Language),
+                BranchName = db.Branches.Where(r => r.IsActive == true && r.BranchID == t.BranchID).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault()
+            }).ToList();
+            return Json(new
+            {
+                data = data.Skip(model.start).Take(model.length).ToList(),
+                recordsTotal = data.Count,
+                recordsFiltered = data.Count,
+                draw = model.draw,
+            });
         }
 
     }

@@ -1,7 +1,7 @@
 ﻿@{
-    ViewBag.Title = Labels.SearchReport;
+    ViewBag.Title = Labels.ItemInWarehouse;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var search = ViewBag.search as Inventory.Models.ViewModels.Receipt_Report_Search;
+    var search = ViewBag.search as Inventory.Models.ViewModels.Item_In_Warehouse_Search;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
     var _canView = _user.HasAccess("ReceiptReportMem7", "View");
 }
@@ -69,7 +69,7 @@
 </div>
 
 @section scripts{
-<script>
+    <script>
     var model = @Html.Raw(Json.Encode(Model));
     $(function () {
             $("#record_form").validate({
@@ -105,7 +105,7 @@
             $.fn.dataTable.ext.errMode = 'none';
             var data_table = $('#data_table').DataTable({
                 ajax: {
-                    url: '@Url.Action("ListPartial")',
+                    url: '@Url.Action("ListItemInWarehouse")',
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (data) {
@@ -218,7 +218,9 @@
             });
 
     })
-</script>
+    </script>
 }
+
+
 
 

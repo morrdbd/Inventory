@@ -24,8 +24,9 @@ namespace Inventory.Models.ViewModels
 
         public string RequestDateVM { get; set; }
 
-        [StringLength(500)]
-        public string Requester { get; set; }
+        public int BranchID { get; set; }
+
+        public string BranchName { get; set; }
 
         public string Details { get; set; }
 
