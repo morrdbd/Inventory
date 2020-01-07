@@ -5,7 +5,7 @@
     var _canEdit = _user.HasAccess("Employee", "Edit");
     var _canDelete = _user.HasAccess("Employee", "Delete");
     var _canPrint = _user.HasAccess("Employee", "Print");
-    ViewBag.Title = "Employee";
+    ViewBag.Title = Labels.Employee;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="margin-bottom-10">
@@ -80,7 +80,7 @@
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
         <div class="caption">
-           Employee List
+           @Labels.EmployeeList
         </div>
         <div class="actions" id="data_table_actions">
         </div>
@@ -91,7 +91,7 @@
                 <tr>
                     <th>@Labels.Name</th>
                     <th>@Labels.FatherName</th>
-                    <th>Branch Name</th>
+                    <th>@Labels.BranchName</th>
                     <th>@Labels.Occupation</th>
                     <th>@Labels.PhoneNumber</th>
                     <th></th>
@@ -109,13 +109,13 @@
         <div class="modal-dialog" style="width:1000px;">
             <div class="modal-content">
                 <div class="modal-header">
-                        Employee
+                        @Labels.Employee
                     </div>
                 <div class="modal-body">
                     <div class="form-horizontal">
                         <div class="portlet box blue-hoki margin-bottom-10">
                             <div class="portlet-title">
-                                <div class="caption">Employee Info</div>
+                                <div class="caption">@Labels.EmployeeInfo</div>
                             </div>
                             <div class="portlet-body">
                                 <div class="row">

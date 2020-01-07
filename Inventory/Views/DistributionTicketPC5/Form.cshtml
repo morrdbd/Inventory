@@ -19,7 +19,7 @@
                 <div class="col-md-3 form-group">
                     <label>@Labels.TicketNumber</label>
                     <div class="col-md-8">
-                        <input type="text" name="TicketNumber" id="TicketNumber" value="@Model.TicketNumber" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="TicketNumber" id="TicketNumber" value="@Model.TicketNumber" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-3 form-group">
@@ -31,7 +31,7 @@
                 <div class="col-md-6 form-group">
                     <label>@Labels.Warehouse</label>
                     <div class="col-md-8">
-                        <input type="text" name="Warehouse" id="Warehouse" value="@Model.Warehouse" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="Warehouse" id="Warehouse" value="@Model.Warehouse" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
@@ -39,7 +39,7 @@
                 <div class="col-md-3 form-group">
                     <label>@Labels.RequestNumber</label>
                     <div class="col-md-8">
-                        <input type="text" name="RequestNumber" id="RequestNumber" value="@Model.RequestNumber" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="RequestNumber" id="RequestNumber" value="@Model.RequestNumber" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-3 form-group">
@@ -51,7 +51,7 @@
                 <div class=" col-md-6 form-group">
                     <label>@Labels.Requester</label>
                     <div class="col-md-8">
-                        @Html.DropDownList("BranchID", ViewBag.BranchDrp as SelectList, Labels.please_select, new { @class = "form-control", @ID = "BranchID", @Required="required" })
+                        @Html.DropDownList("BranchID", ViewBag.BranchDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BranchID", @Required="required" })
                     </div>
                 </div>
             </section>
@@ -144,7 +144,7 @@
                             </div>
                             <div class="form-group">
                                 <label>@Labels.Unit</label>
-                                @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control", id = "UnitID", @required = "required" })
+                                @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", id = "UnitID", @required = "required" })
                             </div>
                         </div>
                         <div class="col-md-6">

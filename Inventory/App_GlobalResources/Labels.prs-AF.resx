@@ -912,6 +912,21 @@
   <data name="Warehouse" xml:space="preserve">
     <value>تحویلخانه توزیع کننده</value>
   </data>
+  <data name="BranchName" xml:space="preserve">
+    <value>نام شعبه</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>کارمند</value>
+  </data>
+  <data name="EmployeeInfo" xml:space="preserve">
+    <value>معلومات کارمند</value>
+  </data>
+  <data name="EmployeeList" xml:space="preserve">
+    <value>لست کارمندان</value>
+  </data>
+  <data name="Employees" xml:space="preserve">
+    <value>کارمندان</value>
+  </data>
   <data name="ItemInUse" xml:space="preserve">
     <value>اجناس در استعمال</value>
   </data>

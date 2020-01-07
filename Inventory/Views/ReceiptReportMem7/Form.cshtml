@@ -19,13 +19,13 @@
                 <div class="col-md-6 form-group">
                     <label>@Labels.ReportNumber</label>
                     <div class="col-md-8">
-                        <input type="text" name="ReportNumber" id="ReportNumber" value="@Model.ReportNumber" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="ReportNumber" id="ReportNumber" value="@Model.ReportNumber" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.organization</label>
                     <div class="col-md-8">
-                        <input type="text" name="Organization" id="Organization" value="@Model.Organization" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="Organization" id="Organization" value="@Model.Organization" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
@@ -39,7 +39,7 @@
                 <div class="col-md-6 form-group">
                     <label>@Labels.DeliveryPlace</label>
                     <div class="col-md-8">
-                        <input type="text" name="DeliveryPlace" id="DeliveryPlace" value="@Model.DeliveryPlace" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="DeliveryPlace" id="DeliveryPlace" value="@Model.DeliveryPlace" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
@@ -47,13 +47,13 @@
                 <div class="col-md-6 form-group">
                     <label>@Labels.SuggestionBillNumber</label>
                     <div class="col-md-8">
-                        <input type="text" name="SuggBillNumber" id="SuggBillNumber" value="@Model.SuggBillNumber" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="SuggBillNumber" id="SuggBillNumber" value="@Model.SuggBillNumber" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.ObtainedFromContractor</label>
                     <div class="col-md-8">
-                        <input type="text" name="ObtainedFromContractor" id="ObtainedFromContractor" value="@Model.ObtainedFromContractor" class="form-control" required data-msg="" placeholder="">
+                        <input type="text" name="ObtainedFromContractor" id="ObtainedFromContractor" value="@Model.ObtainedFromContractor" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
@@ -153,7 +153,7 @@
                             </div>
                             <div class="form-group">
                                 <label>@Labels.Unit</label>
-                                @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control", id = "UnitID", @required = "required" })
+                                @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", id = "UnitID", @required = "required" })
                             </div>
                         </div>
                         <div class="col-md-6">
