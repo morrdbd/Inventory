@@ -1,0 +1,199 @@
+﻿@model Inventory.Models.Tables.Product
+@{
+    ViewBag.Title = "Add Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _ImageUrl = string.IsNullOrWhiteSpace(Model.ImagePath) ? "/Content/resources/img/ProductImage.jpg" : Model.ImagePath;
+    var _ImageRequired = Model.ProductID == 0 ? "required":"";
+}
+<form action='@Url.Action("SaveProduct")' id="main_form" method="post" autocomplete="off" enctype="multipart/form-data">
+    <input type="hidden" name="ProductID" value="@Model.ProductID" />
+    <div class="portlet box blue-hoki margin-bottom-10">
+        <div class="portlet-title">
+            <div class="caption">
+                Product information
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <section class="col-md-8">
+                    <section class="row">
+                        <div class=" col-md-6 form-group">
+                            <label>Usage Type</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "UsageTypeID", @Required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Product Name</label>
+                            <div class="col-md-8">
+                                <input type="text" name="ProductName" id="ProductName" value="@Model.ProductName" class="form-control input-sm" required data-msg="" placeholder="">
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Product Code</label>
+                            <div class="col-md-8">
+                                <input type="text" name="SerialCodeNumber" id="SerialCodeNumber" value="@Model.SerialCodeNumber" class="form-control input-sm" data-msg="" placeholder="">
+                            </div>
+                        </div>
+                        <div class=" col-md-6 form-group">
+                            <label>Unit</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "UnitID" })
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class=" col-md-6 form-group">
+                            <label>Product Group</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("GroupID", ViewBag.GroupDrp as SelectList, Labels.please_select, new { @onchange = "loadCategory()", @class = "form-control input-sm", @ID = "GroupID", @Required = "required" })
+                            </div>
+                        </div>
+                        <div class=" col-md-6 form-group">
+                            <label>Product Category</label>
+                            <div class="col-md-8">
+                                <select id="CategoryID" name="CategoryID" class="form-control"></select>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class=" col-md-6 form-group">
+                            <label>Product Packing</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("PackingID", ViewBag.PackingDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "PackingID" })
+                            </div>
+                        </div>
+                        <div class=" col-md-6 form-group">
+                            <label>Product Size</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class=" col-md-6 form-group">
+                            <label>Product Origin</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
+                            </div>
+                        </div>
+                        <div class=" col-md-6 form-group">
+                            <label>Product Brand</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class="col-md-12 form-group">
+                            <label>Description</label>
+                            <div class="col-md-10">
+                                <textarea type="text" rows="4" name="Description" id="Description" class="form-control" data-msg="" placeholder="">@Model.Description</textarea>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+                <section class="col-md-4">
+                    <section class="row" style="">
+                        <div class="col-md-12 form-group" style="height:300px;">
+                            <img id="ProductPreview" class="img-thumbnail rounded" src="@_ImageUrl" style="width:100%; height:100%;" alt="Product Image" />
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label>Product Image</label>
+                            <div class="col-md-8">
+                                <input type="file" id="FileContent" @_ImageRequired name="FileContent"  accept="image/*" />
+                            </div>
+                        </div>
+                    </section>
+                </section>
+
+            </div>
+        </div>
+    </div>
+    <section class="row">
+        <div class="col-md-5">
+            <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>
+            <a href="@Url.Action("ProductSearch")" class="btn">@Labels.cancel</a>
+            <button type="reset" id="btnReset" class="btn btn-sm">@Labels.reset</button>
+        </div>
+    </section>
+</form>
+
+
+@section scripts{
+<script>
+        $(function () {
+            //Load the category
+            loadCategory();
+
+            $("#FileContent").change(function () {
+                var Files = this.files;
+                if (Files && Files[0]) {
+                    var fileType = Files[0].type;
+                    var reader = new FileReader;
+                    var image = new Image;
+                    reader.readAsDataURL(Files[0]);
+                    reader.onload = function (_file) {
+                        image.src = _file.target.result;
+                        image.onload = function () {
+                            $('#ProductPreview').prop('src', _file.target.result)
+                        }
+                    }
+                }
+            });
+
+            $("#main_form").validate({
+                submitHandler: function () {
+                    Metronic.blockUI({ animate: true });
+                    $("#main_form").ajaxSubmit({
+                        success: function (response) {
+                            if (response == true) {
+                                toastr.success("@Labels.operation_done_suc");
+                                window.location.href = '@Url.Action("ProductSearch")';
+                            } else if (response == "duplicate") {
+                                toastr.error("@Labels.duplicate_code");
+                            }
+                            else {
+                                toastr.error("@Labels.unable_to_update");
+                            }
+                        },
+                        error: function () {
+                            toastr.error("@Labels.unable_to_update");
+                        },
+                        complete: function () {
+                            Metronic.unblockUI();
+                        }
+                    })
+                }
+            })
+    })
+</script>
+    <script>
+        function loadCategory() {
+            var groupID = $('#GroupID').val()
+            if (groupID) {
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    url: '@Url.Action("CategoryAjax", "LookupHelper")', // URL to fetch second ddl
+                    data: "{id:'" + groupID + "'}",
+                    success: function (data) {
+                        $('#CategoryID').empty();
+                        $('#CategoryID').append('<option selected="selected" value="">' + "@Labels.please_select" + '</option>');
+                        $.each(data, function (i, d) {
+                            $('#CategoryID').append('<option value=' + d.Value + '>' + d.Text + '</option>');
+                        });
+                    },
+                    failure: function (data) {
+                        alert('error occured');
+                    }
+                });
+            }
+        }
+    </script>
+
+}
+

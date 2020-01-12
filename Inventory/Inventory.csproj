@@ -300,16 +300,18 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\DistributionTicketPC5Controller.cs" />
+    <Compile Include="Controllers\LookupHelperController.cs" />
     <Compile Include="Controllers\LookupsController.cs" />
     <Compile Include="Controllers\ReceiptReportMem7Controller.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperCode\AllowFileSizeAttribute.cs" />
     <Compile Include="Models\Procedures\Receipt_Report_Item.cs" />
     <Compile Include="Models\Procedures\Ticket_Item.cs" />
     <Compile Include="Models\Tables\Employee.cs" />
-    <Compile Include="Models\Tables\Item.cs" />
+    <Compile Include="Models\Tables\Product.cs" />
     <Compile Include="Models\Tables\Branch.cs" />
     <Compile Include="Models\Tables\ReceiptReportItem.cs" />
     <Compile Include="Models\Tables\Ticket.cs" />
@@ -2366,6 +2368,7 @@
     <Content Include="Content\resources\img\favicon.ico" />
     <Content Include="Content\resources\img\fp_min.png" />
     <Content Include="Content\resources\img\ira.png" />
+    <Content Include="Content\resources\img\ProductImage.jpg" />
     <Content Include="Content\resources\img\morr.png" />
     <Content Include="Content\resources\img\palm.png" />
     <Content Include="Content\resources\img\pdfPreivew.png" />
@@ -2954,11 +2957,12 @@
     <Content Include="Views\DistributionTicketPC5\Search.cshtml" />
     <Content Include="Views\ReceiptReportMem7\View.cshtml" />
     <Content Include="Views\ReceiptReportMem7\Search.cshtml" />
-    <Content Include="Views\Lookups\_ItemList.cshtml" />
     <Content Include="Views\Lookups\Item.cshtml" />
     <Content Include="Views\DistributionTicketPC5\ItemInUse.cshtml" />
     <Content Include="Views\ReceiptReportMem7\ItemInWarehouse.cshtml" />
     <Content Include="Views\Employee\Search.cshtml" />
+    <Content Include="Views\Lookups\ProductSearch.cshtml" />
+    <Content Include="Views\Lookups\ProductAdd.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -3035,9 +3039,8 @@
     <Folder Include="Content\assets\admin\pages\css\" />
     <Folder Include="Content\assets\admin\pages\img\" />
     <Folder Include="Content\assets_rtl\frontend\pages\temp\" />
-    <Folder Include="HelperCode\" />
     <Folder Include="Resources\" />
-    <Folder Include="Uploads\" />
+    <Folder Include="Uploads\ItemsImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

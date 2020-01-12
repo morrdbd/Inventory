@@ -25,10 +25,6 @@ namespace Inventory.Models.Repositories
         //    return query.ToList();
         //}
 
-        internal object ProvinceList(object language)
-        {
-            throw new NotImplementedException();
-        }
 
         //public List<Province> ProvinceList(string lang)
         //{
@@ -46,6 +42,10 @@ namespace Inventory.Models.Repositories
         {
             return db.LookupValues.Where(x => x.IsActive == true && x.LookupCode == lookup_code)
                 .OrderBy(x => lang == "prs" ? x.DrName : lang == "ps" ? x.PaName : x.EnName).OrderBy(l=>l.ForOrdering).ToList();
+        }
+        public string LookupName(string lang, int? _valueID)
+        {
+            return db.LookupValues.Where(l => l.IsActive == true && l.ValueId == _valueID).Select(l => lang == "prs" ? l.DrName : lang == "ps" ? l.PaName : l.EnName).FirstOrDefault();
         }
 
         public RecordUserInfo RecordInfo(string table, string pk, long id)

@@ -138,6 +138,22 @@ namespace Inventory.Models.ViewModels
         public int start { get; set; }
         public int length { get; set; }
     }
+    public class ProductSearch
+    {
+        public int? UsageTypeID { get; set; }
+
+        public int? GroupID { get; set; }
+
+        public int? CategoryID { get; set; }
+
+        public string ProductName { get; set; }
+
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
   
 
     public class chartData
