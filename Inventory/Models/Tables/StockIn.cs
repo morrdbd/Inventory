@@ -6,30 +6,31 @@ using System.Data.Entity.Spatial;
 
 namespace Inventory.Models
 {
-    public class ReceiptReport
+    public class StockIn
     {
-        public int ReceiptReportID { get; set; }
+        [Key]
+        public int StockInID { get; set; }
 
-        public int? ReportNumber { get; set; }
-
-        [StringLength(200)]
-        public string Organization { get; set; }
+        public string M7Number { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? ReceiptDate { get; set; }
+        public DateTime? StockInDate { get; set; }
 
-        public int? SuggBillNumber { get; set; }
+        public string OrderNumber { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? Mem3Date { get; set; }
+        public DateTime? OrderDate { get; set; }
 
         [StringLength(500)]
         public string DeliveryPlace { get; set; }
 
         [StringLength(500)]
-        public string ObtainedFromContractor { get; set; }
+        public string ContractorName { get; set; }
 
         public string Details { get; set; }
+
+        [StringLength(300)]
+        public string ScanPath { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -37,9 +38,6 @@ namespace Inventory.Models
 
         [Column(TypeName = "date")]
         public DateTime? InsertedDate { get; set; }
-
-        [NotMapped]
-        public string InsertedDateForm { get; set; }
 
         public int? LastUpdatedBy { get; set; }
 

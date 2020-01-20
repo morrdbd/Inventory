@@ -40,7 +40,7 @@
                         <div class=" col-md-6 form-group">
                             <label>Unit</label>
                             <div class="col-md-8">
-                                @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "UnitID" })
+                                @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @Required = "required", @ID = "UnitID" })
                             </div>
                         </div>
                     </section>

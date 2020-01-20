@@ -19,9 +19,9 @@ namespace Inventory.Models
 
         public DbSet<TicketItem> TicketItem { get; set; }
 
-        public DbSet<ReceiptReport> ReceiptReports { get; set; }
+        public DbSet<StockIn> StockIns { get; set; }
 
-        public DbSet<ReceiptReportItem> ReceiptReportItems { get; set; }
+        public DbSet<StockInItem> StockInItems { get; set; }
 
         public DbSet<Branch> Branches { get; set; }
 

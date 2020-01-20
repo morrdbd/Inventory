@@ -23,71 +23,6 @@ namespace Inventory.Controllers
         //******************************************************************************
         //***************************Product***********************************************
         //******************************************************************************
-        //[AccessControl("Search")]
-        //public ActionResult ItemSearch()
-        //{
-        //    var model = db.Items.ToList();
-        //    return View(model);
-        //}
-
-        //[AccessControl("Add,Edit")]
-        //public JsonResult SaveItem(Item model)
-        //{
-        //    if (model.ItemID != 0)
-        //    {
-        //        ModelState.Remove("ItemCode");
-        //    }
-        //    if (!ModelState.IsValid)
-        //    {
-        //        LogModelErrors();
-        //        return Json(false);
-        //    }
-        //    try
-        //    {
-        //        if (model.ItemID == 0)
-        //        {
-        //            model.IsActive = true;
-        //            db.Items.Add(model);
-        //        }
-        //        else
-        //        {
-        //            db.Entry(model).State = EntityState.Modified;
-        //            db.Entry(model).Property(x => x.IsActive).IsModified = false;
-        //            db.Entry(model).Property(x => x.ItemCode).IsModified = false;
-        //        }
-        //        db.SaveChanges();
-        //        return Json(true);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-        //    }
-        //    return Json(false);
-        //}
-
-        public JsonResult CheckProductDuplication(int id, int groupID, string productName)
-        {
-            var Any = !db.Products.Any(i => i.ProductID != id && i.GroupID == groupID && i.ProductName == productName);
-            return Json(Any);
-        }
-        //[AccessControl("View")]
-        //public JsonResult GetItem(int id = 0)
-        //{
-        //    var obj = db.Items.Find(id);
-        //    return Json(obj, JsonRequestBehavior.AllowGet);
-        //}
-
-        //[AccessControl("Delete")]
-        //public JsonResult DeleteRestoreItem(int id = 0, bool value = false)
-        //{
-        //    var row = db.Items.Find(id);
-        //    if (row != null)
-        //    {
-        //        row.IsActive = value;
-        //        db.SaveChanges();
-        //    }
-        //    return Json(true, JsonRequestBehavior.AllowGet);
-        //}
 
         //------------------------
         [HttpGet]
@@ -258,18 +193,6 @@ namespace Inventory.Controllers
             });
         }
 
-        //[AccessControl("View")]
-        //public ActionResult ProductView(int id = 0)
-        //{
-        //    var product = db.Products.Where(t => t.IsActive == true).SingleOrDefault(t => t.ProductID == id);
-        //    if (product == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    var model = CreateModel(ticket);
-        //    return View(model);
-        //}
-
         [AccessControl("View")]
         public JsonResult ProductGet(int id = 0)
         {
@@ -341,7 +264,7 @@ namespace Inventory.Controllers
                 string FileExtension = Path.GetExtension(model.FileContent.FileName);
 
                 FileName = model.ProductID + FileExtension;
-                string productIamgesFolder = ConfigurationManager.AppSettings["ProductImagesFolder"].ToString();
+                string productIamgesFolder = ConfigurationManager.AppSettings["ProductsImages"].ToString();
                 var filePathForDB = productIamgesFolder + FileName;
                 var UploadedFilePath = Server.MapPath(productIamgesFolder + FileName);
 

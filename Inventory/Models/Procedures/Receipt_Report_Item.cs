@@ -5,10 +5,11 @@ using System.Web;
 
 namespace Inventory.Models.Procedures
 {
-    public class Receipt_Report_Item
+    public class StockIn_Item
     {
         public int ID { get; set; }
-        public int ReceiptReportID { get; set; }
+        public int StockInID { get; set; }
+        public string ProductCode { get; set; }
         public int Quantity { get; set; }
         public string ItemDetails { get; set; }
         public int UnitPrice { get; set; }

@@ -53,108 +53,61 @@ namespace Inventory.Models.ViewModels
         public TicketItem[] TicketItems { get; set; }
     }
 
-    public class Receipt_Report_Form_VM
+    public class StockIn_Form_VM
     {
-        public int ReceiptReportID { get; set; }
+        public int StockInID { get; set; }
 
-        public int? ReportNumber { get; set; }
+        public string M7Number { get; set; }
 
-        [StringLength(200)]
-        public string Organization { get; set; }
+       
+        public string StockInDateForm { get; set; }
 
-        public string ReceiptDateVM { get; set; }
+        public string OrderNumber { get; set; }
 
-        public int? SuggBillNumber { get; set; }
-
-        public string Mem3DateVM { get; set; }
+        public string OrderDateForm { get; set; }
 
         [StringLength(500)]
         public string DeliveryPlace { get; set; }
 
         [StringLength(500)]
-        public string ObtainedFromContractor { get; set; }
+        public string ContractorName { get; set; }
 
         public string Details { get; set; }
 
-        public ReceiptReportItem[] ReceiptReportItems { get; set; }
+        public StockInItemVM[] StockInItems { get; set; }
     }
 
-    public class TicketSearch
+    public class StockInItemVM
     {
-        public int? TicketNumber { get; set; }
-        public int? RequestNumber { get; set; }
-        public int BranchID { get; set; }
-        public string DateFrom { get; set; }
-        public string DateTo { get; set; }
-        public int PageSize { get; set; }
-        public int? PageNo { get; set; }
-        public int draw { get; set; }
-        public int start { get; set; }
-        public int length { get; set; }
-    }
-    public class ItemInUseSearch
-    {
-        public int? TicketNumber { get; set; }
-        public int BranchID { get; set; }
-        public string DateFrom { get; set; }
-        public string DateTo { get; set; }
-        public int PageSize { get; set; }
-        public int? PageNo { get; set; }
-        public int draw { get; set; }
-        public int start { get; set; }
-        public int length { get; set; }
-    }
-    public class Receipt_Report_Search
-    {
-        public string DateFrom { get; set; }
-        public string DateTo { get; set; }
-        public int PageSize { get; set; }
-        public int? PageNo { get; set; }
-        public int draw { get; set; }
-        public int start { get; set; }
-        public int length { get; set; }
-    }
+        public int ID { get; set; }
 
-    public class Item_In_Warehouse_Search
-    {
-        public string DateFrom { get; set; }
-        public string DateTo { get; set; }
-        public int PageSize { get; set; }
-        public int? PageNo { get; set; }
-        public int draw { get; set; }
-        public int start { get; set; }
-        public int length { get; set; }
-    }
-    public class Employee_Search
-    {
-        public string sName { get; set; }
-        public string sFatherName { get; set; }
-        public int sBranchID { get; set; }
-        //public string DateFrom { get; set; }
-        //public string DateTo { get; set; }
-        public int PageSize { get; set; }
-        public int? PageNo { get; set; }
-        public int draw { get; set; }
-        public int start { get; set; }
-        public int length { get; set; }
-    }
-    public class ProductSearch
-    {
-        public int? UsageTypeID { get; set; }
+        public int StockInID { get; set; }
 
-        public int? GroupID { get; set; }
-
-        public int? CategoryID { get; set; }
+        public int ProductCode { get; set; }
 
         public string ProductName { get; set; }
 
-        public int PageSize { get; set; }
-        public int? PageNo { get; set; }
-        public int draw { get; set; }
-        public int start { get; set; }
-        public int length { get; set; }
+        public string UsageTypeName { get; set; }
+
+        public string ProductSizeName { get; set; }
+
+        public string ProductCategoryName { get; set; }
+
+        public string ProductGroupName { get; set; }
+
+        public string ProductOriginName { get; set; }
+
+        public string UnitName { get; set; }
+
+        public int Quantity { get; set; }
+
+        public int UnitPrice { get; set; }
+
+        public int TotalPrice { get; set; }
+
+        public string Remarks { get; set; }
+
     }
-  
 
     public class chartData
     {

@@ -1,4 +1,4 @@
-﻿@model Inventory.Models.ViewModels.ReceiptReportVM
+﻿@model Inventory.Models.ViewModels.StockInVM
 @{
     ViewBag.Title = Labels.ReceiptReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -41,27 +41,27 @@
                 </tr>
                 <tr>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.ReportNumber</th>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.ReportNumber</th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.M7Number</th>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.organization</th>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.Organization</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">Minstry Of MoRR</th>
 
                 </tr>
                 <tr>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.date</th>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.ReceiptDateVM</th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.StockInDateForm</th>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.DeliveryPlace</th>
                     <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.DeliveryPlace</th>
 
                 </tr>
                 <tr>
                     <th colspan="2" style="text-align:right; word-wrap:normal; width:20%">@Labels.SuggestionBillNumber </th>
-                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.SuggBillNumber</th>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Model.OrderNumber</th>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.ObtainedFromContractor</th>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.ObtainedFromContractor</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.ContractorName</th>
                 </tr>
                 <tr>
                     <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.Mem3Date</th>
-                    <th colspan="7" style="text-align:right; word-wrap:normal;">@Model.Mem3DateVM</th>
+                    <th colspan="7" style="text-align:right; word-wrap:normal;">@Model.OrderDateForm</th>
 
                 </tr>
                 <tr>
@@ -82,15 +82,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.ReceiptReportItems)
+                @foreach (var item in Model.StockInItems)
                 {
                     <tr>
-                        <th>@item.Quantity</th>
-                        <th>@item.UnitName</th>
-                        <th colspan="3">@item.ItemDetails</th>
-                        <th>@item.UnitPrice</th>
-                        <th>@item.TotalPrice</th>
-                        <th colspan="2">@item.Remarks</th>
+                        <th style="text-align:center;">@item.Quantity</th>
+                        <th style="text-align:center;">@item.UnitName</th>
+                        <th style="text-align:center;" colspan="3">@item.ProductName</th>
+                        <th style="text-align:center;">@item.UnitPrice</th>
+                        <th style="text-align:center;">@item.TotalPrice</th>
+                        <th style="text-align:center;" colspan="2">@item.Remarks</th>
                     </tr>
 
                 }
@@ -107,7 +107,7 @@
                     <th style="text-align:center;"></th>
                     <th colspan="3" style="text-align:center;"> ۱۳ مجموع قیمت</th>
                     <th style="text-align:center;">&nbsp;</th>
-                    <th style="text-align:center;">@Model.ReceiptReportItems.Sum(i=>i.TotalPrice)</th>
+                    <th style="text-align:center;">@Model.StockInItems.Sum(i=>i.TotalPrice)</th>
                     <th colspan="2" style="text-align:center;">افغانی </th>
                 </tr>
             </tbody>
@@ -145,14 +145,6 @@
                         })
                     }
                 })
-            })
-            $('body').on('click', '#btn_print', function (e) {
-                e.preventDefault();
-                var divToPrint = $("#print_area").html();
-                var newWin = window.open("");
-                newWin.document.write(divToPrint);
-                newWin.print();
-                newWin.close();
             })
         })
     </script>

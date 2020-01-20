@@ -53,7 +53,8 @@
                     <button type="submit" id="btnSearch" class="btn btn-sm green"><i class="fa fa-search"></i> @Labels.search</button>
                     <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3 form-group">
+                    <label>@Labels.RecordsPerPage</label>
                     <select name="PageSize" class="form-control input-sm pull-right" style="width:70px" id="drpLimit">
                         <option value="10" @(search.length == 10 ? "selected" : "")>10</option>
                         <option value="20" @(search.length == 20 ? "selected" : "")>20</option>
@@ -117,7 +118,7 @@
                             <div class="col-md-6 form-group">
                                 <label>Product Name</label>
                                 <div class="col-md-8">
-                                    <label class="form-control" id="ProductName"></label>
+                                    <label class="form-control" id="ProductNameView"></label>
                                 </div>
                             </div>
                         </section>
@@ -376,19 +377,37 @@
                 var url = "@Url.Action("ProductGet")/" + id;
                 $.get(url, function (response) {
                     $("#UsageTypeName").text(response.UsageTypeName);
-                    $("#ProductName").text(response.ProductName);
-                    $("#ProductCode").text(response.ProductCode);
-                    $("#UnitName").text(response.UnitName);
-                    $("#GroupName").text(response.GroupName);
-                    $("#CategoryName").text(response.CategoryName);
-                    $("#PackingName").text(response.PackingName);
-                    $("#SizeName").text(response.SizeName);
-                    $("#OriginName").text(response.OriginName);
-                    $("#BrandName").text(response.BrandName);
-                    $("#Description").text(response.Description);
+                    $("#ProductNameView").text(response.ProductName);
+                    console.log(response.ProductName);
+                    if(response.ProductCode){
+                        $("#ProductCode").text(response.ProductCode);
+                    }
+                    if(response.UnitName){
+                        $("#UnitName").text(response.UnitName);
+                    }
+                    if(response.GroupName){
+                        $("#GroupName").text(response.GroupName);
+                    }
+                    if(response.CategoryName){
+                        $("#CategoryName").text(response.CategoryName);
+                    }
+                    if(response.PackingName){
+                        $("#PackingName").text(response.PackingName);
+                    }
+                    if(response.SizeName){
+                        $("#SizeName").text(response.SizeName);
+                    }
+                    if(response.OriginName){
+                        $("#OriginName").text(response.OriginName);
+                    }
+                    if(response.BrandName){
+                        $("#BrandName").text(response.BrandName);
+                    }
+                    if(response.Description){
+                        $("#Description").text(response.Description);
+                    }
                     $('#ImagePath'). attr("src",response.ImagePath);
                     $('#popup_record').modal('show');
-                    console.log(JSON.stringify(response));
                 })
             })
 

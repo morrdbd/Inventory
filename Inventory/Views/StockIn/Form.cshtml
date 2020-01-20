@@ -1,4 +1,4 @@
-﻿@model Inventory.Models.ViewModels.ReceiptReportVM
+﻿@model Inventory.Models.ViewModels.StockInVM
 
 @{
     ViewBag.Title = Labels.ReceiptReport;
@@ -6,8 +6,8 @@
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
     string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
 }
-<form action="@Url.Action(Model.ReceiptReportID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
-    <input type="hidden" name="ReceiptReportID" id="ReceiptReportID" value="@Model.ReceiptReportID" />
+<form action="@Url.Action(Model.StockInID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
+    <input type="hidden" name="StockInID" id="StockInID" value="@Model.StockInID" />
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
             <div class="caption">
@@ -19,21 +19,21 @@
                 <div class="col-md-6 form-group">
                     <label>@Labels.ReportNumber</label>
                     <div class="col-md-8">
-                        <input type="text" name="ReportNumber" id="ReportNumber" value="@Model.ReportNumber" class="form-control input-sm" required data-msg="" placeholder="">
+                        <input type="text" name="M7Number" id="M7Number" value="@Model.M7Number" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label>@Labels.organization</label>
+                    <label>@Labels.ReceiptDate</label>
                     <div class="col-md-8">
-                        <input type="text" name="Organization" id="Organization" value="@Model.Organization" class="form-control input-sm" required data-msg="" placeholder="">
+                        <input type="text" name="StockInDateForm" id="StockInDateForm" value="@Model.StockInDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
             <section>
                 <div class="col-md-6 form-group">
-                    <label>@Labels.ReceiptDate</label>
+                    <label>ContractorName</label>
                     <div class="col-md-8">
-                        <input type="text" name="ReceiptDateVM" id="ReceiptDateVM" value="@Model.ReceiptDateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                        <input type="text" name="ContractorName" id="ContractorName" value="@Model.ContractorName" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
@@ -47,23 +47,19 @@
                 <div class="col-md-6 form-group">
                     <label>@Labels.SuggestionBillNumber</label>
                     <div class="col-md-8">
-                        <input type="text" name="SuggBillNumber" id="SuggBillNumber" value="@Model.SuggBillNumber" class="form-control input-sm" required data-msg="" placeholder="">
+                        <input type="text" name="OrderNumber" id="OrderNumber" value="@Model.OrderNumber" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
-                <div class="col-md-6 form-group">
-                    <label>@Labels.ObtainedFromContractor</label>
-                    <div class="col-md-8">
-                        <input type="text" name="ObtainedFromContractor" id="ObtainedFromContractor" value="@Model.ObtainedFromContractor" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
-                </div>
-            </section>
-            <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.Mem3Date</label>
                     <div class="col-md-8">
-                        <input type="text" name="Mem3DateVM" id="Mem3DateVM" value="@Model.Mem3DateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                        <input type="text" name="OrderDateForm" id="OrderDateForm" value="@Model.OrderDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
+                
+            </section>
+            <section class="row">
+                
             </section>
         </div>
     </div>
@@ -94,14 +90,14 @@
                 <tbody id="tbody_item">
                     @{
                         int index = 0;
-                        if (Model.ReceiptReportItems != null)
+                        if (Model.StockInItems != null)
                         {
-                            foreach (var item in Model.ReceiptReportItems)
+                            foreach (var item in Model.StockInItems)
                             {
                                 <tr>
                                     <td>@item.Quantity</td>
                                     <td>@item.UnitName</td>
-                                    <td>@item.ItemDetails</td>
+                                    <td>@item.ProductName</td>
                                     <td>@item.UnitPrice</td>
                                     <td>@item.TotalPrice</td>
                                     <td>@item.Remarks</td>
@@ -127,7 +123,6 @@
             </div>
         </div>
     </div>
-
     <section class="row">
         <div class="col-md-5">
             <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>
@@ -138,47 +133,95 @@
 
 <form id="item_form" method="post" action="" autocomplete="off">
     <div class="modal fade" id="item_modal" tabindex="-1" data-backdrop="static">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width:60%;">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <div class="modal-header" style="background-color:#67809F; padding-top:8px; padding-bottom:8px; color:white;">
+                    <button type="button" class="close red" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">@Labels.AddItem</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Product Code</label>
+                                <input type="number" name="ProductCodeInput" id="ProductCodeInput" class="form-control input-sm" data-rule-digits="true" data-msg="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Usage Type</label>
+                                @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm",@onclick= "loadProducts()", id = "UsageTypeID", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Item Name</label>
+                                <select id="ProductCode" name="ProductCode" required class="form-control"></select>
+                                @*@Html.DropDownList("ProductCode", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", id = "UsageTypeID", @required = "required" })*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Unit Name</label>
+                                <input type="text" id="UnitName" name="UnitName" class="form-control input-sm" readonly="readonly" data-msg="" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Product Size</label>
+                                <input type="text" id="ProductSize" name="ProductSize" class="form-control input-sm" readonly="readonly" data-msg="" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Product Category</label>
+                                <input type="text" id="ProductCategory" name="ProductCategory" class="form-control input-sm" readonly="readonly" data-msg="" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Product Group</label>
+                                <input type="text" id="ProductGroup" name="ProductGroup" class="form-control input-sm" readonly="readonly" data-msg="" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Product Origin</label>
+                                <input type="text" id="ProductOrigin" name="ProductOrigin" class="form-control input-sm" readonly="readonly" data-msg="" />
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>@Labels.Quantity</label>
                                 <input type="number" name="Quantity" class="form-control input-sm" required data-msg="" />
                             </div>
-                            <div class="form-group">
-                                <label>@Labels.Unit</label>
-                                @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", id = "UnitID", @required = "required" })
-                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>@Labels.UnitPrice</label>
-                                <input type="number" name="UnitPrice" class="form-control input-sm" data-rule-digits="true" data-msg="" />
-                            </div>
-                            <div class="form-group">
-                                <label>@Labels.Remarks</label>
-                                <input type="text" name="Remarks" class="form-control input-sm" data-msg="" />
+                                <input type="number" name="UnitPrice" class="form-control input-sm" required data-rule-digits="true" data-msg="" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label>@Labels.ItemDetails</label>
+                            <label>@Labels.Remarks</label>
                             <div class="col-md-10">
-                                <textarea type="text" name="ItemDetails" id="ItemDetails" class="form-control" required data-msg="" placeholder=""></textarea>
+                                <textarea type="text" name="Remarks" id="Remarks" class="form-control" data-msg="" placeholder=""></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn default btn-sm" data-dismiss="modal">@Labels.cancel</button>
                     <button type="submit" class="btn green btn-sm">@Labels.save</button>
+                    <button type="button" class="btn default btn-sm" data-dismiss="modal">@Labels.cancel</button>
+                    <button type="reset" id="btnResetModal" class="btn btn-sm">@Labels.reset</button>
                     <input type="hidden" name="index" value="-1">
                     <input type="hidden" name="ID" value="0">
                 </div>
@@ -187,13 +230,12 @@
     </div>
 </form>
 
-
 @section scripts{
     <script type="text/html" id="temp_item">
         <tr>
             <td>{{Quantity}}</td>
             <td>{{UnitName}}</td>
-            <td>{{ItemDetails}}</td>
+            <td>{{ProductName}}</td>
             <td>{{UnitPrice}}</td>
             <td>{{TotalPrice}}</td>
             <td>{{Remarks}}</td>
@@ -206,12 +248,35 @@
     <script>
         var model = @Html.Raw(Json.Encode(Model));
         $(function () {
-            var ReceiptReportItems = [];
-            var ReceiptReportID = '@Model.ReceiptReportID';
-            if (ReceiptReportID != '0') {
+            var StockInItems = [];
+            var StockInID = '@Model.StockInID';
+            if (StockInID != '0') {
                 //var model = JSON.parse($("#model_json").val());
-                ReceiptReportItems = model.ReceiptReportItems;
+                StockInItems = model.StockInItems;
             }
+            //Load Items
+
+            //Load Product Information
+            $('#ProductCode').change(function () {
+                var productCode = $(this).val();
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    url: '@Url.Action("LoadProductInfo", "StockIn")', // URL to fetch second ddl
+                    data: "{productCode:'" + productCode + "'}",
+                    success: function (data) {
+                        $("#ProductSize").val(data.ProductSize);
+                        $("#ProductCategory").val(data.ProductCategory);
+                        $("#ProductGroup").val(data.ProductGroup);
+                        $("#ProductOrigin").val(data.ProductOrigin);
+                        $("#UnitName").val(data.UnitName);
+                    },
+                    failure: function (data) {
+                        alert('error occured');
+                    }
+                });
+            });
 
             // FORM VALIDATION AND SUBMISSION
             $('#main_form').validate({
@@ -220,14 +285,12 @@
                         parseAll: true,
                         useIntKeysAsArrayIndex: true,
                     });
-                    data['ReceiptReportItems'] = ReceiptReportItems.filter(function (obj) { return obj != null; });
-                    if (data['ReceiptReportItems'].length == 0) {
+                    data['StockInItems'] = StockInItems.filter(function (obj) { return obj != null; });
+                    if (data['StockInItems'].length == 0) {
                         toastr.error('Please Add Item');
                         return;
                     }
-                    console.log("data is >>>>>> "+JSON.stringify(data));
                     var formData = ObjectToFormData(data);
-                    console.log("formData is >>>>>> " + JSON.stringify(formData));
                     //******************
                     Metronic.blockUI({ animate: true });
                     $.ajax({
@@ -262,27 +325,49 @@
 
             $('body').on('click', '.item_edit', function (e) {
                 e.preventDefault();
-                $('#item_modal').modal('show');
                 var index = $(this).data().index;
-                var row = ReceiptReportItems[index];
-                console.log("row is >>>>>>>"+JSON.stringify(row));
+                var row = StockInItems[index];
                 $('#item_form [name=Quantity]').val(row.Quantity);
                 $('#item_form [name=UnitID]').val(row.UnitID);
                 $('#item_form [name=ItemDetails]').val(row.ItemDetails);
                 $('#item_form [name=UnitPrice]').val(row.UnitPrice);
                 $('#item_form [name=Remarks]').val(row.Remarks);
-                $('#item_form [name=ItemID]').val(row.ItemID);
+                $('#item_form [name=ID]').val(row.ItemID);
+                $('#item_form [name=UsageTypeID]').val(row.UsageTypeID);
+                loadProducts(row.ProductCode);
+
+                $("#ProductSize").val(row.ProductSize);
+                $("#ProductCategory").val(row.ProductCategory);
+                $("#ProductGroup").val(row.ProductGroup);
+                $("#ProductOrigin").val(row.ProductOrigin);
+                $("#UnitName").val(row.UnitName);
+
                 $('#item_form [name=index]').val(index);
+                $('#item_modal').modal('show');
+
             })
 
             $('#item_form').validate({
                 submitHandler: function (form) {
+                    var isDuplicate = false;
+                    StockInItems.forEach(function(i){
+                        if(i.ProductCode == $('#ProductCode').val()){
+                            isDuplicate = true;
+                            return;
+                        }
+                    })
+                    if(isDuplicate){
+                        toastr.error("Duplicate Product");
+                        return;
+                    }
                     var row = $(form).serializeJSON();
-                    var _index = (row.index == -1) ? ReceiptReportItems.length : row.index;
+                    console.log("form data is >>>>>>>>>>>>>> "+JSON.stringify(row));
+                    var _index = (row.index == -1) ? StockInItems.length : row.index;
+
                     var tr = $('#temp_item').clone().html()
                     .replace("{{Quantity}}", row.Quantity)
-                    .replace("{{UnitName}}", $('#item_form [name=UnitID] option:selected').text())
-                    .replace("{{ItemDetails}}", row.ItemDetails)
+                    .replace("{{UnitName}}", row.UnitName)
+                    .replace("{{ProductName}}",$('#item_form [name=ProductCode] option:selected').text())
                     .replace("{{UnitPrice}}", row.UnitPrice)
                     .replace("{{TotalPrice}}", row.Quantity * row.UnitPrice)
                     .replace("{{Remarks}}", row.Remarks)
@@ -291,12 +376,15 @@
                         $('#tbody_item').append(tr);
                         $('#item_form').clearForm();
                         $('#item_form input:first').focus();
-                        ReceiptReportItems.push(row);
+                        StockInItems.push(row);
                     } else {
                         $('#tbody_item').find('[data-index=' + row.index + ']').closest('tr').replaceWith(tr);
                         $('#item_modal').modal('hide');
-                        ReceiptReportItems[row.index] = row;
+                        StockInItems[row.index] = row;
                     }
+                    $('#ProductCode').empty();
+                    $('#ProductCode').append('<option selected="selected" value="">'+"Product Name"+'</option>');
+
 
                 }
             })
@@ -308,13 +396,38 @@
 
             $('body').on('confirmed.bs.confirmation', '.item_delete', function (e) {
                 var index = $(this).data().index;
-                ReceiptReportItems[index] = null;
+                StockInItems[index] = null;
                 $(this).closest('tr').remove();
             })
     })
 
     </script>
-
+    <script>
+        function loadProducts(itemID) {
+            var usageTypeID = $('#UsageTypeID').val()
+            if (usageTypeID) {
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    url: '@Url.Action("ProductsByUsageType", "StockIn")', // URL to fetch second ddl
+                    data: "{usageTypeID:'" + usageTypeID + "'}",
+                    success: function (data) {
+                        $('#ProductCode').empty();
+                        $('#ProductCode').append('<option selected="selected" value="">'+"Product Name"+'</option>');
+                        $.each(data, function (i, d) {
+                            $('#ProductCode').append('<option value=' + d.Value + '>' + d.Text + '</option>');
+                            if(data.length == i+1 && itemID){
+                                $('#ProductCode').val(itemID);
+                            }
+                        });
+                    },
+                    failure: function (data) {
+                        alert('error occured');
+                    }
+                });
+            }}
+    </script>
 }
 
 

@@ -6,17 +6,15 @@ using System.Web;
 
 namespace Inventory.Models.Tables
 {
-    public class ReceiptReportItem
+    public class StockInItem
     {
         public int ID { get; set; }
 
-        public int ReceiptReportID { get; set; }
+        public int StockInID { get; set; }
+
+        public int ProductCode { get; set; }
 
         public int Quantity { get; set; }
-
-        public string ItemDetails { get; set; }
-
-        public int UnitID { get; set; }
 
         public int UnitPrice { get; set; }
 
