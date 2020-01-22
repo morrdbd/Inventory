@@ -30,7 +30,7 @@ namespace Inventory.Models.ViewModels
         public int start { get; set; }
         public int length { get; set; }
     }
-    public class Receipt_Report_Search
+    public class StockIn_Search
     {
         public string DateFrom { get; set; }
         public string DateTo { get; set; }

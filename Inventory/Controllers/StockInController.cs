@@ -51,7 +51,9 @@ namespace DOMoRR.Controllers
                 StockInItems = db.StockInItems.Where(i => i.IsActive == true && i.StockInID == model.StockInID)
                 .ToList().Select(i => new StockInItemVM
                 {
-                    ID=  i.ID,
+                    ID =  i.ID,
+                    UsageTypeID = db.Products.Where(p => p.IsActive == true && p.ProductCode == i.ProductCode).Select(p => p.UsageTypeID).FirstOrDefault(),
+                    ProductCode = i.ProductCode,
                     ProductName = db.Products.Where(p => p.IsActive == true && p.ProductCode == i.ProductCode).Select(p => p.ProductName).FirstOrDefault(),
                     UnitName = AdminRepo.LookupName(Language, db.Products.Where(p=>p.IsActive == true && p.ProductCode == i.ProductCode).Select(p=>p.UnitID).FirstOrDefault()),
                     Quantity = i.Quantity,
@@ -67,8 +69,8 @@ namespace DOMoRR.Controllers
         [AccessControl("Add")]
         public JsonResult Insert(StockIn_Form_VM model)
         {
-            //var _StockinDate = model.StockInDateForm.ToDate(Language);
-            //var _OrderDate = model.OrderDateForm.ToDate(Language);
+            var _StockinDate = model.StockInDateForm.ToDate(Language);
+            var _OrderDate = model.OrderDateForm.ToDate(Language);
             var errors = ModelState.Values.SelectMany(v => v.Errors);
 
             if (ModelState.IsValid == false)
@@ -84,8 +86,8 @@ namespace DOMoRR.Controllers
                     {
                         M7Number = model.M7Number,
                         OrderNumber = model.OrderNumber,
-                        StockInDate = model.StockInDateForm.ToDate(Language),
-                        OrderDate = model.OrderDateForm.ToDate(Language),
+                        StockInDate = _StockinDate,
+                        OrderDate = _OrderDate,
                         DeliveryPlace = model.DeliveryPlace,
                         ContractorName = model.ContractorName,
                         Details = model.Details,                       
@@ -137,6 +139,21 @@ namespace DOMoRR.Controllers
                                     ModifiedData = JsonConvert.SerializeObject(row),
                                 });
                                 db.SaveChanges();
+                                //Add item to item in hand
+                                var _stockInHand = db.InHandStocks.Where(s => s.ProductCode == _item.ProductCode).FirstOrDefault();
+                                if (_stockInHand != null)
+                                {
+                                    _stockInHand.Quantity += _item.Quantity;
+                                }else
+                                {
+                                    var newItem = new InHandStock()
+                                    {
+                                        ProductCode = _item.ProductCode,
+                                        Quantity = _item.Quantity
+                                    };
+                                    db.InHandStocks.Add(newItem);
+                                }
+                                db.SaveChanges();
                             }
                         }
                     }
@@ -157,35 +174,35 @@ namespace DOMoRR.Controllers
         [HttpGet]
         public ActionResult Search()
         {
-            ViewBag.search = new Receipt_Report_Search();
+            ViewBag.search = new StockIn_Search();
             return View("Search");
         }
 
-        //[AccessControl("Search")]
-        //public JsonResult ListPartial(Receipt_Report_Search search)
-        //{
-        //    var DateFrom = search.DateFrom.ToDate(Language);
-        //    var DateTo = search.DateTo.ToDate(Language);
-        //    var _Receipts = db.StockIns.Where(t => t.IsActive == true).ToList();
-        //    var data = _Receipts.Select(r => new
-        //    {
-        //        r.ReceiptReportID,
-        //        r.ReportNumber,
-        //        r.Organization,
-        //        ReceiptDate = r.ReceiptDate.ToDateString(Language),
-        //        r.DeliveryPlace,
-        //        r.SuggBillNumber,
-        //        r.ObtainedFromContractor,
-        //        Mem3DateVM = r.Mem3Date.ToDateString(Language),
-        //    }).ToList();
-        //    return Json(new
-        //    {
-        //        data = data.Skip(search.start).Take(search.length).ToList(),
-        //        recordsTotal = data.Count,
-        //        recordsFiltered = data.Count,
-        //        draw = search.draw,
-        //    });
-        //}
+        [AccessControl("Search")]
+        public JsonResult ListPartial(StockIn_Search search)
+        {
+            var DateFrom = search.DateFrom.ToDate(Language);
+            var DateTo = search.DateTo.ToDate(Language);
+            var _Receipts = db.StockIns.Where(t => t.IsActive == true).ToList();
+            var data = _Receipts.Select(r => new
+            {
+                r.StockInID,
+                r.M7Number,
+                StockInDate = r.StockInDate.ToDateString(Language),
+                r.ContractorName,
+                r.DeliveryPlace,
+                r.OrderNumber,
+                OrderDate = r.OrderDate.ToDateString(Language),
+                r.Details
+            }).ToList();
+            return Json(new
+            {
+                data = data.Skip(search.start).Take(search.length).ToList(),
+                recordsTotal = data.Count,
+                recordsFiltered = data.Count,
+                draw = search.draw,
+            });
+        }
 
         [AccessControl("Add")]
         public JsonResult ProductsByUsageType(int usageTypeID = 0)
@@ -356,25 +373,25 @@ namespace DOMoRR.Controllers
         //    return Json(false, JsonRequestBehavior.AllowGet);
         //}
 
-        //[AccessControl("Edit")]
-        //public ActionResult Edit(int id = 0)
-        //{
-        //    CreateDropDown();
-        //    var _ReceiptReport = db.ReceiptReports.SingleOrDefault(t => t.ReceiptReportID == id);
-        //    if (_ReceiptReport == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    var model = CreateModel(_ReceiptReport);
-        //    return View("Form", model);
-        //}
+        [AccessControl("Edit")]
+        public ActionResult Edit(int id = 0)
+        {
+            CreateDropDown();
+            var _stockIn = db.StockIns.SingleOrDefault(t => t.StockInID == id);
+            if (_stockIn == null)
+            {
+                return HttpNotFound();
+            }
+            var model = CreateModel(_stockIn);
+            return View("Form", model);
+        }
 
-        //[AccessControl("Search")]
-        //public ActionResult ItemInWarehouse()
-        //{
-        //    ViewBag.search = new Item_In_Warehouse_Search();
-        //    return View("ItemInWarehouse");
-        //}
+        [AccessControl("Search")]
+        public ActionResult ItemInWarehouse()
+        {
+            ViewBag.search = new Item_In_Warehouse_Search();
+            return View("ItemInWarehouse");
+        }
 
         //[AccessControl("Search")]
         //public JsonResult ListItemInWarehouse(Item_In_Warehouse_Search search)
@@ -401,6 +418,26 @@ namespace DOMoRR.Controllers
         //        draw = search.draw,
         //    });
         //}
+        //public void SaveScanImage(ArchiveDocument model)
+        //{
+        //    if (model.FileContent != null)
+        //    {
+        //        string FileName = Path.GetFileNameWithoutExtension(model.FileContent.FileName);
+
+        //        string FileExtension = Path.GetExtension(model.FileContent.FileName);
+
+        //        FileName = model.ID + FileExtension;
+        //        string ArchiveScanFolder = ConfigurationManager.AppSettings["ArchivesScan"].ToString();
+        //        var filePathForDB = ArchiveScanFolder + FileName;
+        //        var UploadedFilePath = Server.MapPath(ArchiveScanFolder + FileName);
+
+        //        var modelInDb = db.ArchiveDocuments.Where(s => s.ID == model.ID).FirstOrDefault();
+        //        modelInDb.FilePath = filePathForDB;
+        //        db.SaveChanges();
+        //        model.FileContent.SaveAs(UploadedFilePath);
+        //    }
+        //}
+
 
     }
 }

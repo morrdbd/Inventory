@@ -1,4 +1,4 @@
-﻿using DOMoRR.HelperCode;
+﻿using Inventory.HelperCode;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

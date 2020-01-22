@@ -313,6 +313,7 @@
     <Compile Include="Models\Tables\Employee.cs" />
     <Compile Include="Models\Tables\Product.cs" />
     <Compile Include="Models\Tables\Branch.cs" />
+    <Compile Include="Models\Tables\InHandStock.cs" />
     <Compile Include="Models\Tables\StockInItem.cs" />
     <Compile Include="Models\Tables\Ticket.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -2950,6 +2951,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="ApplicationInsights.config" />
+    <Content Include="Scripts\select2full.js" />
     <Content Include="Uploads\ProductsImages\13.jpeg" />
     <Content Include="Uploads\ProductsImages\13.jpg" />
     <Content Include="Uploads\ProductsImages\14.jpeg" />

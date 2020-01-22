@@ -40,6 +40,15 @@
     @RenderSection("styles", false)
 
     <link rel="shortcut icon" href="@Url.Content("~/Content/resources/img/favicon.ico")" />
+
+    <link href="~/Content/resources/select2/select2.min.css" rel="stylesheet" />
+
+    <link href="~/Content/resources/select2/select2-bootstrap.css" rel="stylesheet" />
+    <style>
+        span.select2-container {
+            z-index: 11000;
+        }
+    </style>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -79,8 +88,8 @@
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
-                            
-                            @if(_lang != "en")
+
+                            @if (_lang != "en")
                             {
                                 <li>
                                     <a href="@EnLink">
@@ -88,7 +97,7 @@
                                     </a>
                                 </li>
                             }
-                            @if(_lang != "pa")
+                            @if (_lang != "pa")
                             {
                                 <li>
                                     <a href="@PaLink">
@@ -96,8 +105,8 @@
                                     </a>
                                 </li>
                             }
-                            @if(_lang != "dr")
-                            { 
+                            @if (_lang != "dr")
+                            {
                                 <li>
                                     <a href="@DrLink">
                                         <i class="fa fa-language"></i> @Labels.dari
@@ -148,7 +157,7 @@
                     </li>
                     @foreach (var menu in Menu.Where(x => x.SuperMenuId == 0))
                     {
-                        if(!_user.HasAccess(menu.ModuleId, menu.ActionType))
+                        if (!_user.HasAccess(menu.ModuleId, menu.ActionType))
                         {
                             continue;
                         }
@@ -157,46 +166,46 @@
                                 <i class="@menu.Icon"></i>
                                 <span class="title">@menu.Name</span>
                                 @if (menu.MenuId == ViewBag.ActiveMenu1)
-                                { <span class="selected"></span> }
+                                {<span class="selected"></span>}
                                 @if (menu.HasSubMenu)
-                                { <span class="arrow @(menu.MenuId == ViewBag.ActiveMenu1 ? "open" : "")"></span>}
+                                {<span class="arrow @(menu.MenuId == ViewBag.ActiveMenu1 ? "open" : "")"></span>}
                             </a>
                             @if (menu.HasSubMenu)
                             {
                                 <ul class="sub-menu">
-                                @foreach (var menu2 in Menu.Where(x => x.SuperMenuId == menu.MenuId))
-                                {
-                                    if (!_user.HasAccess(menu2.ModuleId, menu2.ActionType))
+                                    @foreach (var menu2 in Menu.Where(x => x.SuperMenuId == menu.MenuId))
                                     {
-                                        continue;
-                                    }
-                                    <li class="@(menu2.MenuId == ViewBag.ActiveMenu2 ? "active open" : "")">
-                                        <a href="@(menu2.HasSubMenu ? "javascript:;" : Url.Action(menu2.Action, menu2.Controller))">
-                                            <i class="@menu2.Icon"></i>
-                                            @menu2.Name
-                                            @if (menu2.HasSubMenu)
-                                            { <span class="arrow @(false ? "open" : "")"></span>}
-                                        </a>
-                                        @if (menu2.HasSubMenu)
+                                        if (!_user.HasAccess(menu2.ModuleId, menu2.ActionType))
                                         {
-                                            <ul class="sub-menu">
-                                                @foreach (var menu3 in Menu.Where(x => x.SuperMenuId == menu2.MenuId))
-                                                {
-                                                    if (!_user.HasAccess(menu3.ModuleId, menu3.ActionType))
-                                                    {
-                                                        continue;
-                                                    }
-                                                    <li class="@(menu3.MenuId == ViewBag.ActiveMenu3 ? "active" : "")">
-                                                        <a href="@Url.Action(menu3.Action, menu3.Controller)">
-                                                            <i class="@menu3.Icon"></i>
-                                                            @menu3.Name
-                                                        </a>
-                                                    </li>
-                                                }
-                                            </ul>
+                                            continue;
                                         }
-                                    </li>
-                                }
+                                        <li class="@(menu2.MenuId == ViewBag.ActiveMenu2 ? "active open" : "")">
+                                            <a href="@(menu2.HasSubMenu ? "javascript:;" : Url.Action(menu2.Action, menu2.Controller))">
+                                                <i class="@menu2.Icon"></i>
+                                                @menu2.Name
+                                                @if (menu2.HasSubMenu)
+                                                {<span class="arrow @(false ? "open" : "")"></span>}
+                                            </a>
+                                            @if (menu2.HasSubMenu)
+                                            {
+                                                <ul class="sub-menu">
+                                                    @foreach (var menu3 in Menu.Where(x => x.SuperMenuId == menu2.MenuId))
+                                                    {
+                                                        if (!_user.HasAccess(menu3.ModuleId, menu3.ActionType))
+                                                        {
+                                                            continue;
+                                                        }
+                                                        <li class="@(menu3.MenuId == ViewBag.ActiveMenu3 ? "active" : "")">
+                                                            <a href="@Url.Action(menu3.Action, menu3.Controller)">
+                                                                <i class="@menu3.Icon"></i>
+                                                                @menu3.Name
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                        </li>
+                                    }
                                 </ul>
                             }
                         </li>
@@ -234,7 +243,6 @@
         <button class="btn btn-xs pull-right" id="btn_update_sw" style="display:none">Update System</button>
     </div>
     <!-- END FOOTER -->
-
     <!-- CHANGE PASSWORD POPUP -->
     <form method="post" id="change_pass_form">
         <div id="change_pass_div" class="modal fade" data-width="200" data-backdrop="static">
@@ -243,7 +251,7 @@
                     <div class="modal-header">
                         @if (_user.AppUser.PassNeedsChange == false)
                         {
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         }
                         <h4 class="modal-title">@Labels.change_pass</h4>
                     </div>
@@ -265,7 +273,7 @@
                             <div class="form-actions right">
                                 @if (_user.AppUser.PassNeedsChange == false)
                                 {
-                                <button type="button" class="btn default" data-dismiss="modal">@Labels.cancel</button>
+                                    <button type="button" class="btn default" data-dismiss="modal">@Labels.cancel</button>
                                 }
                                 <button type="submit" class="btn green">@Labels.save</button>
                             </div>
@@ -291,10 +299,12 @@
     <script src="@Url.Action("~/Content/assets/global/plugins/excanvas.min.js")"></script>
     <![endif]-->
     <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-    
+
     @Scripts.Render("~/bundles/corejs")
     @*<script src="@Url.Content("~/Content/resources/libs/jquery.cookie.js")"></script>
-    <script src="@Url.Content("~/Content/resources/libs/db.min.js")"></script>*@
+        <script src="@Url.Content("~/Content/resources/libs/db.min.js")"></script>*@
+
+    <script src="~/Scripts/select2.full.js"></script>
     <script>
         var mainvars = {
             lang: '@_lang',
@@ -340,6 +350,8 @@
     <script src="@Url.Content("~/Content/resources/ui-datepicker/scripts/jquery-1.6.2.min.js")"></script>
     <script src="@Url.Content("~/Content/resources/ui-datepicker/scripts/jquery.ui.datepicker-cc.all.min.js")"></script>
     <script src="~/Content/resources/ui-datepicker/scripts/jquery.ui.datetimepicker-addon.js"></script>
+
+
     <script>
         var ui = jQuery.noConflict(true);
         ui('.shpicker').datepicker({

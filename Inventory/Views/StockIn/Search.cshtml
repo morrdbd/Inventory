@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = Labels.SearchReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var search = ViewBag.search as Inventory.Models.ViewModels.Receipt_Report_Search;
+    var search = ViewBag.search as Inventory.Models.ViewModels.StockIn_Search;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
     var _canView = _user.HasAccess("ReceiptReportMem7", "View");
 }
@@ -55,12 +55,12 @@
             <thead>
                 <tr>
                     <th>@Labels.ReportNumber</th>
-                    <th>@Labels.organization</th>
-                    <th>@Labels.ReceiptDate</th>
-                    <th>@Labels.DeliveryPlace</th>
-                    <th>@Labels.SuggestionBillNumber</th>
-                    <th>@Labels.ObtainedFromContractor</th>
-                    <th>@Labels.Mem3Date</th>
+                    <th>Stock-In Date</th>
+                    <th>ContractorName</th>
+                    <th>DeliveryPlace</th>
+                    <th>OrderNumber</th>
+                    <th>OrderDate</th>
+                    <th>Details</th>
                     <th></th>
                 </tr>
             </thead>
@@ -117,18 +117,18 @@
                     },
                 },
                 columns: [
-                    { data: 'ReportNumber' },
-                    { data: 'Organization' },
-                    { data: 'ReceiptDate' },
+                    { data: 'M7Number' },
+                    { data: 'StockInDate' },
+                    { data: 'ContractorName' },
                     { data: 'DeliveryPlace' },
-                    { data: 'SuggBillNumber' },
-                    { data: 'ObtainedFromContractor'},
-                    { data: 'Mem3DateVM'},
+                    { data: 'OrderNumber'},
+                    { data: 'OrderDate'},
+                    { data: 'Details'},
                     {
                         data: null,
                         visible: canView,
                         render: function (row) {
-                            return '<a href="@Url.Action("View")/'+row.ReceiptReportID+'" title="@Labels.View" class="btn btn-xs blue"><i class="fa fa-eye"></i></a>';
+                            return '<a href="@Url.Action("View")/'+row.StockInID+'" title="@Labels.View" class="btn btn-xs blue"><i class="fa fa-eye"></i></a>';
                         }
                     }
                 ],

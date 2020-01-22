@@ -29,6 +29,8 @@ namespace Inventory.Models
 
         public DbSet<Employee> Employees { get; set; }
 
+        public DbSet<InHandStock> InHandStocks { get; set; }
+
 
         public InventoryDBContext() : base("InventoryCONN")
         {

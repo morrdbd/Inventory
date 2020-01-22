@@ -1,10 +1,12 @@
 ﻿using Inventory.Attributes;
+using Inventory.HelperCode;
 using Inventory.Models.Procedures;
 using Inventory.Models.Tables;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 using System.Web.Mvc;
 
@@ -74,12 +76,17 @@ namespace Inventory.Models.ViewModels
 
         public string Details { get; set; }
 
+        [AllowFileSize(ErrorMessage = "سایز فایل ضمیمه باید کمتر از 100 ام بی باشد")]
+        public HttpPostedFileWrapper FileContent { get; set; }
+
         public StockInItemVM[] StockInItems { get; set; }
     }
 
     public class StockInItemVM
     {
         public int ID { get; set; }
+
+        public int UsageTypeID { get; set; }
 
         public int StockInID { get; set; }
 
