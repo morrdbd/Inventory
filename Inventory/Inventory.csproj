@@ -330,6 +330,7 @@
     <Compile Include="Models\Tables\RoleAccess.cs" />
     <Compile Include="Models\Tables\SigninLog.cs" />
     <Compile Include="Models\Tables\TicketItem.cs" />
+    <Compile Include="Models\ViewModels\FileUpload.cs" />
     <Compile Include="Models\ViewModels\ReceiptReportItemVM.cs" />
     <Compile Include="Models\ViewModels\SearchViewModels.cs" />
     <Compile Include="Models\ViewModels\StockInVM.cs" />
@@ -2376,6 +2377,7 @@
     <Content Include="Content\resources\img\pdfPreivew.png" />
     <Content Include="Content\resources\img\user.jpg" />
     <Content Include="Content\resources\libs\angular.min.js" />
+    <Content Include="Content\resources\select2\select2-bootstrap.css" />
     <Content Include="Content\resources\src\dashboard_charts.js" />
     <Content Include="Content\resources\src\home_charts.js" />
     <Content Include="Content\resources\src\home_page.js" />
@@ -2951,7 +2953,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="ApplicationInsights.config" />
-    <Content Include="Scripts\select2full.js" />
+    <Content Include="Scripts\select2.full.js" />
     <Content Include="Uploads\ProductsImages\13.jpeg" />
     <Content Include="Uploads\ProductsImages\13.jpg" />
     <Content Include="Uploads\ProductsImages\14.jpeg" />
@@ -2973,6 +2975,7 @@
     <Content Include="Views\Employee\Search.cshtml" />
     <Content Include="Views\Lookups\ProductSearch.cshtml" />
     <Content Include="Views\Lookups\ProductAdd.cshtml" />
+    <Content Include="Content\resources\select2\select2.min.css" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -3050,6 +3053,7 @@
     <Folder Include="Content\assets\admin\pages\img\" />
     <Folder Include="Content\assets_rtl\frontend\pages\temp\" />
     <Folder Include="Resources\" />
+    <Folder Include="Uploads\StockInScan\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

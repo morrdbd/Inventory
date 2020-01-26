@@ -1,4 +1,5 @@
-﻿using Inventory.Models.Procedures;
+﻿using Inventory.HelperCode;
+using Inventory.Models.Procedures;
 using Inventory.Models.Tables;
 using System;
 using System.Collections.Generic;

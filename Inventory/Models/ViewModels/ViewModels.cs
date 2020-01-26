@@ -52,6 +52,7 @@ namespace Inventory.Models.ViewModels
 
         public string Details { get; set; }
 
+        
         public TicketItem[] TicketItems { get; set; }
     }
 
@@ -60,7 +61,6 @@ namespace Inventory.Models.ViewModels
         public int StockInID { get; set; }
 
         public string M7Number { get; set; }
-
        
         public string StockInDateForm { get; set; }
 
@@ -75,9 +75,6 @@ namespace Inventory.Models.ViewModels
         public string ContractorName { get; set; }
 
         public string Details { get; set; }
-
-        [AllowFileSize(ErrorMessage = "سایز فایل ضمیمه باید کمتر از 100 ام بی باشد")]
-        public HttpPostedFileWrapper FileContent { get; set; }
 
         public StockInItemVM[] StockInItems { get; set; }
     }

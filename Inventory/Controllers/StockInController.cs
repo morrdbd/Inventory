@@ -8,11 +8,13 @@ using Inventory.Models.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace DOMoRR.Controllers
+namespace Inventory.Controllers
 {
     public class StockInController : BaseController
     {
@@ -38,6 +40,7 @@ namespace DOMoRR.Controllers
 
         private StockInVM CreateModel(StockIn model)
         {
+            var _items = db.StockInItems.Where(i => i.IsActive == true && i.StockInID == model.StockInID).ToList();
             return new StockInVM()
             {
                 StockInID = model.StockInID,
@@ -52,6 +55,7 @@ namespace DOMoRR.Controllers
                 .ToList().Select(i => new StockInItemVM
                 {
                     ID =  i.ID,
+                    StockInID = i.StockInID,
                     UsageTypeID = db.Products.Where(p => p.IsActive == true && p.ProductCode == i.ProductCode).Select(p => p.UsageTypeID).FirstOrDefault(),
                     ProductCode = i.ProductCode,
                     ProductName = db.Products.Where(p => p.IsActive == true && p.ProductCode == i.ProductCode).Select(p => p.ProductName).FirstOrDefault(),
@@ -157,7 +161,6 @@ namespace DOMoRR.Controllers
                             }
                         }
                     }
-
                     trans.Commit();
                     return Json(_stockIn.StockInID);
                 }
@@ -183,7 +186,7 @@ namespace DOMoRR.Controllers
         {
             var DateFrom = search.DateFrom.ToDate(Language);
             var DateTo = search.DateTo.ToDate(Language);
-            var _Receipts = db.StockIns.Where(t => t.IsActive == true).ToList();
+            var _Receipts = db.StockIns.Where(t => t.IsActive == true).OrderByDescending(s => s.StockInDate).ToList();
             var data = _Receipts.Select(r => new
             {
                 r.StockInID,
@@ -246,132 +249,185 @@ namespace DOMoRR.Controllers
             return View("View", model);
         }
 
-        //[HttpPost]
-        //[AccessControl("Edit")]
-        //public JsonResult Update(Receipt_Report_Form_VM model)
-        //{
-        //    if (ModelState.IsValid == false)
-        //    {
-        //        LogModelErrors();
-        //        return Json(false);
-        //    }
-        //    using (var trans = db.Database.BeginTransaction())
-        //    {
-        //        try
-        //        {
-        //            var _ReceptReport = db.ReceiptReports.Find(model.ReceiptReportID);
-        //            if (_ReceptReport == null) return Json(false);
-        //            _ReceptReport.ReportNumber = model.ReportNumber;
-        //            _ReceptReport.Organization = model.Organization;
-        //            _ReceptReport.ReceiptDate = model.ReceiptDateVM.ToDate(Language);
-        //            _ReceptReport.DeliveryPlace = model.DeliveryPlace;
-        //            _ReceptReport.SuggBillNumber = model.SuggBillNumber;
-        //            _ReceptReport.ObtainedFromContractor = model.ObtainedFromContractor;
-        //            _ReceptReport.Mem3Date = model.Mem3DateVM.ToDate(Language);
-        //            _ReceptReport.Details = model.Details;
-        //            _ReceptReport.IsActive = true;
-        //            _ReceptReport.LastUpdatedBy = AppUser.Id;
-        //            _ReceptReport.LastUpdatedDate = DateTime.Now;
+        [HttpPost]
+        [AccessControl("Edit")]
+        public JsonResult Update(StockIn_Form_VM model)
+        {
+            if (ModelState.IsValid == false)
+            {
+                LogModelErrors();
+                return Json(false);
+            }
+            using (var trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var _StockIn = db.StockIns.Find(model.StockInID);
+                    if (_StockIn == null) return Json(false);
+                    _StockIn.M7Number = model.M7Number;
+                    _StockIn.StockInDate = model.StockInDateForm.ToDate(Language);
+                    _StockIn.ContractorName = model.ContractorName;
+                    _StockIn.DeliveryPlace = model.DeliveryPlace;
+                    _StockIn.OrderNumber = model.OrderNumber;
+                    _StockIn.OrderDate = model.OrderDateForm.ToDate(Language);
+                    _StockIn.Details = model.Details;
+                    _StockIn.IsActive = true;
+                    _StockIn.LastUpdatedBy = AppUser.Id;
+                    _StockIn.LastUpdatedDate = DateTime.Now;
+                    db.SaveChanges();
 
-        //            db.SaveChanges();
+                    db.ActivityLogs.Add(new ActivityLog
+                    {
+                        ModifiedTable = "StockIns",
+                        ModfiedId = _StockIn.StockInID,
+                        Action = "Update",
+                        UserId = AppUser.Id,
+                        ModifiedTime = DateTime.Now,
+                        ModifiedData = JsonConvert.SerializeObject(_StockIn),
+                    });
+                    db.SaveChanges();
+                    //Subtract the item from ItemInHand
+                    var _stockInItemsInDB = db.StockInItems.Where(x => x.StockInID == _StockIn.StockInID && x.IsActive == true).ToList();
+                    if (_stockInItemsInDB != null && _stockInItemsInDB.Count > 0)
+                    {
+                        foreach (var _item in _stockInItemsInDB)
+                        {
+                            var _stockInHandDB = db.InHandStocks.Where(i => i.ProductCode == _item.ProductCode).First();
+                            if (_stockInHandDB != null)
+                            {
+                                _stockInHandDB.Quantity -= _item.Quantity;
+                                db.SaveChanges();
+                            }
+                        }
+                    }
 
-        //            db.ActivityLogs.Add(new ActivityLog
-        //            {
-        //                ModifiedTable = "ReceiptReport",
-        //                ModfiedId = _ReceptReport.ReceiptReportID,
-        //                Action = "Update",
-        //                UserId = AppUser.Id,
-        //                ModifiedTime = DateTime.Now,
-        //                ModifiedData = JsonConvert.SerializeObject(_ReceptReport),
-        //            });
-        //            db.SaveChanges();
+                    db.StockInItems.Where(x => x.StockInID == _StockIn.StockInID).ToList().ForEach(x => x.IsActive = false);
 
-        //            db.ReceiptReportItems.Where(x => x.ReceiptReportID == _ReceptReport.ReceiptReportID).ToList().ForEach(x => x.IsActive = false);
-        //            db.SaveChanges();
-        //            if (model.ReceiptReportItems != null)
-        //            {
-        //                foreach (var row in model.ReceiptReportItems)
-        //                {
-        //                    if (row != null)
-        //                    {
-        //                        string action = row.ID == 0 ? "Insert" : "Update";
-        //                        if (row.ID == 0)
-        //                        {
-        //                            row.ReceiptReportID = _ReceptReport.ReceiptReportID;
-        //                            row.InsertedBy = AppUser.Id;
-        //                            row.InsertedDate = DateTime.Now;
-        //                            row.IsActive = true;
-        //                            db.ReceiptReportItems.Add(row);
-        //                        }
-        //                        else
-        //                        {
-        //                            var obj = db.ReceiptReportItems.Find(row.ID);
-        //                            if (obj != null)
-        //                            {
-        //                                obj.Quantity = row.Quantity;
-        //                                obj.UnitID = row.UnitID;
-        //                                obj.ItemDetails = row.ItemDetails;
-        //                                obj.UnitPrice = row.UnitPrice;
-        //                                obj.Remarks = row.Remarks;
-        //                                obj.LastUpdatedBy = AppUser.Id;
-        //                                obj.LastUpdatedDate = DateTime.Now;
-        //                                obj.IsActive = true;
-        //                            }
-        //                        }
-        //                        db.SaveChanges();
+                    db.SaveChanges();
+                    if (model.StockInItems != null)
+                    {
+                        foreach (var row in model.StockInItems)
+                        {
+                            if (row != null)
+                            {
+                                string action = row.ID == 0 ? "Insert" : "Update";
+                                if (row.ID == 0)
+                                {
+                                    var _newItem = new StockInItem() {
+                                        StockInID = _StockIn.StockInID,
+                                        ProductCode = row.ProductCode,
+                                        Quantity = row.Quantity,
+                                        UnitPrice = row.UnitPrice,
+                                        InsertedBy = AppUser.Id,
+                                        InsertedDate = DateTime.Now,
+                                        IsActive = true
+                                    };
+                                   
+                                    db.StockInItems.Add(_newItem);
+                                }
+                                else
+                                {
+                                    var obj = db.StockInItems.Find(row.ID);
+                                    if (obj != null)
+                                    {
+                                        obj.Quantity = row.Quantity;
+                                        obj.ProductCode = row.ProductCode;
+                                        obj.UnitPrice = row.UnitPrice;
+                                        obj.Remarks = row.Remarks;
+                                        obj.LastUpdatedBy = AppUser.Id;
+                                        obj.LastUpdatedDate = DateTime.Now;
+                                        obj.IsActive = true;
+                                    }
+                                }
+                                db.SaveChanges();
 
-        //                        db.ActivityLogs.Add(new ActivityLog
-        //                        {
-        //                            ModifiedTable = "ReceiptReportItems",
-        //                            ModfiedId = row.ID,
-        //                            Action = action,
-        //                            UserId = AppUser.Id,
-        //                            ModifiedTime = DateTime.Now,
-        //                            ModifiedData = JsonConvert.SerializeObject(row),
-        //                        });
-        //                        db.SaveChanges();
-        //                    }
-        //                }
-        //            }
-        //            trans.Commit();
-        //            return Json(_ReceptReport.ReceiptReportID);
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            trans.Rollback();
-        //            Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-        //        }
-        //    }
-        //    return Json(false);
-        //}
+                                db.ActivityLogs.Add(new ActivityLog
+                                {
+                                    ModifiedTable = "StockInItems",
+                                    ModfiedId = row.ID,
+                                    Action = action,
+                                    UserId = AppUser.Id,
+                                    ModifiedTime = DateTime.Now,
+                                    ModifiedData = JsonConvert.SerializeObject(row),
+                                });
+                                db.SaveChanges();
+                                //Add item to item in hand
+                                var _stockInHand = db.InHandStocks.Where(s => s.ProductCode == row.ProductCode).FirstOrDefault();
+                                if (_stockInHand != null)
+                                {
+                                    _stockInHand.Quantity += row.Quantity;
+                                }
+                                else
+                                {
+                                    var newItem = new InHandStock()
+                                    {
+                                        ProductCode = row.ProductCode,
+                                        Quantity = row.Quantity
+                                    };
+                                    db.InHandStocks.Add(newItem);
+                                }
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                    trans.Commit();
+                    return Json(_StockIn.StockInID);
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                }
+            }
+            return Json(false);
+        }
 
-        //[AccessControl("Delete")]
-        //public JsonResult Delete(int id = 0)
-        //{
-        //    try
-        //    {
-        //        var obj = db.ReceiptReports.Find(id);
-        //        if (obj != null)
-        //        {
-        //            obj.IsActive = false;
-        //            db.ActivityLogs.Add(new ActivityLog
-        //            {
-        //                ModifiedTable = "ReceiptReport",
-        //                ModfiedId = id,
-        //                Action = "Delete",
-        //                UserId = AppUser.Id,
-        //                ModifiedTime = DateTime.Now,
-        //            });
-        //            db.SaveChanges();
-        //            return Json(true, JsonRequestBehavior.AllowGet);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-        //    }
-        //    return Json(false, JsonRequestBehavior.AllowGet);
-        //}
+        [AccessControl("Delete")]
+        public JsonResult Delete(int id = 0)
+        {
+            using (var trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var _stockIn = db.StockIns.Find(id);
+                    if (_stockIn != null)
+                    {
+                        _stockIn.IsActive = false;
+                        db.ActivityLogs.Add(new ActivityLog
+                        {
+                            ModifiedTable = "ReceiptReport",
+                            ModfiedId = id,
+                            Action = "Delete",
+                            UserId = AppUser.Id,
+                            ModifiedTime = DateTime.Now,
+                        });
+                        db.SaveChanges();
+                        var _stockInItems = db.StockInItems.Where(s => s.StockInID == _stockIn.StockInID && s.IsActive == true).ToList();
+                        if(_stockInItems != null && _stockInItems.Count > 0)
+                        {
+                            foreach(var _item in _stockInItems){
+                                var _stockInHanddb = db.InHandStocks.Where(i => i.ProductCode == _item.ProductCode).First();
+                                if(_stockInHanddb != null)
+                                {
+                                    _stockInHanddb.Quantity -= _item.Quantity;
+                                    db.SaveChanges();
+                                }
+                            }
+                        }
+                        db.StockInItems.Where(s => s.StockInID == _stockIn.StockInID).ToList().ForEach(i => i.IsActive = false);
+                    }
+                    db.SaveChanges();
+                    trans.Commit();
+                return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                }
+            }
+            return Json(false,JsonRequestBehavior.AllowGet);
+        }
 
         [AccessControl("Edit")]
         public ActionResult Edit(int id = 0)
@@ -418,25 +474,34 @@ namespace DOMoRR.Controllers
         //        draw = search.draw,
         //    });
         //}
-        //public void SaveScanImage(ArchiveDocument model)
-        //{
-        //    if (model.FileContent != null)
-        //    {
-        //        string FileName = Path.GetFileNameWithoutExtension(model.FileContent.FileName);
+        public JsonResult SaveScanImage(FileUpload model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return Json(false);
+            }
+            try
+            {
+                string FileName = Path.GetFileNameWithoutExtension(model.FileContent.FileName);
 
-        //        string FileExtension = Path.GetExtension(model.FileContent.FileName);
+                string FileExtension = Path.GetExtension(model.FileContent.FileName);
 
-        //        FileName = model.ID + FileExtension;
-        //        string ArchiveScanFolder = ConfigurationManager.AppSettings["ArchivesScan"].ToString();
-        //        var filePathForDB = ArchiveScanFolder + FileName;
-        //        var UploadedFilePath = Server.MapPath(ArchiveScanFolder + FileName);
+                FileName = model.RecordID + FileExtension;
+                string StockInScanFolder = ConfigurationManager.AppSettings["StockInScan"].ToString();
+                var filePathForDB = StockInScanFolder + FileName;
+                var UploadedFilePath = Server.MapPath(StockInScanFolder + FileName);
 
-        //        var modelInDb = db.ArchiveDocuments.Where(s => s.ID == model.ID).FirstOrDefault();
-        //        modelInDb.FilePath = filePathForDB;
-        //        db.SaveChanges();
-        //        model.FileContent.SaveAs(UploadedFilePath);
-        //    }
-        //}
+                var modelInDb = db.StockIns.Where(s => s.StockInID == model.RecordID).FirstOrDefault();
+                modelInDb.FilePath = filePathForDB;
+                db.SaveChanges();
+                model.FileContent.SaveAs(UploadedFilePath);
+                return Json(true);
+            }
+            catch(Exception e)
+            {
+                return Json(false);
+            }
+        }
 
 
     }

@@ -75,7 +75,7 @@ namespace Inventory.Controllers
                             return Json("duplicate");
                         }
                         _action = "Insert";
-                        var _ProductCode = db.Products.OrderByDescending(p => p.ProductCode).Select(p => p.ProductCode).FirstOrDefault() + 1;
+                        int _ProductCode = (db.Products.Max(x => (int?)x.ProductCode) ?? 0) + 1;
                         model.ProductCode = _ProductCode;
                         model.IsActive = true;
                         model.InsertedBy = AppUser.Id;
