@@ -15,7 +15,7 @@ namespace Inventory.Controllers
     public class HomeController : BaseController
     {
         private InventoryDBContext db = new InventoryDBContext();
-        private ClientsRepocitory repo = new ClientsRepocitory();
+        private ProductRepocitory repo = new ProductRepocitory();
         public ActionResult Index()
         {
             ViewBag.DateFrom = Funcs.DateFrom("en");

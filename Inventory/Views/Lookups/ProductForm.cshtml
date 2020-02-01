@@ -127,7 +127,6 @@
         $(function () {
             //Load the category
             loadCategory();
-
             $("#FileContent").change(function () {
                 var Files = this.files;
                 if (Files && Files[0]) {
@@ -172,7 +171,8 @@
 </script>
     <script>
         function loadCategory() {
-            var groupID = $('#GroupID').val()
+            var groupID = $('#GroupID').val();
+            var categoryID = @Html.Raw(Json.Encode(Model.CategoryID));
             if (groupID) {
                 $.ajax({
                     type: "post",
@@ -185,6 +185,9 @@
                         $('#CategoryID').append('<option selected="selected" value="">' + "@Labels.please_select" + '</option>');
                         $.each(data, function (i, d) {
                             $('#CategoryID').append('<option value=' + d.Value + '>' + d.Text + '</option>');
+                            if (data.length == i + 1 && categoryID != '0') {
+                                $('#CategoryID').val(categoryID);
+                            }
                         });
                     },
                     failure: function (data) {

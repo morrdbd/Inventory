@@ -48,12 +48,12 @@ namespace Inventory.Models.ViewModels
 
         public string RequestDateVM { get; set; }
 
-        public int BranchID { get; set; }
+        public int EmployeeID { get; set; }
 
         public string Details { get; set; }
 
         
-        public TicketItem[] TicketItems { get; set; }
+        public DistributionItem[] TicketItems { get; set; }
     }
 
     public class StockIn_Form_VM
@@ -110,6 +110,40 @@ namespace Inventory.Models.ViewModels
         public int TotalPrice { get; set; }
 
         public string Remarks { get; set; }
+
+    }
+
+    public class DistributionItemVM
+    {
+        public int ID { get; set; }
+
+        public int DistributionID { get; set; }
+
+        public string UnitName { get; set; }
+
+        public int UsageTypeID { get; set; }
+
+        public int ProductCode { get; set; }
+
+        public string ProductName { get; set; }
+
+        public string UsageTypeName { get; set; }
+
+        public string ProductSizeName { get; set; }
+
+        public string ProductCategoryName { get; set; }
+
+        public string ProductGroupName { get; set; }
+
+        public string ProductOriginName { get; set; }
+
+        public int Quantity { get; set; }
+
+        public int UnitPrice { get; set; }
+
+        public int TotalPrice { get; set; }
+
+        public string DealWithAccount { get; set; }
 
     }
 

@@ -5,10 +5,10 @@ using System.Web;
 
 namespace Inventory.Models.Procedures
 {
-    public class Ticket_Item
+    public class Distribution_Item
     {
         public int ID { get; set; }
-        public int TicketID { get; set; }
+        public int DistributionID { get; set; }
         public int Quantity { get; set; }
         public string ItemDetails { get; set; }
         public int UnitPrice { get; set; }

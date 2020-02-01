@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Inventory.Models.Repositories
 {
-    public class ClientsRepocitory
+    public class ProductRepocitory
     {
         InventoryDBContext db = new InventoryDBContext();
         /// <summary>

@@ -9,7 +9,7 @@ namespace Inventory.Models.ViewModels
     {
         public int? TicketNumber { get; set; }
         public int? RequestNumber { get; set; }
-        public int BranchID { get; set; }
+        public int EmployeeID { get; set; }
         public string DateFrom { get; set; }
         public string DateTo { get; set; }
         public int PageSize { get; set; }
@@ -55,7 +55,8 @@ namespace Inventory.Models.ViewModels
     {
         public string sName { get; set; }
         public string sFatherName { get; set; }
-        public int sBranchID { get; set; }
+        public int? sDepartmentID { get; set; }
+        public string sOccupation { get; set; }
         //public string DateFrom { get; set; }
         //public string DateTo { get; set; }
         public int PageSize { get; set; }

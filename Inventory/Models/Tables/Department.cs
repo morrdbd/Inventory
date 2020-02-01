@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace Inventory.Models.Tables
 {
-    public class Branch
+    public class Department
     {
         [Key]
-        public int BranchID { get; set; }
+        public int DepartmentID { get; set; }
         [Required]
         public string EnName { get; set; }
         [Required]
@@ -18,6 +19,17 @@ namespace Inventory.Models.Tables
         public string PaName { get; set; }
 
         public string ForOrdering { get; set; }
+
         public bool IsActive { get; set; }
+
+        public int InsertedBy { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? InsertedDate { get; set; }
+
+        public int? LastUpdatedBy { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? LastUpdatedDate { get; set; }
     }
 }

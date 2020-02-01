@@ -18,10 +18,7 @@ namespace Inventory.Models.Tables
         [StringLength(300)]
         public string FatherName { get; set; }
 
-        [NotMapped]
-        public string BranchName { get; set; }
-
-        public int BranchID { get; set; }
+        public int DepartmentID { get; set; }
 
         [StringLength(300)]
         public string Occupation { get; set; }

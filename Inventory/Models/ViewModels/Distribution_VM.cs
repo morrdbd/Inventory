@@ -9,9 +9,9 @@ using System.Web;
 
 namespace Inventory.Models.ViewModels
 {
-    public class Ticket_VM
+    public class Distribution_VM
     {
-        public int TicketID { get; set; }
+        public int DistributionID { get; set; }
 
         public int? TicketNumber { get; set; }
 
@@ -24,13 +24,21 @@ namespace Inventory.Models.ViewModels
 
         public string RequestDateVM { get; set; }
 
-        public int BranchID { get; set; }
+        public int EmpID { get; set; }
 
-        public string BranchName { get; set; }
+        public string EmpName { get; set; }
+
+        public string EmpFatherName { get; set; }
+
+        public string EmpOccupation { get; set; }
+
+        public int EmpDepartmentID { get; set; }
+
+        public string EmpDepartmentName { get; set; }
 
         public string Details { get; set; }
 
-        public List<Ticket_Item> TicketItems { get; set; }
+        public List<DistributionItemVM> DistributionItems { get; set; }
     }
     
 

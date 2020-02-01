@@ -30,7 +30,7 @@ namespace Inventory.Controllers
         public ActionResult ProductAdd()
         {
             CreateDropDown();
-            return View(new Product());
+            return View("ProductForm",new Product());
         }
 
         private void CreateDropDown()
@@ -252,7 +252,7 @@ namespace Inventory.Controllers
             {
                 return HttpNotFound();
             }
-            return View("ProductAdd", product);
+            return View("ProductForm", product);
         }
 
         public void SaveProductImage(Product model)

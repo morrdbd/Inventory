@@ -1,78 +1,105 @@
-﻿@model Inventory.Models.ViewModels.StockInVM
+﻿@model Inventory.Models.ViewModels.Distribution_VM
 
 @{
-    ViewBag.Title = Labels.ReceiptReport;
+    var empSearch = ViewBag.emSearch as Inventory.Models.ViewModels.Employee_Search;
+
+    ViewBag.Title = Labels.DistributionTicket;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
     string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
-    var _ImageRequired = Model.StockInID == 0 ? "required" : "";
 }
-
-<form action="@Url.Action(Model.StockInID == 0 ? "Insert" : "Update")" id="main_form" method="post" autocomplete="off" enctype="multipart/form-data">
-    <input type="hidden" name="StockInID" id="StockInID" value="@Model.StockInID" />
+<form action="@Url.Action(Model.DistributionID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
+    <input type="hidden" name="DistributionID" value="@Model.DistributionID" />
+    <input type="hidden" name="EmpID" id="EmpID" value="@Model.EmpID" />
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
             <div class="caption">
-                @Labels.ReceiptReportInfo
+                Requester Information
+            </div>
+            <div class="actions">
+                <a href="#popup_employee" data-toggle="modal" class="btn btn-xs btn-circle blue-steel"><i class="fa fa-user"></i>Select Employee</a>
             </div>
         </div>
         <div class="portlet-body">
             <section class="row">
-                <div class="col-md-6 form-group">
-                    <label>@Labels.ReportNumber</label>
+                <div class="col-md-2 form-group">
+                    <label>@Labels.Name</label>
+                    <input type="text" name="EmpName" id="EmpName" readonly value="@Model.EmpName" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>@Labels.FatherName</label>
+                    <input type="text" name="EmpFatherName" id="EmpFatherName" readonly value="@Model.EmpFatherName" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>@Labels.Occupation</label>
+                    <input type="text" name="EmpOccupation" id="EmpOccupation" readonly value="@Model.EmpOccupation" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Department</label>
+                    <input type="text" name="EmpDepartmentName" id="EmpDepartmentName" readonly value="@Model.EmpDepartmentName" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="portlet box blue-hoki margin-bottom-10">
+        <div class="portlet-title">
+            <div class="caption">
+                @Labels.TicketAndRequestInfo
+            </div>
+        </div>
+        <div class="portlet-body">
+            <section class="row">
+                <div class="col-md-3 form-group">
+                    <label>@Labels.TicketNumber</label>
                     <div class="col-md-8">
-                        <input type="text" name="M7Number" id="M7Number" value="@Model.M7Number" class="form-control input-sm" required data-msg="" placeholder="">
+                        <input type="text" name="TicketNumber" id="TicketNumber" value="@Model.TicketNumber" class="form-control input-sm" required data-msg="" placeholder="">
+                    </div>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>@Labels.TicketIssedDate</label>
+                    <div class="col-md-8">
+                        <input type="text" name="TicketIssuedDateVM" id="TicketIssuedDateVM" value="@Model.TicketIssuedDateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label>@Labels.ReceiptDate</label>
+                    <label>@Labels.Warehouse</label>
                     <div class="col-md-8">
-                        <input type="text" name="StockInDateForm" id="StockInDateForm" value="@Model.StockInDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                        <input type="text" name="Warehouse" id="Warehouse" value="@Model.Warehouse" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
             <section class="row">
-                <div class="col-md-6 form-group">
-                    <label>ContractorName</label>
+                <div class="col-md-3 form-group">
+                    <label>@Labels.RequestNumber</label>
                     <div class="col-md-8">
-                        <input type="text" name="ContractorName" id="ContractorName" value="@Model.ContractorName" class="form-control input-sm" required data-msg="" placeholder="">
+                        <input type="text" name="RequestNumber" id="RequestNumber" value="@Model.RequestNumber" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                 </div>
-                <div class="col-md-6 form-group">
-                    <label>@Labels.DeliveryPlace</label>
+                <div class="col-md-3 form-group">
+                    <label>@Labels.RequestDate</label>
                     <div class="col-md-8">
-                        <input type="text" name="DeliveryPlace" id="DeliveryPlace" value="@Model.DeliveryPlace" class="form-control input-sm" required data-msg="" placeholder="">
+                        <input type="text" name="RequestDateVM" id="RequestDateVM" value="@Model.RequestDateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
-            </section>
-            <section class="row">
-                <div class="col-md-6 form-group">
-                    <label>@Labels.SuggestionBillNumber</label>
-                    <div class="col-md-8">
-                        <input type="text" name="OrderNumber" id="OrderNumber" value="@Model.OrderNumber" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
-                </div>
-                <div class="col-md-6 form-group">
-                    <label>@Labels.Mem3Date</label>
-                    <div class="col-md-8">
-                        <input type="text" name="OrderDateForm" id="OrderDateForm" value="@Model.OrderDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
-                    </div>
-                </div>
-            </section>
-            <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.Attachment</label>
                     <div class="col-md-8">
-                        <input type="file" id="FileContent" name="FileContent" @_ImageRequired accept="image/*,.pdf" />
+                        <input type="file" id="FileContent" name="FileContent" @(Model.DistributionID == 0 ? "required" : "") accept="image/*,.pdf" />
                     </div>
                 </div>
+                @*<div class=" col-md-6 form-group">
+            <label>@Labels.Requester</label>
+            <div class="col-md-8">
+                @Html.DropDownList("DistributionID", ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "DistributionID", @Required = "required" })
+            </div>
+        </div>*@
             </section>
         </div>
     </div>
 
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
-            <div class="caption">@Labels.ReceiptReportItems</div>
+            <div class="caption">@Labels.TicketItems</div>
             <div class="actions">
                 <a href="javascript:;" class="btn btn-xs btn-circle blue-steel" id="btn_add_item">
                     <i class="fa fa-plus"></i> @Labels.AddItem
@@ -88,7 +115,7 @@
                         <th>@Labels.ItemDetails</th>
                         <th>@Labels.UnitPrice</th>
                         <th>@Labels.TotalPrice</th>
-                        <th>@Labels.Remarks</th>
+                        <th>@Labels.DealWithAccount</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -96,9 +123,9 @@
                 <tbody id="tbody_item">
                     @{
                         int index = 0;
-                        if (Model.StockInItems != null)
+                        if (Model.DistributionItems != null)
                         {
-                            foreach (var item in Model.StockInItems)
+                            foreach (var item in Model.DistributionItems)
                             {
                                 <tr>
                                     <td>@item.Quantity</td>
@@ -106,7 +133,7 @@
                                     <td>@item.ProductName</td>
                                     <td>@item.UnitPrice</td>
                                     <td>@item.TotalPrice</td>
-                                    <td>@item.Remarks</td>
+                                    <td>@item.DealWithAccount</td>
                                     <td>
                                         <a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>
                                         <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="@index" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>
@@ -129,48 +156,48 @@
             </div>
         </div>
     </div>
+
     <section class="row">
         <div class="col-md-5">
             <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>
             <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
         </div>
     </section>
+
 </form>
-
-
 
 <form id="item_form" method="post" action="" autocomplete="off">
     <div class="modal fade" id="item_modal" tabindex="-1" data-backdrop="static">
         <div class="modal-dialog" style="width:60%;">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:#67809F; padding-top:8px; padding-bottom:8px; color:white;">
-                    <button type="button" class="close red" data-dismiss="modal" aria-hidden="true"></button>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">@Labels.AddItem</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Product Code</label>
+                        <div class="col-md-12 form-group">
+                            <label>Product Code</label>
+                            <div class="col-md-10">
                                 <input type="number" name="ProductCodeInput" id="ProductCodeInput" class="form-control input-sm ProductCodeSearchable" data-rule-digits="true" data-msg="" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Usage Type</label>
+                        <div class="col-md-6 form-group">
+                            <label>Usage Type</label>
+                            <div class="col-md-9">
                                 @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @onclick = "loadProducts()", id = "UsageTypeID", @required = "required" })
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Item Name</label>
+                        <div class="col-md-6 form-group">
+                            <label>Item Name</label>
+                            <div class="col-md-9">
                                 <select id="ProductCode" name="ProductCode" required class="form-control input-sm select2-single select2-hidden-accessible"></select>
-                                @*@Html.DropDownList("ProductCode", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", id = "UsageTypeID", @required = "required" })*@
                             </div>
                         </div>
                     </div>
+              
                     <div class="row">
                         <div class="col-md-2">
                             <div class="form-group">
@@ -203,25 +230,24 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>@Labels.Quantity</label>
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.Quantity</label>
+                            <div class="col-md-9">
                                 <input type="number" name="Quantity" class="form-control input-sm" required data-msg="" />
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>@Labels.UnitPrice</label>
-                                <input type="number" name="UnitPrice" class="form-control input-sm" required data-rule-digits="true" data-msg="" />
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.UnitPrice</label>
+                            <div class="col-md-9">
+                                <input type="number" name="UnitPrice" class="form-control input-sm" data-rule-digits="true" data-msg="" />
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            <label>@Labels.Remarks</label>
-                            <div class="col-md-10">
-                                <textarea type="text" name="Remarks" id="Remarks" class="form-control" data-msg="" placeholder=""></textarea>
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.DealWithAccount</label>
+                            <div class="col-md-9">
+                                <input type="text" name="DealWithAccount" class="form-control input-sm" data-msg="" />
                             </div>
                         </div>
                     </div>
@@ -238,9 +264,74 @@
     </div>
 </form>
 
+<div class="modal fade" id="popup_employee" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" style="width:800px;">
+        <div class="modal-content">
+            <div class="modal-header blue">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                Employee
+            </div>
+            <div class="portlet-body">
+                <form id="employee_search_form" autocomplete="off" class="margin-top-10">
+                    <section class="row">
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.Name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control input-sm" name="sName" value="@empSearch.sName" placeholder="@Labels.Name" id="sName" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.FatherName</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control input-sm" name="sFatherName" value="@empSearch.sFatherName" placeholder="@Labels.FatherName" id="sFatherName" />
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.Occupation</label>
+                            <div class="col-md-8">
+                                <input type="text" name="sOccupation" id="sOccupation" value="@empSearch.sOccupation" class="form-control input-sm" data-msg="" placeholder="@Labels.Occupation">
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Department</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("sDepartmentID", ViewBag.DepartmentDrp as SelectList, "Select Department", new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class="col-md-12 form-group" style="margin-left:10px; margin-right:10px;">
+                            <button type="submit" class="btn btn-sm blue "><i class="fa fa-search"></i> @Labels.search</button>
+                            <button type="reset" id="btnReset" class="btn btn-sm ">@Labels.reset</button>
+                        </div>
+                    </section>
+                </form>
+
+                <section class="row">
+                    <div class="col-md-12" id="list_div" style="overflow:auto">
+                        <table class="table table-striped table-hover table-condensed" id="employee_table">
+                            <thead>
+                                <tr>
+                                    <th>@Labels.Name</th>
+                                    <th>@Labels.FatherName</th>
+                                    <th>@Labels.Occupation</th>
+                                    <th>Department</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section scripts{
-    @*<link href="~/Content/css/select2.min.css" rel="stylesheet" />*@
-    @*<script src="~/Scripts/select2.min.js"></script>*@
     <script type="text/html" id="temp_item">
         <tr>
             <td>{{Quantity}}</td>
@@ -248,7 +339,7 @@
             <td>{{ProductName}}</td>
             <td>{{UnitPrice}}</td>
             <td>{{TotalPrice}}</td>
-            <td>{{Remarks}}</td>
+            <td>{{DealWithAccount}}</td>
             <td>
                 <a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="{{index}}"><i class="fa fa-edit"></i></a>
                 <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="{{index}}" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>
@@ -258,14 +349,13 @@
     <script>
         var model = @Html.Raw(Json.Encode(Model));
         $(function () {
-            var StockInItems = [];
-            var StockInID = '@Model.StockInID';
-            if (StockInID != '0') {
+            var DistributionItems = [];
+            var DistributionID = '@Model.DistributionID';
+            if (DistributionID != '0') {
                 //var model = JSON.parse($("#model_json").val());
-                StockInItems = model.StockInItems;
+                DistributionItems = model.DistributionItems;
             }
-            console.log("StockInItems >>>>>>>>>>>>>>>> "+JSON.stringify(StockInItems));
-            //Load Product Information
+
             $('#ProductCode').change(function () {
                 var productCode = $(this).val();
                 $.ajax({
@@ -290,19 +380,16 @@
             // FORM VALIDATION AND SUBMISSION
             $('#main_form').validate({
                 submitHandler: function (form) {
-
                     var data = $('#main_form').serializeJSON({
                         parseAll: true,
                         useIntKeysAsArrayIndex: true,
                     });
-                    data['StockInItems'] = StockInItems.filter(function (obj) { return obj != null; });
-                    if (data['StockInItems'].length == 0) {
+                    data['DistributionItems'] = DistributionItems.filter(function (obj) { return obj != null; });
+                    if (data['DistributionItems'].length == 0) {
                         toastr.error('Please Add Item');
                         return;
                     }
                     var formData = ObjectToFormData(data);
-
-                    console.log("form data is >>>>>>>> "+ JSON.stringify(formData));
                     //******************
                     Metronic.blockUI({ animate: true });
                     $.ajax({
@@ -313,14 +400,47 @@
                         contentType: false,
                         success: function (response) {
                             if (response != false) {
-                                saveImage(response);
-                                console.log("response received >>>>>>>>>><<<<<<");
-
+                                bootbox.alert('@Labels.operation_done_suc', function () {
+                                    window.location.href = '@Url.Action("View")/' + response;
+                                })
                             } else {
                                 toastr.error('@Labels.unable_to_update');
                             }
+                        },
+                        complete: function () {
+                            Metronic.unblockUI();
                         }
-                        
+                    })
+                }
+            })
+            // Employee search FORM VALIDATION AND SUBMISSION
+            $('#employee_form').validate({
+                submitHandler: function (form) {
+                    var data = $('#main_form').serializeJSON({
+                        parseAll: true,
+                        useIntKeysAsArrayIndex: true,
+                    });
+                    var formData = ObjectToFormData(data);
+                    //******************
+                    Metronic.blockUI({ animate: true });
+                    $.ajax({
+                        url: $('#employee_form').attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            if (response != false) {
+                                bootbox.alert('@Labels.operation_done_suc', function () {
+                                    window.location.href = '@Url.Action("View")/' + response;
+                                })
+                            } else {
+                                toastr.error('@Labels.unable_to_update');
+                            }
+                        },
+                        complete: function () {
+                            Metronic.unblockUI();
+                        }
                     })
                 }
             })
@@ -329,39 +449,29 @@
                 e.preventDefault();
                 $('#item_modal').modal('show');
                 $('#item_form').clearForm();
-                $('#item_form [name=ID]').val('0');
+                $('#item_form [name=ItemID]').val('0');
                 $('#item_form [name=index]').val('-1');
             })
 
             $('body').on('click', '.item_edit', function (e) {
                 e.preventDefault();
+                $('#item_modal').modal('show');
                 var index = $(this).data().index;
-                var row = StockInItems[index];
-                console.log("row is >>>>>>>>>>>>>"+ JSON.stringify(row));
+                var row = DistributionItems[index];
+                console.log("row is >>>>>>>"+JSON.stringify(row));
                 $('#item_form [name=Quantity]').val(row.Quantity);
                 $('#item_form [name=UnitID]').val(row.UnitID);
                 $('#item_form [name=ItemDetails]').val(row.ItemDetails);
                 $('#item_form [name=UnitPrice]').val(row.UnitPrice);
-                $('#item_form [name=Remarks]').val(row.Remarks);
-                $('#item_form [name=ID]').val(row.ID);
-                $('#item_form [name=UsageTypeID]').val(row.UsageTypeID);
-                loadProducts(row.ProductCode);
-
-                $("#ProductSize").val(row.ProductSize);
-                $("#ProductCategory").val(row.ProductCategory);
-                $("#ProductGroup").val(row.ProductGroup);
-                $("#ProductOrigin").val(row.ProductOrigin);
-                $("#UnitName").val(row.UnitName);
-
+                $('#item_form [name=DealWithAccount]').val(row.DealWithAccount);
+                $('#item_form [name=ItemID]').val(row.ItemID);
                 $('#item_form [name=index]').val(index);
-                $('#item_modal').modal('show');
-
             })
 
             $('#item_form').validate({
                 submitHandler: function (form) {
                     var isDuplicate = false;
-                    StockInItems.forEach(function(i){
+                    DistributionItems.forEach(function(i){
                         if(i.ProductCode == $('#ProductCode').val()){
                             isDuplicate = true;
                             return;
@@ -372,30 +482,30 @@
                         return;
                     }
                     var row = $(form).serializeJSON();
-                    console.log("form data is >>>>>>>>>>>>>> "+JSON.stringify(row));
-                    var _index = (row.index == -1) ? StockInItems.length : row.index;
-
+                    var _index = (row.index == -1) ? DistributionItems.length : row.index;
                     var tr = $('#temp_item').clone().html()
                     .replace("{{Quantity}}", row.Quantity)
                     .replace("{{UnitName}}", row.UnitName)
-                    .replace("{{ProductName}}",$('#item_form [name=ProductCode] option:selected').text())
+                    .replace("{{ProductName}}", $('#item_form [name=ProductCode] option:selected').text())
                     .replace("{{UnitPrice}}", row.UnitPrice)
                     .replace("{{TotalPrice}}", row.Quantity * row.UnitPrice)
-                    .replace("{{Remarks}}", row.Remarks)
+                    .replace("{{DealWithAccount}}", row.DealWithAccount)
                     .replace("{{index}}", _index);
                     if (row.index == -1) {
                         $('#tbody_item').append(tr);
                         $('#item_form').clearForm();
                         $('#item_form input:first').focus();
-                        StockInItems.push(row);
+                        DistributionItems.push(row);
                     } else {
                         $('#tbody_item').find('[data-index=' + row.index + ']').closest('tr').replaceWith(tr);
                         $('#item_modal').modal('hide');
-                        StockInItems[row.index] = row;
+                        console.log("row in item form valided +++++++"+JSON.stringify(row));
+                        DistributionItems[row.index] = row;
                     }
                     $('#ProductCode').empty();
                     $('#ProductCode').append('<option selected="selected" value="">'+"Product Name"+'</option>');
                     $("#select2-ProductCode-container").prop("title", "Product Name").text("Product Name");
+                    console.log("TicketItems are +++++++++"+JSON.stringify(DistributionItems));
 
                 }
             })
@@ -407,7 +517,7 @@
 
             $('body').on('confirmed.bs.confirmation', '.item_delete', function (e) {
                 var index = $(this).data().index;
-                StockInItems[index] = null;
+                DistributionItems[index] = null;
                 $(this).closest('tr').remove();
             })
 
@@ -417,8 +527,62 @@
                 placeholder: "Select a product code",
                 width: null,
                 containerCssClass: ':all:'
-            } );
+                });
+
+            $('#employee_search_form').submit(function (e, param) {
+                console.log(">>>>>>>>>>>>>>>>>>><<<<<<< Insdie the call funtion");
+                e.preventDefault();
+                Metronic.blockUI({
+                    target: '#list_div',
+                    animate: true
+                });
+                var data = $('#employee_search_form').serializeJSON();
+                var json = JSON.stringify(data);
+                var url = '@Url.Action("EmployeeList")';
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: json,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        console.log(JSON.stringify(response));
+                        $('#employee_table > tbody').empty();
+                        response.forEach(function(emp){
+                            var selectBtn = '<button class="btn btn-xs btn-primary btn_select_employee" data-id="' + emp.EmployeeID + '">Select</button>';
+                            $('#employee_table > tbody').append('<tr><td>'+emp.Name+'</td><td>'+emp.FatherName+'</td><td>'+emp.Occupation+'</td><td>'+emp.DepartmentName+'</td><td>'+selectBtn+'</td></tr>');
+                        })
+                        Metronic.unblockUI('#list_div');
+                    }
+                })
+            })
+
+            $('body').on('click', '.btn_select_employee', function (e) {
+                e.preventDefault();
+                //popup_employee
+                var tr = $(this).closest('tr');
+                var EmployeeID = $(this).data().id;
+                console.log(EmployeeID);
+                var Name = $(tr).find('td:first').text();
+                var FatherName = $(tr).find('td:nth-child(2)').text();
+                var Occpation = $(tr).find('td:nth-child(3)').text();
+                var Department = $(tr).find('td:nth-child(4)').text();
+                $('#EmpID').val(EmployeeID);
+                $('#EmpName').val(Name);
+                $('#EmpFatherName').val(FatherName);
+                $('#EmpOccupation').val(Occpation);
+                $('#EmpDepartmentName').val(Department);
+                $('#popup_employee').modal('hide');
+               // $('#employee_search_form').reset();
+                $("#employee_search_form").trigger("reset");
+
+                console.log("id is >>>>>>>>>>"+Name);
+                console.log("id is >>>>>>>>>>"+FatherName);
+                console.log("id is >>>>>>>>>>"+Occpation);
+                console.log("id is >>>>>>>>>>"+Department);
+
+            })
     })
+
     </script>
     <script>
         function saveImage(recordId){
@@ -493,6 +657,5 @@
 
         }
     </script>
+
 }
-
-

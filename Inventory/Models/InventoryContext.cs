@@ -15,15 +15,15 @@ namespace Inventory.Models
 
         public DbSet<RoleAccess> RoleAccess { get; set; }
 
-        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Distribution> Distributions { get; set; }
 
-        public DbSet<TicketItem> TicketItem { get; set; }
+        public DbSet<DistributionItem> DistributionItems { get; set; }
 
         public DbSet<StockIn> StockIns { get; set; }
 
         public DbSet<StockInItem> StockInItems { get; set; }
 
-        public DbSet<Branch> Branches { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         public DbSet<Product> Products { get; set; }
 

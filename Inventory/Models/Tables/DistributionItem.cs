@@ -6,17 +6,15 @@ using System.Web;
 
 namespace Inventory.Models.Tables
 {
-    public class TicketItem
+    public class DistributionItem
     {
         public int ID { get; set; }
 
-        public int TicketID { get; set; }
+        public int DistributionID { get; set; }
 
         public int Quantity { get; set; }
 
-        public int UnitID { get; set; }
-
-        public string ItemDetails { get; set; }
+        public int ProductCode { get; set; } 
 
         public int UnitPrice { get; set; }
 

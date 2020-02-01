@@ -21,9 +21,9 @@ namespace Inventory.Controllers
         [AccessControl("View")]
         public ActionResult Search()
         {
-            var branchList = db.Branches.Where(d => d.IsActive == true).OrderBy(d => d.ForOrdering).Select(d =>
-                new { d.BranchID, BranchName = Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName }).ToList();
-            ViewBag.BranchDrp = new SelectList(branchList, "BranchID", "BranchName");
+            var branchList = db.Departments.Where(d => d.IsActive == true).OrderBy(d => d.ForOrdering).Select(d =>
+                new { d.DepartmentID,DepartmentName = Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName }).ToList();
+            ViewBag.BranchDrp = new SelectList(branchList, "DepartmentID", "DepartmentName");
             ViewBag.search = new Employee_Search();
             return View("Search", new Employee());
         }
@@ -40,9 +40,9 @@ namespace Inventory.Controllers
             {
                 query = query.Where(c => c.Name.Contains(model.sFatherName));
             }
-            if (model.sBranchID != 0)
+            if (model.sDepartmentID != 0)
             {
-                query = query.Where(c => c.BranchID == model.sBranchID);
+                query = query.Where(c => c.DepartmentID == model.sDepartmentID);
             }
             var records = query.OrderBy(e => e.InsertedDate).ToList();
             var data = records.Select(e => new
@@ -50,7 +50,7 @@ namespace Inventory.Controllers
                 e.EmployeeID,
                 e.Name,
                 e.FatherName,
-                BranchName = db.Branches.Where(r => r.IsActive == true && r.BranchID == e.BranchID).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault(),
+                BranchName = db.Departments.Where(r => r.IsActive == true && r.DepartmentID == e.DepartmentID).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault(),
                 e.Occupation,
                 e.PhoneNumber,
                 e.IsActive

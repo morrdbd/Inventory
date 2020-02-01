@@ -6,10 +6,10 @@ using System.Data.Entity.Spatial;
 
 namespace Inventory.Models
 {
-    public class Ticket
+    public class Distribution
     {
         [Key]
-        public int TicketID { get; set; }
+        public int DistributionID { get; set; }
 
         public int? TicketNumber { get; set; }
 
@@ -22,7 +22,7 @@ namespace Inventory.Models
 
         public DateTime? RequestDate { get; set; }
 
-        public int BranchID { get; set; }
+        public int EmployeeID { get; set; }
 
         public string Details { get; set; }
 
