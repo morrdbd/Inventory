@@ -47,10 +47,10 @@ namespace Inventory.Controllers
             {
                 DistributionID = model.DistributionID,
                 TicketNumber = model.TicketNumber,
-                TicketIssuedDateVM = model.TicketIssuedDate.ToDateString(Language),
+                TicketIssuedDateForm = model.TicketIssuedDate.ToDateString(Language),
                 Warehouse = model.Warehouse,
                 RequestNumber = model.RequestNumber,
-                RequestDateVM = model.RequestDate.ToDateString(Language),
+                RequestDateForm = model.RequestDate.ToDateString(Language),
                 EmpID = model.EmployeeID,
                 EmpDepartmentName = db.Departments.Where(r => r.IsActive == true && r.DepartmentID == model.EmployeeID).Select(d =>
                 Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
@@ -117,7 +117,7 @@ namespace Inventory.Controllers
 
         [HttpPost]
         [AccessControl("Add")]
-        public JsonResult Insert(Ticket_Form_VM model)
+        public JsonResult Insert(Distribution_Form_VM model)
         {
             if (ModelState.IsValid == false)
             {
@@ -131,11 +131,11 @@ namespace Inventory.Controllers
                     var _distribution = new Distribution
                     {
                         TicketNumber = model.TicketNumber,
-                        TicketIssuedDate = model.TicketIssuedDateVM.ToDate(Language),
+                        TicketIssuedDate = model.TicketIssuedDateForm.ToDate(Language),
                         Warehouse = model.Warehouse,
                         RequestNumber = model.RequestNumber,
                         RequestDate = model.RequestDateVM.ToDate(Language),
-                        EmployeeID = model.EmployeeID,
+                        EmployeeID = model.EmpID,
                         Details = model.Details,
                         InsertedBy = AppUser.Id,
                         InsertedDate = DateTime.Now,
@@ -147,7 +147,7 @@ namespace Inventory.Controllers
 
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "Ticket",
+                        ModifiedTable = "Distribution",
                         ModfiedId = _distribution.DistributionID,
                         Action = "Insert",
                         UserId = AppUser.Id,
@@ -156,28 +156,42 @@ namespace Inventory.Controllers
                     });
                     db.SaveChanges();
 
-                    if (model.TicketItems != null)
+                    if (model.DistributionItems != null)
                     {
-                        foreach (var row in model.TicketItems)
+                        foreach (var row in model.DistributionItems)
                         {
                             if (row != null)
                             {
-                                row.DistributionID = _distribution.DistributionID;
-                                row.InsertedBy = AppUser.Id;
-                                row.InsertedDate = DateTime.Now;
-                                row.IsActive = true;
-                                db.DistributionItems.Add(row);
+                                var _item = new DistributionItem()
+                                {
+                                    DistributionID = row.DistributionID,
+                                    ProductCode = row.ProductCode,
+                                    Quantity = row.Quantity,
+                                    UnitPrice = row.UnitPrice,
+                                    DealWithAccount = row.DealWithAccount,
+                                    InsertedBy = AppUser.Id,
+                                    InsertedDate = DateTime.Now,
+                                    IsActive = true
+                                };
+                                
+                                db.DistributionItems.Add(_item);
                                 db.SaveChanges();
 
                                 db.ActivityLogs.Add(new ActivityLog
                                 {
-                                    ModifiedTable = "TicketItem",
+                                    ModifiedTable = "DistributionItem",
                                     ModfiedId = row.ID,
                                     Action = "Insert",
                                     UserId = AppUser.Id,
                                     ModifiedTime = DateTime.Now,
                                     ModifiedData = JsonConvert.SerializeObject(row),
                                 });
+                                db.SaveChanges();
+                                //minus item from item in hand
+                                var _stockInHand = db.InHandStocks.Where(s => s.ProductCode == _item.ProductCode).First();
+
+                                _stockInHand.Quantity -= _item.Quantity;
+
                                 db.SaveChanges();
                             }
                         }
@@ -267,98 +281,98 @@ namespace Inventory.Controllers
 
         [HttpPost]
         [AccessControl("Edit")]
-        public JsonResult Update(Ticket_Form_VM model)
+        public JsonResult Update(Distribution_Form_VM model)
         {
             if (ModelState.IsValid == false)
             {
                 LogModelErrors();
                 return Json(false);
             }
-            using (var trans = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    var _distribution = db.Distributions.Find(model.TicketID);
-                    if (_distribution == null) return Json(false);
-                    _distribution.TicketNumber = model.TicketNumber;
-                    _distribution.TicketIssuedDate = model.TicketIssuedDateVM.ToDate(Language);
-                    _distribution.Warehouse = model.Warehouse;
-                    _distribution.RequestNumber = model.RequestNumber;
-                    _distribution.RequestDate = model.RequestDateVM.ToDate(Language);
-                    _distribution.EmployeeID = model.EmployeeID;
-                    _distribution.Details = model.Details;
-                    _distribution.IsActive = true;
-                    _distribution.LastUpdatedBy = AppUser.Id;
-                    _distribution.LastUpdatedDate = DateTime.Now;
+//            using (var trans = db.Database.BeginTransaction())
+//            {
+//                try
+//                {
+//                    var _distribution = db.Distributions.Find(model.TicketID);
+//                    if (_distribution == null) return Json(false);
+//                    _distribution.TicketNumber = model.TicketNumber;
+//                    _distribution.TicketIssuedDate = model.TicketIssuedDateVM.ToDate(Language);
+//                    _distribution.Warehouse = model.Warehouse;
+//                    _distribution.RequestNumber = model.RequestNumber;
+//                    _distribution.RequestDate = model.RequestDateVM.ToDate(Language);
+//                    _distribution.EmployeeID = model.EmployeeID;
+//                    _distribution.Details = model.Details;
+//                    _distribution.IsActive = true;
+//                    _distribution.LastUpdatedBy = AppUser.Id;
+//                    _distribution.LastUpdatedDate = DateTime.Now;
 
-                    db.SaveChanges();
+//                    db.SaveChanges();
 
-                    db.ActivityLogs.Add(new ActivityLog
-                    {
-                        ModifiedTable = "Ticket",
-                        ModfiedId = _distribution.DistributionID,
-                        Action = "Update",
-                        UserId = AppUser.Id,
-                        ModifiedTime = DateTime.Now,
-                        ModifiedData = JsonConvert.SerializeObject(_distribution),
-                    });
-                    db.SaveChanges();
+//                    db.ActivityLogs.Add(new ActivityLog
+//                    {
+//                        ModifiedTable = "Ticket",
+//                        ModfiedId = _distribution.DistributionID,
+//                        Action = "Update",
+//                        UserId = AppUser.Id,
+//                        ModifiedTime = DateTime.Now,
+//                        ModifiedData = JsonConvert.SerializeObject(_distribution),
+//                    });
+//                    db.SaveChanges();
 
-                    db.DistributionItems.Where(x => x.DistributionID == _distribution.DistributionID).ToList().ForEach(x => x.IsActive = false);
-                    db.SaveChanges();
-                    if (model.TicketItems != null)
-                    {
-                        foreach (var row in model.TicketItems)
-                        {
-                            if (row != null)
-                            {
-                                string action = row.ID == 0 ? "Insert" : "Update";
-                                if (row.ID == 0)
-                                {
-                                    row.DistributionID = _distribution.DistributionID;
-                                    row.InsertedBy = AppUser.Id;
-                                    row.InsertedDate = DateTime.Now;
-                                    row.IsActive = true;
-                                    db.DistributionItems.Add(row);
-                                }
-                                else
-                                {
-                                    var obj = db.DistributionItems.Find(row.ID);
-                                    if (obj != null)
-                                    {
-                                        obj.Quantity = row.Quantity;
-                                        obj.ProductCode = row.ProductCode;
-                                        obj.UnitPrice = row.UnitPrice;
-                                        obj.DealWithAccount = row.DealWithAccount;
-                                        obj.LastUpdatedBy = AppUser.Id;
-                                        obj.LastUpdatedDate = DateTime.Now;
-                                        obj.IsActive = true;
-                                    }
-                                }
-                                db.SaveChanges();
+//                    db.DistributionItems.Where(x => x.DistributionID == _distribution.DistributionID).ToList().ForEach(x => x.IsActive = false);
+//                    db.SaveChanges();
+//                    if (model.TicketItems != null)
+//                    {
+//                        foreach (var row in model.TicketItems)
+//                        {
+//                            if (row != null)
+//                            {
+//                                string action = row.ID == 0 ? "Insert" : "Update";
+//                                if (row.ID == 0)
+//                                {
+//                                    row.DistributionID = _distribution.DistributionID;
+//                                    row.InsertedBy = AppUser.Id;
+//                                    row.InsertedDate = DateTime.Now;
+//                                    row.IsActive = true;
+//                                    db.DistributionItems.Add(row);
+//                                }
+//                                else
+//                                {
+//                                    var obj = db.DistributionItems.Find(row.ID);
+//                                    if (obj != null)
+//                                    {
+//                                        obj.Quantity = row.Quantity;
+//                                        obj.ProductCode = row.ProductCode;
+//                                        obj.UnitPrice = row.UnitPrice;
+//                                        obj.DealWithAccount = row.DealWithAccount;
+//                                        obj.LastUpdatedBy = AppUser.Id;
+//                                        obj.LastUpdatedDate = DateTime.Now;
+//                                        obj.IsActive = true;
+//                                    }
+//                                }
+//                                db.SaveChanges();
 
-                                db.ActivityLogs.Add(new ActivityLog
-                                {
-                                    ModifiedTable = "TicketItem",
-                                    ModfiedId = row.ID,
-                                    Action = action,
-                                    UserId = AppUser.Id,
-                                    ModifiedTime = DateTime.Now,
-                                    ModifiedData = JsonConvert.SerializeObject(row),
-                                });
-                                db.SaveChanges();
-                            }
-                        }
-                    }
-            trans.Commit();
-            return Json(_distribution.DistributionID);
-        }
-                catch (Exception e)
-                {
-                    trans.Rollback();
-                    Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-    }
-}
+//                                db.ActivityLogs.Add(new ActivityLog
+//                                {
+//                                    ModifiedTable = "TicketItem",
+//                                    ModfiedId = row.ID,
+//                                    Action = action,
+//                                    UserId = AppUser.Id,
+//                                    ModifiedTime = DateTime.Now,
+//                                    ModifiedData = JsonConvert.SerializeObject(row),
+//                                });
+//                                db.SaveChanges();
+//                            }
+//                        }
+//                    }
+//            trans.Commit();
+//            return Json(_distribution.DistributionID);
+//        }
+//                catch (Exception e)
+//                {
+//                    trans.Rollback();
+//                    Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+//    }
+//}
             return Json(false);
         }
 

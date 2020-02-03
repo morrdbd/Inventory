@@ -32,8 +32,6 @@ namespace Inventory.Models
 
         [Column(TypeName = "date")]
         public DateTime? InsertedDate { get; set; }
-        [NotMapped]
-        public string InsertedDateForm { get; set; }
 
         public int? LastUpdatedBy { get; set; }
 

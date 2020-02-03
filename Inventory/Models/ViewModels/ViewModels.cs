@@ -33,29 +33,6 @@ namespace Inventory.Models.ViewModels
         public int? PageNo { get; set; }
     }
 
-    public class Ticket_Form_VM
-    {
-        public int TicketID { get; set; }
-
-        public int? TicketNumber { get; set; }
-
-        public string TicketIssuedDateVM { get; set; }
-
-        [StringLength(500)]
-        public string Warehouse { get; set; }
-
-        public int? RequestNumber { get; set; }
-
-        public string RequestDateVM { get; set; }
-
-        public int EmployeeID { get; set; }
-
-        public string Details { get; set; }
-
-        
-        public DistributionItem[] TicketItems { get; set; }
-    }
-
     public class StockIn_Form_VM
     {
         public int StockInID { get; set; }
@@ -113,6 +90,37 @@ namespace Inventory.Models.ViewModels
 
     }
 
+    public class Distribution_Form_VM
+    {
+        public int DistributionID { get; set; }
+
+        public int? TicketNumber { get; set; }
+
+        public string TicketIssuedDateForm { get; set; }
+
+        [StringLength(500)]
+        public string Warehouse { get; set; }
+
+        public int? RequestNumber { get; set; }
+
+        public string RequestDateVM { get; set; }
+
+        public int EmpID { get; set; }
+
+        public string EmpName { get; set; }
+
+        public string EmpFatherName { get; set; }
+
+        public string EmpOccupation { get; set; }
+
+        public int EmpDepartmentID { get; set; }
+
+        public string EmpDepartmentName { get; set; }
+
+        public string Details { get; set; }
+
+        public DistributionItemVM[] DistributionItems { get; set; }
+    }
     public class DistributionItemVM
     {
         public int ID { get; set; }

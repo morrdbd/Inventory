@@ -58,7 +58,7 @@
                 <div class="col-md-3 form-group">
                     <label>@Labels.TicketIssedDate</label>
                     <div class="col-md-8">
-                        <input type="text" name="TicketIssuedDateVM" id="TicketIssuedDateVM" value="@Model.TicketIssuedDateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                        <input type="text" name="TicketIssuedDateVM" id="TicketIssuedDateVM" value="@Model.TicketIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
@@ -78,7 +78,7 @@
                 <div class="col-md-3 form-group">
                     <label>@Labels.RequestDate</label>
                     <div class="col-md-8">
-                        <input type="text" name="RequestDateVM" id="RequestDateVM" value="@Model.RequestDateVM" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                        <input type="text" name="RequestDateVM" id="RequestDateVM" value="@Model.RequestDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
@@ -380,6 +380,7 @@
             // FORM VALIDATION AND SUBMISSION
             $('#main_form').validate({
                 submitHandler: function (form) {
+                    console.log("Inside the main_form the >>>>>>>");
                     var data = $('#main_form').serializeJSON({
                         parseAll: true,
                         useIntKeysAsArrayIndex: true,
@@ -389,7 +390,9 @@
                         toastr.error('Please Add Item');
                         return;
                     }
+                    console.log("data is >>>>>>>?????????"+JSON.stringify(data));
                     var formData = ObjectToFormData(data);
+                    console.log("items are >>>>>>>>>>><<<<<<<<<<<"+ JSON.stringify(formData));
                     //******************
                     Metronic.blockUI({ animate: true });
                     $.ajax({
@@ -400,9 +403,8 @@
                         contentType: false,
                         success: function (response) {
                             if (response != false) {
-                                bootbox.alert('@Labels.operation_done_suc', function () {
-                                    window.location.href = '@Url.Action("View")/' + response;
-                                })
+                                saveImage(response);
+                                console.log("response received >>>>>>>>>><<<<<<");
                             } else {
                                 toastr.error('@Labels.unable_to_update');
                             }
@@ -502,6 +504,7 @@
                         console.log("row in item form valided +++++++"+JSON.stringify(row));
                         DistributionItems[row.index] = row;
                     }
+                    console.log("items are >>>>>>>>>>>>>"+JSON.stringify(DistributionItems));
                     $('#ProductCode').empty();
                     $('#ProductCode').append('<option selected="selected" value="">'+"Product Name"+'</option>');
                     $("#select2-ProductCode-container").prop("title", "Product Name").text("Product Name");
