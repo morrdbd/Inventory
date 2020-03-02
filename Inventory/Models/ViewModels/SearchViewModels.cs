@@ -30,10 +30,14 @@ namespace Inventory.Models.ViewModels
         public int start { get; set; }
         public int length { get; set; }
     }
-    public class StockIn_Search
+    public class Durable_StockIn_Search
     {
-        public string DateFrom { get; set; }
-        public string DateTo { get; set; }
+        public string ReportNumber { get; set; }
+        public string RequestNumber { get; set; }
+        public string StockInDateFrom { get; set; }
+        public string StockInDateTo { get; set; }
+        public string RequestDateFrom { get; set; }
+        public string RequestDateTo { get; set; }
         public int PageSize { get; set; }
         public int? PageNo { get; set; }
         public int draw { get; set; }

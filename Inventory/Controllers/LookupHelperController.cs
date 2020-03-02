@@ -17,9 +17,15 @@ namespace Inventory.Controllers
         AdminRepository AdminRepo = new AdminRepository();
 
 
-        public JsonResult CategoryAjax(string id = "0")
+        //public JsonResult CategoryAjax(string id = "0")
+        //{
+        //    var categories = AdminRepo.LookupValueList(Language, "PRODUCTCATEGORY");
+        //    var _categories = new SelectList(categories, "ValueId", TextField);
+        //    return Json(_categories, JsonRequestBehavior.AllowGet);
+        //}
+        public JsonResult CategoryAjax(int id = 0)
         {
-            var categories = AdminRepo.LookupValueList(Language, "PRODUCTCATEGORY");
+            var categories = AdminRepo.ProductCategoryList(Language, id);
             var _categories = new SelectList(categories, "ValueId", TextField);
             return Json(_categories, JsonRequestBehavior.AllowGet);
         }

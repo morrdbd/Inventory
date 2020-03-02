@@ -21,7 +21,11 @@ namespace Inventory.Models.Tables
         public string DrName { get; set; }
         [Required]
         public string PaName { get; set; }
+
         public string ForOrdering { get; set; }
+
+        public int? GroupValueId { get; set; }
+
         public bool IsActive { get; set; }
     }
 }

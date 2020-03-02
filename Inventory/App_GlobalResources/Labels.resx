@@ -796,7 +796,7 @@
     <value>Receipt Date</value>
   </data>
   <data name="ReceiptReport" xml:space="preserve">
-    <value>Receipt Report</value>
+    <value>Receipt Report( M7 form)</value>
   </data>
   <data name="ReceiptReportInfo" xml:space="preserve">
     <value>Receipt Report Information</value>

@@ -38,10 +38,15 @@ namespace Inventory.Models.Repositories
         //        .OrderBy(x => lang == "prs" ? x.DrName : lang == "ps" ? x.PaName : x.EnName).ToList();
         //}
 
+        public List<LookupValue> ProductCategoryList(string lang, int groupValueId)
+        {
+            return db.LookupValues.Where(x => x.IsActive == true && x.GroupValueId == groupValueId)
+                .OrderBy(x => lang == "prs" ? x.DrName : lang == "ps" ? x.PaName : x.EnName).OrderBy(l=>l.ForOrdering).ToList();
+        }
         public List<LookupValue> LookupValueList(string lang, string lookup_code)
         {
             return db.LookupValues.Where(x => x.IsActive == true && x.LookupCode == lookup_code)
-                .OrderBy(x => lang == "prs" ? x.DrName : lang == "ps" ? x.PaName : x.EnName).OrderBy(l=>l.ForOrdering).ToList();
+                .OrderBy(x => lang == "prs" ? x.DrName : lang == "ps" ? x.PaName : x.EnName).OrderBy(l => l.ForOrdering).ToList();
         }
         public string LookupName(string lang, int? _valueID)
         {

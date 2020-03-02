@@ -1663,7 +1663,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Receipt Report.
+        ///   Looks up a localized string similar to Receipt Report( M7 form).
         /// </summary>
         internal static string ReceiptReport {
             get {
