@@ -38,9 +38,9 @@ namespace Inventory.Models.Repositories
         //        .OrderBy(x => lang == "prs" ? x.DrName : lang == "ps" ? x.PaName : x.EnName).ToList();
         //}
 
-        public List<LookupValue> ProductCategoryList(string lang, int groupValueId)
+        public List<LookupValue> FilteredList(string lang, int groupId)
         {
-            return db.LookupValues.Where(x => x.IsActive == true && x.GroupValueId == groupValueId)
+            return db.LookupValues.Where(x => x.IsActive == true && x.GroupValueId == groupId)
                 .OrderBy(x => lang == "prs" ? x.DrName : lang == "ps" ? x.PaName : x.EnName).OrderBy(l=>l.ForOrdering).ToList();
         }
         public List<LookupValue> LookupValueList(string lang, string lookup_code)

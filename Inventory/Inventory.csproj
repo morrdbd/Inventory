@@ -296,7 +296,6 @@
     <Compile Include="Attributes\MyDateConverter.cs" />
     <Compile Include="Attributes\MyFilter.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\NondurableStockInController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -304,7 +303,7 @@
     <Compile Include="Controllers\DistributionController.cs" />
     <Compile Include="Controllers\LookupHelperController.cs" />
     <Compile Include="Controllers\LookupsController.cs" />
-    <Compile Include="Controllers\DurableStockInController.cs" />
+    <Compile Include="Controllers\StockInController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -312,20 +311,18 @@
     <Compile Include="HelperCode\AllowFileSizeAttribute.cs" />
     <Compile Include="Models\Procedures\Receipt_Report_Item.cs" />
     <Compile Include="Models\Procedures\Ticket_Item.cs" />
-    <Compile Include="Models\Tables\NondurableStockIn.cs" />
-    <Compile Include="Models\Tables\NondurableStockInItem.cs" />
     <Compile Include="Models\Tables\Employee.cs" />
-    <Compile Include="Models\Tables\NondurableStockInItemVM.cs" />
+    <Compile Include="Models\Tables\StockIn.cs" />
+    <Compile Include="Models\Tables\StockInItem.cs" />
+    <Compile Include="Models\ViewModels\StockInItemVM.cs" />
     <Compile Include="Models\Tables\Product.cs" />
     <Compile Include="Models\Tables\Department.cs" />
     <Compile Include="Models\Tables\InHandStock.cs" />
-    <Compile Include="Models\Tables\DurableStockInItem.cs" />
     <Compile Include="Models\Tables\Distribution.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InventoryContext.cs" />
     <Compile Include="Models\Procedures\RecordUserInfo.cs" />
     <Compile Include="Models\Procedures\User_List.cs" />
-    <Compile Include="Models\Tables\DurableStockIn.cs" />
     <Compile Include="Models\Repositories\ProductRepocitory.cs" />
     <Compile Include="Models\Tables\ActivityLog.cs" />
     <Compile Include="Models\Tables\FollowUp.cs" />
@@ -335,11 +332,10 @@
     <Compile Include="Models\Tables\RoleAccess.cs" />
     <Compile Include="Models\Tables\SigninLog.cs" />
     <Compile Include="Models\Tables\DistributionItem.cs" />
-    <Compile Include="Models\ViewModels\NondurableStockInVM.cs" />
     <Compile Include="Models\ViewModels\FileUpload.cs" />
+    <Compile Include="Models\ViewModels\StockInVM.cs" />
     <Compile Include="Models\ViewModels\ReceiptReportItemVM.cs" />
     <Compile Include="Models\ViewModels\SearchViewModels.cs" />
-    <Compile Include="Models\ViewModels\DurableStockInVM.cs" />
     <Compile Include="Models\ViewModels\Distribution_VM.cs" />
     <Compile Include="Models\ViewModels\MenuVM.cs" />
     <Compile Include="Models\ViewModels\RoleFormVM.cs" />
@@ -2967,24 +2963,20 @@
     <Content Include="Uploads\ProductsImages\16.jpeg" />
     <Content Include="Uploads\ProductsImages\16.jpg" />
     <Content Include="Uploads\ProductsImages\24.jpg" />
-    <Content Include="Views\DurableStockIn\Form.cshtml" />
     <Content Include="Templates\DistributionTicketPC5.xlsx" />
     <Content Include="Templates\ReceiptReportMem7.xlsx" />
     <Content Include="Views\Distribution\Form.cshtml" />
     <Content Include="Views\Distribution\View.cshtml" />
     <Content Include="Views\Distribution\Search.cshtml" />
-    <Content Include="Views\DurableStockIn\View.cshtml" />
-    <Content Include="Views\DurableStockIn\Search.cshtml" />
     <Content Include="Views\Distribution\ItemInUse.cshtml" />
-    <Content Include="Views\DurableStockIn\ItemInWarehouse.cshtml" />
     <Content Include="Views\Employee\Search.cshtml" />
     <Content Include="Views\Lookups\ProductSearch.cshtml" />
     <Content Include="Views\Lookups\ProductForm.cshtml" />
     <Content Include="Content\resources\select2\select2.min.css" />
-    <Content Include="Views\NondurableStockIn\Form.cshtml" />
-    <Content Include="Views\NondurableStockIn\ItemInWarehouse.cshtml" />
-    <Content Include="Views\NondurableStockIn\Search.cshtml" />
-    <Content Include="Views\NondurableStockIn\View.cshtml" />
+    <Content Include="Views\StockIn\Form.cshtml" />
+    <Content Include="Views\StockIn\ItemInWarehouse.cshtml" />
+    <Content Include="Views\StockIn\Search.cshtml" />
+    <Content Include="Views\StockIn\View.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -3062,8 +3054,8 @@
     <Folder Include="Content\assets\admin\pages\img\" />
     <Folder Include="Content\assets_rtl\frontend\pages\temp\" />
     <Folder Include="Resources\" />
-    <Folder Include="Uploads\DurableStockIn\" />
     <Folder Include="Uploads\NondurableStockIn\" />
+    <Folder Include="Uploads\StockInScan\" />
     <Folder Include="Views\Helper\" />
   </ItemGroup>
   <ItemGroup>

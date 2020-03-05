@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Inventory.Models.Tables
 {
-    public class NondurableStockInItem
+    public class StockInItem
     {
         public int ID { get; set; }
 
@@ -15,6 +15,8 @@ namespace Inventory.Models.Tables
         public int UnitPrice { get; set; }
 
         public int Quantity { get; set; }
+
+        public int UsageTypeID { get; set; }
 
         public int GroupID { get; set; }
 
@@ -27,6 +29,8 @@ namespace Inventory.Models.Tables
         public string CategoryName { get; set; }
 
         public string ProductName { get; set; }
+
+        public string ProductCode { get; set; }
 
         public int UnitID { get; set; }
 

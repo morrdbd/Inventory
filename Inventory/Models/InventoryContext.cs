@@ -19,13 +19,9 @@ namespace Inventory.Models
 
         public DbSet<DistributionItem> DistributionItems { get; set; }
 
-        public DbSet<DurableStockIn> DurableStockIns { get; set; }
+        public DbSet<StockIn> StockIns { get; set; }
 
-        public DbSet<DurableStockInItem> DurableStockInItems { get; set; }
-
-        public DbSet<NondurableStockIn> NondurableStockIns { get; set; }
-
-        public DbSet<NondurableStockInItem> NondurableStockInItems { get; set; }
+        public DbSet<StockInItem> StockInItems { get; set; }
 
         public DbSet<Department> Departments { get; set; }
 

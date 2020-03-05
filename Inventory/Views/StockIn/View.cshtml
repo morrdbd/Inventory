@@ -1,0 +1,138 @@
+﻿@model Inventory.Models.ViewModels.StockInVM
+@{
+    ViewBag.Title = Labels.ReceiptReport;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
+}
+<div class="margin-bottom-10">
+    @if (_user.HasAccess("StockIn", "Search"))
+    {
+        <a href="@Url.Action("Search")" class="btn btn-sm">@Labels.back_to_list</a>
+    }
+    @if (_user.HasAccess("StockIn", "Edit"))
+    {
+        <a href="@Url.Action("Edit", new { id = Model.StockInID })" class="btn btn-sm blue"><i class="fa fa-edit"></i> @Labels.edit</a>
+    }
+    @if (_user.HasAccess("StockIn", "Print"))
+    {
+        <a href="@Url.Action("Print", new { id = Model.StockInID })" class="btn btn-sm btn-success" id="btn_print"><i class="fa fa-print"></i> @Labels.print_preview</a>
+    }
+    @if (_user.HasAccess("StockIn", "Delete"))
+    {
+        <a href="@Url.Action("Delete", new { id = Model.StockInID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.delete</a>
+    }
+</div>
+
+<div id="print_area">
+    <div style="direction:rtl;">
+        <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%;">
+            <thead>
+                <tr>
+                    <td colspan="12">
+                        <table style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th colspan="4" style="text-align:right; border-right:none;">@Labels.Mem7Form</th>
+                                    <th colspan="8" style="text-align:right; border-right:none;">@Labels.ReceiptReport</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.ReportNumber</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.M7Number</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.organization</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">Minstry Of MoRR</th>
+
+                </tr>
+                <tr>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.date</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.StockInDateForm</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.DeliveryPlace</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.DeliveryPlace</th>
+
+                </tr>
+                <tr>
+                    <th colspan="3" style="text-align:right; word-wrap:normal; width:20%">@Labels.SuggestionBillNumber </th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.OrderNumber</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.ObtainedFromContractor</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.ContractorName</th>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align:right; word-wrap:normal;">@Labels.Mem3Date</th>
+                    <th colspan="10" style="text-align:right; word-wrap:normal;">@Model.OrderDateForm</th>
+
+                </tr>
+                <tr>
+                    <th style="text-align:center; word-wrap:normal; word-wrap:normal;  width:5%;">#</th>
+                    <th style="text-align:center; word-wrap:normal; word-wrap:normal;">@Labels.Quantity</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.Unit</th>
+                    <th style="text-align:center; word-wrap:normal;">@Labels.ItemDetails</th>
+                    <th style="text-align:center; word-wrap:normal;">Product Code</th>
+                    <th style="text-align:center; word-wrap:normal;">Product Code</th>
+                    <th style="text-align:center; word-wrap:normal;">Product Group</th>
+                    <th style="text-align:center; word-wrap:normal;">Product Category</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.UnitPrice</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.TotalPrice</th>
+                    <th colspan="2" style="text-align:center; word-wrap:normal;">@Labels.Remarks</th>
+                </tr>
+               
+            </thead>
+            <tbody>
+                @foreach (var item in Model.StockInItems)
+                {
+                    int index = 1;
+                    <tr>
+                        <th style="text-align:center;">@index</th>
+                        <th style="text-align:center;">@item.Quantity</th>
+                        <th style="text-align:center;">@item.UnitName</th>
+                        <th style="text-align:center;">@item.ProductName</th>
+                        <th style="text-align:center;">@item.ProductCode</th>
+                        <th style="text-align:center;">@item.GroupName</th>
+                        <th style="text-align:center;">@item.CategoryName</th>
+                        <th style="text-align:center;">@item.UnitPrice</th>
+                        <th style="text-align:center;"> @(item.Quantity * item.UnitPrice)</th>
+                        <th style="text-align:center;" colspan="2">@item.Remarks</th>
+                    </tr>
+                    index++;
+
+                }
+                @*<tr>
+                    <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
+                    <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
+                    <th colspan="3" style="text-align:center; word-wrap:normal; width:40%;">&nbsp;</th>
+                    <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
+                    <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
+                    <th colspan="2" style="text-align:center; word-wrap:normal;">&nbsp;</th>
+                </tr>*@
+                <tr>
+                    @*<th style="text-align:center;"></th>
+                    <th style="text-align:center;"></th>*@
+                    <th colspan="9" style="text-align:center;"> مجموع قیمت</th>
+                    <th style="text-align:center;"> @Model.StockInItems.Sum(i=> i.UnitPrice * i.Quantity)</th>
+                    <th colspan="2" style="text-align:center;">افغانی </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('body').on('click', '#btn_delete', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                bootbox.confirm('@Labels.are_you_sure', function (result) {
+                    if (result == true) {
+                        $.get(url, function (response) {
+                            if (response == true) {
+                                window.location.href = '@Url.Action("Search")';
+                            }
+                        })
+                    }
+                })
+            })
+        })
+    </script>
+}

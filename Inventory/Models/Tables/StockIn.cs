@@ -6,7 +6,7 @@ using System.Data.Entity.Spatial;
 
 namespace Inventory.Models
 {
-    public class DurableStockIn
+    public class StockIn
     {
         [Key]
         public int StockInID { get; set; }

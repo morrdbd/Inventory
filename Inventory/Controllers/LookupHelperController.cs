@@ -23,11 +23,11 @@ namespace Inventory.Controllers
         //    var _categories = new SelectList(categories, "ValueId", TextField);
         //    return Json(_categories, JsonRequestBehavior.AllowGet);
         //}
-        public JsonResult CategoryAjax(int id = 0)
+        public JsonResult FilteredLookupAjax(int id = 0)
         {
-            var categories = AdminRepo.ProductCategoryList(Language, id);
-            var _categories = new SelectList(categories, "ValueId", TextField);
-            return Json(_categories, JsonRequestBehavior.AllowGet);
+            var groups = AdminRepo.FilteredList(Language, id);
+            var _groups = new SelectList(groups, "ValueId", TextField);
+            return Json(_groups, JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -10,7 +10,7 @@ using System.Web;
 
 namespace Inventory.Models.ViewModels
 {
-    public class DurableStockInVM
+    public class StockInVM
     {
         public int StockInID { get; set; }
 
@@ -30,7 +30,7 @@ namespace Inventory.Models.ViewModels
 
         public string Details { get; set; }
 
-        public List<DurableStockInItemVM> DurableStockInItems { get; set; }
+        public List<StockInItemVM> StockInItems { get; set; }
 
     }
 }

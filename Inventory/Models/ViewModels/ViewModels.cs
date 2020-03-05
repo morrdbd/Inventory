@@ -33,7 +33,7 @@ namespace Inventory.Models.ViewModels
         public int? PageNo { get; set; }
     }
 
-    public class Durable_StockIn_Form_VM
+    public class StockIn_Form_VM
     {
         public int StockInID { get; set; }
 
@@ -53,71 +53,7 @@ namespace Inventory.Models.ViewModels
 
         public string Details { get; set; }
 
-        public DurableStockInItemVM[] DurableStockInItems { get; set; }
-    }
-    public class Non_Durable_StockIn_Form_VM
-    {
-        public int StockInID { get; set; }
-
-        public string M7Number { get; set; }
-
-        public string StockInDateForm { get; set; }
-
-        public string OrderNumber { get; set; }
-
-        public string OrderDateForm { get; set; }
-
-        [StringLength(500)]
-        public string DeliveryPlace { get; set; }
-
-        [StringLength(500)]
-        public string ContractorName { get; set; }
-
-        public string Details { get; set; }
-
-        public NondurableStockInItemVM[] NondurableStockInItems { get; set; }
-    }
-
-    public class DurableStockInItemVM
-    {
-        public int ID { get; set; }
-
-        public int UsageTypeID { get; set; }
-
-        public int StockInID { get; set; }
-
-        public int ProductCode { get; set; }
-
-        public string ProductName { get; set; }
-
-        public string SizeName { get; set; }
-
-        public int? SizeID { get; set; }
-
-        public string CategoryName { get; set; }
-
-        public int CategoryID { get; set; }
-
-        public string GroupName { get; set; }
-
-        public int GroupID { get; set; }
-
-        public string OriginName { get; set; }
-
-        public int? OriginID { get; set; }
-
-        public string BrandName { get; set; }
-
-        public int? BrandID { get; set; }
-
-        public string UnitName { get; set; }
-
-        public int UnitID { get; set; }
-
-        public int Price { get; set; }
-
-        public string Remarks { get; set; }
-
+        public StockInItemVM[] StockInItems { get; set; }
     }
 
     public class Distribution_Form_VM

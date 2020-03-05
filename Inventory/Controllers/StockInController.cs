@@ -16,7 +16,7 @@ using System.Web.Mvc;
 
 namespace Inventory.Controllers
 {
-    public class DurableStockInController : BaseController
+    public class StockInController : BaseController
     {
         InventoryDBContext db = new InventoryDBContext();
         AdminRepository AdminRepo = new AdminRepository();
@@ -25,11 +25,14 @@ namespace Inventory.Controllers
         public ActionResult Add()
         {
             CreateDropDown();
-            return View("Form", new DurableStockInVM());
+            return View("Form", new StockInVM());
         }
 
         private void CreateDropDown()
         {
+            var usageTypeList = AdminRepo.LookupValueList(Language, "UTYPE");
+            ViewBag.UsageTypeDrp = new SelectList(usageTypeList, "ValueId", TextField);
+
             var unitList = AdminRepo.LookupValueList(Language, "UNIT");
             ViewBag.UnitDrp = new SelectList(unitList, "ValueId", TextField);
 
@@ -51,10 +54,10 @@ namespace Inventory.Controllers
             ViewBag.ProductGroupDrp = new SelectList(ProductGroup, "ValueId", TextField);
         }
 
-        private DurableStockInVM CreateModel(DurableStockIn model)
+        private StockInVM CreateModel(StockIn model)
         {
-            var _items = db.DurableStockInItems.Where(i => i.IsActive == true && i.StockInID == model.StockInID).ToList();
-            return new DurableStockInVM()
+            var _items = db.StockInItems.Where(i => i.IsActive == true && i.StockInID == model.StockInID).ToList();
+            return new StockInVM()
             {
                 StockInID = model.StockInID,
                 M7Number = model.M7Number,
@@ -64,18 +67,17 @@ namespace Inventory.Controllers
                 ContractorName = model.ContractorName,
                 OrderDateForm = model.OrderDate.ToDateString(Language),
                 Details = model.Details,
-                DurableStockInItems = db.DurableStockInItems.Where(i => i.IsActive == true && i.StockInID == model.StockInID)
-                .ToList().Select(i => new DurableStockInItemVM
+                StockInItems = db.StockInItems.Where(i => i.IsActive == true && i.StockInID == model.StockInID)
+                .ToList().Select(i => new StockInItemVM
                 {
-                    ID =  i.ID,
+                    ID = i.ID,
                     StockInID = i.StockInID,
-                    ProductCode = i.ProductCode,
                     ProductName = i.ProductName,
                     UnitName = AdminRepo.LookupName(Language, i.UnitID),
                     UnitID = i.UnitID,
                     GroupID = i.GroupID,
                     GroupName = AdminRepo.LookupName(Language, i.GroupID),
-                    CategoryID =i.CategoryID,
+                    CategoryID = i.CategoryID,
                     CategoryName = AdminRepo.LookupName(Language, i.CategoryID),
                     SizeID = i.SizeID,
                     SizeName = AdminRepo.LookupName(Language, i.SizeID),
@@ -84,7 +86,10 @@ namespace Inventory.Controllers
                     BrandID = i.BrandID,
                     BrandName = AdminRepo.LookupName(Language, i.BrandID),
                     Remarks = i.Remarks,
-                    Price = i.Price,
+                    UnitPrice = i.UnitPrice,
+                    Quantity = i.Quantity,
+                    UsageTypeID = i.UsageTypeID,
+                    ProductCode = i.ProductCode
                 }
                 ).ToList()
             };
@@ -92,7 +97,7 @@ namespace Inventory.Controllers
 
         [HttpPost]
         [AccessControl("Add")]
-        public JsonResult Insert(Durable_StockIn_Form_VM model)
+        public JsonResult Insert(StockIn_Form_VM model)
         {
             var _StockinDate = model.StockInDateForm.ToDate(Language);
             var _OrderDate = model.OrderDateForm.ToDate(Language);
@@ -107,7 +112,7 @@ namespace Inventory.Controllers
             {
                 try
                 {
-                    var _stockIn = new DurableStockIn
+                    var _stockIn = new StockIn
                     {
                         M7Number = model.M7Number,
                         OrderNumber = model.OrderNumber,
@@ -121,12 +126,12 @@ namespace Inventory.Controllers
                         IsActive = true,
                     };
 
-                    db.DurableStockIns.Add(_stockIn);
+                    db.StockIns.Add(_stockIn);
                     db.SaveChanges();
 
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "DurableStockIns",
+                        ModifiedTable = "StockIns",
                         ModfiedId = _stockIn.StockInID,
                         Action = "Insert",
                         UserId = AppUser.Id,
@@ -135,34 +140,34 @@ namespace Inventory.Controllers
                     });
                     db.SaveChanges();
 
-                    if (model.DurableStockInItems != null)
+                    if (model.StockInItems != null)
                     {
-                        foreach (var row in model.DurableStockInItems)
+                        foreach (var row in model.StockInItems)
                         {
                             if (row != null)
                             {
-                                var _item = new DurableStockInItem()
+                                var _item = new StockInItem()
                                 {
                                     StockInID = _stockIn.StockInID,
                                     UnitID = row.UnitID,
-                                    ProductCode = row.ProductCode,
                                     ProductName = row.ProductName,
                                     GroupID = row.GroupID,
                                     CategoryID = row.CategoryID,
                                     BrandID = row.BrandID,
                                     SizeID = row.SizeID,
                                     OriginID = row.OriginID,
-                                    Price = row.Price,
+                                    UnitPrice = row.UnitPrice,
+                                    Quantity = row.Quantity,
                                     Remarks = row.Remarks,
                                     InsertedBy = AppUser.Id,
                                     InsertedDate = DateTime.Now,
                                     IsActive = true
                                 };
-                                db.DurableStockInItems.Add(_item);
+                                db.StockInItems.Add(_item);
                                 db.SaveChanges();
                                 db.ActivityLogs.Add(new ActivityLog
                                 {
-                                    ModifiedTable = "DurableStockInItems",
+                                    ModifiedTable = "StockInItems",
                                     ModfiedId = row.ID,
                                     Action = "Insert",
                                     UserId = AppUser.Id,
@@ -200,7 +205,7 @@ namespace Inventory.Controllers
             var StockInDateTo = search.StockInDateTo.ToDate(Language);
             var RequestDateFrom = search.RequestDateFrom.ToDate(Language);
             var RequestDateTo = search.RequestDateTo.ToDate(Language);
-            var _Receipts = db.DurableStockIns.Where(t => t.IsActive == true).OrderByDescending(s => s.StockInDate).ToList();
+            var _Receipts = db.StockIns.Where(t => t.IsActive == true).OrderByDescending(s => s.StockInDate).ToList();
             if(StockInDateFrom != null)
             {
                 _Receipts = _Receipts.Where(r => r.StockInDate >= StockInDateFrom).ToList();
@@ -248,7 +253,7 @@ namespace Inventory.Controllers
         [AccessControl("View")]
         public ActionResult View(int id = 0)
         {
-            var _record = db.DurableStockIns.Where(t => t.IsActive == true && t.StockInID == id).FirstOrDefault();
+            var _record = db.StockIns.Where(t => t.IsActive == true && t.StockInID == id).FirstOrDefault();
             if (_record == null)
             {
                 return HttpNotFound();
@@ -259,7 +264,7 @@ namespace Inventory.Controllers
 
         [HttpPost]
         [AccessControl("Edit")]
-        public JsonResult Update(Durable_StockIn_Form_VM model)
+        public JsonResult Update(StockIn_Form_VM model)
         {
             if (ModelState.IsValid == false)
             {
@@ -270,7 +275,7 @@ namespace Inventory.Controllers
             {
                 try
                 {
-                    var _StockIn = db.DurableStockIns.Find(model.StockInID);
+                    var _StockIn = db.StockIns.Find(model.StockInID);
                     if (_StockIn == null) return Json(false);
                     _StockIn.M7Number = model.M7Number;
                     _StockIn.StockInDate = model.StockInDateForm.ToDate(Language);
@@ -286,7 +291,7 @@ namespace Inventory.Controllers
 
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "DurableStockIns",
+                        ModifiedTable = "StockIns",
                         ModfiedId = _StockIn.StockInID,
                         Action = "Update",
                         UserId = AppUser.Id,
@@ -295,32 +300,32 @@ namespace Inventory.Controllers
                     });
                     db.SaveChanges();
 
-                    db.DurableStockInItems.Where(x => x.StockInID == _StockIn.StockInID).ToList().ForEach(x => x.IsActive = false);
+                    db.StockInItems.Where(x => x.StockInID == _StockIn.StockInID).ToList().ForEach(x => x.IsActive = false);
 
                     db.SaveChanges();
-                    if (model.DurableStockInItems != null)
+                    if (model.StockInItems != null)
                     {
-                        foreach (var row in model.DurableStockInItems)
+                        foreach (var row in model.StockInItems)
                         {
                             if (row != null)
                             {
                                 string action = row.ID == 0 ? "Insert" : "Update";
                                 if (row.ID == 0)
                                 {
-                                    var _newItem = new DurableStockInItem() {
+                                    var _newItem = new StockInItem() {
                                         StockInID = _StockIn.StockInID,
                                         ProductCode = row.ProductCode,
-                                        Price = row.Price,
+                                        UnitPrice = row.UnitPrice,
                                         InsertedBy = AppUser.Id,
                                         InsertedDate = DateTime.Now,
                                         IsActive = true
                                     };
                                    
-                                    db.DurableStockInItems.Add(_newItem);
+                                    db.StockInItems.Add(_newItem);
                                 }
                                 else
                                 {
-                                    var obj = db.DurableStockInItems.Find(row.ID);
+                                    var obj = db.StockInItems.Find(row.ID);
                                     if (obj != null)
                                     {
                                         obj.ProductCode = row.ProductCode;
@@ -331,7 +336,8 @@ namespace Inventory.Controllers
                                         obj.CategoryID = row.CategoryID;
                                         obj.BrandID = row.BrandID;
                                         obj.SizeID = row.SizeID;
-                                        obj.Price = row.Price;
+                                        obj.UnitPrice = row.UnitPrice;
+                                        obj.Quantity = row.Quantity;
                                         obj.Remarks = row.Remarks;
                                         obj.LastUpdatedBy = AppUser.Id;
                                         obj.LastUpdatedDate = DateTime.Now;
@@ -342,7 +348,7 @@ namespace Inventory.Controllers
 
                                 db.ActivityLogs.Add(new ActivityLog
                                 {
-                                    ModifiedTable = "DurableStockInItems",
+                                    ModifiedTable = "StockInItems",
                                     ModfiedId = row.ID,
                                     Action = action,
                                     UserId = AppUser.Id,
@@ -372,21 +378,21 @@ namespace Inventory.Controllers
             {
                 try
                 {
-                    var _stockIn = db.DurableStockIns.Find(id);
+                    var _stockIn = db.StockIns.Find(id);
                     if (_stockIn != null)
                     {
                         _stockIn.IsActive = false;
                         db.ActivityLogs.Add(new ActivityLog
                         {
-                            ModifiedTable = "ReceiptReport",
+                            ModifiedTable = "StockIns",
                             ModfiedId = id,
                             Action = "Delete",
                             UserId = AppUser.Id,
                             ModifiedTime = DateTime.Now,
                         });
                         db.SaveChanges();
-                        var _stockInItems = db.DurableStockInItems.Where(s => s.StockInID == _stockIn.StockInID && s.IsActive == true).ToList();
-                        db.DurableStockInItems.Where(s => s.StockInID == _stockIn.StockInID).ToList().ForEach(i => i.IsActive = false);
+                        var _stockInItems = db.StockInItems.Where(s => s.StockInID == _stockIn.StockInID && s.IsActive == true).ToList();
+                        db.StockInItems.Where(s => s.StockInID == _stockIn.StockInID).ToList().ForEach(i => i.IsActive = false);
                     }
                     db.SaveChanges();
                     trans.Commit();
@@ -405,7 +411,7 @@ namespace Inventory.Controllers
         public ActionResult Edit(int id = 0)
         {
             CreateDropDown();
-            var _stockIn = db.DurableStockIns.SingleOrDefault(t => t.StockInID == id);
+            var _stockIn = db.StockIns.SingleOrDefault(t => t.StockInID == id);
             if (_stockIn == null)
             {
                 return HttpNotFound();
@@ -459,11 +465,11 @@ namespace Inventory.Controllers
                 string FileExtension = Path.GetExtension(model.FileContent.FileName);
 
                 FileName = model.RecordID + FileExtension;
-                string StockInScanFolder = ConfigurationManager.AppSettings["DurableStockIn"].ToString();
+                string StockInScanFolder = ConfigurationManager.AppSettings["StockInScan"].ToString();
                 var filePathForDB = StockInScanFolder + FileName;
                 var UploadedFilePath = Server.MapPath(StockInScanFolder + FileName);
 
-                var modelInDb = db.DurableStockIns.Where(s => s.StockInID == model.RecordID).FirstOrDefault();
+                var modelInDb = db.StockIns.Where(s => s.StockInID == model.RecordID).FirstOrDefault();
                 modelInDb.FilePath = filePathForDB;
                 db.SaveChanges();
                 model.FileContent.SaveAs(UploadedFilePath);
