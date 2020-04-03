@@ -84,13 +84,14 @@
                 <thead id="thead_attendee">
                     <tr>
                         <th>@Labels.Unit</th>
-                        <th>Product Name</th>
-                        <th>Product Code</th>
-                        <th>Group Name</th>
-                        <th>Category Name</th>
-                        <th>Product Size</th>
-                        <th>Product Origin</th>
-                        <th>Product Brand</th>
+                        <th>Quantity</th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Group</th>
+                        <th>Category</th>
+                        <th>Size</th>
+                        <th>Origin</th>
+                        <th>Brand</th>
                         <th>Unit Price</th>
                         <th>Total Price</th>
                         <th>@Labels.Remarks</th>
@@ -106,6 +107,7 @@
                             {
                             <tr>
                                 <td>@item.UnitName</td>
+                                <td>@item.Quantity</td>
                                 <td>@item.ProductName</td>
                                 <td>@item.ProductCode</td>
                                 <td>@item.GroupName</td>
@@ -265,6 +267,7 @@
     <script type="text/html" id="temp_item">
         <tr>
             <td>{{UnitName}}</td>
+            <td>{{Quantity}}</td>
             <td>{{ProductName}}</td>
             <td>{{ProductCode}}</td>
             <td>{{GroupName}}</td>

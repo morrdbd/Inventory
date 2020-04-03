@@ -43,6 +43,8 @@ namespace Inventory.Models.Tables
 
         public int Quantity { get; set; }
 
+        public int? AvailableQuantity { get; set; }
+
         public int UnitPrice { get; set; }
 
         public string Remarks { get; set; }

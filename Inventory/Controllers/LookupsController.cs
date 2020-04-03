@@ -136,62 +136,62 @@ namespace Inventory.Controllers
             }
         }
 
-        [AccessControl("Search")]
-        [HttpGet]
-        public ActionResult ProductSearch()
-        {
-            ViewBag.search = new ProductSearch();
-            CreateDropDown();
-            return View();
-        }
+        //[AccessControl("Search")]
+        //[HttpGet]
+        //public ActionResult ProductSearch()
+        //{
+        //    ViewBag.search = new ProductSearch();
+        //    CreateDropDown();
+        //    return View();
+        //}
 
-        [AccessControl("Search")]
-        public JsonResult ListProduct(ProductSearch model)
-        {
-            var query = db.Products.Where(t => t.IsActive == true);
+        //[AccessControl("Search")]
+        //public JsonResult ListProduct(ProductSearch model)
+        //{
+        //    var query = db.Products.Where(t => t.IsActive == true);
 
-            ViewBag.search = model;
+        //    ViewBag.search = model;
            
-            if (model.UsageTypeID != null && model.UsageTypeID != 0)
-            {
-                query = query.Where(c => c.UsageTypeID == model.UsageTypeID);
-            }
-            if (model.GroupID != null && model.GroupID != 0)
-            {
-                query = query.Where(c => c.GroupID == model.GroupID);
-            }
-            if (model.CategoryID != null && model.CategoryID != 0)
-            {
-                query = query.Where(c => c.CategoryID == model.CategoryID);
-            }
-            if (!string.IsNullOrWhiteSpace(model.ProductName))
-            {
-                query = query.Where(c => c.ProductName.Contains(model.ProductName));
-            }
-            var records = query.OrderBy(t => t.GroupID).ToList();
-            var data = records.Select(i => new
-            {
-                i.ProductID,
-                UsageType = db.LookupValues.Where(l => l.IsActive == true && l.ValueId == i.UsageTypeID).Select(l => Language == "prs" ? l.DrName : Language == "ps" ? l.PaName : l.EnName).FirstOrDefault(),
-                i.ProductName,
-                i.ProductCode,
-                Group = AdminRepo.LookupName(Language,i.GroupID),
-                Category = AdminRepo.LookupName(Language, i.CategoryID),
-                Unit = AdminRepo.LookupName(Language, i.UnitID),
-                Packing = AdminRepo.LookupName(Language, i.PackingID),
-                Size = AdminRepo.LookupName(Language, i.SizeID),
-                Origin = AdminRepo.LookupName(Language, i.OriginID),
-                Brand = AdminRepo.LookupName(Language, i.BrandID),
-                i.ImagePath
-            }).ToList();
-            return Json(new
-            {
-                data = data.Skip(model.start).Take(model.length).ToList(),
-                recordsTotal = data.Count,
-                recordsFiltered = data.Count,
-                draw = model.draw,
-            });
-        }
+        //    if (model.UsageTypeID != null && model.UsageTypeID != 0)
+        //    {
+        //        query = query.Where(c => c.UsageTypeID == model.UsageTypeID);
+        //    }
+        //    if (model.GroupID != null && model.GroupID != 0)
+        //    {
+        //        query = query.Where(c => c.GroupID == model.GroupID);
+        //    }
+        //    if (model.CategoryID != null && model.CategoryID != 0)
+        //    {
+        //        query = query.Where(c => c.CategoryID == model.CategoryID);
+        //    }
+        //    if (!string.IsNullOrWhiteSpace(model.ProductName))
+        //    {
+        //        query = query.Where(c => c.ProductName.Contains(model.ProductName));
+        //    }
+        //    var records = query.OrderBy(t => t.GroupID).ToList();
+        //    var data = records.Select(i => new
+        //    {
+        //        i.ProductID,
+        //        UsageType = db.LookupValues.Where(l => l.IsActive == true && l.ValueId == i.UsageTypeID).Select(l => Language == "prs" ? l.DrName : Language == "ps" ? l.PaName : l.EnName).FirstOrDefault(),
+        //        i.ProductName,
+        //        i.ProductCode,
+        //        Group = AdminRepo.LookupName(Language,i.GroupID),
+        //        Category = AdminRepo.LookupName(Language, i.CategoryID),
+        //        Unit = AdminRepo.LookupName(Language, i.UnitID),
+        //        Packing = AdminRepo.LookupName(Language, i.PackingID),
+        //        Size = AdminRepo.LookupName(Language, i.SizeID),
+        //        Origin = AdminRepo.LookupName(Language, i.OriginID),
+        //        Brand = AdminRepo.LookupName(Language, i.BrandID),
+        //        i.ImagePath
+        //    }).ToList();
+        //    return Json(new
+        //    {
+        //        data = data.Skip(model.start).Take(model.length).ToList(),
+        //        recordsTotal = data.Count,
+        //        recordsFiltered = data.Count,
+        //        draw = model.draw,
+        //    });
+        //}
 
         [AccessControl("View")]
         public JsonResult ProductGet(int id = 0)

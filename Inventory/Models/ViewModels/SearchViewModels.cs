@@ -69,7 +69,7 @@ namespace Inventory.Models.ViewModels
         public int start { get; set; }
         public int length { get; set; }
     }
-    public class ProductSearch
+    public class Item_Search
     {
         public int? UsageTypeID { get; set; }
 
@@ -78,6 +78,16 @@ namespace Inventory.Models.ViewModels
         public int? CategoryID { get; set; }
 
         public string ProductName { get; set; }
+
+        public string ProductCode { get; set; }
+
+        public int? UnitID { get; set; }
+
+        public int? SizeID { get; set; }
+
+        public int? OriginID { get; set; }
+
+        public int? BrandID { get; set; }
 
         public int PageSize { get; set; }
         public int? PageNo { get; set; }

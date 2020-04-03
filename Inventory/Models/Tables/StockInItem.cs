@@ -16,7 +16,12 @@ namespace Inventory.Models.Tables
 
         public int Quantity { get; set; }
 
+        public int AvailableQuantity { get; set; }
+
         public int UsageTypeID { get; set; }
+
+        [NotMapped]
+        public string UsageTypeName { get; set; }
 
         public int GroupID { get; set; }
 

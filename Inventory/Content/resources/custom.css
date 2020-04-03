@@ -17,3 +17,7 @@
 .radio {
     padding-top: 4px !important;
 }
+.selectedItem {
+    background-color: #67809f !important;
+    color:white !important;
+}

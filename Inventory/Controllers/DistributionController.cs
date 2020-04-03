@@ -25,19 +25,32 @@ namespace Inventory.Controllers
         {
             CreateDropDown();
             ViewBag.emSearch = new Employee_Search();
+            ViewBag.itemSearch = new Item_Search();
             return View("Form", new Distribution_VM());
         }
         private void CreateDropDown()
         {
-            //var unitList = db.LookupValues.Where(l => l.LookupCode == "UNIT" && l.IsActive == true).OrderBy(l=>l.ForOrdering).Select(l =>
-            // new { l.ValueId, UnitName = Language == "prs" ? l.DrName : Language == "ps" ? l.PaName : l.EnName }).ToList();
-            //ViewBag.UnitDrp = new SelectList(unitList, "ValueId", "UnitName");
+            var usageTypeList = AdminRepo.LookupValueList(Language, "UTYPE");
+            ViewBag.UsageTypeDrp = new SelectList(usageTypeList, "ValueId", TextField);
 
-            var UsageType = AdminRepo.LookupValueList(Language, "UTYPE");
-            ViewBag.UsageTypeDrp = new SelectList(UsageType, "ValueId", TextField);
+            var unitList = AdminRepo.LookupValueList(Language, "UNIT");
+            ViewBag.UnitDrp = new SelectList(unitList, "ValueId", TextField);
 
-            var departmentList =  db.Departments.Where(d=>d.IsActive == true).Select(d =>
-               new { d.DepartmentID, DepartmentName = Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName }).ToList();
+            var sizeList = AdminRepo.LookupValueList(Language, "PRODUCTSIZE");
+            ViewBag.SizeDrp = new SelectList(sizeList, "ValueId", TextField);
+
+            var originList = AdminRepo.LookupValueList(Language, "PRODUCTORIGIN");
+            ViewBag.OriginDrp = new SelectList(originList, "ValueId", TextField);
+
+            var brandList = AdminRepo.LookupValueList(Language, "PRODUCTBRAND");
+            ViewBag.BrandDrp = new SelectList(brandList, "ValueId", TextField);
+
+
+            var ProductGroup = AdminRepo.LookupValueList(Language, "PRODUCTGROUP");
+            ViewBag.ProductGroupDrp = new SelectList(ProductGroup, "ValueId", TextField);
+
+            var departmentList = db.Departments.Where(d => d.IsActive == true).Select(d =>
+                new { d.DepartmentID, DepartmentName = Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName }).ToList();
             ViewBag.DepartmentDrp = new SelectList(departmentList, "DepartmentID", "DepartmentName");
         }
 
@@ -94,7 +107,7 @@ namespace Inventory.Controllers
             {
                 query = query.Where(c => c.FatherName.Contains(model.sFatherName));
             }
-            if (model.sDepartmentID !=null)
+            if (model.sDepartmentID != null)
             {
                 query = query.Where(c => c.DepartmentID == model.sDepartmentID);
             }
@@ -108,11 +121,91 @@ namespace Inventory.Controllers
                 c.Name,
                 c.FatherName,
                 c.Occupation,
-                DepartmentName = db.Departments.Where(d=>d.DepartmentID == d.DepartmentID).Select(d=> Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault()
+                DepartmentName = db.Departments.Where(d => d.DepartmentID == d.DepartmentID).Select(d => Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault()
             }
             ).ToList();
             var tes = data.ToList();
             return Json(data);
+        }
+        //Load search result
+        [AccessControl("Search")]
+        public JsonResult ItemList(Item_Search search)
+        {
+            var query = db.StockInItems.Where(i => i.IsActive == true).AsQueryable();
+           
+            if (!string.IsNullOrWhiteSpace(search.ProductName))
+            {
+                query = query.Where(c => c.ProductName.Contains(search.ProductName));
+            }
+            if (!string.IsNullOrWhiteSpace(search.ProductCode))
+            {
+                query = query.Where(c => c.ProductCode.Contains(search.ProductCode));
+            }
+            if (search.UsageTypeID != null)
+            {
+                query = query.Where(c => c.UsageTypeID == search.UsageTypeID);
+            }
+            if (search.GroupID != null)
+            {
+                query = query.Where(c => c.GroupID == search.GroupID);
+            }
+            if (search.CategoryID != null)
+            {
+                query = query.Where(c => c.CategoryID == search.CategoryID);
+            }
+            if (search.UnitID != null)
+            {
+                query = query.Where(c => c.UnitID == search.UnitID);
+            }
+            if (search.UnitID != null)
+            {
+                query = query.Where(c => c.CategoryID == search.UnitID);
+            }
+            if (search.SizeID != null)
+            {
+                query = query.Where(c => c.SizeID == search.SizeID);
+            }
+            if (search.OriginID != null)
+            {
+                query = query.Where(c => c.OriginID == search.OriginID);
+            }
+            if (search.BrandID != null)
+            {
+                query = query.Where(c => c.BrandID == search.BrandID);
+            }
+            ViewBag.search = search;
+            var items = query.ToList();
+              var data = items.Select(i => new StockInItemVM
+            {
+                ID = i.ID,
+                ProductName = i.ProductName,
+                UnitName = AdminRepo.LookupName(Language, i.UnitID),
+                UnitID = i.UnitID,
+                GroupID = i.GroupID,
+                GroupName = AdminRepo.LookupName(Language, i.GroupID),
+                CategoryID = i.CategoryID,
+                CategoryName = AdminRepo.LookupName(Language, i.CategoryID),
+                SizeID = i.SizeID,
+                SizeName = AdminRepo.LookupName(Language, i.SizeID),
+                OriginID = i.OriginID,
+                OriginName = AdminRepo.LookupName(Language, i.OriginID),
+                BrandID = i.BrandID,
+                BrandName = AdminRepo.LookupName(Language, i.BrandID),
+                Remarks = i.Remarks,
+                UnitPrice = i.UnitPrice,
+                AvailableQuantity = i.AvailableQuantity,
+                UsageTypeID = i.UsageTypeID,
+                ProductCode = i.ProductCode
+            }
+            ).ToList();
+            var tes = data.ToList();
+            return Json(new
+            {
+                data = data.Skip(search.start).Take(search.length).ToList(),
+                recordsTotal = data.Count,
+                recordsFiltered = data.Count,
+                draw = search.draw,
+            });
         }
 
         [HttpPost]
@@ -173,7 +266,7 @@ namespace Inventory.Controllers
                                     InsertedDate = DateTime.Now,
                                     IsActive = true
                                 };
-                                
+
                                 db.DistributionItems.Add(_item);
                                 db.SaveChanges();
 
@@ -224,7 +317,7 @@ namespace Inventory.Controllers
             var TicketIssuedDateFrom = model.DateFrom.ToDate(Language);
             var TicketIssuedDateTo = model.DateTo.ToDate(Language);
 
-            var query = db.Distributions.Where(t=>t.IsActive == true);
+            var query = db.Distributions.Where(t => t.IsActive == true);
 
             if (model.RequestNumber != null && model.RequestNumber != 0)
             {
@@ -247,7 +340,7 @@ namespace Inventory.Controllers
                 query = query.Where(c => c.TicketIssuedDate <= TicketIssuedDateTo);
             }
             ViewBag.search = model;
-            var records = query.OrderBy(t=>t.TicketIssuedDate).ToList();
+            var records = query.OrderBy(t => t.TicketIssuedDate).ToList();
             var data = records.Select(t => new
             {
                 t.DistributionID,
@@ -270,8 +363,8 @@ namespace Inventory.Controllers
         [AccessControl("View")]
         public ActionResult View(int id = 0)
         {
-            var ticket = db.Distributions.Where(t=>t.IsActive == true).SingleOrDefault(t => t.DistributionID == id);
-            if(ticket == null)
+            var ticket = db.Distributions.Where(t => t.IsActive == true).SingleOrDefault(t => t.DistributionID == id);
+            if (ticket == null)
             {
                 return HttpNotFound();
             }
@@ -288,94 +381,93 @@ namespace Inventory.Controllers
                 LogModelErrors();
                 return Json(false);
             }
-//            using (var trans = db.Database.BeginTransaction())
-//            {
-//                try
-//                {
-//                    var _distribution = db.Distributions.Find(model.TicketID);
-//                    if (_distribution == null) return Json(false);
-//                    _distribution.TicketNumber = model.TicketNumber;
-//                    _distribution.TicketIssuedDate = model.TicketIssuedDateVM.ToDate(Language);
-//                    _distribution.Warehouse = model.Warehouse;
-//                    _distribution.RequestNumber = model.RequestNumber;
-//                    _distribution.RequestDate = model.RequestDateVM.ToDate(Language);
-//                    _distribution.EmployeeID = model.EmployeeID;
-//                    _distribution.Details = model.Details;
-//                    _distribution.IsActive = true;
-//                    _distribution.LastUpdatedBy = AppUser.Id;
-//                    _distribution.LastUpdatedDate = DateTime.Now;
+            //            using (var trans = db.Database.BeginTransaction())
+            //            {
+            //                try
+            //                {
+            //                    var _distribution = db.Distributions.Find(model.TicketID);
+            //                    if (_distribution == null) return Json(false);
+            //                    _distribution.TicketNumber = model.TicketNumber;
+            //                    _distribution.TicketIssuedDate = model.TicketIssuedDateVM.ToDate(Language);
+            //                    _distribution.Warehouse = model.Warehouse;
+            //                    _distribution.RequestNumber = model.RequestNumber;
+            //                    _distribution.RequestDate = model.RequestDateVM.ToDate(Language);
+            //                    _distribution.EmployeeID = model.EmployeeID;
+            //                    _distribution.Details = model.Details;
+            //                    _distribution.IsActive = true;
+            //                    _distribution.LastUpdatedBy = AppUser.Id;
+            //                    _distribution.LastUpdatedDate = DateTime.Now;
 
-//                    db.SaveChanges();
+            //                    db.SaveChanges();
 
-//                    db.ActivityLogs.Add(new ActivityLog
-//                    {
-//                        ModifiedTable = "Ticket",
-//                        ModfiedId = _distribution.DistributionID,
-//                        Action = "Update",
-//                        UserId = AppUser.Id,
-//                        ModifiedTime = DateTime.Now,
-//                        ModifiedData = JsonConvert.SerializeObject(_distribution),
-//                    });
-//                    db.SaveChanges();
+            //                    db.ActivityLogs.Add(new ActivityLog
+            //                    {
+            //                        ModifiedTable = "Ticket",
+            //                        ModfiedId = _distribution.DistributionID,
+            //                        Action = "Update",
+            //                        UserId = AppUser.Id,
+            //                        ModifiedTime = DateTime.Now,
+            //                        ModifiedData = JsonConvert.SerializeObject(_distribution),
+            //                    });
+            //                    db.SaveChanges();
 
-//                    db.DistributionItems.Where(x => x.DistributionID == _distribution.DistributionID).ToList().ForEach(x => x.IsActive = false);
-//                    db.SaveChanges();
-//                    if (model.TicketItems != null)
-//                    {
-//                        foreach (var row in model.TicketItems)
-//                        {
-//                            if (row != null)
-//                            {
-//                                string action = row.ID == 0 ? "Insert" : "Update";
-//                                if (row.ID == 0)
-//                                {
-//                                    row.DistributionID = _distribution.DistributionID;
-//                                    row.InsertedBy = AppUser.Id;
-//                                    row.InsertedDate = DateTime.Now;
-//                                    row.IsActive = true;
-//                                    db.DistributionItems.Add(row);
-//                                }
-//                                else
-//                                {
-//                                    var obj = db.DistributionItems.Find(row.ID);
-//                                    if (obj != null)
-//                                    {
-//                                        obj.Quantity = row.Quantity;
-//                                        obj.ProductCode = row.ProductCode;
-//                                        obj.UnitPrice = row.UnitPrice;
-//                                        obj.DealWithAccount = row.DealWithAccount;
-//                                        obj.LastUpdatedBy = AppUser.Id;
-//                                        obj.LastUpdatedDate = DateTime.Now;
-//                                        obj.IsActive = true;
-//                                    }
-//                                }
-//                                db.SaveChanges();
+            //                    db.DistributionItems.Where(x => x.DistributionID == _distribution.DistributionID).ToList().ForEach(x => x.IsActive = false);
+            //                    db.SaveChanges();
+            //                    if (model.TicketItems != null)
+            //                    {
+            //                        foreach (var row in model.TicketItems)
+            //                        {
+            //                            if (row != null)
+            //                            {
+            //                                string action = row.ID == 0 ? "Insert" : "Update";
+            //                                if (row.ID == 0)
+            //                                {
+            //                                    row.DistributionID = _distribution.DistributionID;
+            //                                    row.InsertedBy = AppUser.Id;
+            //                                    row.InsertedDate = DateTime.Now;
+            //                                    row.IsActive = true;
+            //                                    db.DistributionItems.Add(row);
+            //                                }
+            //                                else
+            //                                {
+            //                                    var obj = db.DistributionItems.Find(row.ID);
+            //                                    if (obj != null)
+            //                                    {
+            //                                        obj.Quantity = row.Quantity;
+            //                                        obj.ProductCode = row.ProductCode;
+            //                                        obj.UnitPrice = row.UnitPrice;
+            //                                        obj.DealWithAccount = row.DealWithAccount;
+            //                                        obj.LastUpdatedBy = AppUser.Id;
+            //                                        obj.LastUpdatedDate = DateTime.Now;
+            //                                        obj.IsActive = true;
+            //                                    }
+            //                                }
+            //                                db.SaveChanges();
 
-//                                db.ActivityLogs.Add(new ActivityLog
-//                                {
-//                                    ModifiedTable = "TicketItem",
-//                                    ModfiedId = row.ID,
-//                                    Action = action,
-//                                    UserId = AppUser.Id,
-//                                    ModifiedTime = DateTime.Now,
-//                                    ModifiedData = JsonConvert.SerializeObject(row),
-//                                });
-//                                db.SaveChanges();
-//                            }
-//                        }
-//                    }
-//            trans.Commit();
-//            return Json(_distribution.DistributionID);
-//        }
-//                catch (Exception e)
-//                {
-//                    trans.Rollback();
-//                    Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-//    }
-//}
+            //                                db.ActivityLogs.Add(new ActivityLog
+            //                                {
+            //                                    ModifiedTable = "TicketItem",
+            //                                    ModfiedId = row.ID,
+            //                                    Action = action,
+            //                                    UserId = AppUser.Id,
+            //                                    ModifiedTime = DateTime.Now,
+            //                                    ModifiedData = JsonConvert.SerializeObject(row),
+            //                                });
+            //                                db.SaveChanges();
+            //                            }
+            //                        }
+            //                    }
+            //            trans.Commit();
+            //            return Json(_distribution.DistributionID);
+            //        }
+            //                catch (Exception e)
+            //                {
+            //                    trans.Rollback();
+            //                    Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+            //    }
+            //}
             return Json(false);
         }
-
         [AccessControl("Delete")]
         public JsonResult Delete(int id = 0)
         {
@@ -395,6 +487,77 @@ namespace Inventory.Controllers
                     });
                     db.SaveChanges();
                     return Json(true, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+        [AccessControl("Search")]
+        public JsonResult SelectItem(int id = 0)
+        {
+            try
+            {
+                var obj = db.StockInItems.Where(i => i.ID == id && i.IsActive == true && i.AvailableQuantity > 0).FirstOrDefault();
+                if (obj != null)
+                {
+                    var item = new {
+                        obj.ID,
+                        obj.AvailableQuantity,
+                        obj.ProductName,
+                        obj.ProductCode,
+                        obj.UnitPrice,
+                        UsageTypeName = AdminRepo.LookupName(Language, obj.UsageTypeID),
+                        UnitName = AdminRepo.LookupName(Language, obj.UnitID),
+                        GroupName = AdminRepo.LookupName(Language, obj.GroupID),
+                        CategoryName = AdminRepo.LookupName(Language, obj.CategoryID),
+                        SizeName = AdminRepo.LookupName(Language, obj.SizeID),
+                        OriginName = AdminRepo.LookupName(Language, obj.OriginID),
+                        BrandName = AdminRepo.LookupName(Language, obj.BrandID),
+                        };
+                    return Json(obj, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetItem(GetItemVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+                var obj = db.StockInItems.Where(i => i.ID == model.ItemID && i.IsActive == true && i.AvailableQuantity > 0).FirstOrDefault();
+                if (obj != null && obj.AvailableQuantity >= model.Quantity)
+                {
+                    var item = new {
+                        obj.ID,
+                       // obj.
+                        Quantity = model.Quantity,
+                        DealWithAccount = model.DealWithAccount,
+                        obj.ProductName,
+                        obj.ProductCode,
+                        obj.UnitPrice,
+                        UsageTypeName = AdminRepo.LookupName(Language, obj.UsageTypeID),
+                        UnitName = AdminRepo.LookupName(Language, obj.UnitID),
+                        GroupName = AdminRepo.LookupName(Language, obj.GroupID),
+                        CategoryName = AdminRepo.LookupName(Language, obj.CategoryID),
+                        SizeName = AdminRepo.LookupName(Language, obj.SizeID),
+                        OriginName = AdminRepo.LookupName(Language, obj.OriginID),
+                        BrandName = AdminRepo.LookupName(Language, obj.BrandID),
+                        };
+                    return Json(item, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(false, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception e)

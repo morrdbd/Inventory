@@ -314,6 +314,7 @@
     <Compile Include="Models\Tables\Employee.cs" />
     <Compile Include="Models\Tables\StockIn.cs" />
     <Compile Include="Models\Tables\StockInItem.cs" />
+    <Compile Include="Models\ViewModels\GetItemVM.cs" />
     <Compile Include="Models\ViewModels\StockInItemVM.cs" />
     <Compile Include="Models\Tables\Product.cs" />
     <Compile Include="Models\Tables\Department.cs" />

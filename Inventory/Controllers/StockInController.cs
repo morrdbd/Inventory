@@ -158,6 +158,7 @@ namespace Inventory.Controllers
                                     OriginID = row.OriginID,
                                     UnitPrice = row.UnitPrice,
                                     Quantity = row.Quantity,
+                                    AvailableQuantity = row.Quantity,
                                     Remarks = row.Remarks,
                                     InsertedBy = AppUser.Id,
                                     InsertedDate = DateTime.Now,

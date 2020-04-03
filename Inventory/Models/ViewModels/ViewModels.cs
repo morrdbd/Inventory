@@ -91,6 +91,8 @@ namespace Inventory.Models.ViewModels
     {
         public int ID { get; set; }
 
+        public int ItemID { get; set; }
+
         public int DistributionID { get; set; }
 
         public string UnitName { get; set; }
@@ -112,6 +114,8 @@ namespace Inventory.Models.ViewModels
         public string ProductOriginName { get; set; }
 
         public int Quantity { get; set; }
+
+        public int AvailableQuantity { get; set; }
 
         public int UnitPrice { get; set; }
 

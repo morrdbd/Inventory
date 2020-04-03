@@ -31,7 +31,7 @@
                 <div class=" col-md-6">
                     <div class="form-group">
                         <label>@Labels.Requester</label>
-                        @Html.DropDownList("BranchID", ViewBag.BranchDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BranchID" })
+                        @Html.DropDownList("DepartmentID", ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "DepartmentID" })
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@
 </div>
 
 @section scripts{
-<script>
+    <script>
     var model = @Html.Raw(Json.Encode(Model));
     $(function () {
             $("#record_form").validate({
@@ -118,10 +118,8 @@
                     })
                 }
             })
-
             /////////////////////////SEARCH//////////////////////////////
             var canView = @Html.Raw(Json.Encode(_canView));
-
             $.fn.dataTable.ext.errMode = 'none';
             var data_table = $('#data_table').DataTable({
                 ajax: {
@@ -143,7 +141,6 @@
                     { data: 'RequestNumber' },
                     { data: 'RequestDate' },
                     { data: 'RequesterName' },
-
                     {
                         data: null,
                         visible: canView,
@@ -175,7 +172,6 @@
                 ],
             });
             data_table.buttons().container().appendTo('#data_table_actions');
-
             $('#data_table').on('processing.dt', function (e, s, p) {
                 if (p == true) {
                     Metronic.blockUI({
@@ -186,12 +182,10 @@
                     Metronic.unblockUI('#list_div');
                 }
             })
-
             $('#search_form').submit(function (e, param) {
                 e.preventDefault();
                 data_table.ajax.reload();
             })
-
             $('#btnReset').click(function (e) {
                 e.preventDefault();
                 $('#search_form').clearForm();
@@ -200,18 +194,14 @@
             $('#btn_cancel').click(function (e) {
                 e.preventDefault();
             })
-
             $('#drpLimit').change(function () {
                 data_table.page.len($(this).val()).draw();
             })
-
             ////////////////////////////////////////////////////
-
             $("body").on("click", ".edit_row", function (e) {
                 e.preventDefault();
                 var id = $(this).data().id;
                 var url = "@Url.Action("LoadClientRecord")/" + id;
-
             })
             $("body").on("click", ".delete_row", function (e) {
                 e.preventDefault();
@@ -228,15 +218,12 @@
                     }
                 })
             })
-
             $("#popup_record").on("hide.bs.modal", function (e) {
                 $("#record_form").clearForm();
                 $("#record_form").find("[name=ID]").val(0);
             })
             $("#popup_record").on('show.bs.modal', function () {
             });
-
     })
-</script>
+    </script>
 }
-
