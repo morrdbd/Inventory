@@ -241,7 +241,8 @@ namespace Inventory.Controllers
                 r.DeliveryPlace,
                 r.OrderNumber,
                 OrderDate = r.OrderDate.ToDateString(Language),
-                r.Details
+                r.Details,
+                r.FilePath
             }).ToList();
             return Json(new
             {
