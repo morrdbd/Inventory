@@ -22,13 +22,37 @@
                         <input type="number" class="form-control input-sm" name="TicketNumber" value="@search.TicketNumber" placeholder="@Labels.TicketNumber" id="TicketNumber" />
                     </div>
                 </div>
+                <div class="col-md-6 form-group">
+                    <label>@Labels.TicketIssedDate</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm shpicker" name="IssuedDateFrom" value="@search.IssuedDateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
+                        <span class="input-group-addon input-sm">@Labels.ToDate</span>
+                        <input type="text" class="form-control input-sm shpicker" name="IssuedDateTo" value="@search.IssuedDateTo" placeholder="@Labels.ToDate" data-rule-date="true" data-msg="" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>@Labels.Warehouse</label>
+                        <input type="number" class="form-control input-sm" name="Warehouse" value="@search.Warehouse" placeholder="@Labels.Warehouse" id="warehouse" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.RequestNumber</label>
                         <input type="number" class="form-control input-sm" name="RequestNumber" value="@search.RequestNumber" placeholder="@Labels.RequestNumber" id="RequestNumber" />
                     </div>
                 </div>
-                <div class=" col-md-6">
+                <div class="col-md-6 form-group">
+                    <label>@Labels.RequestDate</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm shpicker" name="RequestDateFrom" value="@search.RequestDateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
+                        <span class="input-group-addon input-sm">@Labels.ToDate</span>
+                        <input type="text" class="form-control input-sm shpicker" name="RequestDateTo" value="@search.RequestDateTo" placeholder="@Labels.ToDate" data-rule-date="true" data-msg="" />
+                    </div>
+                </div>
+                <div class=" col-md-3">
                     <div class="form-group">
                         <label>@Labels.Requester</label>
                         @Html.DropDownList("DepartmentID", ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "DepartmentID" })
@@ -36,12 +60,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 form-group">
-                    <label>@Labels.TicketIssedDate</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control input-sm shpicker" name="DateFrom" value="@search.DateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
-                        <span class="input-group-addon input-sm">@Labels.ToDate</span>
-                        <input type="text" class="form-control input-sm shpicker" name="DateTo" value="@search.DateTo" placeholder="@Labels.ToDate" data-rule-date="true" data-msg="" />
+                <div class=" col-md-3">
+                    <div class="form-group">
+                        <label>@Labels.Employee</label>
+                        <select id="EmployeeID" name="EmployeeID" class="form-control input-sm"></select>
                     </div>
                 </div>
             </div>
@@ -81,6 +103,7 @@
                     <th>@Labels.RequestNumber</th>
                     <th>@Labels.RequestDate</th>
                     <th>@Labels.Requester</th>
+                    <th>@Labels.Employee</th>
                     <th></th>
                 </tr>
             </thead>
@@ -89,7 +112,7 @@
 </div>
 
 @section scripts{
-    <script>
+<script>
     var model = @Html.Raw(Json.Encode(Model));
     $(function () {
             $("#record_form").validate({
@@ -140,12 +163,13 @@
                     { data: 'Warehouse' },
                     { data: 'RequestNumber' },
                     { data: 'RequestDate' },
-                    { data: 'RequesterName' },
+                    { data: 'EmployeeName' },
+                    { data: 'DepartmentName' },
                     {
                         data: null,
                         visible: canView,
                         render: function (row) {
-                            return '<a href="@Url.Action("View")/'+row.TicketID+'" title="@Labels.View" class="btn btn-xs blue"><i class="fa fa-eye"></i></a>';
+                            return '<a href="@Url.Action("View")/'+row.DistributionID+'" title="@Labels.View" class="btn btn-xs blue"><i class="fa fa-eye"></i></a>';
                         }
                     }
                 ],
@@ -189,6 +213,7 @@
             $('#btnReset').click(function (e) {
                 e.preventDefault();
                 $('#search_form').clearForm();
+                $('#EmployeeID').empty();
                 data_table.ajax.reload();
             })
             $('#btn_cancel').click(function (e) {
@@ -224,6 +249,19 @@
             })
             $("#popup_record").on('show.bs.modal', function () {
             });
+            $("#DepartmentID" ).change(function() {
+                var departmentId = $(this).val();
+                if (departmentId) {
+                    var url = "@Url.Action("loadDepartmentEmployee", "Employee")"+"/"+departmentId;
+                        $.get(url, function (data) {
+                            $('#EmployeeID').empty();
+                            $('#EmployeeID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
+                            $.each(data, function (i, d) {
+                                $('#EmployeeID').append('<option value=' + d.emplyeeID + '>' + d.name + '</option>');
+                            });
+                        })
+                }
+            });
     })
-    </script>
+</script>
 }

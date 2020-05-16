@@ -10,7 +10,7 @@ namespace Inventory.Models.Procedures
         public int ID { get; set; }
         public int DistributionID { get; set; }
         public int Quantity { get; set; }
-        public string ItemDetails { get; set; }
+        public string ItemName { get; set; }
         public int UnitPrice { get; set; }
         public int TotalPrice { get; set; }
         public string DealWithAccount { get; set; }

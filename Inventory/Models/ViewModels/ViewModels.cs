@@ -69,7 +69,7 @@ namespace Inventory.Models.ViewModels
 
         public int? RequestNumber { get; set; }
 
-        public string RequestDateVM { get; set; }
+        public string RequestDateForm { get; set; }
 
         public int EmpID { get; set; }
 
@@ -99,7 +99,7 @@ namespace Inventory.Models.ViewModels
 
         public int UsageTypeID { get; set; }
 
-        public int ProductCode { get; set; }
+        public string ProductCode { get; set; }
 
         public string ProductName { get; set; }
 
@@ -113,9 +113,9 @@ namespace Inventory.Models.ViewModels
 
         public string ProductOriginName { get; set; }
 
-        public int Quantity { get; set; }
+        public string BrandName { get; set; }
 
-        public int AvailableQuantity { get; set; }
+        public int Quantity { get; set; }
 
         public int UnitPrice { get; set; }
 

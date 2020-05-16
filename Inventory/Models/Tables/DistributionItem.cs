@@ -14,7 +14,7 @@ namespace Inventory.Models.Tables
 
         public int Quantity { get; set; }
 
-        public int ProductCode { get; set; } 
+        public int ItemID { get; set; } 
 
         public int UnitPrice { get; set; }
 
@@ -22,14 +22,5 @@ namespace Inventory.Models.Tables
 
         public bool IsActive { get; set; }
 
-        public int InsertedBy { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime? InsertedDate { get; set; }
-
-        public int? LastUpdatedBy { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime? LastUpdatedDate { get; set; }
     }
 }

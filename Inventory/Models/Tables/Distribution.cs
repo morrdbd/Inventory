@@ -26,6 +26,8 @@ namespace Inventory.Models
 
         public string Details { get; set; }
 
+        public string FilePath { get; set; }
+
         public bool IsActive { get; set; }
 
         public int InsertedBy { get; set; }

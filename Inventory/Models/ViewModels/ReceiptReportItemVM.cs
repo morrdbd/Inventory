@@ -16,7 +16,7 @@ namespace Inventory.Models.ViewModels
 
         public int UnitID { get; set; }
 
-        public string ItemDetails { get; set; }
+        public string ItemName { get; set; }
 
         public int UnitPrice { get; set; }
 

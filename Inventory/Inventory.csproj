@@ -3055,7 +3055,7 @@
     <Folder Include="Content\assets\admin\pages\img\" />
     <Folder Include="Content\assets_rtl\frontend\pages\temp\" />
     <Folder Include="Resources\" />
-    <Folder Include="Uploads\NondurableStockIn\" />
+    <Folder Include="Uploads\Distribution\" />
     <Folder Include="Uploads\StockInScan\" />
     <Folder Include="Views\Helper\" />
   </ItemGroup>

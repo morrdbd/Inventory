@@ -1,146 +1,119 @@
-﻿@model Inventory.Models.ViewModels.DistributionItemVM
+﻿@model Inventory.Models.ViewModels.Distribution_VM
 @{
     //ViewBag.Title = "تکت توزیع تحویلخانه";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
 <div class="margin-bottom-10">
-    @if (_user.HasAccess("DistributionTicketPC5", "Search"))
+    @if (_user.HasAccess("Distribution", "Search"))
     {
-    <a href="@Url.Action(" Search")" class="btn btn-sm">@Labels.back_to_list</a>
+        <a href="@Url.Action("Search")" class="btn btn-sm">@Labels.back_to_list</a>
     }
-    @if (_user.HasAccess("DistributionTicketPC5", "Edit"))
+    @if (_user.HasAccess("Distribution", "Edit"))
     {
-    <a href="@Url.Action(" Edit", new { id=Model.TicketID })" class="btn btn-sm blue"><i class="fa fa-edit"></i> @Labels.edit</a>
+        <a href="@Url.Action("Edit", new { id=Model.DistributionID })" class="btn btn-sm blue"><i class="fa fa-edit"></i> @Labels.edit</a>
     }
-    @if (_user.HasAccess("DistributionTicketPC5", "Print"))
+    @if (_user.HasAccess("Distribution", "Print"))
     {
-    <a href="@Url.Action(" Print", new { id=Model.TicketID })" class="btn btn-sm btn-success" id="btn_print"><i class="fa fa-print"></i> @Labels.print_preview</a>
+        <a href="@Url.Action("Print", new { id=Model.DistributionID })" class="btn btn-sm btn-success" id="btn_print"><i class="fa fa-print"></i> @Labels.print_preview</a>
     }
-    @if (_user.HasAccess("DistributionTicketPC5", "Delete"))
+    @if (_user.HasAccess("Distribution", "Delete"))
     {
-    <a href="@Url.Action(" Delete", new { id=Model.TicketID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.delete</a>
+        <a href="@Url.Action("Delete", new { id=Model.DistributionID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.delete</a>
     }
 </div>
+
 <div id="print_area">
     <div style="direction:rtl;">
-        <table style="width:100%;">
+        <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%;">
             <thead>
                 <tr>
-                    <th style="text-align:right; width:20%;"><h3>@Labels.PC5Form</h3></th>
-                    <th style="text-align:right; width:80%"><h3>@Labels.DistributionTicket</h3></th>
+                    <td colspan="12">
+                        <table style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th colspan="4" style="text-align:right; border-right:none;">@Labels.PC5Form</th>
+                                    <th colspan="8" style="text-align:right; border-right:none;">@Labels.DistributionTicket</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
                 </tr>
-            </thead>
-        </table>
+                <tr>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.TicketNumber</th>
+                    <th colspan="4" style="text-align:right; word-wrap:normal;">@Model.TicketNumber</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.RequestNumber</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.RequestNumber</th>
 
-        <table border="1" width="700" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse;">
-            <thead class="thead-light">
-                <tr>
-                    <th colspan="1">۱- @Labels.TicketNumber</th>
-                    <td colspan="2">@Model.TicketNumber</td>
-                    <th colspan="2">۴- @Labels.RequestNumber</th>
-                    <td colspan="2">@Model.RequestNumber</td>
                 </tr>
                 <tr>
-                    <th colspan="1">۲- @Labels.date</th>
-                    <td colspan="2">@Model.TicketIssuedDateVM</td>
-                    <th colspan="2">۵- @Labels.date</th>
-                    <td colspan="2">@Model.RequestDateVM</td>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.date</th>
+                    <th colspan="4" style="text-align:right; word-wrap:normal;">@Model.TicketIssuedDateForm</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.RequestDate</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.RequestDateForm</th>
+
                 </tr>
                 <tr>
-                    <th colspan="1">۳- @Labels.Warehouse </th>
-                    <td colspan="2" style="word-wrap:normal;">@Model.Warehouse</td>
-                    <th colspan="2">۶- @Labels.Requester</th>
-                    <td colspan="2" style="word-wrap:normal;">@Model.BranchName</td>
+                    <th colspan="3" style="text-align:right; word-wrap:normal; width:20%">@Labels.Warehouse </th>
+                    <th colspan="4" style="text-align:right; word-wrap:normal;">@Model.Warehouse</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.Requester</th>
+                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.EmpDepartmentName</th>
                 </tr>
                 <tr>
-                    <th align="center" width="10%">@Labels.Quantity </th>
-                    <th align="center" width="10%">@Labels.Unit </th>
-                    <th colspan="2" width="40%" style="text-align:center;">@Labels.ItemDetails </th>
-                    <th align="center" width="10%">@Labels.UnitPrice </th>
-                    <th align="center" width="10%">@Labels.TotalPrice</th>
-                    <th align="center" width="20%">@Labels.DealWithAccount</th>
+                    <th style="text-align:center; word-wrap:normal; word-wrap:normal;  width:5%;">#</th>
+                    <th style="text-align:center; word-wrap:normal; word-wrap:normal;">@Labels.Quantity</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.Unit</th>
+                    <th style="text-align:center; word-wrap:normal;">Usage Type</th>
+                    <th style="text-align:center; word-wrap:normal;">Group Name</th>
+                    <th style="text-align:center; word-wrap:normal;">Product Category</th>
+                    <th style="text-align:center; word-wrap:normal;">@Labels.ItemName</th>
+                    <th style="text-align:center; word-wrap:normal;">Product Code</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.UnitPrice</th>
+                    <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.TotalPrice</th>
+                    <th colspan="3" style="text-align:center; word-wrap:normal;">@Labels.DealWithAccount</th>
                 </tr>
-                <tr>
-                    <th>۷</th>
-                    <th>۸</th>
-                    <th colspan="2">۹</th>
-                    <th>۱۰</th>
-                    <th>۱۱</th>
-                    <th>۱۲</th>
-                </tr>
+
             </thead>
             <tbody>
-                @foreach (var item in Model.TicketItems)
+                @foreach (var item in Model.DistributionItems)
                 {
+                    int index = 1;
                 <tr>
-                    <td>@item.Quantity</td>
-                    <td>@item.UnitName</td>
-                    <td colspan="2" style="text-align:center; word-wrap:normal;">@item.ItemDetails</td>
-                    <td>@item.UnitPrice</td>
-                    <td>@item.TotalPrice</td>
-                    <td>@item.DealWithAccount</td>
+                    <th style="text-align:center;">@index</th>
+                    <th style="text-align:center;">@item.Quantity</th>
+                    <th style="text-align:center;">@item.UnitName</th>
+                    <th style="text-align:center;">@item.UsageTypeName</th>
+                    <th style="text-align:center;">@item.ProductGroupName</th>
+                    <th style="text-align:center;">@item.ProductCategoryName</th>
+                    <th style="text-align:center;">@item.ProductName</th>
+                    <th style="text-align:center;">@item.ProductCode</th>
+                    <th style="text-align:center;">@item.UnitPrice</th>
+                    <th style="text-align:center;"> @(item.Quantity * item.UnitPrice)</th>
+                    <th style="text-align:center;" colspan="3">@item.DealWithAccount</th>
                 </tr>
+                    index++;
+
                 }
                 <tr>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th colspan="2" style="text-align:center; word-wrap:normal;">@Model.Details</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                        <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
+                        <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
+                        <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
+                        <th colspan="5" style="text-align:center; word-wrap:normal; width:40%;">@Model.Details</th>
+                        <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
+                        <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
+                        <th colspan="3" style="text-align:center; word-wrap:normal;">&nbsp;</th>
+                </tr>
+                <tr>
+                    <th colspan="9" style="text-align:center;"> مجموع قیمت</th>
+                    <th style="text-align:center;"> @Model.DistributionItems.Sum(i => i.UnitPrice * i.Quantity)</th>
+                    <th colspan="3" style="text-align:center;">افغانی </th>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th colspan="2" style="text-align:center;"> ۱۳- مجموع کل  </th>
-                    <th></th>
-                    <th>@Model.TicketItems.Sum(t => t.TotalPrice)</th>
-                    <th></th>
-                </tr>
-            </tfoot>
         </table>
-        <table id="tbl_auth" style="width:100%; margin-top:15px;">
-            <thead>
-                <tr>
-                    <th colspan="2" style="text-align:right; padding-top:5px;">۱۴-امضاء آمر تحویلخانه</th>
-                    <td colspan="2" style="text-align:right; padding-top:5px;"></td>
-                    <td colspan="2" style="text-align:right;">۱۵-امضاء گیرنده</td>
-                    <td colspan="3" style="text-align:right; padding-top:5px;"></td>
-                </tr>
-                <tr>
-                    <th colspan="5" style="text-align:right;">۱۶- اندارج:تمام اجناس درکارت های ثبت ذخیره درج گریده است جنس</th>
-                    <th colspan="2" style="text-align:right; padding-top:5px;"></th>
-                </tr>
-                <tr>
-                    <th colspan="2" style="text-align:right; padding-top:5px;">امضاء</th>
-                    <th colspan="2" style="text-align:right; padding-top:5px;"></th>
-                    <th colspan="1" style="text-align:right; padding-top:5px;">تاریخ</th>
-                    <th colspan="2" style="text-align:right; padding-top:5px;"></th>
-                </tr>
-                <tr>
-                    <th colspan="7" style="text-align:right; padding-top:5px;">کاتب اندراج</th>
-                </tr>
-                <tr>
-                    <th colspan="7" style="text-align:right; padding-top:5px;">توریع فورمه دریک اصل و دو کاپی ترتیب شود</th>
-                </tr>
-                <tr>
-                    <th colspan="7" style="text-align:right; padding-top:5px;">الف اصل به درخواست کننده داده شود</th>
-                </tr>
-                <tr>
-                    <th colspan="3" style="text-align:right; padding-top:5px;">امضاء ترتیب گننده</th>
-                    <th colspan="4" style="text-align:right; padding-top:5px;"></th>
-                </tr>
-            </thead>
-        </table>
-
     </div>
 </div>
-
 @section scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
         $(function () {
             $('body').on('click', '#btn_delete', function (e) {
                 e.preventDefault();
@@ -155,14 +128,6 @@
                     }
                 })
             })
-            $('body').on('click', '#btn_print', function (e) {
-                e.preventDefault();
-                var divToPrint = $("#print_area").html();
-                var newWin = window.open("");
-                newWin.document.write(divToPrint);
-                newWin.print();
-                newWin.close();
-            })
         })
-</script>
+    </script>
 }

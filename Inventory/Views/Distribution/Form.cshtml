@@ -59,7 +59,7 @@
                 <div class="col-md-3 form-group">
                     <label>@Labels.TicketIssedDate</label>
                     <div class="col-md-8">
-                        <input type="text" name="TicketIssuedDateVM" id="TicketIssuedDateVM" value="@Model.TicketIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                        <input type="text" name="TicketIssuedDateForm" id="TicketIssuedDateForm" value="@Model.TicketIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
@@ -79,7 +79,7 @@
                 <div class="col-md-3 form-group">
                     <label>@Labels.RequestDate</label>
                     <div class="col-md-8">
-                        <input type="text" name="RequestDateVM" id="RequestDateVM" value="@Model.RequestDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                        <input type="text" name="RequestDateForm" id="RequestDateForm" value="@Model.RequestDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                     </div>
                 </div>
             </section>
@@ -101,10 +101,11 @@
                     <tr>
                         <th>@Labels.Unit</th>
                         <th>@Labels.Quantity</th>
-                        <th>Name</th>
-                        <th>Code</th>
+                        <th>Usage Type</th>
                         <th>Group</th>
                         <th>Category</th>
+                        <th>Name</th>
+                        <th>Code</th>
                         <th>Size</th>
                         <th>Origin</th>
                         <th>Brand</th>
@@ -112,7 +113,7 @@
                         <th>@Labels.TotalPrice</th>
                         <th>@Labels.DealWithAccount</th>
                         <th></th>
-                       @* <th></th>*@
+                        @* <th></th>*@
                     </tr>
                 </thead>
                 <tbody id="tbody_item">
@@ -122,18 +123,25 @@
                         {
                             foreach (var item in Model.DistributionItems)
                             {
-                                <tr>
-                                    <td>@item.UnitName</td>
-                                    <td>@item.Quantity</td>
-                                    <td>@item.ProductName</td>
-                                    <td>@item.UnitPrice</td>
-                                    <td>@item.TotalPrice</td>
-                                    <td>@item.DealWithAccount</td>
-                                    <td>
-                                        @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>*@
-                                        <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
+                    <tr>
+                        <td>@item.UnitName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UsageTypeName</td>
+                        <td>@item.ProductGroupName</td>
+                        <td>@item.ProductCategoryName</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.ProductCode</td>
+                        <td>@item.ProductSizeName</td>
+                        <td>@item.ProductOriginName</td>
+                        <td>@item.BrandName</td>
+                        <td>@item.UnitPrice</td>
+                        <td>@item.TotalPrice</td>
+                        <td>@item.DealWithAccount</td>
+                        <td>
+                            @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>*@
+                            <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
                                 index++;
                             }
                         }
@@ -249,10 +257,11 @@
                             <thead>
                                 <tr>
                                     <th>@Labels.Unit</th>
-                                    <th>Product Name</th>
-                                    <th>Product Code</th>
+                                    <th>Usage Type</th>
                                     <th>Group Name</th>
                                     <th>Category Name</th>
+                                    <th>Product Name</th>
+                                    <th>Product Code</th>
                                     <th>Product Size</th>
                                     <th>Product Origin</th>
                                     <th>Product Brand</th>
@@ -266,7 +275,7 @@
                     </div>
                 </section>
 
-                <form id="assign_item_form" action="GetItem" autocomplete="off" class="margin-top-10">
+                <form id="assign_item_form" action="@Url.Action("GetItem","Distribution")" autocomplete="off" class="margin-top-10">
                     <div class="row">
                         <div class="col-md-3 form-group">
                             <label>@Labels.Quantity</label>
@@ -373,10 +382,11 @@
         <tr>
             <td>{{UnitName}}</td>
             <td>{{Quantity}}</td>
-            <td>{{ProductName}}</td>
-            <td>{{ProductCode}}</td>
+            <td>{{UsageTypeName}}</td>
             <td>{{GroupName}}</td>
             <td>{{CategoryName}}</td>
+            <td>{{ProductName}}</td>
+            <td>{{ProductCode}}</td>
             <td>{{SizeName}}</td>
             <td>{{OriginName}}</td>
             <td>{{BrandName}}</td>
@@ -386,7 +396,7 @@
             <td>
                 <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
                 @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="{{index}}"><i class="fa fa-edit"></i></a>
-        <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="{{index}}" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>*@
+            <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="{{index}}" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>*@
             </td>
         </tr>
     </script>
@@ -502,6 +512,7 @@
                     //}
                     //var formData = $(form).serializeJSON();
                     console.log("row <<<<<<<<<<<<<<<<<< "+formData.ItemID);
+                    console.log($('#assign_item_form').attr('action'));
                     console.log("row form data is <<<<<<<<<<<<<<<<<< "+JSON.stringify(formData));
                     $.ajax({
                         url: $('#assign_item_form').attr('action'),
@@ -527,10 +538,11 @@
                                 var tr = $('#temp_item').clone().html()
                                 .replace("{{UnitName}}", response.UnitName)
                                 .replace("{{Quantity}}", response.Quantity)
-                                .replace("{{ProductName}}", response.ProductName)
-                                .replace("{{ProductCode}}", response.ProductCode)
+                                .replace("{{UsageTypeName}}", response.UsageTypeName)
                                 .replace("{{GroupName}}", response.GroupName)
                                 .replace("{{CategoryName}}", response.CategoryName)
+                                .replace("{{ProductName}}", response.ProductName)
+                                .replace("{{ProductCode}}", response.ProductCode)
                                 .replace("{{SizeName}}", response.SizeName)
                                 .replace("{{OriginName}}", response.OriginName)
                                 .replace("{{BrandName}}", response.BrandName)
@@ -654,10 +666,11 @@
                 },
                 columns: [
                     { data: 'UnitName' },
-                    { data: 'ProductName' },
-                    { data: 'ProductCode' },
+                    { data: 'UsageTypeName' },
                     { data: 'GroupName' },
                     { data: 'CategoryName' },
+                    { data: 'ProductName' },
+                    { data: 'ProductCode' },
                     { data: 'SizeName' },
                     { data: 'OriginName' },
                     { data: 'BrandName' },

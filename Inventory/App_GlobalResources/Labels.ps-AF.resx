@@ -852,8 +852,8 @@
   <data name="DistributionTicketList" xml:space="preserve">
     <value>د توزیع تکت لست</value>
   </data>
-  <data name="ItemDetails" xml:space="preserve">
-    <value>جنسی تفصیل</value>
+  <data name="ItemName" xml:space="preserve">
+    <value>د توکی نوم</value>
   </data>
   <data name="Mem3Date" xml:space="preserve">
     <value>م ۳ تاریخ</value>

@@ -29,7 +29,6 @@ namespace Inventory.Models
 
         public string Details { get; set; }
 
-        [StringLength(300)]
         public string FilePath { get; set; }
 
         public bool IsActive { get; set; }

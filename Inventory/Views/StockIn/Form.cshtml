@@ -85,10 +85,11 @@
                     <tr>
                         <th>@Labels.Unit</th>
                         <th>Quantity</th>
-                        <th>Name</th>
-                        <th>Code</th>
+                        <th>Usage Type</th>
                         <th>Group</th>
                         <th>Category</th>
+                        <th>Name</th>
+                        <th>Code</th>
                         <th>Size</th>
                         <th>Origin</th>
                         <th>Brand</th>
@@ -105,24 +106,25 @@
                         {
                             foreach (var item in Model.StockInItems)
                             {
-                            <tr>
-                                <td>@item.UnitName</td>
-                                <td>@item.Quantity</td>
-                                <td>@item.ProductName</td>
-                                <td>@item.ProductCode</td>
-                                <td>@item.GroupName</td>
-                                <td>@item.CategoryName</td>
-                                <td>@item.SizeName</td>
-                                <td>@item.OriginName</td>
-                                <td>@item.BrandName</td>
-                                <td>@item.UnitPrice</td>
-                                <td>@(item.UnitPrice * item.Quantity)</td>
-                                <td>@item.Remarks</td>
-                                <td>
-                                    <a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>
-                                    <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="@index" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
+                    <tr>
+                        <td>@item.UnitName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UsageTypeName</td>
+                        <td>@item.GroupName</td>
+                        <td>@item.CategoryName</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.ProductCode</td>
+                        <td>@item.SizeName</td>
+                        <td>@item.OriginName</td>
+                        <td>@item.BrandName</td>
+                        <td>@item.UnitPrice</td>
+                        <td>@(item.UnitPrice * item.Quantity)</td>
+                        <td>@item.Remarks</td>
+                        <td>
+                            <a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="@index" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
                                 index++;
                             }
                         }
@@ -268,10 +270,11 @@
         <tr>
             <td>{{UnitName}}</td>
             <td>{{Quantity}}</td>
-            <td>{{ProductName}}</td>
-            <td>{{ProductCode}}</td>
+            <td>{{UsageTypeName}}</td>
             <td>{{GroupName}}</td>
             <td>{{CategoryName}}</td>
+            <td>{{ProductName}}</td>
+            <td>{{ProductCode}}</td>
             <td>{{SizeName}}</td>
             <td>{{OriginName}}</td>
             <td>{{BrandName}}</td>
@@ -369,7 +372,7 @@
                 var row = StockInItems[index];
                 console.log("row is >>>>>>>>>>>>>"+ JSON.stringify(row));
                 $('#item_form [name=UnitID]').val(row.UnitID);
-                $('#item_form [name=ItemDetails]').val(row.ItemDetails);
+                $('#item_form [name=ItemName]').val(row.ItemName);
                 $('#item_form [name=UnitPrice]').val(row.UnitPrice);
                 $('#item_form [name=Quantity]').val(row.Quantity);
                 $('#item_form [name=Remarks]').val(row.Remarks);
@@ -415,11 +418,12 @@
                     var tr = $('#temp_item').clone().html()
                     .replace("{{Quantity}}", row.Quantity)
                     .replace("{{UnitName}}", $('#item_form [name=UnitID] option:selected').text())
+                    .replace("{{UsageTypeName}}", $('#item_form [name=UsageTypeID] option:selected').text())
+                    .replace("{{GroupName}}",$('#item_form [name=GroupID] option:selected').text())
+                    .replace("{{CategoryName}}",$('#item_form [name=CategoryID] option:selected').text())
                     .replace("{{ProductName}}",row.ProductName)
                     .replace("{{ProductCode}}",row.ProductCode)
                     //.replace("{{ProductName}}",$('#item_form [name=ProductCode] option:selected').text())
-                    .replace("{{GroupName}}",$('#item_form [name=GroupID] option:selected').text())
-                    .replace("{{CategoryName}}",$('#item_form [name=CategoryID] option:selected').text())
                     .replace("{{SizeName}}",$('#item_form [name=SizeID] option:selected').text())
                     .replace("{{OriginName}}",$('#item_form [name=OriginID] option:selected').text())
                     .replace("{{BrandName}}",$('#item_form [name=BrandID] option:selected').text())

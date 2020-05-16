@@ -1087,15 +1087,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item Details.
-        /// </summary>
-        internal static string ItemDetails {
-            get {
-                return ResourceManager.GetString("ItemDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Item In Use.
         /// </summary>
         internal static string ItemInUse {
@@ -1110,6 +1101,15 @@ namespace Resources {
         internal static string ItemInWarehouse {
             get {
                 return ResourceManager.GetString("ItemInWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Name.
+        /// </summary>
+        internal static string ItemName {
+            get {
+                return ResourceManager.GetString("ItemName", resourceCulture);
             }
         }
         

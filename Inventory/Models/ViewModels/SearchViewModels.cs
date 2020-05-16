@@ -8,10 +8,14 @@ namespace Inventory.Models.ViewModels
     public class TicketSearch
     {
         public int? TicketNumber { get; set; }
+        public string Warehouse { get; set; }
         public int? RequestNumber { get; set; }
-        public int EmployeeID { get; set; }
-        public string DateFrom { get; set; }
-        public string DateTo { get; set; }
+        public int? DepartmentID { get; set; }
+        public int? EmployeeID { get; set; }
+        public string IssuedDateFrom { get; set; }
+        public string IssuedDateTo { get; set; }
+        public string RequestDateFrom { get; set; }
+        public string RequestDateTo { get; set; }
         public int PageSize { get; set; }
         public int? PageNo { get; set; }
         public int draw { get; set; }

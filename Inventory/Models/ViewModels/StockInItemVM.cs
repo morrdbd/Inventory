@@ -27,6 +27,8 @@ namespace Inventory.Models.Tables
 
         public int UsageTypeID { get; set; }
 
+        public string UsageTypeName { get; set; }
+
         public int GroupID { get; set; }
 
         public string OriginName { get; set; }

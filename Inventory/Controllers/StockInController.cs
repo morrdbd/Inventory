@@ -89,6 +89,7 @@ namespace Inventory.Controllers
                     UnitPrice = i.UnitPrice,
                     Quantity = i.Quantity,
                     UsageTypeID = i.UsageTypeID,
+                    UsageTypeName = AdminRepo.LookupName(Language,i.UsageTypeID),
                     ProductCode = i.ProductCode
                 }
                 ).ToList()
@@ -409,6 +410,7 @@ namespace Inventory.Controllers
         }
 
         [AccessControl("Edit")]
+        [HttpGet]
         public ActionResult Edit(int id = 0)
         {
             CreateDropDown();

@@ -21,9 +21,9 @@ namespace Inventory.Controllers
         [AccessControl("View")]
         public ActionResult Search()
         {
-            var branchList = db.Departments.Where(d => d.IsActive == true).OrderBy(d => d.ForOrdering).Select(d =>
+            var departmentList = db.Departments.Where(d => d.IsActive == true).Select(d =>
                 new { d.DepartmentID,DepartmentName = Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName }).ToList();
-            ViewBag.BranchDrp = new SelectList(branchList, "DepartmentID", "DepartmentName");
+            ViewBag.DepartmentDrp = new SelectList(departmentList, "DepartmentID", "DepartmentName");
             ViewBag.search = new Employee_Search();
             return View("Search", new Employee());
         }
@@ -127,6 +127,14 @@ namespace Inventory.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
             return Json(false, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult loadDepartmentEmployee(int id = 0)
+        {
+            var employeesList = db.Employees.Where(x => x.IsActive == true && x.DepartmentID == id)
+                .Select(x=> new { employeeID = x.EmployeeID, name = (x.Name +" ولد "+x.FatherName)});
+
+            return Json(employeesList, JsonRequestBehavior.AllowGet);
         }
 
     }
