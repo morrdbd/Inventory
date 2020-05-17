@@ -33,9 +33,9 @@ namespace Inventory.Models.Tables
         [NotMapped]
         public string CategoryName { get; set; }
 
-        public string ProductName { get; set; }
+        public string ItemName { get; set; }
 
-        public string ProductCode { get; set; }
+        public string ItemCode { get; set; }
 
         public int UnitID { get; set; }
 

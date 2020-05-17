@@ -3,8 +3,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.search as Inventory.Models.ViewModels.Durable_StockIn_Search;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
-    var _canView = _user.HasAccess("ReceiptReportMem7", "View");
-    var _canPrint = _user.HasAccess("ReceiptReportMem7", "Print");
+    var _canView = _user.HasAccess("StockIn", "View");
+    var _canPrint = _user.HasAccess("StockIn", "Print");
 }
 
 <form method="post" action="@Url.Action("ListPartial")" id="search_form" autocomplete="off">
@@ -85,8 +85,6 @@
                     <th>OrderNumber</th>
                     <th>OrderDate</th>
                     <th>Details</th>
-                    <th></th>
-                    <th></th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -179,7 +177,7 @@
                         visible: canPrint,
                         render: function (row) {
                             if (row.FilePath) {
-                                return '<a href="#popup_attachment" data-toggle="modal" class="btn btn-xs blue showFile_row" data-filepath="' + row.FilePath + '" title="@Labels.FinalSOAttachment"><i class="fa fa-paperclip"></i></a>';
+                                return '<a href="#popup_attachment" data-toggle="modal" class="btn btn-xs showFile_row" data-filepath="' + row.FilePath + '" title="@Labels.FinalSOAttachment"><i class="fa fa-paperclip"></i></a>';
                             } else return;
                         }
                     },
@@ -188,20 +186,6 @@
                         visible: canView,
                         render: function (row) {
                             return '<a href="@Url.Action("View")/'+row.StockInID+'" title="@Labels.View" class="btn btn-xs blue"><i class="fa fa-eye"></i></a>';
-                        }
-                    },
-                    {
-                        data: null,
-                        visible: canView,
-                        render: function (row) {
-                            return '<a href="@Url.Action("Edit")/'+row.StockInID+'" title="@Labels.View" class="btn btn-xs green"><i class="fa fa-pencil"></i></a>';
-                        }
-                    },
-                    {
-                        data: null,
-                        visible: canView,
-                        render: function (row) {
-                            return '<button data-toggle="modal" class="btn btn-xs red delete_row" data-id="' + row.StockInID + '" title="@Labels.delete"><i class="fa fa-trash"></i></button>';
                         }
                     }
                 ],
@@ -266,21 +250,6 @@
                 var id = $(this).data().id;
                 var url = "@Url.Action("LoadClientRecord")/" + id;
 
-            })
-            $("body").on("click", ".delete_row", function (e) {
-                e.preventDefault();
-                var id = $(this).data().id;
-                var url = "@Url.Action("Delete")/" + id;
-                bootbox.confirm("@Labels.are_you_sure", function (result) {
-                    if (result == true) {
-                        $.get(url, function (response) {
-                            if (response == true) {
-                                toastr.success("@Labels.operation_done_suc");
-                                data_table.ajax.reload();
-                            }
-                        })
-                    }
-                })
             })
 
             $("#popup_record").on("hide.bs.modal", function (e) {

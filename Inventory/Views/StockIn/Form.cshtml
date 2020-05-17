@@ -112,8 +112,8 @@
                         <td>@item.UsageTypeName</td>
                         <td>@item.GroupName</td>
                         <td>@item.CategoryName</td>
-                        <td>@item.ProductName</td>
-                        <td>@item.ProductCode</td>
+                        <td>@item.ItemName</td>
+                        <td>@item.ItemCode</td>
                         <td>@item.SizeName</td>
                         <td>@item.OriginName</td>
                         <td>@item.BrandName</td>
@@ -166,18 +166,17 @@
                                 @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new {onchange = "loadGroup()", @class = "form-control input-sm", @ID = "UsageTypeID", @Required = "required" })
                             </div>
                         </div>
-                      
                     </section>
                     <section class="row">
                         <div class=" col-md-6 form-group">
-                            <label>Product Group</label>
+                            <label>Item Group</label>
                             <div class="col-md-8">
                                 <select id="GroupID" name="GroupID" onchange="loadCategories()" class="form-control input-sm"></select>
-                                @*@Html.DropDownList("GroupID", ViewBag.ProductGroupDrp as SelectList, Labels.please_select, new { onchange = "", @class = "form-control input-sm", @ID = "GroupID", @Required = "required" })*@
+                                @*@Html.DropDownList("GroupID", ViewBag.ItemGroupDrp as SelectList, Labels.please_select, new { onchange = "", @class = "form-control input-sm", @ID = "GroupID", @Required = "required" })*@
                             </div>
                         </div>
                         <div class=" col-md-6 form-group">
-                            <label>Product Category</label>
+                            <label>Item Category</label>
                             <div class="col-md-8">
                                 <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
                             </div>
@@ -186,15 +185,15 @@
                     <div class="row">
                         <section class="row">
                             <div class="col-md-6 form-group">
-                                <label>Product Name</label>
+                                <label>Item Name</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="ProductName" id="ProductName" class="form-control input-sm" required data-msg="" placeholder="">
+                                    <input type="text" name="ItemName" id="ItemName" class="form-control input-sm" required data-msg="" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label>Product Code</label>
+                                <label>Item Code</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="ProductCode" id="ProductCode" class="form-control input-sm" data-msg="" placeholder="">
+                                    <input type="text" name="ItemCode" id="ItemCode" class="form-control input-sm" data-msg="" placeholder="">
                                 </div>
                             </div>
                         </section>
@@ -206,7 +205,7 @@
                                 </div>
                             </div>
                             <div class=" col-md-6 form-group">
-                                <label>Product Size</label>
+                                <label>Item Size</label>
                                 <div class="col-md-8">
                                     @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
                                 </div>
@@ -215,13 +214,13 @@
                         <section class="row"></section>
                         <section class="row">
                             <div class=" col-md-6 form-group">
-                                <label>Product Origin</label>
+                                <label>Item Origin</label>
                                 <div class="col-md-8">
                                     @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
                                 </div>
                             </div>
                             <div class=" col-md-6 form-group">
-                                <label>Product Brand</label>
+                                <label>Item Brand</label>
                                 <div class="col-md-8">
                                     @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
                                 </div>
@@ -273,8 +272,8 @@
             <td>{{UsageTypeName}}</td>
             <td>{{GroupName}}</td>
             <td>{{CategoryName}}</td>
-            <td>{{ProductName}}</td>
-            <td>{{ProductCode}}</td>
+            <td>{{ItemName}}</td>
+            <td>{{ItemCode}}</td>
             <td>{{SizeName}}</td>
             <td>{{OriginName}}</td>
             <td>{{BrandName}}</td>
@@ -299,20 +298,20 @@
             }
 
             console.log("StockInItems >>>>>>>>>>>>>>>> "+JSON.stringify(StockInItems));
-            //Load Product Information
-            @*$('#ProductCode').change(function () {
-                var productCode = $(this).val();
+            //Load Item Information
+            @*$('#ItemCode').change(function () {
+                var ItemCode = $(this).val();
                 $.ajax({
                     type: "post",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    url: '@Url.Action("LoadProductInfo", "Helper")', // URL to fetch second ddl
-                    data: "{productCode:'" + productCode + "'}",
+                    url: '@Url.Action("LoadItemInfo", "Helper")', // URL to fetch second ddl
+                    data: "{ItemCode:'" + ItemCode + "'}",
                     success: function (data) {
-                        $("#ProductSize").val(data.ProductSize);
-                        $("#ProductCategory").val(data.ProductCategory);
-                        $("#ProductGroup").val(data.ProductGroup);
-                        $("#ProductOrigin").val(data.ProductOrigin);
+                        $("#ItemSize").val(data.ItemSize);
+                        $("#ItemCategory").val(data.ItemCategory);
+                        $("#ItemGroup").val(data.ItemGroup);
+                        $("#ItemOrigin").val(data.ItemOrigin);
                         $("#UnitName").val(data.UnitName);
                     },
                     failure: function (data) {
@@ -384,9 +383,9 @@
                 $('#item_form [name=CategoryID]').val(row.CategoryID);
                 $('#item_form [name=OriginID]').val(row.OriginID);
                 $('#item_form [name=BrandID]').val(row.BrandID);
-                $('#item_form [name=ProductName]').val(row.ProductName);
-                console.log("Product code is >>>>>>>>>>>> "+ row.ProductCode);
-                $('#item_form [name=ProductCode]').val(row.ProductCode);
+                $('#item_form [name=ItemName]').val(row.ItemName);
+                console.log("Item code is >>>>>>>>>>>> "+ row.ItemCode);
+                $('#item_form [name=ItemCode]').val(row.ItemCode);
 
                 $('#item_form [name=index]').val(index);
                 $('#item_modal').modal('show');
@@ -399,16 +398,16 @@
                 submitHandler: function (form) {
                     var isDuplicate = false;
                     StockInItems.forEach(function(i){
-                        console.log("Product code textbox value is >>>>>>> "+$('#ProductName').val());
-                        console.log("Product code value is >>>>>>> "+i.ProductName);
-                        if($('#ProductName').val() && (i.ProductName === $('#ProductName').val())){
-                            console.log("Inside the product Name >>>>"+i.ProductName);
+                        console.log("Item code textbox value is >>>>>>> "+$('#ItemName').val());
+                        console.log("Item code value is >>>>>>> "+i.ItemName);
+                        if($('#ItemName').val() && (i.ItemName === $('#ItemName').val())){
+                            console.log("Inside the Item Name >>>>"+i.ItemName);
                             isDuplicate = true;
                             return;
                         }
                     })
                     if(isDuplicate && $('#index').val() === "-1"){
-                        toastr.error("Duplicate Product");
+                        toastr.error("Duplicate Item");
                         return;
                     }
                     var row = $(form).serializeJSON();
@@ -421,9 +420,9 @@
                     .replace("{{UsageTypeName}}", $('#item_form [name=UsageTypeID] option:selected').text())
                     .replace("{{GroupName}}",$('#item_form [name=GroupID] option:selected').text())
                     .replace("{{CategoryName}}",$('#item_form [name=CategoryID] option:selected').text())
-                    .replace("{{ProductName}}",row.ProductName)
-                    .replace("{{ProductCode}}",row.ProductCode)
-                    //.replace("{{ProductName}}",$('#item_form [name=ProductCode] option:selected').text())
+                    .replace("{{ItemName}}",row.ItemName)
+                    .replace("{{ItemCode}}",row.ItemCode)
+                    //.replace("{{ItemName}}",$('#item_form [name=ItemCode] option:selected').text())
                     .replace("{{SizeName}}",$('#item_form [name=SizeID] option:selected').text())
                     .replace("{{OriginName}}",$('#item_form [name=OriginID] option:selected').text())
                     .replace("{{BrandName}}",$('#item_form [name=BrandID] option:selected').text())
@@ -456,10 +455,10 @@
                 $(this).closest('tr').remove();
             })
 
-            //$('#ProductCode').select2({
+            //$('#ItemCode').select2({
             //    dropdownParent: $('#item_modal'),
             //    theme: "bootstrap",
-            //    placeholder: "Select a product code",
+            //    placeholder: "Select a Item code",
             //    width: null,
             //    containerCssClass: ':all:'
             //} );

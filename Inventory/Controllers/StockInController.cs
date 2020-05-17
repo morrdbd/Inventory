@@ -36,13 +36,13 @@ namespace Inventory.Controllers
             var unitList = AdminRepo.LookupValueList(Language, "UNIT");
             ViewBag.UnitDrp = new SelectList(unitList, "ValueId", TextField);
 
-            var sizeList = AdminRepo.LookupValueList(Language, "PRODUCTSIZE");
+            var sizeList = AdminRepo.LookupValueList(Language, "ITEMSIZE");
             ViewBag.SizeDrp = new SelectList(sizeList, "ValueId", TextField);
 
-            var originList = AdminRepo.LookupValueList(Language, "PRODUCTORIGIN");
+            var originList = AdminRepo.LookupValueList(Language, "ITEMORIGIN");
             ViewBag.OriginDrp = new SelectList(originList, "ValueId", TextField);
 
-            var brandList = AdminRepo.LookupValueList(Language, "PRODUCTBRAND");
+            var brandList = AdminRepo.LookupValueList(Language, "ITEMBRAND");
             ViewBag.BrandDrp = new SelectList(brandList, "ValueId", TextField);
 
 
@@ -50,8 +50,8 @@ namespace Inventory.Controllers
             // new { l.ValueId, UnitName = Language == "prs" ? l.DrName : Language == "ps" ? l.PaName : l.EnName }).ToList();
             //ViewBag.UnitDrp = new SelectList(unitList, "ValueId", "UnitName");
 
-            var ProductGroup = AdminRepo.LookupValueList(Language, "PRODUCTGROUP");
-            ViewBag.ProductGroupDrp = new SelectList(ProductGroup, "ValueId", TextField);
+            var ItemGroup = AdminRepo.LookupValueList(Language, "ITEMGROUP");
+            ViewBag.ItemGroupDrp = new SelectList(ItemGroup, "ValueId", TextField);
         }
 
         private StockInVM CreateModel(StockIn model)
@@ -72,7 +72,7 @@ namespace Inventory.Controllers
                 {
                     ID = i.ID,
                     StockInID = i.StockInID,
-                    ProductName = i.ProductName,
+                    ItemName = i.ItemName,
                     UnitName = AdminRepo.LookupName(Language, i.UnitID),
                     UnitID = i.UnitID,
                     GroupID = i.GroupID,
@@ -90,7 +90,7 @@ namespace Inventory.Controllers
                     Quantity = i.Quantity,
                     UsageTypeID = i.UsageTypeID,
                     UsageTypeName = AdminRepo.LookupName(Language,i.UsageTypeID),
-                    ProductCode = i.ProductCode
+                    ItemCode = i.ItemCode
                 }
                 ).ToList()
             };
@@ -151,7 +151,7 @@ namespace Inventory.Controllers
                                 {
                                     StockInID = _stockIn.StockInID,
                                     UnitID = row.UnitID,
-                                    ProductName = row.ProductName,
+                                    ItemName = row.ItemName,
                                     GroupID = row.GroupID,
                                     CategoryID = row.CategoryID,
                                     BrandID = row.BrandID,
@@ -317,7 +317,7 @@ namespace Inventory.Controllers
                                 {
                                     var _newItem = new StockInItem() {
                                         StockInID = _StockIn.StockInID,
-                                        ProductCode = row.ProductCode,
+                                        ItemCode = row.ItemCode,
                                         UnitPrice = row.UnitPrice,
                                         InsertedBy = AppUser.Id,
                                         InsertedDate = DateTime.Now,
@@ -331,8 +331,8 @@ namespace Inventory.Controllers
                                     var obj = db.StockInItems.Find(row.ID);
                                     if (obj != null)
                                     {
-                                        obj.ProductCode = row.ProductCode;
-                                        obj.ProductName = row.ProductName;
+                                        obj.ItemCode = row.ItemCode;
+                                        obj.ItemName = row.ItemName;
                                         obj.UnitID = row.UnitID;
                                         obj.OriginID = row.OriginID;
                                         obj.GroupID = row.GroupID;
@@ -428,34 +428,105 @@ namespace Inventory.Controllers
         public ActionResult ItemInWarehouse()
         {
             ViewBag.search = new Item_In_Warehouse_Search();
+            CreateDropDown();
             return View("ItemInWarehouse");
         }
 
-        //[AccessControl("Search")]
-        //public JsonResult ListItemInWarehouse(Item_In_Warehouse_Search search)
-        //{
-        //    var DateFrom = search.DateFrom.ToDate(Language);
-        //    var DateTo = search.DateTo.ToDate(Language);
-        //    var _Receipts = db.ReceiptReports.Where(t => t.IsActive == true).ToList();
-        //    var data = _Receipts.Select(r => new
-        //    {
-        //        r.ReceiptReportID,
-        //        r.ReportNumber,
-        //        r.Organization,
-        //        ReceiptDate = r.ReceiptDate.ToDateString(Language),
-        //        r.DeliveryPlace,
-        //        r.SuggBillNumber,
-        //        r.ObtainedFromContractor,
-        //        Mem3DateVM = r.Mem3Date.ToDateString(Language),
-        //    }).ToList();
-        //    return Json(new
-        //    {
-        //        data = data.Skip(search.start).Take(search.length).ToList(),
-        //        recordsTotal = data.Count,
-        //        recordsFiltered = data.Count,
-        //        draw = search.draw,
-        //    });
-        //}
+        [AccessControl("Search")]
+        public JsonResult ListItemInWarehouse(Item_In_Warehouse_Search search)
+        {
+            var DateFrom = search.DateFrom.ToDate(Language);
+            var DateTo = search.DateTo.ToDate(Language);
+            var _intemInHandQuery = (from s in db.StockIns
+                                join i in db.StockInItems on s.StockInID equals i.StockInID
+                                where s.IsActive == true
+                                select new
+                                {
+                                    s.M7Number,
+                                    s.StockInDate,
+                                    s.OrderNumber,
+                                    s.OrderDate,
+                                    i.Quantity,
+                                    i.AvailableQuantity,
+                                    i.UsageTypeID,
+                                    i.ItemName,
+                                    i.ItemCode,
+                                    i.GroupID,
+                                    i.CategoryID,
+                                    i.SizeID,
+                                    i.OriginID,
+                                    i.BrandID,
+                                    i.UnitPrice,
+                                    i.Remarks
+                                });
+            if (!string.IsNullOrWhiteSpace(search.ReportNumber))
+            {
+                _intemInHandQuery.Where(i => i.M7Number.Contains(search.ReportNumber));
+            }
+            if (DateFrom != null)
+            {
+                _intemInHandQuery = _intemInHandQuery.Where(r => r.StockInDate >= DateFrom);
+            }
+            if (DateTo != null)
+            {
+                _intemInHandQuery = _intemInHandQuery.Where(r => r.StockInDate <= DateTo);
+            }
+            if (search.UsageTypeID != null)
+            {
+                _intemInHandQuery = _intemInHandQuery.Where(r => r.UsageTypeID == search.UsageTypeID);
+            }
+            if (search.GroupID != null)
+            {
+                _intemInHandQuery = _intemInHandQuery.Where(r => r.GroupID == search.GroupID);
+            }
+            if (search.CategoryID != null)
+            {
+                _intemInHandQuery = _intemInHandQuery.Where(r => r.CategoryID == search.CategoryID);
+            }
+            if (search.ItemName != null)
+            {
+                _intemInHandQuery = _intemInHandQuery.Where(r => r.ItemName.Contains(search.ItemName));
+            }
+            if (search.ItemCode != null)
+            {
+                _intemInHandQuery = _intemInHandQuery.Where(r => r.ItemCode.Contains(search.ItemCode));
+            }
+            if (search.SizeID != null)
+            {
+                _intemInHandQuery = _intemInHandQuery.Where(r => r.SizeID == search.SizeID);
+            }
+            if (search.BrandID != null)
+            {
+                _intemInHandQuery = _intemInHandQuery.Where(r => r.BrandID == search.BrandID);
+            }
+            var searchResult = _intemInHandQuery.ToList();
+            var data = searchResult.Select(r => new
+            {
+                r.M7Number,
+                StockInDate = r.StockInDate.ToDateString(Language),
+                r.OrderNumber,
+                OrderDate = r.OrderDate.ToDateString(Language),
+                r.Quantity,
+                r.AvailableQuantity,
+                UsageTypeName = AdminRepo.LookupName(Language,r.UsageTypeID),
+                r.ItemName,
+                r.ItemCode,
+                GroupName = AdminRepo.LookupName(Language,r.GroupID),
+                CategoryName = AdminRepo.LookupName(Language, r.CategoryID),
+                SizeName = AdminRepo.LookupName(Language, r.SizeID),
+                OriginName = AdminRepo.LookupName(Language, r.OriginID),
+                BrandName = AdminRepo.LookupName(Language, r.BrandID),
+                r.UnitPrice,
+                r.Remarks
+            }).ToList();
+            return Json(new
+            {
+                data = data.Skip(search.start).Take(search.length).ToList(),
+                recordsTotal = data.Count(),
+                recordsFiltered = data.Count(),
+                draw = search.draw,
+            });
+        }
         public JsonResult SaveScanImage(FileUpload model)
         {
             if(!ModelState.IsValid)

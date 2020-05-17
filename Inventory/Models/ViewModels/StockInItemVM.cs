@@ -11,7 +11,7 @@ namespace Inventory.Models.Tables
 
         public int StockInID { get; set; }
 
-        public string ProductName { get; set; }
+        public string ItemName { get; set; }
 
         public string SizeName { get; set; }
 
@@ -23,7 +23,7 @@ namespace Inventory.Models.Tables
 
         public string GroupName { get; set; }
 
-        public string ProductCode { get; set; }
+        public string ItemCode { get; set; }
 
         public int UsageTypeID { get; set; }
 

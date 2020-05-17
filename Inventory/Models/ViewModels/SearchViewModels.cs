@@ -51,8 +51,17 @@ namespace Inventory.Models.ViewModels
 
     public class Item_In_Warehouse_Search
     {
+        public string ReportNumber { get; set; }
         public string DateFrom { get; set; }
         public string DateTo { get; set; }
+        public int? UsageTypeID { get; set; }
+        public int? GroupID { get; set; }
+        public int? CategoryID { get; set; }
+        public string ItemName { get; set; }
+        public string ItemCode { get; set; }
+        public int? SizeID { get; set; }
+        public int? OriginID { get; set; }
+        public int? BrandID { get; set; }
         public int PageSize { get; set; }
         public int? PageNo { get; set; }
         public int draw { get; set; }
@@ -81,9 +90,9 @@ namespace Inventory.Models.ViewModels
 
         public int? CategoryID { get; set; }
 
-        public string ProductName { get; set; }
+        public string ItemName { get; set; }
 
-        public string ProductCode { get; set; }
+        public string ItemCode { get; set; }
 
         public int? UnitID { get; set; }
 

@@ -48,8 +48,8 @@ namespace Inventory.Controllers
             ViewBag.BrandDrp = new SelectList(brandList, "ValueId", TextField);
 
 
-            var ProductGroup = AdminRepo.LookupValueList(Language, "PRODUCTGROUP");
-            ViewBag.ProductGroupDrp = new SelectList(ProductGroup, "ValueId", TextField);
+            var ItemGroup = AdminRepo.LookupValueList(Language, "PRODUCTGROUP");
+            ViewBag.ItemGroupDrp = new SelectList(ItemGroup, "ValueId", TextField);
 
             var departmentList = db.Departments.Where(d => d.IsActive == true).Select(d =>
                 new { d.DepartmentID, DepartmentName = Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName }).ToList();
@@ -82,13 +82,13 @@ namespace Inventory.Controllers
                     DistributionID = i.DistributionID,
                     UsageTypeID = db.StockInItems.Where(item=> item.IsActive == true && item.ID == i.ItemID).Select(item=>item.UsageTypeID).FirstOrDefault(),
                     UsageTypeName = AdminRepo.LookupName(Language, db.StockInItems.Where(item=> item.IsActive == true && item.ID == i.ItemID).Select(item=>item.UsageTypeID).FirstOrDefault()),
-                    ProductCode = db.StockInItems.Where(item => item.IsActive == true && item.ID == i.ItemID).Select(item => item.ProductCode).FirstOrDefault(),
-                    ProductName = db.StockInItems.Where(item => item.IsActive == true && item.ID == i.ItemID).Select(item => item.ProductName).FirstOrDefault(),
-                    ProductCategoryName = AdminRepo.LookupName(Language,db.StockInItems.Where(item => item.IsActive == true && item.ID == i.ItemID).Select(item => item.CategoryID).FirstOrDefault()),
-                    ProductGroupName = AdminRepo.LookupName(Language, db.StockInItems.Where(item => item.IsActive == true && item.ID == i.ItemID).Select(item => item.GroupID).FirstOrDefault()),
+                    ItemCode = db.StockInItems.Where(item => item.IsActive == true && item.ID == i.ItemID).Select(item => item.ItemCode).FirstOrDefault(),
+                    ItemName = db.StockInItems.Where(item => item.IsActive == true && item.ID == i.ItemID).Select(item => item.ItemName).FirstOrDefault(),
+                    ItemCategoryName = AdminRepo.LookupName(Language,db.StockInItems.Where(item => item.IsActive == true && item.ID == i.ItemID).Select(item => item.CategoryID).FirstOrDefault()),
+                    ItemGroupName = AdminRepo.LookupName(Language, db.StockInItems.Where(item => item.IsActive == true && item.ID == i.ItemID).Select(item => item.GroupID).FirstOrDefault()),
                     UnitName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.ID == i.ItemID).Select(p => p.UnitID).FirstOrDefault()),
-                    ProductSizeName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.ID == i.ItemID).Select(p => p.SizeID).FirstOrDefault()),
-                    ProductOriginName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.ID == i.ItemID).Select(p => p.OriginID).FirstOrDefault()),
+                    ItemSizeName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.ID == i.ItemID).Select(p => p.SizeID).FirstOrDefault()),
+                    ItemOriginName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.ID == i.ItemID).Select(p => p.OriginID).FirstOrDefault()),
                     BrandName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.ID == i.ItemID).Select(p => p.BrandID).FirstOrDefault()),
                     Quantity = i.Quantity,
                     DealWithAccount = i.DealWithAccount,
@@ -146,13 +146,13 @@ namespace Inventory.Controllers
         {
             var query = db.StockInItems.Where(i => i.IsActive == true && i.AvailableQuantity != 0).AsQueryable();
            
-            if (!string.IsNullOrWhiteSpace(search.ProductName))
+            if (!string.IsNullOrWhiteSpace(search.ItemName))
             {
-                query = query.Where(c => c.ProductName.Contains(search.ProductName));
+                query = query.Where(c => c.ItemName.Contains(search.ItemName));
             }
-            if (!string.IsNullOrWhiteSpace(search.ProductCode))
+            if (!string.IsNullOrWhiteSpace(search.ItemCode))
             {
-                query = query.Where(c => c.ProductCode.Contains(search.ProductCode));
+                query = query.Where(c => c.ItemCode.Contains(search.ItemCode));
             }
             if (search.UsageTypeID != null)
             {
@@ -191,7 +191,7 @@ namespace Inventory.Controllers
               var data = items.Select(i => new StockInItemVM
             {
                 ID = i.ID,
-                ProductName = i.ProductName,
+                ItemName = i.ItemName,
                 UnitName = AdminRepo.LookupName(Language, i.UnitID),
                 UnitID = i.UnitID,
                 GroupID = i.GroupID,
@@ -208,7 +208,7 @@ namespace Inventory.Controllers
                 UnitPrice = i.UnitPrice,
                 AvailableQuantity = i.AvailableQuantity,
                 UsageTypeID = i.UsageTypeID,
-                ProductCode = i.ProductCode
+                ItemCode = i.ItemCode
             }
             ).ToList();
             var tes = data.ToList();
@@ -346,6 +346,7 @@ namespace Inventory.Controllers
                              d.RequestNumber,
                              d.RequestDate,
                              d.EmployeeID,
+                             d.FilePath,
                              EmployeeName = e.Name,
                              e.DepartmentID,
                              DepartmentName = (Language == "prs"? dep.DrName:(Language == "pa" ? dep.PaName: dep.EnName))
@@ -403,7 +404,8 @@ namespace Inventory.Controllers
                 t.RequestNumber,
                 RequestDate = t.RequestDate.ToDateString(Language),
                 t.EmployeeName,
-                t.DepartmentName
+                t.DepartmentName,
+                t.FilePath
             }).ToList();
             return Json(new
             {
@@ -568,8 +570,8 @@ namespace Inventory.Controllers
                     var item = new {
                         obj.ID,
                         obj.AvailableQuantity,
-                        obj.ProductName,
-                        obj.ProductCode,
+                        obj.ItemName,
+                        obj.ItemCode,
                         obj.UnitPrice,
                         obj.UsageTypeID,
                         UsageTypeName = AdminRepo.LookupName(Language, obj.UsageTypeID),
@@ -605,8 +607,8 @@ namespace Inventory.Controllers
                         ItemID = model.ItemID,
                         Quantity = model.Quantity,
                         DealWithAccount = model.DealWithAccount,
-                        obj.ProductName,
-                        obj.ProductCode,
+                        obj.ItemName,
+                        obj.ItemCode,
                         obj.UnitPrice,
                         obj.UsageTypeID,
                         UsageTypeName = AdminRepo.LookupName(Language, obj.UsageTypeID),

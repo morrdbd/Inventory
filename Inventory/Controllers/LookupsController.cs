@@ -38,22 +38,22 @@ namespace Inventory.Controllers
             var usageType = AdminRepo.LookupValueList(Language, "UTYPE");
             ViewBag.UsageTypeDrp = new SelectList(usageType, "ValueId", TextField);
 
-            var groupList = AdminRepo.LookupValueList(Language, "PRODUCTGROUP");
+            var groupList = AdminRepo.LookupValueList(Language, "ITEMGROUP");
             ViewBag.GroupDrp = new SelectList(groupList, "ValueId", TextField);
 
             var unitList = AdminRepo.LookupValueList(Language, "UNIT"); 
             ViewBag.UnitDrp = new SelectList(unitList, "ValueId", TextField);
 
-            var packingList = AdminRepo.LookupValueList(Language, "PRODUCTPACKAGE"); 
+            var packingList = AdminRepo.LookupValueList(Language, "ITEMPACKAGE"); 
             ViewBag.PackingDrp = new SelectList(packingList, "ValueId", TextField);
 
-            var sizeList = AdminRepo.LookupValueList(Language, "PRODUCTSIZE");
+            var sizeList = AdminRepo.LookupValueList(Language, "ITEMSIZE");
             ViewBag.SizeDrp = new SelectList(sizeList, "ValueId", TextField);
 
-            var originList = AdminRepo.LookupValueList(Language, "PRODUCTORIGIN");  
+            var originList = AdminRepo.LookupValueList(Language, "ITEMORIGIN");  
             ViewBag.OriginDrp = new SelectList(originList, "ValueId", TextField);
 
-            var brandList = AdminRepo.LookupValueList(Language, "PRODUCTBRAND"); 
+            var brandList = AdminRepo.LookupValueList(Language, "ITEMBRAND"); 
             ViewBag.BrandDrp = new SelectList(brandList, "ValueId", TextField);
 
 

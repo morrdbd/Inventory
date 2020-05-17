@@ -99,19 +99,19 @@ namespace Inventory.Models.ViewModels
 
         public int UsageTypeID { get; set; }
 
-        public string ProductCode { get; set; }
+        public string ItemCode { get; set; }
 
-        public string ProductName { get; set; }
+        public string ItemName { get; set; }
 
         public string UsageTypeName { get; set; }
 
-        public string ProductSizeName { get; set; }
+        public string ItemSizeName { get; set; }
 
-        public string ProductCategoryName { get; set; }
+        public string ItemCategoryName { get; set; }
 
-        public string ProductGroupName { get; set; }
+        public string ItemGroupName { get; set; }
 
-        public string ProductOriginName { get; set; }
+        public string ItemOriginName { get; set; }
 
         public string BrandName { get; set; }
 
