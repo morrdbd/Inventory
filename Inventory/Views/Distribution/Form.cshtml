@@ -168,7 +168,7 @@
     <section class="row">
         <div class="col-md-5">
             <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>
-            <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
+            <a href="@Url.Action("Search")" class="btn btn-sm">@Labels.cancel</a>
         </div>
     </section>
 
@@ -191,13 +191,13 @@
                             </div>
                         </div>
                         <div class=" col-md-4 form-group">
-                            <label>Product Group</label>
+                            <label>Item Group</label>
                             <div class="col-md-8">
                                 <select id="GroupID" name="GroupID" onchange="loadCategories()" class="form-control input-sm"></select>
                             </div>
                         </div>
                         <div class=" col-md-4 form-group">
-                            <label>Product Category</label>
+                            <label>Item Category</label>
                             <div class="col-md-8">
                                 <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
                             </div>
@@ -205,15 +205,15 @@
                     </section>
                     <section class="row">
                         <div class="col-md-4 form-group">
-                            <label>Product Name</label>
+                            <label>Item Name</label>
                             <div class="col-md-8">
-                                <input type="text" name="ProductName" id="ProductName" value="@itemSearch.ItemName" class="form-control input-sm" data-msg="" placeholder="">
+                                <input type="text" name="ItemName" id="ItemName" value="@itemSearch.ItemName" class="form-control input-sm" data-msg="" placeholder="">
                             </div>
                         </div>
                         <div class="col-md-4 form-group">
-                            <label>Product Code</label>
+                            <label>Item Code</label>
                             <div class="col-md-8">
-                                <input type="text" name="ProductCode" id="ProductCode" value="@itemSearch.ItemCode" class="form-control input-sm" data-msg="" placeholder="">
+                                <input type="text" name="ItemCode" id="ItemCode" value="@itemSearch.ItemCode" class="form-control input-sm" data-msg="" placeholder="">
                             </div>
                         </div>
                         <div class=" col-md-4 form-group">
@@ -225,19 +225,19 @@
                     </section>
                     <section class="row">
                         <div class=" col-md-4 form-group">
-                            <label>Product Brand</label>
+                            <label>Item Brand</label>
                             <div class="col-md-8">
                                 @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
                             </div>
                         </div>
                         <div class=" col-md-4 form-group">
-                            <label>Product Size</label>
+                            <label>Item Size</label>
                             <div class="col-md-8">
                                 @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
                             </div>
                         </div>
                         <div class=" col-md-4 form-group">
-                            <label>Product Origin</label>
+                            <label>Item Origin</label>
                             <div class="col-md-8">
                                 @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
                             </div>
@@ -260,11 +260,11 @@
                                     <th>Usage Type</th>
                                     <th>Group Name</th>
                                     <th>Category Name</th>
-                                    <th>Product Name</th>
-                                    <th>Product Code</th>
-                                    <th>Product Size</th>
-                                    <th>Product Origin</th>
-                                    <th>Product Brand</th>
+                                    <th>Item Name</th>
+                                    <th>Item Code</th>
+                                    <th>Item Size</th>
+                                    <th>Item Origin</th>
+                                    <th>Item Brand</th>
                                     <th>Unit Price</th>
                                     <th>Available Quantity</th>
                                     <th></th>
@@ -385,8 +385,8 @@
             <td>{{UsageTypeName}}</td>
             <td>{{GroupName}}</td>
             <td>{{CategoryName}}</td>
-            <td>{{ProductName}}</td>
-            <td>{{ProductCode}}</td>
+            <td>{{ItemName}}</td>
+            <td>{{ItemCode}}</td>
             <td>{{SizeName}}</td>
             <td>{{OriginName}}</td>
             <td>{{BrandName}}</td>
@@ -501,13 +501,13 @@
                     Metronic.blockUI({ animate: true });
                     //var isDuplicate = false;
                     //DistributionItems.forEach(function(i){
-                    //    if(i.ProductCode == $('#ProductCode').val()){
+                    //    if(i.ItemCode == $('#ItemCode').val()){
                     //        isDuplicate = true;
                     //        return;
                     //    }
                     //})
                     //if(isDuplicate && $('#index').val() === "-1"){
-                    //    toastr.error("Duplicate Product");
+                    //    toastr.error("Duplicate Item");
                     //    return;
                     //}
                     //var formData = $(form).serializeJSON();
@@ -541,8 +541,8 @@
                                 .replace("{{UsageTypeName}}", response.UsageTypeName)
                                 .replace("{{GroupName}}", response.GroupName)
                                 .replace("{{CategoryName}}", response.CategoryName)
-                                .replace("{{ProductName}}", response.ProductName)
-                                .replace("{{ProductCode}}", response.ProductCode)
+                                .replace("{{ItemName}}", response.ItemName)
+                                .replace("{{ItemCode}}", response.ItemCode)
                                 .replace("{{SizeName}}", response.SizeName)
                                 .replace("{{OriginName}}", response.OriginName)
                                 .replace("{{BrandName}}", response.BrandName)
@@ -572,7 +572,7 @@
                     //var tr = $('#temp_item').clone().html()
                     //.replace("{{Quantity}}", row.Quantity)
                     //.replace("{{UnitName}}", row.UnitName)
-                    //.replace("{{ProductName}}", $('#assign_item_form [name=ProductCode] option:selected').text())
+                    //.replace("{{ItemName}}", $('#assign_item_form [name=ItemCode] option:selected').text())
                     //.replace("{{UnitPrice}}", row.UnitPrice)
                     //.replace("{{TotalPrice}}", row.Quantity * row.UnitPrice)
                     //.replace("{{DealWithAccount}}", row.DealWithAccount)
@@ -669,8 +669,8 @@
                     { data: 'UsageTypeName' },
                     { data: 'GroupName' },
                     { data: 'CategoryName' },
-                    { data: 'ProductName' },
-                    { data: 'ProductCode' },
+                    { data: 'ItemName' },
+                    { data: 'ItemCode' },
                     { data: 'SizeName' },
                     { data: 'OriginName' },
                     { data: 'BrandName' },

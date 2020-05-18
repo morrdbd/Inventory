@@ -448,6 +448,7 @@ namespace Inventory.Controllers
                                     s.OrderDate,
                                     i.Quantity,
                                     i.AvailableQuantity,
+                                    i.UnitID,
                                     i.UsageTypeID,
                                     i.ItemName,
                                     i.ItemCode,
@@ -499,13 +500,14 @@ namespace Inventory.Controllers
             {
                 _intemInHandQuery = _intemInHandQuery.Where(r => r.BrandID == search.BrandID);
             }
-            var searchResult = _intemInHandQuery.ToList();
+            var searchResult = _intemInHandQuery.OrderByDescending(i=>i.StockInDate).ToList();
             var data = searchResult.Select(r => new
             {
                 r.M7Number,
                 StockInDate = r.StockInDate.ToDateString(Language),
                 r.OrderNumber,
                 OrderDate = r.OrderDate.ToDateString(Language),
+                UnitName = AdminRepo.LookupName(Language,r.UnitID),
                 r.Quantity,
                 r.AvailableQuantity,
                 UsageTypeName = AdminRepo.LookupName(Language,r.UsageTypeID),

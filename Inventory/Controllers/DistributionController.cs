@@ -38,17 +38,17 @@ namespace Inventory.Controllers
             var unitList = AdminRepo.LookupValueList(Language, "UNIT");
             ViewBag.UnitDrp = new SelectList(unitList, "ValueId", TextField);
 
-            var sizeList = AdminRepo.LookupValueList(Language, "PRODUCTSIZE");
+            var sizeList = AdminRepo.LookupValueList(Language, "ITEMSIZE");
             ViewBag.SizeDrp = new SelectList(sizeList, "ValueId", TextField);
 
-            var originList = AdminRepo.LookupValueList(Language, "PRODUCTORIGIN");
+            var originList = AdminRepo.LookupValueList(Language, "ITEMORIGIN");
             ViewBag.OriginDrp = new SelectList(originList, "ValueId", TextField);
 
-            var brandList = AdminRepo.LookupValueList(Language, "PRODUCTBRAND");
+            var brandList = AdminRepo.LookupValueList(Language, "ITEMBRAND");
             ViewBag.BrandDrp = new SelectList(brandList, "ValueId", TextField);
 
 
-            var ItemGroup = AdminRepo.LookupValueList(Language, "PRODUCTGROUP");
+            var ItemGroup = AdminRepo.LookupValueList(Language, "ITEMGROUP");
             ViewBag.ItemGroupDrp = new SelectList(ItemGroup, "ValueId", TextField);
 
             var departmentList = db.Departments.Where(d => d.IsActive == true).Select(d =>
@@ -74,7 +74,7 @@ namespace Inventory.Controllers
                 EmpDepartmentName = db.Departments.Where(r => r.IsActive == true && r.DepartmentID == model.EmployeeID).Select(d =>
                 Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
                 Details = model.Details,
-                DistributionItems = db.DistributionItems.Where(i => i.IsActive == true && i.DistributionID == model.DistributionID)
+                DistributionItems = db.DistributionItems.Where(i =>i.DistributionID == model.DistributionID)
                 .ToList().Select(i => new DistributionItemVM
                 {
                     ID = i.ID,
@@ -134,7 +134,7 @@ namespace Inventory.Controllers
                 c.Name,
                 c.FatherName,
                 c.Occupation,
-                DepartmentName = db.Departments.Where(d => d.DepartmentID == d.DepartmentID).Select(d => Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault()
+                DepartmentName = db.Departments.Where(d => d.DepartmentID == c.DepartmentID).Select(d => Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault()
             }
             ).ToList();
             var tes = data.ToList();
@@ -274,8 +274,7 @@ namespace Inventory.Controllers
                                     ItemID = row.ItemID,
                                     Quantity = row.Quantity,
                                     UnitPrice = row.UnitPrice,
-                                    DealWithAccount = row.DealWithAccount,
-                                    IsActive = true
+                                    DealWithAccount = row.DealWithAccount
                                 };
 
                                 db.DistributionItems.Add(_item);
@@ -368,7 +367,7 @@ namespace Inventory.Controllers
             {
                 query = query.Where(c => c.Warehouse.Contains(model.Warehouse));
             }
-            if (model.RequestNumber != null && model.RequestNumber != 0)
+            if (model.RequestNumber != null)
             {
                 query = query.Where(c => c.RequestNumber == model.RequestNumber);
             }
@@ -488,7 +487,6 @@ namespace Inventory.Controllers
                                 ItemID = dItem.ItemID,
                                 UnitPrice = dItem.UnitPrice,
                                 DealWithAccount = dItem.DealWithAccount,
-                                IsActive = true
                             };
                             db.DistributionItems.Add(dItemTableObj);
                         }
@@ -527,7 +525,7 @@ namespace Inventory.Controllers
                         ModifiedData = JsonConvert.SerializeObject(_distribution),
                     });
                     db.SaveChanges();
-                    var distributedItems = db.DistributionItems.Where(d => d.IsActive == true && d.DistributionID == _distribution.DistributionID).ToList();
+                    var distributedItems = db.DistributionItems.Where(d => d.DistributionID == _distribution.DistributionID).ToList();
                     foreach (var dItem in distributedItems)
                     {
                         var stockInItem = db.StockInItems.Find(dItem.ItemID);
@@ -535,7 +533,7 @@ namespace Inventory.Controllers
                         {
                             stockInItem.AvailableQuantity += dItem.Quantity;
                             var dItemTobeDeleted = db.DistributionItems.Find(dItem.ID);
-                            dItemTobeDeleted.IsActive = false;
+                            db.DistributionItems.Remove(dItemTobeDeleted);
                             db.ActivityLogs.Add(new ActivityLog
                             {
                                 ModifiedTable = "DistributionItems",
@@ -648,14 +646,6 @@ namespace Inventory.Controllers
             return View("Form", model);
         }
 
-        [AccessControl("Search")]
-        public ActionResult ItemInUse()
-        {
-            CreateDropDown();
-            ViewBag.search = new ItemInUseSearch();
-            return View("ItemInUse");
-        }
-
         public JsonResult SaveScanImage(FileUpload model)
         {
             if (!ModelState.IsValid)
@@ -685,63 +675,126 @@ namespace Inventory.Controllers
             }
         }
 
+        [AccessControl("Search")]
+        public ActionResult ItemInUse()
+        {
+            CreateDropDown();
+            ViewBag.search = new ItemInUseSearch();
+            return View("ItemInUse");
+        }
 
-        //[AccessControl("Search")]
-        //public JsonResult ListItemInUse(ItemInUseSearch model)
-        //{
-        //    var TicketIssuedDateFrom = model.DateFrom.ToDate(Language);
-        //    var TicketIssuedDateTo = model.DateTo.ToDate(Language);
-
-        //    var query = db.Distributions.Where(t => t.IsActive == true);
-
-        //    if (model.TicketNumber != null && model.TicketNumber != 0)
-        //    {
-        //        query = query.Where(c => c.TicketNumber == model.TicketNumber);
-        //    }
-        //    if (model.BranchID != 0)
-        //    {
-        //        query = query.Where(c => c.BranchID == model.BranchID);
-        //    }
-        //    if (TicketIssuedDateFrom != null)
-        //    {
-        //        query = query.Where(c => c.TicketIssuedDate >= TicketIssuedDateFrom);
-        //    }
-        //    if (TicketIssuedDateTo != null)
-        //    {
-        //        query = query.Where(c => c.TicketIssuedDate <= TicketIssuedDateTo);
-        //    }
-        //    ViewBag.search = model;
-        //    var records = (from t in query
-        //                   join i in db.Distributions
-        //                   on t.DistributionID equals i.DistributionID
-        //                   select new {
-        //                       t.DistributionID,
-        //                       t.TicketNumber,
-        //                       t.TicketIssuedDate,
-        //                       t.BranchID,
-        //                       t.RequestDate,
-        //                       BranchName = db.Branches.Where(r => r.IsActive == true && r.BranchID == t.BranchID).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault(),
-        //                       i.Details,
-        //                       UnitName = db.LookupValues.Where(l=>l.IsActive == true && l.ValueId == i.UnitID).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault(),
-        //                       i.UnitPrice
-        //                   }).OrderBy(t => t.TicketIssuedDate).ToList();
-        //    //query.OrderBy(t => t.TicketIssuedDate).ToList();
-        //    var data = records.Select(t => new
-        //    {
-        //        t.TicketID,
-        //        t.TicketNumber,
-        //        TicketIssuedDate = t.TicketIssuedDate.ToDateString(Language),
-        //        RequestDate = t.RequestDate.ToDateString(Language),
-        //        BranchName = db.Branches.Where(r => r.IsActive == true && r.BranchID == t.BranchID).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault()
-        //    }).ToList();
-        //    return Json(new
-        //    {
-        //        data = data.Skip(model.start).Take(model.length).ToList(),
-        //        recordsTotal = data.Count,
-        //        recordsFiltered = data.Count,
-        //        draw = model.draw,
-        //    });
-        //}
+        [AccessControl("Search")]
+        public JsonResult ListItemInUse(ItemInUseSearch model)
+        {
+            var TicketIssuedDateFrom = model.DateFrom.ToDate(Language);
+            var TicketIssuedDateTo = model.DateTo.ToDate(Language);
+            var query = (from d in db.Distributions
+                                     join dItem in db.DistributionItems on d.DistributionID equals dItem.DistributionID
+                                     join sItem in db.StockInItems on dItem.ItemID equals sItem.ID
+                                     join emp in db.Employees on d.EmployeeID equals emp.EmployeeID
+                                     join dep in db.Departments on emp.DepartmentID equals dep.DepartmentID
+                                     where d.IsActive == true
+                                     select new
+                                     {
+                                        d.DistributionID,
+                                        emp.DepartmentID,
+                                        d.EmployeeID,
+                                        EmployeeName = emp.Name,
+                                        EmployeeFName = emp.FatherName,
+                                        d.TicketNumber,
+                                        d.TicketIssuedDate,
+                                        d.RequestNumber,
+                                        d.RequestDate,
+                                        dItem.Quantity,
+                                         sItem.UnitID,
+                                         sItem.UsageTypeID,
+                                         sItem.GroupID,
+                                         sItem.CategoryID,
+                                         sItem.ItemName,
+                                         sItem.ItemCode,
+                                         sItem.SizeID,
+                                         sItem.OriginID,
+                                         sItem.BrandID,
+                                         sItem.UnitPrice,
+                                         dItem.DealWithAccount
+                                     });
+            if (model.DepartmentID != null)
+            {
+                query = query.Where(c => c.DepartmentID == model.DepartmentID);
+            }
+            if (model.EmployeeID != null)
+            {
+                query = query.Where(c => c.EmployeeID == model.EmployeeID);
+            }
+            if (model.UsageTypeID != null)
+            {
+                query = query.Where(r => r.UsageTypeID == model.UsageTypeID);
+            }
+            if (model.GroupID != null)
+            {
+                query = query.Where(r => r.GroupID == model.GroupID);
+            }
+            if (model.CategoryID != null)
+            {
+                query = query.Where(r => r.CategoryID == model.CategoryID);
+            }
+            if (model.ItemName != null)
+            {
+                query = query.Where(r => r.ItemName.Contains(model.ItemName));
+            }
+            if (model.ItemCode != null)
+            {
+                query = query.Where(r => r.ItemCode.Contains(model.ItemCode));
+            }
+            if (model.SizeID != null)
+            {
+                query = query.Where(r => r.SizeID == model.SizeID);
+            }
+            if (model.BrandID != null)
+            {
+                query = query.Where(r => r.BrandID == model.BrandID);
+            }
+            if (TicketIssuedDateFrom != null)
+            {
+                query = query.Where(c => c.TicketIssuedDate >= TicketIssuedDateFrom);
+            }
+            if (TicketIssuedDateTo != null)
+            {
+                query = query.Where(c => c.TicketIssuedDate <= TicketIssuedDateTo);
+            }
+            ViewBag.search = model;
+            var queryResult = query.OrderByDescending(i => i.TicketIssuedDate).ToList();
+            var data = queryResult.Select(i => new {
+                i.DistributionID,
+                DepartmentName = db.Departments.Where(d => d.DepartmentID == i.DepartmentID).Select(d => Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
+                i.EmployeeName,
+                i.EmployeeFName,
+                i.TicketNumber,
+                TicketIssuedDate = i.TicketIssuedDate.ToDateString(Language),
+                i.RequestNumber,
+                RequestDate = i.RequestDate.ToDateString(Language),
+                i.Quantity,
+                UnitName = AdminRepo.LookupName(Language, i.UnitID),
+                UsageTypeName = AdminRepo.LookupName(Language, i.UsageTypeID),
+                GroupName = AdminRepo.LookupName(Language, i.GroupID),
+                CategoryName = AdminRepo.LookupName(Language, i.CategoryID),
+                i.ItemName,
+                i.ItemCode,
+                SizeName = AdminRepo.LookupName(Language, i.SizeID),
+                OriginName = AdminRepo.LookupName(Language, i.OriginID),
+                BrandName = AdminRepo.LookupName(Language, i.BrandID),
+                i.UnitPrice,
+                i.DealWithAccount
+            });
+   
+            return Json(new
+            {
+                data = data.Skip(model.start).Take(model.length).ToList(),
+                recordsTotal = data.Count(),
+                recordsFiltered = data.Count(),
+                draw = model.draw,
+            });
+        }
 
     }
 }

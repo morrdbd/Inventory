@@ -40,7 +40,7 @@ namespace Inventory.Controllers
             {
                 query = query.Where(c => c.Name.Contains(model.sFatherName));
             }
-            if (model.sDepartmentID != 0)
+            if (model.sDepartmentID != null)
             {
                 query = query.Where(c => c.DepartmentID == model.sDepartmentID);
             }

@@ -20,7 +20,5 @@ namespace Inventory.Models.Tables
 
         public string DealWithAccount { get; set; }
 
-        public bool IsActive { get; set; }
-
     }
 }
