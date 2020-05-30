@@ -951,4 +951,7 @@
   <data name="ItemInWarehouse" xml:space="preserve">
     <value>اجناس په تحویلخانه کی</value>
   </data>
+  <data name="return_item" xml:space="preserve">
+    <value>جنس تسلیمول</value>
+  </data>
 </root>

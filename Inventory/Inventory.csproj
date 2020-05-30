@@ -315,6 +315,7 @@
     <Compile Include="Models\Tables\StockIn.cs" />
     <Compile Include="Models\Tables\StockInItem.cs" />
     <Compile Include="Models\ViewModels\GetItemVM.cs" />
+    <Compile Include="Models\ViewModels\ReturnItemVM.cs" />
     <Compile Include="Models\ViewModels\StockInItemVM.cs" />
     <Compile Include="Models\Tables\Product.cs" />
     <Compile Include="Models\Tables\Department.cs" />
@@ -2969,7 +2970,7 @@
     <Content Include="Views\Distribution\Form.cshtml" />
     <Content Include="Views\Distribution\View.cshtml" />
     <Content Include="Views\Distribution\Search.cshtml" />
-    <Content Include="Views\Distribution\ItemInUse.cshtml" />
+    <Content Include="Views\Distribution\ItemsInUse.cshtml" />
     <Content Include="Views\Employee\Search.cshtml" />
     <Content Include="Views\Lookups\ProductSearch.cshtml" />
     <Content Include="Views\Lookups\ProductForm.cshtml" />
@@ -2978,6 +2979,8 @@
     <Content Include="Views\StockIn\ItemInWarehouse.cshtml" />
     <Content Include="Views\StockIn\Search.cshtml" />
     <Content Include="Views\StockIn\View.cshtml" />
+    <Content Include="Views\Distribution\ReturnItem.cshtml" />
+    <Content Include="Views\Distribution\ReturnedItems.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

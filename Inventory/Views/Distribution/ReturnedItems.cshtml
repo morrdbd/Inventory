@@ -1,0 +1,395 @@
+﻿@{
+    ViewBag.Title = Labels.ItemInUse;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var search = ViewBag.search as Inventory.Models.ViewModels.ItemInUseSearch;
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
+    var _canView = _user.HasAccess("Distribution", "View");
+}
+
+<form method="post" action="@Url.Action("ListPartial")" id="search_form" autocomplete="off">
+    <div class="portlet box blue-hoki" style="margin-bottom:10px">
+        <div class="portlet-title">
+            <div class="caption">@Labels.search_criteria</div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <div class=" col-md-3">
+                    <div class="form-group">
+                        <label>@Labels.Requester</label>
+                        @Html.DropDownList("DepartmentID", ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control", @ID = "DepartmentID" })
+                    </div>
+                </div>
+                <div class=" col-md-3">
+                    <div class="form-group">
+                        <label>@Labels.Employee</label>
+                        <select id="EmployeeID" name="EmployeeID" class="form-control input-sm"></select>
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Returned Date</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm shpicker" name="DateFrom" value="@search.DateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
+                        <span class="input-group-addon input-sm">@Labels.ToDate</span>
+                        <input type="text" class="form-control input-sm shpicker" name="DateTo" value="@search.DateTo" placeholder="@Labels.ToDate" data-rule-date="true" data-msg="" />
+                    </div>
+                </div>
+            </div>
+            <section class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Usage Type</label>
+                        @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new { onchange = "loadGroup()", @class = "form-control input-sm", @ID = "UsageTypeID" })
+                    </div>
+                </div>
+                <div class=" col-md-3">
+                    <div class="form-group">
+                        <label>Item Group</label>
+                        <select id="GroupID" name="GroupID" onchange="loadCategories()" class="form-control input-sm"></select>
+                    </div>
+                </div>
+                <div class=" col-md-3">
+                    <div class="form-group">
+                        <label>Item Category</label>
+                        <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Item Name</label>
+                        <input type="text" name="ItemName" id="ItemName" class="form-control input-sm" data-msg="" placeholder="">
+                    </div>
+                </div>
+            </section>
+            <section class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Item Code</label>
+                        <input type="text" name="ItemCode" id="ItemCode" class="form-control input-sm" data-msg="" placeholder="">
+                    </div>
+                </div>
+                <div class=" col-md-3">
+                    <div class="form-group">
+                        <label>Item Size</label>
+                        @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
+                    </div>
+                </div>
+                <div class=" col-md-3">
+                    <div class="form-group">
+                        <label>Item Origin</label>
+                        @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
+                    </div>
+                </div>
+                <div class=" col-md-3">
+                    <div class="form-group">
+                        <label>Item Brand</label>
+                        @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
+                    </div>
+                </div>
+            </section>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="submit" id="btnSearch" class="btn btn-sm"><i class="fa fa-search"></i> @Labels.search</button>
+                    <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
+                </div>
+                <div class="col-md-2">
+                    <select name="PageSize" class="form-control input-sm pull-right" style="width:70px" id="drpLimit">
+                        <option value="10" @(search.length == 10 ? "selected" : "")>10</option>
+                        <option value="20" @(search.length == 20 ? "selected" : "")>20</option>
+                        <option value="50" @(search.length == 50 ? "selected" : "")>50</option>
+                    </select>
+                    <input type="hidden" name="hdStart" id="StartRow" value="@search.start" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="portlet box blue-hoki">
+    <div class="portlet-title">
+        <div class="caption">
+            @Labels.DistributionTicketList
+        </div>
+        <div class="actions" id="data_table_actions">
+        </div>
+    </div>
+    <div class="portlet-body" id="list_div" style="overflow:auto">
+        <table id="data_table" class="table table-striped table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>@Labels.Requester</th>
+                    <th>@Labels.Employee</th>
+                    <th>@Labels.FatherName</th>
+                    <th>@Labels.TicketNumber</th>
+                    <th>@Labels.TicketIssedDate</th>
+                    <th>@Labels.RequestNumber</th>
+                    <th>@Labels.RequestDate</th>
+                    <th>@Labels.Quantity</th>
+                    <th>@Labels.Unit</th>
+                    <th>Usage Type Name</th>
+                    <th>Group</th>
+                    <th>Category</th>
+                    <th>@Labels.ItemName</th>
+                    <th>Item Code</th>
+                    <th>Size</th>
+                    <th>@Labels.Origin</th>
+                    <th>Brand</th>
+                    <th>Unit Price</th>
+                    <th>Deal with Account</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+    var model = @Html.Raw(Json.Encode(Model));
+    $(function () {
+            $("#record_form").validate({
+                submitHandler: function () {
+                    $("#record_form").ajaxSubmit({
+                        beforeSubmit: function(){
+                            $('#btn_submit').button('loading');
+                        },
+                        success: function (response) {
+                            if (response != false) {
+                                toastr.success("@Labels.operation_done_suc");
+                                data_table.ajax.reload();
+                            } else {
+                                toastr.error("@Labels.unable_to_update");
+                            }
+                        },
+                        error: function(){
+                            toastr.error("@Labels.unable_to_update");
+                        },
+                        complete: function () {
+                            $('#popup_record').modal('hide');
+                            $('#btn_submit').button('reset');
+                            setDefaultValue();
+                            $('#ID').button(0);
+                        }
+                    })
+                }
+            })
+
+            /////////////////////////SEARCH//////////////////////////////
+            var canView = @Html.Raw(Json.Encode(_canView));
+
+            $.fn.dataTable.ext.errMode = 'none';
+            var data_table = $('#data_table').DataTable({
+                ajax: {
+                    url: '@Url.Action("ListItemReturned")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function (data) {
+                        var form_data = $('#search_form').serializeJSON();
+                        console.log("form data is >>>>> "+ JSON.stringify(data));
+                        form_data['draw'] = data.draw;
+                        form_data['start'] = data.start;
+                        form_data['length'] = data.length;
+                        return JSON.stringify(form_data);
+                    },
+                },
+                columns: [
+                    { data: 'DepartmentName' },
+                    { data: 'EmployeeName' },
+                    { data: 'EmployeeFName' },
+                    { data: 'TicketNumber' },
+                    { data: 'TicketIssuedDate' },
+                    { data: 'RequestNumber' },
+                    { data: 'RequestDate' },
+                    { data: 'Quantity' },
+                    { data: 'UnitName' },
+                    { data: 'UsageTypeName' },
+                    { data: 'GroupName' },
+                    { data: 'CategoryName' },
+                    { data: 'ItemName' },
+                    { data: 'ItemCode' },
+                    { data: 'SizeName' },
+                    { data: 'OriginName' },
+                    { data: 'BrandName' },
+                    { data: 'UnitPrice' },
+                    { data: 'DealWithAccount' },
+
+                    {
+                        data: null,
+                        visible: canView,
+                        render: function (row) {
+                            return '<a href="@Url.Action("ViewItemInUse")/'+row.distributionItemID+'" title="@Labels.return_item" data-id="' + row.distributionItemID + '" class="btn btn-xs blue view-item"><i class="fa fa-undo"></i>@Labels.return_item</a>';
+                        }
+                    }
+                ],
+                searching: false,
+                bInfo: false,
+                bLengthChange: false,
+                ordering: false,
+                serverSide: true,
+                pageLength: $('#drpLimit').val(),
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        text: '<li class="fa fa-clipboard"></li> Copy',
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<li class="fa fa-file-excel-o"></li> Excel',
+                    },
+                    {
+                        extend: 'print',
+                        text: '<li class="fa fa-print"></li> Print',
+                    },
+                ],
+            });
+            data_table.buttons().container().appendTo('#data_table_actions');
+
+            $('#data_table').on('processing.dt', function (e, s, p) {
+                if (p == true) {
+                    Metronic.blockUI({
+                        target: '#list_div',
+                        animate: true
+                    });
+                } else {
+                    Metronic.unblockUI('#list_div');
+                }
+            })
+
+            $('#search_form').submit(function (e, param) {
+                e.preventDefault();
+                data_table.ajax.reload();
+            })
+
+            $('#btnReset').click(function (e) {
+                e.preventDefault();
+                $('#EmployeeID').empty();
+                $('#search_form').clearForm();
+                data_table.ajax.reload();
+            })
+            $('#btn_cancel').click(function (e) {
+                e.preventDefault();
+            })
+
+            $('#drpLimit').change(function () {
+                data_table.page.len($(this).val()).draw();
+            })
+
+            ////////////////////////////////////////////////////
+
+
+
+        $('#data_table tbody').on('click', 'tr', function(){
+            if($(this).hasClass('selectedItem')){
+                $(this).removeClass('selectedItem');
+            } else {console.log("insid the else if");
+            $(this).addClass('selectedItem').siblings().removeClass('selectedItem');
+            }
+            let id = $(this).find('a').data().id;
+            console.log("id is >>>>>>>>"+ id);
+            if(id){
+                window.location.href = `@Url.Action("ViewItemInUse", "Distribution")/`+id;
+            }
+        });
+            $("#DepartmentID" ).change(function() {
+                var departmentId = $(this).val();
+                if (departmentId) {
+                    var url = "@Url.Action("loadDepartmentEmployee", "Employee")"+"/"+departmentId;
+                    $.get(url, function (data) {
+                        console.log("Employee list is >>>>>>>>"+ JSON.stringify(data));
+                        $('#EmployeeID').empty();
+                        $('#EmployeeID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
+                        $.each(data, function (i, d) {
+                            $('#EmployeeID').append('<option value='+ d.employeeID +'>' + d.name + '</option>');
+                        });
+                    })
+                }
+            });
+    })
+    </script>
+    <script>
+        function loadGroup(groupId){
+            var usageTypId = $("#UsageTypeID").val();
+            console.log("Inside the ca >>>>>>>>>>>>>>>>");
+            console.log("groupId is "+ groupId);
+            console.log("usageTypId  is >>>>>>>>>>>>>>>>"+ usageTypId);
+            if (usageTypId) {
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
+                    data: "{id:'" + usageTypId + "'}",
+                    success: function (data) {
+                        console.log(">>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<"+JSON.stringify(data));
+                        $('#GroupID').empty();
+                        $('#GroupID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
+                        $.each(data, function (i, d) {
+                            $('#GroupID').append('<option value=' + d.Value + '>' + d.Text + '</option>');
+                            if(data.length == i+1){
+                                var index =  $('#item_form [name=index]').val();
+                                if(data.length == i+1 && groupId){
+                                    $('#GroupID').val(groupId);
+                                }
+
+                            }
+                        });
+                    },
+                    failure: function (data) {
+                        alert('error occured');
+                    },
+                    complete: function(data) {
+
+                    }
+                });
+            }
+        }
+        function loadCategories(groupId,categoryId){
+            //console.log("Inside the ca >>>>>>>>>>>>>>>>");
+            //console.log("groupId is "+ groupId);
+            var groupId = groupId;
+            if(!groupId){
+                groupId = $("#GroupID").val();
+            }
+            if (groupId) {
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
+                    data: "{id:'" + groupId + "'}",
+                    success: function (data) {
+                        console.log(">>>>>>>>>>>>>>>>>>>>>>>Category>><<<<<<<<<<<<<<<<"+ JSON.stringify(data));
+                        $('#CategoryID').empty();
+                        $('#CategoryID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
+                        $.each(data, function (i, d) {
+                            $('#CategoryID').append('<option value=' + d.Value + '>' + d.Text + '</option>');
+                            if(data.length == i+1){
+                                var index =  $('#item_form [name=index]').val();
+                                if(data.length == i+1 && categoryId){
+                                    $('#CategoryID').val(categoryId);
+                                }
+
+                            }
+                        });
+                    },
+                    failure: function (data) {
+                        alert('error occured');
+                    },
+                    complete: function(data) {
+
+                    }
+                });
+            }
+        }
+
+    </script>
+
+
+}
+
+

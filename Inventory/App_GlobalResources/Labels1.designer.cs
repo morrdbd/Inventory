@@ -1852,6 +1852,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return Item.
+        /// </summary>
+        internal static string return_item {
+            get {
+                return ResourceManager.GetString("return_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Right.
         /// </summary>
         internal static string right {

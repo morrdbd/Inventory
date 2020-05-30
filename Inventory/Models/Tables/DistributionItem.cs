@@ -20,5 +20,9 @@ namespace Inventory.Models.Tables
 
         public string DealWithAccount { get; set; }
 
+        public bool IsReturned { get; set; }
+
+        public DateTime? ReturnDate { get; set; }
+
     }
 }

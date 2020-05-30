@@ -933,4 +933,7 @@
   <data name="ItemInWarehouse" xml:space="preserve">
     <value>اجناس در تحویلخانه</value>
   </data>
+  <data name="return_item" xml:space="preserve">
+    <value>تسلیمی جنس</value>
+  </data>
 </root>

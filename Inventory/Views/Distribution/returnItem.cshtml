@@ -1,0 +1,108 @@
+﻿@model Inventory.Models.ViewModels.ReturnItemVM
+@{
+    ViewBag.Title = "Return Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
+}
+<div class="margin-bottom-10">
+    @if (_user.HasAccess("Distribution", "Search"))
+    {
+        <a href="@Url.Action("ItemsInUse")" class="btn btn-sm">@Labels.back_to_list</a>
+    }
+    @if (_user.HasAccess("Distribution", "Delete"))
+    {
+        <a href="@Url.Action("ReturnItem", new { id=Model.DistributionItemID })" class="btn btn-sm btn-success" id="btn_return"><i class="fa fa-undo"></i> @Labels.return_item</a>
+    }
+</div>
+<h4>Tiket information</h4>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>@Labels.TicketNumber</th>
+            <th>@Labels.TicketIssedDate</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.TicketNumber</td>
+            <td>@Model.TicketIssuedDateForm</td>
+        </tr>
+    </tbody>
+
+</table>
+<h4>Emloyee ,organization and ticket information</h4>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>@Labels.Requester</th>
+            <th>@Labels.Name</th>
+            <th>@Labels.FatherName</th>
+            <th>@Labels.Occupation</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.EmpDepartmentName</td>
+            <td>@Model.EmpName</td>
+            <td>@Model.EmpFatherName</td>
+            <td>@Model.EmpOccupation</td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>Item information</h4>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>@Labels.Quantity</th>
+            <td>@Labels.Unit</td>
+            <th>Usage Type</th>
+            <th>Group Name</th>
+            <th>Category Name</th>
+            <th>@Labels.ItemName</th>
+            <th>@Labels.code</th>
+            <th>Size Name</th>
+            <th>Orgin Name</th>
+            <th>Brand Name</th>
+            <td>@Labels.UnitPrice</td>
+            <td>@Labels.DealWithAccount</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Quantity</td>
+            <td>@Model.UnitName</td>
+            <td>@Model.UsageTypeName</td>
+            <td>@Model.ItemGroupName</td>
+            <td>@Model.ItemCategoryName</td>
+            <td>@Model.ItemName</td>
+            <td>@Model.ItemCode</td>
+            <td>@Model.ItemSizeName</td>
+            <td>@Model.ItemOriginName</td>
+            <td>@Model.BrandName</td>
+            <td>@Model.UnitPrice</td>
+            <td>@Model.DealWithAccount</td>
+        </tr>
+
+    </tbody>
+</table>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('body').on('click', '#btn_return', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                bootbox.confirm('@Labels.are_you_sure', function (result) {
+                    if (result == true) {
+                        $.get(url, function (response) {
+                            if (response == true) {
+                                window.location.href = '@Url.Action("ItemsInUse")';
+                            }
+                        })
+                    }
+                })
+            })
+        })
+    </script>
+}

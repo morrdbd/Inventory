@@ -676,11 +676,11 @@ namespace Inventory.Controllers
         }
 
         [AccessControl("Search")]
-        public ActionResult ItemInUse()
+        public ActionResult ItemsInUse()
         {
             CreateDropDown();
             ViewBag.search = new ItemInUseSearch();
-            return View("ItemInUse");
+            return View("ItemsInUse");
         }
 
         [AccessControl("Search")]
@@ -693,10 +693,11 @@ namespace Inventory.Controllers
                                      join sItem in db.StockInItems on dItem.ItemID equals sItem.ID
                                      join emp in db.Employees on d.EmployeeID equals emp.EmployeeID
                                      join dep in db.Departments on emp.DepartmentID equals dep.DepartmentID
-                                     where d.IsActive == true
+                                     where d.IsActive == true && dItem.IsReturned == false
                                      select new
                                      {
-                                        d.DistributionID,
+                                        distributionItemID = dItem.ID,
+                                        dItem.ItemID,
                                         emp.DepartmentID,
                                         d.EmployeeID,
                                         EmployeeName = emp.Name,
@@ -765,7 +766,8 @@ namespace Inventory.Controllers
             ViewBag.search = model;
             var queryResult = query.OrderByDescending(i => i.TicketIssuedDate).ToList();
             var data = queryResult.Select(i => new {
-                i.DistributionID,
+                i.distributionItemID,
+                i.ItemID,
                 DepartmentName = db.Departments.Where(d => d.DepartmentID == i.DepartmentID).Select(d => Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
                 i.EmployeeName,
                 i.EmployeeFName,
@@ -796,5 +798,240 @@ namespace Inventory.Controllers
             });
         }
 
+        [AccessControl("View")]
+        public ActionResult ViewItemInUse(int id = 0)
+        {
+            //var itemInUse = db.DistributionItems.Where(i=>i.IsReturned == false && i.ID == id).FirstOrDefault();
+            var itemInUse = (from d in db.Distributions
+                         join dItem in db.DistributionItems on d.DistributionID equals dItem.DistributionID
+                         join sItem in db.StockInItems on dItem.ItemID equals sItem.ID
+                         join emp in db.Employees on d.EmployeeID equals emp.EmployeeID
+                         join dep in db.Departments on emp.DepartmentID equals dep.DepartmentID
+                         where d.IsActive == true && dItem.IsReturned == false
+                         select new
+                         {
+                             distributionItemID = dItem.ID,
+                             DepartmentName = (Language == "prs" ? dep.DrName : Language == "ps" ? dep.PaName : dep.EnName),
+                             EmployeeName = emp.Name,
+                             EmployeeFName = emp.FatherName,
+                             d.TicketNumber,
+                             d.TicketIssuedDate,
+                             dItem.Quantity,
+                             sItem.UnitID,
+                             sItem.UsageTypeID,
+                             sItem.GroupID,
+                             sItem.CategoryID,
+                             sItem.ItemName,
+                             sItem.ItemCode,
+                             sItem.SizeID,
+                             sItem.OriginID,
+                             sItem.BrandID,
+                             sItem.UnitPrice,
+                             dItem.DealWithAccount
+                         }).FirstOrDefault();
+            if (itemInUse == null)
+            {
+                return HttpNotFound();
+            }
+            var model = new ReturnItemVM {
+                DistributionItemID = itemInUse.distributionItemID,
+                EmpDepartmentName = itemInUse.DepartmentName,
+                EmpName = itemInUse.EmployeeName,
+                EmpFatherName = itemInUse.EmployeeFName,
+                TicketNumber = itemInUse.TicketNumber,
+                TicketIssuedDateForm = itemInUse.TicketIssuedDate.ToDateString(Language),
+                Quantity = itemInUse.Quantity,
+                UnitName = AdminRepo.LookupName(Language, itemInUse.UnitID),
+                UsageTypeName = AdminRepo.LookupName(Language,itemInUse.UsageTypeID),
+                ItemGroupName = AdminRepo.LookupName(Language, itemInUse.GroupID),
+                ItemCategoryName = AdminRepo.LookupName(Language, itemInUse.CategoryID),
+                ItemName = itemInUse.ItemName,
+                ItemCode = itemInUse.ItemCode,
+                ItemSizeName = AdminRepo.LookupName(Language, itemInUse.SizeID),
+                ItemOriginName = AdminRepo.LookupName(Language, itemInUse.OriginID),
+                BrandName = AdminRepo.LookupName(Language, itemInUse.BrandID),
+                UnitPrice =  itemInUse.UnitPrice,
+                DealWithAccount = itemInUse.DealWithAccount
+            };
+            return View("ReturnItem", model);
+        }
+
+        [AccessControl("Delete")]
+        public JsonResult ReturnItem(int id = 0)
+        {
+            using (var trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var _itemInUse = db.DistributionItems.Where(d => d.IsReturned == false && d.ID == id).FirstOrDefault();
+                    if (_itemInUse == null) return Json(false);
+                    _itemInUse.IsReturned = true;
+                    _itemInUse.ReturnDate = DateTime.Now;
+                    db.SaveChanges();
+
+                    db.ActivityLogs.Add(new ActivityLog
+                    {
+                        ModifiedTable = "DistributionItems",
+                        ModfiedId = _itemInUse.ID,
+                        Action = "Returned",
+                        UserId = AppUser.Id,
+                        ModifiedTime = DateTime.Now,
+                        ModifiedData = JsonConvert.SerializeObject(_itemInUse),
+                    });
+                    db.SaveChanges();
+                    var stockInItem = db.StockInItems.Where(d => d.IsActive == true && d.ID == _itemInUse.ItemID).FirstOrDefault();
+             
+                    if (stockInItem != null)
+                    {
+                        stockInItem.AvailableQuantity += _itemInUse.Quantity;
+                        db.ActivityLogs.Add(new ActivityLog
+                        {
+                            ModifiedTable = "StockInItems",
+                            ModfiedId = stockInItem.ID,
+                            Action = "Return",
+                            UserId = AppUser.Id,
+                            ModifiedTime = DateTime.Now,
+                        });
+                    }
+                    
+                    db.SaveChanges();
+                    trans.Commit();
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                }
+            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        [AccessControl("Search")]
+        public ActionResult ReturnedItems()
+        {
+            CreateDropDown();
+            ViewBag.search = new ItemInUseSearch();
+            return View("ReturnedItems");
+        }
+        [AccessControl("Search")]
+        public JsonResult ListItemReturned(ItemInUseSearch model)
+        {
+            var ReturnedDateFrom = model.DateFrom.ToDate(Language);
+            var ReturnedDateTo = model.DateTo.ToDate(Language);
+            var query = (from d in db.Distributions
+                         join dItem in db.DistributionItems on d.DistributionID equals dItem.DistributionID
+                         join sItem in db.StockInItems on dItem.ItemID equals sItem.ID
+                         join emp in db.Employees on d.EmployeeID equals emp.EmployeeID
+                         join dep in db.Departments on emp.DepartmentID equals dep.DepartmentID
+                         where d.IsActive == true && dItem.IsReturned == true
+                         select new
+                         {
+                             distributionItemID = dItem.ID,
+                             dItem.ItemID,
+                             emp.DepartmentID,
+                             d.EmployeeID,
+                             EmployeeName = emp.Name,
+                             EmployeeFName = emp.FatherName,
+                             d.TicketNumber,
+                             d.TicketIssuedDate,
+                             d.RequestNumber,
+                             d.RequestDate,
+                             dItem.Quantity,
+                             sItem.UnitID,
+                             sItem.UsageTypeID,
+                             sItem.GroupID,
+                             sItem.CategoryID,
+                             sItem.ItemName,
+                             sItem.ItemCode,
+                             sItem.SizeID,
+                             sItem.OriginID,
+                             sItem.BrandID,
+                             sItem.UnitPrice,
+                             dItem.DealWithAccount,
+                             dItem.ReturnDate,
+                         });
+            if (model.DepartmentID != null)
+            {
+                query = query.Where(c => c.DepartmentID == model.DepartmentID);
+            }
+            if (model.EmployeeID != null)
+            {
+                query = query.Where(c => c.EmployeeID == model.EmployeeID);
+            }
+            if (model.UsageTypeID != null)
+            {
+                query = query.Where(r => r.UsageTypeID == model.UsageTypeID);
+            }
+            if (model.GroupID != null)
+            {
+                query = query.Where(r => r.GroupID == model.GroupID);
+            }
+            if (model.CategoryID != null)
+            {
+                query = query.Where(r => r.CategoryID == model.CategoryID);
+            }
+            if (model.ItemName != null)
+            {
+                query = query.Where(r => r.ItemName.Contains(model.ItemName));
+            }
+            if (model.ItemCode != null)
+            {
+                query = query.Where(r => r.ItemCode.Contains(model.ItemCode));
+            }
+            if (model.SizeID != null)
+            {
+                query = query.Where(r => r.SizeID == model.SizeID);
+            }
+            if (model.BrandID != null)
+            {
+                query = query.Where(r => r.BrandID == model.BrandID);
+            }
+            if (ReturnedDateFrom != null)
+            {
+                query = query.Where(c => c.ReturnDate >= ReturnedDateFrom);
+            }
+            if (ReturnedDateTo != null)
+            {
+                query = query.Where(c => c.ReturnDate <= ReturnedDateTo);
+            }
+            ViewBag.search = model;
+            var queryResult = query.OrderByDescending(i => i.ReturnDate).ToList();
+            var data = queryResult.Select(i => new {
+                i.distributionItemID,
+                i.ItemID,
+                DepartmentName = db.Departments.Where(d => d.DepartmentID == i.DepartmentID).Select(d => Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
+                i.EmployeeName,
+                i.EmployeeFName,
+                i.TicketNumber,
+                TicketIssuedDate = i.TicketIssuedDate.ToDateString(Language),
+                i.RequestNumber,
+                RequestDate = i.RequestDate.ToDateString(Language),
+                i.Quantity,
+                UnitName = AdminRepo.LookupName(Language, i.UnitID),
+                UsageTypeName = AdminRepo.LookupName(Language, i.UsageTypeID),
+                GroupName = AdminRepo.LookupName(Language, i.GroupID),
+                CategoryName = AdminRepo.LookupName(Language, i.CategoryID),
+                i.ItemName,
+                i.ItemCode,
+                SizeName = AdminRepo.LookupName(Language, i.SizeID),
+                OriginName = AdminRepo.LookupName(Language, i.OriginID),
+                BrandName = AdminRepo.LookupName(Language, i.BrandID),
+                ReturnedDate = i.ReturnDate.ToDateString(Language),
+                i.UnitPrice,
+                i.DealWithAccount
+            });
+
+            return Json(new
+            {
+                data = data.Skip(model.start).Take(model.length).ToList(),
+                recordsTotal = data.Count(),
+                recordsFiltered = data.Count(),
+                draw = model.draw,
+            });
+        }
+
     }
+    
 }

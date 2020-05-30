@@ -873,4 +873,7 @@
   <data name="ItemInWarehouse" xml:space="preserve">
     <value>Item In Warehouse</value>
   </data>
+  <data name="return_item" xml:space="preserve">
+    <value>Return Item</value>
+  </data>
 </root>
