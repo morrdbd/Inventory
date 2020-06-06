@@ -19,12 +19,12 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Report Number</label>
+                        <label>@Labels.ReportNumber</label>
                         <input type="number" class="form-control input-sm" name="Number" value="@search.ReportNumber" placeholder="@Labels.ReportNumber" id="ReportNumber" />
                     </div>
                 </div>
                 <div class="col-md-8 form-group">
-                    <label>Stock In Date</label>
+                    <label>@Labels.StockInDate</label>
                     <div class="input-group">
                         <input type="text" class="form-control input-sm shpicker" name="StockInDateFrom" value="@search.StockInDateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
                         <span class="input-group-addon input-sm">@Labels.ToDate</span>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="col-md-8 form-group">
-                    <label>Request Date</label>
+                    <label>@Labels.RequestDate</label>
                     <div class="input-group">
                         <input type="text" class="form-control input-sm shpicker" name="RequestDateFrom" value="@search.RequestDateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
                         <span class="input-group-addon input-sm">@Labels.ToDate</span>
@@ -69,7 +69,7 @@
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
         <div class="caption">
-            List of ticket
+           @Labels.List_of_ticket
         </div>
         <div class="actions" id="data_table_actions">
         </div>
@@ -79,12 +79,12 @@
             <thead>
                 <tr>
                     <th>@Labels.ReportNumber</th>
-                    <th>Stock-In Date</th>
-                    <th>ContractorName</th>
-                    <th>DeliveryPlace</th>
-                    <th>OrderNumber</th>
-                    <th>OrderDate</th>
-                    <th>Details</th>
+                    <th>@Labels.StockInDate</th>
+                    <th>@Labels.Contractor_Name</th>
+                    <th>@Labels.DeliveryPlace</th>
+                    <th>@Labels.OrderNumber</th>
+                    <th>@Labels.OrderDate</th>
+                    <th>@Labels.Details</th>
                     <th></th>
                     <th></th>
                 </tr>

@@ -18,12 +18,12 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label>Report Number</label>
+                        <label>@Labels.ReportNumber</label>
                         <input type="number" class="form-control input-sm" name="Number" value="@search.ReportNumber" placeholder="@Labels.ReportNumber" id="ReportNumber" />
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label>Stockin Date</label>
+                    <label>@Labels.StockInDate</label>
                     <div class="input-group">
                         <input type="text" class="form-control input-sm shpicker" name="DateFrom" value="@search.DateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
                         <span class="input-group-addon input-sm">@Labels.ToDate</span>
@@ -34,25 +34,25 @@
             <section class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label>Usage Type</label>
+                        <label>@Labels.Usage_Type</label>
                         @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new { onchange = "loadGroup()", @class = "form-control input-sm", @ID = "UsageTypeID"})
                     </div>
                 </div>
                 <div class=" col-md-3">
                     <div class="form-group">
-                        <label>Item Group</label>
+                        <label>@Labels.Item_Group</label>
                         <select id="GroupID" name="GroupID" onchange="loadCategories()" class="form-control input-sm"></select>
                     </div>
                 </div>
                 <div class=" col-md-3">
                     <div class="form-group">
-                        <label>Item Category</label>
+                        <label>@Labels.Item_Category</label>
                         <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label>Item Name</label>
+                        <label>@Labels.Item_Name</label>
                         <input type="text" name="ItemName" id="ItemName" class="form-control input-sm" data-msg="" placeholder="">
                     </div>
                 </div>
@@ -60,25 +60,25 @@
             <section class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label>Item Code</label>
+                        <label>@Labels.Item_Code</label>
                         <input type="text" name="ItemCode" id="ItemCode" class="form-control input-sm" data-msg="" placeholder="">
                     </div>
                 </div>
                 <div class=" col-md-3">
                     <div class="form-group">
-                        <label>Item Size</label>
+                        <label>@Labels.Size</label>
                         @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
                     </div>
                 </div>
                 <div class=" col-md-3">
                     <div class="form-group">
-                        <label>Item Origin</label>
+                        <label>@Labels.Origin</label>
                         @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
                     </div>
                 </div>
                 <div class=" col-md-3">
                     <div class="form-group">
-                        <label>Item Brand</label>
+                        <label>@Labels.Brand</label>
                         @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
                     </div>
                 </div>
@@ -104,7 +104,7 @@
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
         <div class="caption">
-            List of ticket
+           @Labels.List_of_ticket
         </div>
         <div class="actions" id="data_table_actions">
         </div>
@@ -114,20 +114,20 @@
             <thead>
                 <tr>
                     <th>@Labels.ReportNumber</th>
-                    <th>Stock in Date</th>
+                    <th>@Labels.StockInDate</th>
                     <th>@Labels.RequestNumber</th>
                     <th>@Labels.RequestDate</th>
                     <th>@Labels.Quantity</th>
-                    <th>Availabel Quantity</th>
+                    <th>@Labels.Available_Quantity</th>
                     <th>@Labels.Unit</th>
-                    <th>Usage Type</th>
+                    <th>@Labels.Usage_Type</th>
                     <th>@Labels.ItemName</th>
-                    <th>Code</th>
-                    <th>Group</th>
-                    <th>Category</th>
-                    <th>Size</th>
-                    <th>Origin</th>
-                    <th>Brand</th>
+                    <th>@Labels.Item_Code</th>
+                    <th>@Labels.Item_Group</th>
+                    <th>@Labels.Item_Category</th>
+                    <th>@Labels.Size</th>
+                    <th>@Labels.Origin</th>
+                    <th>@Labels.Brand</th>
                     <th>@Labels.UnitPrice</th>
                     <th>@Labels.TotalPrice</th>
                     <th>@Labels.Remarks</th>

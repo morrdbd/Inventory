@@ -33,7 +33,7 @@
             </section>
             <section class="row">
                 <div class="col-md-6 form-group">
-                    <label>Contractor Name</label>
+                    <label>@Labels.Contractor_Name</label>
                     <div class="col-md-8">
                         <input type="text" name="ContractorName" id="ContractorName" value="@Model.ContractorName" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
@@ -84,17 +84,17 @@
                 <thead id="thead_attendee">
                     <tr>
                         <th>@Labels.Unit</th>
-                        <th>Quantity</th>
-                        <th>Usage Type</th>
-                        <th>Group</th>
-                        <th>Category</th>
-                        <th>Name</th>
-                        <th>Code</th>
-                        <th>Size</th>
-                        <th>Origin</th>
-                        <th>Brand</th>
-                        <th>Unit Price</th>
-                        <th>Total Price</th>
+                        <th>@Labels.Quantity</th>
+                        <th>@Labels.Usage_Type</th>
+                        <th>@Labels.Item_Group</th>
+                        <th>@Labels.Item_Category</th>
+                        <th>@Labels.Name</th>
+                        <th>@Labels.Item_Code</th>
+                        <th>@Labels.Size</th>
+                        <th>@Labels.Origin</th>
+                        <th>@Labels.Brand</th>
+                        <th>@Labels.UnitPrice</th>
+                        <th>@Labels.TotalPrice</th>
                         <th>@Labels.Remarks</th>
                         <th></th>
                     </tr>
@@ -161,7 +161,7 @@
                 <div class="modal-body">
                     <section class="row">
                         <div class=" col-md-6 form-group">
-                            <label>Usage Type</label>
+                            <label>@Labels.Usage_Type</label>
                             <div class="col-md-8">
                                 @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new {onchange = "loadGroup()", @class = "form-control input-sm", @ID = "UsageTypeID", @Required = "required" })
                             </div>
@@ -169,14 +169,14 @@
                     </section>
                     <section class="row">
                         <div class=" col-md-6 form-group">
-                            <label>Item Group</label>
+                            <label>@Labels.Item_Group</label>
                             <div class="col-md-8">
                                 <select id="GroupID" name="GroupID" onchange="loadCategories()" class="form-control input-sm"></select>
                                 @*@Html.DropDownList("GroupID", ViewBag.ItemGroupDrp as SelectList, Labels.please_select, new { onchange = "", @class = "form-control input-sm", @ID = "GroupID", @Required = "required" })*@
                             </div>
                         </div>
                         <div class=" col-md-6 form-group">
-                            <label>Item Category</label>
+                            <label>@Labels.Item_Category</label>
                             <div class="col-md-8">
                                 <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
                             </div>
@@ -185,13 +185,13 @@
                     <div class="row">
                         <section class="row">
                             <div class="col-md-6 form-group">
-                                <label>Item Name</label>
+                                <label>@Labels.Item_Name</label>
                                 <div class="col-md-8">
                                     <input type="text" name="ItemName" id="ItemName" class="form-control input-sm" required data-msg="" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label>Item Code</label>
+                                <label>@Labels.Item_Code</label>
                                 <div class="col-md-8">
                                     <input type="text" name="ItemCode" id="ItemCode" class="form-control input-sm" data-msg="" placeholder="">
                                 </div>
@@ -199,13 +199,13 @@
                         </section>
                         <section class="row">
                             <div class=" col-md-6 form-group">
-                                <label>Unit</label>
+                                <label>@Labels.Unit</label>
                                 <div class="col-md-8">
                                     @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @Required = "required", @ID = "UnitID" })
                                 </div>
                             </div>
                             <div class=" col-md-6 form-group">
-                                <label>Item Size</label>
+                                <label>@Labels.Size</label>
                                 <div class="col-md-8">
                                     @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
                                 </div>
@@ -214,13 +214,13 @@
                         <section class="row"></section>
                         <section class="row">
                             <div class=" col-md-6 form-group">
-                                <label>Item Origin</label>
+                                <label>@Labels.Origin</label>
                                 <div class="col-md-8">
                                     @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
                                 </div>
                             </div>
                             <div class=" col-md-6 form-group">
-                                <label>Item Brand</label>
+                                <label>@Labels.Brand</label>
                                 <div class="col-md-8">
                                     @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
                                 </div>
@@ -229,13 +229,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label>Quantity</label>
+                            <label>@Labels.Quantity</label>
                             <div class="col-md-8">
                                 <input type="number" name="Quantity" id="Quantity" class="form-control input-sm" required data-rule-digits="true" data-msg="" />
                             </div>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label> Unit Price</label>
+                            <label> @Labels.UnitPrice</label>
                             <div class="col-md-8">
                                 <input type="number" name="UnitPrice" id="UnitPrice" class="form-control input-sm" required data-rule-digits="true" data-msg="" />
                             </div>

@@ -950,7 +950,7 @@ namespace Inventory.Controllers
                              sItem.BrandID,
                              sItem.UnitPrice,
                              dItem.DealWithAccount,
-                             dItem.ReturnDate,
+                             dItem.ReturnDate
                          });
             if (model.DepartmentID != null)
             {

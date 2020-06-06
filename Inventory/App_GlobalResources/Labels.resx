@@ -876,4 +876,64 @@
   <data name="return_item" xml:space="preserve">
     <value>Return Item</value>
   </data>
+  <data name="Available_Quantity" xml:space="preserve">
+    <value>Available Quantity</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>Brand</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Contractor_Name" xml:space="preserve">
+    <value>Contractor Name</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="Item_Category" xml:space="preserve">
+    <value>Item Category</value>
+  </data>
+  <data name="Item_Code" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="Item_Group" xml:space="preserve">
+    <value>Item Group</value>
+  </data>
+  <data name="Item_Name" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="List_of_ticket" xml:space="preserve">
+    <value>List of ticket</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>Order Date</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Order Number</value>
+  </data>
+  <data name="Requester_Information" xml:space="preserve">
+    <value>Requester Information</value>
+  </data>
+  <data name="ReturnDate" xml:space="preserve">
+    <value>Return Date</value>
+  </data>
+  <data name="Select_Department" xml:space="preserve">
+    <value>--- Select Department ---</value>
+  </data>
+  <data name="Select_Employee" xml:space="preserve">
+    <value>Select Employee</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="StockInDate" xml:space="preserve">
+    <value>Stock in Date</value>
+  </data>
+  <data name="Usage_Type" xml:space="preserve">
+    <value>Usage Type</value>
+  </data>
 </root>
