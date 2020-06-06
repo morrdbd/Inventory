@@ -936,4 +936,64 @@
   <data name="return_item" xml:space="preserve">
     <value>تسلیمی جنس</value>
   </data>
+  <data name="Available_Quantity" xml:space="preserve">
+    <value>تعداد موجوده</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>اصل</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>نوع</value>
+  </data>
+  <data name="Contractor_Name" xml:space="preserve">
+    <value>قراردادی / از باز اخذګردیده</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>دیپارتمنت</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>گروپ</value>
+  </data>
+  <data name="Item_Category" xml:space="preserve">
+    <value>نوع جنس</value>
+  </data>
+  <data name="Item_Code" xml:space="preserve">
+    <value>جنس کود</value>
+  </data>
+  <data name="Item_Group" xml:space="preserve">
+    <value>کروپ جنس</value>
+  </data>
+  <data name="Item_Name" xml:space="preserve">
+    <value>اسم جنس</value>
+  </data>
+  <data name="List_of_ticket" xml:space="preserve">
+    <value>لیست تیکیت</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>تاریخ حکم</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>نمبر حکم</value>
+  </data>
+  <data name="Requester_Information" xml:space="preserve">
+    <value>معلومات درخواست کننده</value>
+  </data>
+  <data name="ReturnDate" xml:space="preserve">
+    <value>تاریخ تسلیم</value>
+  </data>
+  <data name="Select_Department" xml:space="preserve">
+    <value>--- انتخاب دیپارتمنت ---</value>
+  </data>
+  <data name="Select_Employee" xml:space="preserve">
+    <value>انتخاب کارمند</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>اندازه</value>
+  </data>
+  <data name="StockInDate" xml:space="preserve">
+    <value>تاریخ ازدیاد</value>
+  </data>
+  <data name="Usage_Type" xml:space="preserve">
+    <value>نوع استعمال</value>
+  </data>
 </root>
