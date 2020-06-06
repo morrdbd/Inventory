@@ -30,6 +30,7 @@ namespace Inventory.Controllers
             ViewBag.itemSearch = new Item_Search();
             return View("Form", new Distribution_VM());
         }
+
         private void CreateDropDown()
         {
             var usageTypeList = AdminRepo.LookupValueList(Language, "UTYPE");
@@ -462,6 +463,7 @@ namespace Inventory.Controllers
             }
             return Json(false);
         }
+
         [AccessControl("Delete")]
         public JsonResult Delete(int id = 0)
         {
@@ -516,6 +518,7 @@ namespace Inventory.Controllers
 
             return Json(false, JsonRequestBehavior.AllowGet);
         }
+
         [AccessControl("Search")]
         public JsonResult SelectItem(int id = 0)
         {
@@ -548,6 +551,7 @@ namespace Inventory.Controllers
             }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult GetItem(GetItemVM model)
         {
             if (!ModelState.IsValid)
@@ -874,6 +878,7 @@ namespace Inventory.Controllers
             ViewBag.search = new ItemInUseSearch();
             return View("ReturnedItems");
         }
+
         [AccessControl("Search")]
         public JsonResult ListItemReturned(ItemInUseSearch model)
         {
