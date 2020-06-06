@@ -33,7 +33,11 @@ namespace Inventory.Models
 
         public bool IsActive { get; set; }
 
-        public int InsertedBy { get; set; }
+        public bool IsExpired { get; set; }
+
+        public DateTime? DateExpired { get; set; }
+
+        public int? InsertedBy { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? InsertedDate { get; set; }
