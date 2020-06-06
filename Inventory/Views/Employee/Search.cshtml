@@ -206,7 +206,7 @@
             $.fn.dataTable.ext.errMode = 'none';
             var data_table = $('#data_table').DataTable({
                 ajax: {
-                    url: '@Url.Action("EmployeeList")',
+                    url: '@Url.Action("EmployeeListPartial")',
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (data) {

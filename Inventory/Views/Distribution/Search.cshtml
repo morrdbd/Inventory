@@ -35,7 +35,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.Warehouse</label>
-                        <input type="number" class="form-control input-sm" name="Warehouse" value="@search.Warehouse" placeholder="@Labels.Warehouse" id="warehouse" />
+                        <input type="text" class="form-control input-sm" name="Warehouse" value="@search.Warehouse" placeholder="@Labels.Warehouse" id="warehouse" />
                     </div>
                 </div>
             </div>
@@ -140,32 +140,6 @@
     <script>
     var model = @Html.Raw(Json.Encode(Model));
     $(function () {
-            $("#record_form").validate({
-                submitHandler: function () {
-                    $("#record_form").ajaxSubmit({
-                        beforeSubmit: function(){
-                            $('#btn_submit').button('loading');
-                        },
-                        success: function (response) {
-                            if (response != false) {
-                                toastr.success("@Labels.operation_done_suc");
-                                data_table.ajax.reload();
-                            } else {
-                                toastr.error("@Labels.unable_to_update");
-                            }
-                        },
-                        error: function(){
-                            toastr.error("@Labels.unable_to_update");
-                        },
-                        complete: function () {
-                            $('#popup_record').modal('hide');
-                            $('#btn_submit').button('reset');
-                            setDefaultValue();
-                            $('#ID').button(0);
-                        }
-                    })
-                }
-            })
             /////////////////////////SEARCH//////////////////////////////
         var canView = @Html.Raw(Json.Encode(_canView));
         var canPrint = @Html.Raw(Json.Encode(_canView));
@@ -259,32 +233,6 @@
                 data_table.page.len($(this).val()).draw();
             })
             ////////////////////////////////////////////////////
-            $("body").on("click", ".edit_row", function (e) {
-                e.preventDefault();
-                var id = $(this).data().id;
-                var url = "@Url.Action("LoadClientRecord")/" + id;
-            })
-            $("body").on("click", ".delete_row", function (e) {
-                e.preventDefault();
-                var id = $(this).data().id;
-                var url = "@Url.Action("DeleteClient")/" + id;
-                bootbox.confirm("@Labels.are_you_sure", function (result) {
-                    if (result == true) {
-                        $.get(url, function (response) {
-                            if (response == true) {
-                                toastr.success("@Labels.operation_done_suc");
-                                data_table.ajax.reload();
-                            }
-                        })
-                    }
-                })
-            })
-            $("#popup_record").on("hide.bs.modal", function (e) {
-                $("#record_form").clearForm();
-                $("#record_form").find("[name=ID]").val(0);
-            })
-            $("#popup_record").on('show.bs.modal', function () {
-            });
             $("#DepartmentID" ).change(function() {
                 var departmentId = $(this).val();
                 if (departmentId) {

@@ -609,7 +609,7 @@
                 });
                 var data = $('#employee_search_form').serializeJSON();
                 var json = JSON.stringify(data);
-                var url = '@Url.Action("EmployeeList")';
+                var url = '@Url.Action("SearchEmployee", "Employee")';
                 $.ajax({
                     url: url,
                     type: 'POST',

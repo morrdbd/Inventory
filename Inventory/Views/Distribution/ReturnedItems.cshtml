@@ -121,6 +121,7 @@
         <table id="data_table" class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
+                    <th>Returned Date</th>
                     <th>@Labels.Requester</th>
                     <th>@Labels.Employee</th>
                     <th>@Labels.FatherName</th>
@@ -197,6 +198,7 @@
                     },
                 },
                 columns: [
+                    {data: 'ReturnedDate'},
                     { data: 'DepartmentName' },
                     { data: 'EmployeeName' },
                     { data: 'EmployeeFName' },
@@ -215,15 +217,7 @@
                     { data: 'OriginName' },
                     { data: 'BrandName' },
                     { data: 'UnitPrice' },
-                    { data: 'DealWithAccount' },
-
-                    {
-                        data: null,
-                        visible: canView,
-                        render: function (row) {
-                            return '<a href="@Url.Action("ViewItemInUse")/'+row.distributionItemID+'" title="@Labels.return_item" data-id="' + row.distributionItemID + '" class="btn btn-xs blue view-item"><i class="fa fa-undo"></i>@Labels.return_item</a>';
-                        }
-                    }
+                    { data: 'DealWithAccount' }
                 ],
                 searching: false,
                 bInfo: false,
@@ -281,20 +275,6 @@
 
             ////////////////////////////////////////////////////
 
-
-
-        $('#data_table tbody').on('click', 'tr', function(){
-            if($(this).hasClass('selectedItem')){
-                $(this).removeClass('selectedItem');
-            } else {console.log("insid the else if");
-            $(this).addClass('selectedItem').siblings().removeClass('selectedItem');
-            }
-            let id = $(this).find('a').data().id;
-            console.log("id is >>>>>>>>"+ id);
-            if(id){
-                window.location.href = `@Url.Action("ViewItemInUse", "Distribution")/`+id;
-            }
-        });
             $("#DepartmentID" ).change(function() {
                 var departmentId = $(this).val();
                 if (departmentId) {

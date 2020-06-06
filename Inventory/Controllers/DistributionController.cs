@@ -101,47 +101,6 @@ namespace Inventory.Controllers
 
         //Load search result
         [AccessControl("Search")]
-        public JsonResult EmployeeList(Employee_Search model)
-        {
-            var query = db.Employees.Select(c => new
-            {
-                c.EmployeeID,
-                c.Name,
-                c.FatherName,
-                c.Occupation,
-                c.DepartmentID,
-                c.IsActive
-            }).Where(c => c.IsActive == true);
-            if (!string.IsNullOrWhiteSpace(model.sName))
-            {
-                query = query.Where(c => c.Name.Contains(model.sName));
-            }
-            if (!string.IsNullOrWhiteSpace(model.sFatherName))
-            {
-                query = query.Where(c => c.FatherName.Contains(model.sFatherName));
-            }
-            if (model.sDepartmentID != null)
-            {
-                query = query.Where(c => c.DepartmentID == model.sDepartmentID);
-            }
-            ViewBag.search = model;
-            var tes1 = query.ToList();
-
-            var data = query.Select(c =>
-            new
-            {
-                c.EmployeeID,
-                c.Name,
-                c.FatherName,
-                c.Occupation,
-                DepartmentName = db.Departments.Where(d => d.DepartmentID == c.DepartmentID).Select(d => Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault()
-            }
-            ).ToList();
-            var tes = data.ToList();
-            return Json(data);
-        }
-        //Load search result
-        [AccessControl("Search")]
         public JsonResult ItemList(Item_Search search)
         {
             var query = db.StockInItems.Where(i => i.IsActive == true && i.AvailableQuantity != 0).AsQueryable();
@@ -950,7 +909,7 @@ namespace Inventory.Controllers
                              sItem.BrandID,
                              sItem.UnitPrice,
                              dItem.DealWithAccount,
-                             dItem.ReturnDate,
+                             dItem.ReturnDate
                          });
             if (model.DepartmentID != null)
             {

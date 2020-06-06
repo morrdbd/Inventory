@@ -1069,20 +1069,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Issued.
-        /// </summary>
-        internal static string Issued {
-            get {
-                return ResourceManager.GetString("Issued", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Issue Date.
         /// </summary>
         internal static string IssueDate {
             get {
                 return ResourceManager.GetString("IssueDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Issued Number.
+        /// </summary>
+        internal static string Issued_Number {
+            get {
+                return ResourceManager.GetString("Issued_Number", resourceCulture);
             }
         }
         
