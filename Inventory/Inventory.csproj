@@ -312,9 +312,14 @@
     <Compile Include="HelperCode\AllowFileSizeAttribute.cs" />
     <Compile Include="Models\Procedures\Receipt_Report_Item.cs" />
     <Compile Include="Models\Procedures\Ticket_Item.cs" />
+    <Compile Include="Models\Tables\Expired.cs" />
+    <Compile Include="Models\Tables\ExpiredItem.cs" />
     <Compile Include="Models\Tables\Employee.cs" />
     <Compile Include="Models\Tables\StockIn.cs" />
     <Compile Include="Models\Tables\StockInItem.cs" />
+    <Compile Include="Models\ViewModels\ExpiredItem.cs" />
+    <Compile Include="Models\ViewModels\ExpiredItemVM.cs" />
+    <Compile Include="Models\ViewModels\ExpiredVM.cs" />
     <Compile Include="Models\ViewModels\GetItemVM.cs" />
     <Compile Include="Models\ViewModels\ReturnItemVM.cs" />
     <Compile Include="Models\ViewModels\StockInItemVM.cs" />
