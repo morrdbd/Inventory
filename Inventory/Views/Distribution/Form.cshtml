@@ -50,37 +50,27 @@
         </div>
         <div class="portlet-body">
             <section class="row">
-                <div class="col-md-3 form-group">
-                    <label>@Labels.TicketNumber</label>
-                    <div class="col-md-8">
-                        <input type="text" name="TicketNumber" id="TicketNumber" value="@Model.TicketNumber" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
+                <div class="col-md-3">
+                     <label>@Labels.TicketNumber</label>
+                    <input type="text" name="TicketNumber" id="TicketNumber" value="@Model.TicketNumber" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
-                <div class="col-md-3 form-group">
+                <div class="col-md-3">
                     <label>@Labels.TicketIssedDate</label>
-                    <div class="col-md-8">
-                        <input type="text" name="TicketIssuedDateForm" id="TicketIssuedDateForm" value="@Model.TicketIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
-                    </div>
+                    <input type="text" name="TicketIssuedDateForm" id="TicketIssuedDateForm" value="@Model.TicketIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                 </div>
-                <div class="col-md-6 form-group">
+                <div class="col-md-4">
                     <label>@Labels.Warehouse</label>
-                    <div class="col-md-8">
-                        <input type="text" name="Warehouse" id="Warehouse" value="@Model.Warehouse" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
+                    <input type="text" name="Warehouse" id="Warehouse" value="@Model.Warehouse" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
             </section>
-            <section class="row">
-                <div class="col-md-3 form-group">
+            <section class="row margin-top-10">
+                <div class="col-md-3">
                     <label>@Labels.RequestNumber</label>
-                    <div class="col-md-8">
-                        <input type="text" name="RequestNumber" id="RequestNumber" value="@Model.RequestNumber" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
+                    <input type="text" name="RequestNumber" id="RequestNumber" value="@Model.RequestNumber" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
-                <div class="col-md-3 form-group">
+                <div class="col-md-3">
                     <label>@Labels.RequestDate</label>
-                    <div class="col-md-8">
-                        <input type="text" name="RequestDateForm" id="RequestDateForm" value="@Model.RequestDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
-                    </div>
+                    <input type="text" name="RequestDateForm" id="RequestDateForm" value="@Model.RequestDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                 </div>
             </section>
         </div>
@@ -181,69 +171,63 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">@Labels.AddItem</h4>
             </div>
-            <div class="portlet-body">
+            <div style="padding:0 15px;">
                 <form method="post" action="ItemList" id="item_search_form" autocomplete="off" class="margin-top-10">
                     <section class="row">
                         <div class=" col-md-4 form-group">
                             <label>@Labels.Usage_Type</label>
-                            <div class="col-md-8">
-                                @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new { onchange = "loadGroup()", @class = "form-control input-sm", @ID = "UsageTypeID" })
-                            </div>
+                             @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new { onchange = "loadGroup()", @class = "form-control input-sm", @ID = "UsageTypeID" })
                         </div>
                         <div class=" col-md-4 form-group">
                             <label>@Labels.Item_Group</label>
-                            <div class="col-md-8">
                                 <select id="GroupID" name="GroupID" onchange="loadCategories()" class="form-control input-sm"></select>
-                            </div>
                         </div>
                         <div class=" col-md-4 form-group">
                             <label>@Labels.Item_Category</label>
-                            <div class="col-md-8">
-                                <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
-                            </div>
+                             <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
                         </div>
                     </section>
                     <section class="row">
                         <div class="col-md-4 form-group">
                             <label>@Labels.Item_Name</label>
-                            <div class="col-md-8">
+                            
                                 <input type="text" name="ItemName" id="ItemName" value="@itemSearch.ItemName" class="form-control input-sm" data-msg="" placeholder="">
-                            </div>
+                           
                         </div>
                         <div class="col-md-4 form-group">
                             <label>@Labels.Item_Code</label>
-                            <div class="col-md-8">
+                            
                                 <input type="text" name="ItemCode" id="ItemCode" value="@itemSearch.ItemCode" class="form-control input-sm" data-msg="" placeholder="">
-                            </div>
+                            
                         </div>
                         <div class=" col-md-4 form-group">
                             <label>@Labels.Unit</label>
-                            <div class="col-md-8">
+                            
                                 @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "UnitID" })
-                            </div>
+                          
                         </div>
                     </section>
                     <section class="row">
-                        <div class=" col-md-4 form-group">
+                        <div class=" col-md-4 ">
                             <label>@Labels.Brand</label>
-                            <div class="col-md-8">
+                           
                                 @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
-                            </div>
+                            
                         </div>
-                        <div class=" col-md-4 form-group">
+                        <div class=" col-md-4 ">
                             <label>@Labels.Size</label>
-                            <div class="col-md-8">
+                            
                                 @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
-                            </div>
+                           
                         </div>
-                        <div class=" col-md-4 form-group">
+                        <div class=" col-md-4 ">
                             <label>@Labels.Origin</label>
-                            <div class="col-md-8">
+                            
                                 @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
-                            </div>
+                           
                         </div>
                     </section>
-                    <section class="row">
+                    <section class="row margin-top-15" >
                         <div class="col-md-12 form-group" style="margin-left:10px; margin-right:10px;">
                             <input type="hidden" name="hdStart" id="StartRow" value="@itemSearch.start" />
                             <button type="submit" class="btn btn-sm blue "><i class="fa fa-search"></i> @Labels.search</button>
@@ -279,21 +263,21 @@
                     <div class="row">
                         <div class="col-md-3 form-group">
                             <label>@Labels.Quantity</label>
-                            <div class="col-md-9">
+                          
                                 <input type="number" id="Quantity" name="Quantity" class="form-control input-sm" required data-msg="" />
-                            </div>
+                            
                         </div>
                         <div class="col-md-3 form-group">
                             <label>@Labels.UnitPrice</label>
-                            <div class="col-md-9">
+                            
                                 <input type="number" id="UnitPrice" name="UnitPrice" class="form-control input-sm" data-rule-digits="true" required data-msg="" />
-                            </div>
+                            
                         </div>
                         <div class="col-md-6 form-group">
                             <label>@Labels.DealWithAccount</label>
-                            <div class="col-md-9">
+                            
                                 <input type="text" name="DealWithAccount" required class="form-control input-sm" data-msg="" />
-                            </div>
+                            
                         </div>
                     </div>
                     <div class="margin-right-10 margin-left-20 pull-right">
@@ -319,34 +303,32 @@
                     @Labels.Employee
                 </label> 
             </div>
-            <div class="portlet-body">
+            <div class="portlet-body" style="padding: 0 15px;">
                 <form id="employee_search_form" autocomplete="off" class="margin-top-10">
                     <section class="row">
                         <div class="col-md-6 form-group">
                             <label>@Labels.Name</label>
-                            <div class="col-md-8">
                                 <input type="text" class="form-control input-sm" name="sName" value="@empSearch.sName" placeholder="@Labels.Name" id="sName" />
-                            </div>
+                           
                         </div>
                         <div class="col-md-6 form-group">
                             <label>@Labels.FatherName</label>
-                            <div class="col-md-8">
                                 <input type="text" class="form-control input-sm" name="sFatherName" value="@empSearch.sFatherName" placeholder="@Labels.FatherName" id="sFatherName" />
-                            </div>
+                            
                         </div>
                     </section>
                     <section class="row">
                         <div class="col-md-6 form-group">
                             <label>@Labels.Occupation</label>
-                            <div class="col-md-8">
+                            
                                 <input type="text" name="sOccupation" id="sOccupation" value="@empSearch.sOccupation" class="form-control input-sm" data-msg="" placeholder="@Labels.Occupation">
-                            </div>
+                          
                         </div>
                         <div class="col-md-6 form-group">
                             <label>@Labels.Department</label>
-                            <div class="col-md-8">
+                            
                                 @Html.DropDownList("sDepartmentID", ViewBag.DepartmentDrp as SelectList, Labels.Select_Department, new { @class = "form-control" })
-                            </div>
+                           
                         </div>
                     </section>
                     <section class="row">

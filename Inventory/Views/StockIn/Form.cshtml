@@ -16,55 +16,48 @@
                 @Labels.ReceiptReportInfo
             </div>
         </div>
-        <div class="portlet-body">
+        <div class="portlet-body" style="padding:0 15px;">
             <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.ReportNumber</label>
-                    <div class="col-md-8">
                         <input type="text" name="M7Number" id="M7Number" value="@Model.M7Number" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
+                   
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.ReceiptDate</label>
-                    <div class="col-md-8">
                         <input type="text" name="StockInDateForm" id="StockInDateForm" value="@Model.StockInDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
-                    </div>
+               
                 </div>
             </section>
             <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.Contractor_Name</label>
-                    <div class="col-md-8">
                         <input type="text" name="ContractorName" id="ContractorName" value="@Model.ContractorName" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
+           
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.DeliveryPlace</label>
-                    <div class="col-md-8">
                         <input type="text" name="DeliveryPlace" id="DeliveryPlace" value="@Model.DeliveryPlace" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
-                </div>
+           
             </section>
             <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.SuggestionBillNumber</label>
-                    <div class="col-md-8">
                         <input type="text" name="OrderNumber" id="OrderNumber" value="@Model.OrderNumber" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
+                  
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.Mem3Date</label>
-                    <div class="col-md-8">
                         <input type="text" name="OrderDateForm" id="OrderDateForm" value="@Model.OrderDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
-                    </div>
+              
                 </div>
             </section>
             <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.Attachment</label>
-                    <div class="col-md-8">
                         <input type="file" id="FileContent" name="FileContent" @_ImageRequired accept="image/*,.pdf" />
-                    </div>
+                  
                 </div>
             </section>
         </div>
@@ -137,9 +130,9 @@
     <div class="row">
         <div class="col-md-12 form-group">
             <label>@Labels.Details</label>
-            <div class="col-md-10">
+            
                 <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Details</textarea>
-            </div>
+            
         </div>
     </div>
     <section class="row">
@@ -158,95 +151,83 @@
                     <button type="button" class="close red" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">@Labels.AddItem</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="padding:0 15px;">
                     <section class="row">
                         <div class=" col-md-6 form-group">
                             <label>@Labels.Usage_Type</label>
-                            <div class="col-md-8">
                                 @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new {onchange = "loadGroup()", @class = "form-control input-sm", @ID = "UsageTypeID", @Required = "required" })
-                            </div>
+                          
                         </div>
                     </section>
                     <section class="row">
                         <div class=" col-md-6 form-group">
                             <label>@Labels.Item_Group</label>
-                            <div class="col-md-8">
                                 <select id="GroupID" name="GroupID" onchange="loadCategories()" class="form-control input-sm"></select>
                                 @*@Html.DropDownList("GroupID", ViewBag.ItemGroupDrp as SelectList, Labels.please_select, new { onchange = "", @class = "form-control input-sm", @ID = "GroupID", @Required = "required" })*@
-                            </div>
+                            
                         </div>
                         <div class=" col-md-6 form-group">
                             <label>@Labels.Item_Category</label>
-                            <div class="col-md-8">
                                 <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
-                            </div>
+                            
                         </div>
                     </section>
-                    <div class="row">
+                    <div class="row" style="padding:0 15px;">
                         <section class="row">
                             <div class="col-md-6 form-group">
                                 <label>@Labels.Item_Name</label>
-                                <div class="col-md-8">
                                     <input type="text" name="ItemName" id="ItemName" class="form-control input-sm" required data-msg="" placeholder="">
-                                </div>
+                            
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>@Labels.Item_Code</label>
-                                <div class="col-md-8">
                                     <input type="text" name="ItemCode" id="ItemCode" class="form-control input-sm" data-msg="" placeholder="">
                                 </div>
-                            </div>
+                            
                         </section>
                         <section class="row">
                             <div class=" col-md-6 form-group">
                                 <label>@Labels.Unit</label>
-                                <div class="col-md-8">
                                     @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @Required = "required", @ID = "UnitID" })
-                                </div>
+                              
                             </div>
                             <div class=" col-md-6 form-group">
                                 <label>@Labels.Size</label>
-                                <div class="col-md-8">
                                     @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
-                                </div>
+                             
                             </div>
                         </section>
                         <section class="row"></section>
                         <section class="row">
                             <div class=" col-md-6 form-group">
                                 <label>@Labels.Origin</label>
-                                <div class="col-md-8">
                                     @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
-                                </div>
+                             
                             </div>
                             <div class=" col-md-6 form-group">
                                 <label>@Labels.Brand</label>
-                                <div class="col-md-8">
                                     @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
-                                </div>
+                               
                             </div>
                         </section>
                     </div>
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label>@Labels.Quantity</label>
-                            <div class="col-md-8">
                                 <input type="number" name="Quantity" id="Quantity" class="form-control input-sm" required data-rule-digits="true" data-msg="" />
-                            </div>
+                           
                         </div>
                         <div class="col-md-6 form-group">
                             <label> @Labels.UnitPrice</label>
-                            <div class="col-md-8">
                                 <input type="number" name="UnitPrice" id="UnitPrice" class="form-control input-sm" required data-rule-digits="true" data-msg="" />
-                            </div>
+                       
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label>@Labels.Remarks</label>
-                            <div class="col-md-10">
                                 <textarea type="text" name="Remarks" id="Remarks" class="form-control" data-msg="" placeholder=""></textarea>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
