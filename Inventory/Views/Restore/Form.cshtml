@@ -1,4 +1,4 @@
-﻿@model Inventory.Models.ViewModels.ExpiredVM
+﻿@model Inventory.Models.ViewModels.RestoreVM
 
 @{
     var empSearch = ViewBag.emSearch as Inventory.Models.ViewModels.Employee_Search;
@@ -9,8 +9,8 @@
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
     string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
 }
-<form action="@Url.Action(Model.ExpiredID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
-    <input type="hidden" name="DistributionID" value="@Model.ExpiredID" />
+<form action="@Url.Action(Model.RestoreID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
+    <input type="hidden" name="RestoreID" value="@Model.RestoreID" />
     <input type="hidden" name="EmpID" id="EmpID" value="@Model.EmpID" />
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
@@ -50,23 +50,21 @@
         </div>
         <div class="portlet-body">
             <section class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-3 form-group">
                     <label>Issued Number</label>
-                    <div class="col-md-8">
-                        <input type="text" name="DocumentIssuedNo" id="DocumentIssuedNo" value="@Model.DocumentIssuedNo" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
+                    <input type="text" name="DocumentIssuedNo" id="DocumentIssuedNo" value="@Model.DocumentIssuedNo" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
-                <div class="col-md-4 form-group">
+                <div class="col-md-3 form-group">
                     <label>Date</label>
-                    <div class="col-md-8">
-                        <input type="text" name="DocumentIssuedDateForm" id="DocumentIssuedDateForm" value="@Model.DocumentIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
-                    </div>
+                    <input type="text" name="DocumentIssuedDateForm" id="DocumentIssuedDateForm" value="@Model.DocumentIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                 </div>
-                <div class="col-md-4 form-group">
+                <div class=" col-md-3 form-group">
+                    <label>Item Condition</label>
+                    @Html.DropDownListFor(m=> m.ItemInCondition, ViewBag.ItemInConditionDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @Required = "required" })
+                </div>
+                <div class="col-md-3 form-group">
                     <label>@Labels.Attachment</label>
-                    <div class="col-md-8">
-                        <input type="file" id="FileContent" name="FileContent" @(Model.ExpiredID == 0 ? "required" : "") accept="image/*,.pdf" />
-                    </div>
+                    <input type="file" id="FileContent" name="FileContent" @(Model.RestoreID == 0 ? "required" : "") accept="image/*,.pdf" />
                 </div>
             </section>
         </div>
@@ -82,12 +80,11 @@
             </div>
         </div>
         <div class="portlet-body">
-            <table id="assign_items_table" class="table table-striped table-condensed">
+            <table id="restore_items_table" class="table table-striped table-condensed">
                 <thead id="thead_items">
                     <tr>
                         <th>@Labels.Unit</th>
                         <th>@Labels.Quantity</th>
-                        <th>Usage Type</th>
                         <th>Group</th>
                         <th>Category</th>
                         <th>Name</th>
@@ -105,22 +102,24 @@
                 <tbody id="tbody_item">
                     @{
                         int index = 0;
-                        foreach (var item in Model.ExpiredItems)
+                        foreach (var item in Model.RestoreItems)
                         {
                             <tr>
                                 <td>@item.UnitName</td>
                                 <td>@item.Quantity</td>
-                                <td>@item.UsageTypeName</td>
-                                <td>@item.ItemGroupName</td>
-                                <td>@item.ItemCategoryName</td>
+                                <td>@item.GroupName</td>
+                                <td>@item.CategoryName</td>
                                 <td>@item.ItemName</td>
                                 <td>@item.ItemCode</td>
-                                <td>@item.ItemSizeName</td>
-                                <td>@item.ItemOriginName</td>
+                                <td>@item.SizeName</td>
+                                <td>@item.OriginName</td>
                                 <td>@item.BrandName</td>
+                                <td>@item.UnitPrice</td>
+                                <td>@(item.UnitPrice * item.Quantity)</td>
+                                <td>@item.DealWithAccount</td>
                                 <td>
                                     @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>*@
-                                    <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                                    <button data-toggle="modal" class="btn btn-xs btn-danger delete_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             index++;
@@ -132,7 +131,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8 form-group">
+        <div class="col-md-12 form-group">
             <label>@Labels.Details</label>
             <div class="col-md-11">
                 <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Details</textarea>
@@ -148,7 +147,7 @@
 
 </form>
 
-<div class="modal fade" id="assign_item_modal" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" id="restore_item_modal" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" style="width:80%;">
         <div class="modal-content">
             <div class="modal-header blue">
@@ -225,7 +224,6 @@
                             <thead>
                                 <tr>
                                     <th>@Labels.Unit</th>
-                                    <th>Usage Type</th>
                                     <th>Group Name</th>
                                     <th>Category Name</th>
                                     <th>Item Name</th>
@@ -234,7 +232,6 @@
                                     <th>Item Origin</th>
                                     <th>Item Brand</th>
                                     <th>Unit Price</th>
-                                    <th>Available Quantity</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -321,7 +318,6 @@
         <tr>
             <td>{{UnitName}}</td>
             <td>{{Quantity}}</td>
-            <td>{{UsageTypeName}}</td>
             <td>{{GroupName}}</td>
             <td>{{CategoryName}}</td>
             <td>{{ItemName}}</td>
@@ -333,7 +329,7 @@
             <td>{{TotalPrice}}</td>
             <td>{{DealWithAccount}}</td>
             <td>
-                <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                <button data-toggle="modal" class="btn btn-xs btn-danger delete_item" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
                 @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="{{index}}"><i class="fa fa-edit"></i></a>
                     <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="{{index}}" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>*@
             </td>
@@ -342,13 +338,13 @@
     <script>
         var model = @Html.Raw(Json.Encode(Model));
         $(function () {
-            var ExpiredItems = [];
-            var ExpiredID = '@Model.ExpiredID';
-            if (ExpiredID != '0') {
+            var RestoreItems = [];
+            var RestoreID = '@Model.RestoreID';
+            if (RestoreID != '0') {
                 //var model = JSON.parse($("#model_json").val());
-                ExpiredItems = model.ExpiredItems;
+                RestoreItems = model.RestoreItems;
             }
-
+            
             // FORM VALIDATION AND SUBMISSION
             $('#main_form').validate({
                 submitHandler: function (form) {
@@ -357,8 +353,8 @@
                         parseAll: true,
                         useIntKeysAsArrayIndex: true,
                     });
-                    data['ExpiredItems'] = ExpiredItems.filter(function (obj) { return obj != null; });
-                    if (data['ExpiredItems'].length == 0) {
+                    data['RestoreItems'] = RestoreItems.filter(function (obj) { return obj != null; });
+                    if (data['RestoreItems'].length == 0) {
                         toastr.error('Please Add Item');
                         return;
                     }
@@ -376,7 +372,7 @@
                         success: function (response) {
                             if (response != false) {
                                 saveImage(response);
-                                console.log("response received >>>>>>>>>><<<<<<");
+                                console.log("response received >>>>>>>>>><<<<<<"+ response);
                             } else {
                                 toastr.error('@Labels.unable_to_update');
                             }
@@ -420,116 +416,15 @@
             })
             $('body').on('click', '#btn_add_item', function (e) {
                 e.preventDefault();
-                $('#assign_item_modal').modal('show');
-                $('#assign_item_form').clearForm();
-                data_table.ajax.reload();
-                $('#assign_item_form [name=ItemID]').val('0');
-                $('#assign_item_form [name=index]').val('-1');
-            })
-
-            $('#assign_item_form').validate({
-
-                submitHandler: function (form) {
-                    console.log(">>>>>>>>>>>>>>>>>>>>>>> inside the ");
-                    var data = $('#assign_item_form').serializeJSON({
-                        parseAll: true,
-                        useIntKeysAsArrayIndex: true,
-                    });
-                    var formData = ObjectToFormData(data);
-                    //******************
-                    Metronic.blockUI({ animate: true });
-                    //var isDuplicate = false;
-                    //DistributionItems.forEach(function(i){
-                    //    if(i.ItemCode == $('#ItemCode').val()){
-                    //        isDuplicate = true;
-                    //        return;
-                    //    }
-                    //})
-                    //if(isDuplicate && $('#index').val() === "-1"){
-                    //    toastr.error("Duplicate Item");
-                    //    return;
-                    //}
-                    //var formData = $(form).serializeJSON();
-                    console.log("row <<<<<<<<<<<<<<<<<< "+formData.ItemID);
-                    console.log($('#assign_item_form').attr('action'));
-                    console.log("row form data is <<<<<<<<<<<<<<<<<< "+JSON.stringify(formData));
-                    $.ajax({
-                        url: $('#assign_item_form').attr('action'),
-                        type: 'POST',
-                        data: formData,//$('#assign_item_form').serialize()(),
-                        processData: false,
-                        contentType: false,
-                        success: function (response) {
-                            if (response != false) {
-                                var isDuplicate = false;
-                                DistributionItems.forEach(function(i){
-                                    if(i.ID == response.ID){
-                                        isDuplicate = true;
-                                        return;
-                                    }
-                                })
-                                if(isDuplicate){
-                                    toastr.error('Item already exist pelase.');
-                                    return;
-                                }
-                                console.log("response is >>>>>>>>>>>>>>> "+JSON.stringify(response));
-                                var _index = DistributionItems.length
-                                var tr = $('#temp_item').clone().html()
-                                .replace("{{UnitName}}", response.UnitName)
-                                .replace("{{Quantity}}", response.Quantity)
-                                .replace("{{UsageTypeName}}", response.UsageTypeName)
-                                .replace("{{GroupName}}", response.GroupName)
-                                .replace("{{CategoryName}}", response.CategoryName)
-                                .replace("{{ItemName}}", response.ItemName)
-                                .replace("{{ItemCode}}", response.ItemCode)
-                                .replace("{{SizeName}}", response.SizeName)
-                                .replace("{{OriginName}}", response.OriginName)
-                                .replace("{{BrandName}}", response.BrandName)
-                                .replace("{{UnitPrice}}", response.UnitPrice)
-                                .replace("{{TotalPrice}}", response.Quantity * response.UnitPrice)
-                                .replace("{{DealWithAccount}}", response.DealWithAccount)
-                                .replace("{{index}}", _index);
-                                //if (row.index == -1) {
-
-                                    $('#tbody_item').append(tr);
-                                    $('#assign_item_form').clearForm();
-                                    $('#assign_item_form input:first').focus();
-                                    DistributionItems.push(response);
-                                //}
-
-                            } else {
-                                toastr.error('Please check item availabe quanity and try again.');
-                            }
-                        },
-                        complete: function () {
-                            Metronic.unblockUI();
-                            data_table.ajax.reload();
-                        }
-                    })
-                    //console.log("id is row is >>>>>>>>"+ console.log(JSON.stringify(row.ItemID)));
-                    //var _index = (row.index == -1) ? DistributionItems.length : row.index;
-                    //var tr = $('#temp_item').clone().html()
-                    //.replace("{{Quantity}}", row.Quantity)
-                    //.replace("{{UnitName}}", row.UnitName)
-                    //.replace("{{ItemName}}", $('#assign_item_form [name=ItemCode] option:selected').text())
-                    //.replace("{{UnitPrice}}", row.UnitPrice)
-                    //.replace("{{TotalPrice}}", row.Quantity * row.UnitPrice)
-                    //.replace("{{DealWithAccount}}", row.DealWithAccount)
-                    //.replace("{{index}}", _index);
-                    //if (row.index == -1) {
-                    //    $('#tbody_item').append(tr);
-                    //    $('#assign_item_form').clearForm();
-                    //    $('#assign_item_form input:first').focus();
-                    //    DistributionItems.push(row);
-                    //} else {
-                    //    $('#tbody_item').find('[data-index=' + row.index + ']').closest('tr').replaceWith(tr);
-                    //    $('#assign_item_modal').modal('hide');
-                    //    console.log("row in item form valided +++++++"+JSON.stringify(row));
-                    //    DistributionItems[row.index] = row;
-                    //}
-                    //console.log("items are >>>>>>>>>>>>>"+JSON.stringify(DistributionItems));
+                if($("#EmpID").val() == 0){
+                    toastr.error('Please select an employee.');
+                    return;
                 }
+                $('#restore_item_modal').modal('show');
+                data_table.ajax.reload();
             })
+
+        
             //$('body').on('click', '.item_delete', function (e) {
             //    e.preventDefault()
             //    $(this).confirmation('show');
@@ -558,10 +453,14 @@
                     success: function (response) {
                         console.log("response is >>>>>. "+JSON.stringify(response));
                         $('#employee_table > tbody').empty();
-                        response.forEach(function(emp){
-                            var selectBtn = '<button class="btn btn-xs btn-primary btn_select_employee" data-id="' + emp.EmployeeID + '">Select</button>';
-                            $('#employee_table > tbody').append('<tr><td>'+emp.Name+'</td><td>'+emp.FatherName+'</td><td>'+emp.Occupation+'</td><td>'+emp.DepartmentName+'</td><td>'+selectBtn+'</td></tr>');
-                        })
+                        if(response.length){
+                            response.forEach(function(emp){
+                                var selectBtn = '<button class="btn btn-xs btn-primary btn_select_employee" data-id="' + emp.EmployeeID + '">Select</button>';
+                                $('#employee_table > tbody').append('<tr><td>'+emp.Name+'</td><td>'+emp.FatherName+'</td><td>'+emp.Occupation+'</td><td>'+emp.DepartmentName+'</td><td>'+selectBtn+'</td></tr>');
+                            })
+                        }else{
+                            $('#employee_table > tbody').append('<tr><td colspan="5" style="text-align:center;">'+'No employee found'+'</td></tr>');
+                        }
                         Metronic.unblockUI('#list_div');
                     }
                 })
@@ -593,7 +492,7 @@
 
             var data_table = $('#item_table').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetNotExpiredItemList")',
+                    url: '@Url.Action("EmployeeItemsList")',
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (data) {
@@ -601,12 +500,12 @@
                         form_data['draw'] = data.draw;
                         form_data['start'] = data.start;
                         form_data['length'] = data.length;
+                        form_data['EmpID'] = $("#EmpID").val();
                         return JSON.stringify(form_data);
                     },
                 },
                 columns: [
                     { data: 'UnitName' },
-                    { data: 'UsageTypeName' },
                     { data: 'GroupName' },
                     { data: 'CategoryName' },
                     { data: 'ItemName' },
@@ -615,7 +514,6 @@
                     { data: 'OriginName' },
                     { data: 'BrandName' },
                     { data: 'UnitPrice' },
-                    { data: 'AvailableQuantity' },
                     {
                         data: null,
                         visible: true,
@@ -633,13 +531,13 @@
                 //dom: 'Bfrtip',
             });
             //Remove from list of assign items
-            $("body").on("click", ".delete_assign_item", function (e) {
+            $("body").on("click", ".delete_item", function (e) {
                 e.preventDefault();
                 var index = $(this).data().index;
                 var tr = $(this);
                 bootbox.confirm("@Labels.are_you_sure", function (result) {
                     if (result == true) {
-                        DistributionItems.splice(index,1);
+                        RestoreItems.splice(index,1);
                         tr.closest('tr').remove();
                     }
                 })
@@ -656,6 +554,7 @@
             })
             $("body").on("click", ".btn_select_item", function (e) {
                 e.preventDefault();
+                console.log("Inside the select section");
                 var row = $(this).parent().parent();
                 if(!row.hasClass('selectedItem')){
                     row.addClass('selectedItem')
@@ -664,6 +563,17 @@
                 }
                 var id = $(this).data().id;
                 console.log("Id is >>>>>>>>>>>>>>>>>>>>> "+id);
+                var isDuplicate = false;
+                RestoreItems.forEach(function(i){
+                    if(i.ID == id){
+                        isDuplicate = true;
+                        return;
+                    }
+                })
+                if(isDuplicate){
+                    toastr.error('Item already exist pelase.');
+                    return;
+                }
                 Metronic.blockUI({
                     target: '#item_list_div',
                     animate: true
@@ -674,13 +584,33 @@
                     type: 'POST',
                     contentType: 'application/json',
                     success: function (response) {
-                        console.log("reponse is >>>>>>>>>>>> "+JSON.stringify(response));
+                        console.log("reponse is <<<<<<<<<<<<<<>>>>>>>>>>>> "+JSON.stringify(response));
                         if(response){
-                            console.log(response.AvailableQuantity);
-                            console.log(response.UnitPrice);
-                            $("#Quantity").val(response.AvailableQuantity);
-                            $("#UnitPrice").val(response.UnitPrice);
-                            $("#ItemID").val(response.ID);
+                            //console.log(response.AvailableQuantity);
+                            //console.log(response.UnitPrice);
+
+                            var _index = RestoreItems.length
+                            var tr = $('#temp_item').clone().html()
+                            .replace("{{UnitName}}", response.UnitName)
+                            .replace("{{Quantity}}", response.Quantity)
+                            .replace("{{GroupName}}", response.GroupName)
+                            .replace("{{CategoryName}}", response.CategoryName)
+                            .replace("{{ItemName}}", response.ItemName)
+                            .replace("{{ItemCode}}", response.ItemCode)
+                            .replace("{{SizeName}}", response.SizeName)
+                            .replace("{{OriginName}}", response.OriginName)
+                            .replace("{{BrandName}}", response.BrandName)
+                            .replace("{{UnitPrice}}", response.UnitPrice)
+                            .replace("{{TotalPrice}}", response.Quantity * response.UnitPrice)
+                            .replace("{{DealWithAccount}}", response.DealWithAccount)
+                            .replace("{{index}}", _index);
+                            //if (row.index == -1) {
+
+                            $('#tbody_item').append(tr);
+                            console.log("besfor push is >>>>>>>");
+                            RestoreItems.push(response);
+                            
+                            console.log("items are "+JSON.stringify(RestoreItems));
                         }
                         Metronic.unblockUI('#item_list_div');
                     }
@@ -711,7 +641,6 @@
                         $.each(data, function (i, d) {
                             $('#CategoryID').append('<option value=' + d.Value + '>' + d.Text + '</option>');
                             if(data.length == i+1){
-                                var index =  $('#assign_item_form [name=index]').val();
                                 if(data.length == i+1 && categoryId){
                                     $('#CategoryID').val(categoryId);
                                 }

@@ -9,6 +9,7 @@ namespace Inventory.Models
         public DbSet<ActivityLog> ActivityLogs { get; set; }
 
         public DbSet<LookupType> LookupTypes { get; set; }
+
         public DbSet<LookupValue> LookupValues { get; set; }
 
         public DbSet<SigninLog> SigninLogs { get; set; }
@@ -28,6 +29,10 @@ namespace Inventory.Models
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Employee> Employees { get; set; }
+
+        public DbSet<Restore> Restores { get; set; }
+
+        public DbSet<RestoreItem> RestoreItems { get; set; }
 
         public DbSet<InHandStock> InHandStocks { get; set; }
 

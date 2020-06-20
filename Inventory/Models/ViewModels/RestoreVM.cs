@@ -9,9 +9,9 @@ using System.Web;
 
 namespace Inventory.Models.ViewModels
 {
-    public class ExpiredVM
+    public class RestoreVM
     {
-        public int ExpiredID { get; set; }
+        public int RestoreID { get; set; }
 
         public int? DocumentIssuedNo { get; set; }
 
@@ -29,13 +29,15 @@ namespace Inventory.Models.ViewModels
 
         public string EmpDepartmentName { get; set; }
 
+        public string ItemInCondition { get; set; }
+
         public string Details { get; set; }
 
-        public List<ExpiredItemVM> ExpiredItems { get; set; }
+        public List<RestoreItemVM> RestoreItems { get; set; }
 
-        public ExpiredVM()
+        public RestoreVM()
         {
-            this.ExpiredItems = new List<ExpiredItemVM>();
+            this.RestoreItems = new List<RestoreItemVM>();
         }
     }
     

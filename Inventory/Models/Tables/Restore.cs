@@ -6,16 +6,18 @@ using System.Data.Entity.Spatial;
 
 namespace Inventory.Models
 {
-    public class Expired
+    public class Restore
     {
         [Key]
-        public int ExpiredID { get; set; }
+        public int RestoreID { get; set; }
 
         public int EmployeeID { get; set; }
 
         public int? DocumentIssuedNo { get; set; }
 
         public DateTime? DocumentIssuedDate { get; set; }
+
+        public string ItemInCondition { get; set; }
 
         public string Details { get; set; }
 

@@ -52,6 +52,10 @@ namespace Inventory.Models.Repositories
         {
             return db.LookupValues.Where(l => l.IsActive == true && l.ValueId == _valueID).Select(l => lang == "prs" ? l.DrName : lang == "ps" ? l.PaName : l.EnName).FirstOrDefault();
         }
+        public string LookupNameByVlueCode(string lang, string _valueCode)
+        {
+            return db.LookupValues.Where(l => l.IsActive == true && l.ValueCode == _valueCode).Select(l => lang == "prs" ? l.DrName : lang == "ps" ? l.PaName : l.EnName).FirstOrDefault();
+        }
 
         public RecordUserInfo RecordInfo(string table, string pk, long id)
         {
