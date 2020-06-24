@@ -1,25 +1,25 @@
-﻿@model Inventory.Models.ViewModels.Distribution_VM
+﻿@model Inventory.Models.ViewModels.ReusableDistribution_VM
 @{
     //ViewBag.Title = "تکت توزیع تحویلخانه";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
 <div class="margin-bottom-10">
-    @if (_user.HasAccess("Distribution", "Search"))
+    @if (_user.HasAccess("ReusableDistribution", "Search"))
     {
         <a href="@Url.Action("Search")" class="btn btn-sm">@Labels.back_to_list</a>
     }
-    @if (_user.HasAccess("Distribution", "Edit"))
+    @if (_user.HasAccess("ReusableDistribution", "Edit"))
     {
-        <a href="@Url.Action("Edit", new { id=Model.DistributionID })" class="btn btn-sm blue"><i class="fa fa-edit"></i> @Labels.edit</a>
+        <a href="@Url.Action("Edit", new { id=Model.ReusableDistributionID })" class="btn btn-sm blue"><i class="fa fa-edit"></i> @Labels.edit</a>
     }
-    @if (_user.HasAccess("Distribution", "Print"))
+    @if (_user.HasAccess("ReusableDistribution", "Print"))
     {
-        <a href="@Url.Action("Print", new { id=Model.DistributionID })" class="btn btn-sm btn-success" id="btn_print"><i class="fa fa-print"></i> @Labels.print_preview</a>
+        <a href="@Url.Action("Print", new { id=Model.ReusableDistributionID })" class="btn btn-sm btn-success" id="btn_print"><i class="fa fa-print"></i> @Labels.print_preview</a>
     }
-    @if (_user.HasAccess("Distribution", "Delete"))
+    @if (_user.HasAccess("ReusableDistribution", "Delete"))
     {
-        <a href="@Url.Action("Delete", new { id=Model.DistributionID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.delete</a>
+        <a href="@Url.Action("Delete", new { id=Model.ReusableDistributionID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.delete</a>
     }
 </div>
 

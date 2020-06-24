@@ -189,4 +189,32 @@ namespace Inventory.Models.ViewModels
         public int start { get; set; }
         public int length { get; set; }
     }
+    public class DisposableDistributionItemsSearch
+    {
+        public int? DepartmentID { get; set; }
+
+        public int? GroupID { get; set; }
+
+        public int? CategoryID { get; set; }
+
+        public string ItemName { get; set; }
+
+        public string ItemCode { get; set; }
+
+        public int? SizeID { get; set; }
+
+        public int? OriginID { get; set; }
+
+        public int? BrandID { get; set; }
+
+        public string DateFrom { get; set; }
+
+        public string DateTo { get; set; }
+
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
 }

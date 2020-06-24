@@ -1,4 +1,4 @@
-﻿@model Inventory.Models.ViewModels.Distribution_VM
+﻿@model Inventory.Models.ViewModels.ReusableDistribution_VM
 
 @{
     var empSearch = ViewBag.emSearch as Inventory.Models.ViewModels.Employee_Search;
@@ -9,8 +9,8 @@
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
     string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
 }
-<form action="@Url.Action(Model.DistributionID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
-    <input type="hidden" name="DistributionID" value="@Model.DistributionID" />
+<form action="@Url.Action(Model.ReusableDistributionID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
+    <input type="hidden" name="ReusableDistributionID" value="@Model.ReusableDistributionID" />
     <input type="hidden" name="EmpID" id="EmpID" value="@Model.EmpID" />
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
@@ -151,7 +151,7 @@
         <div class="col-md-4 form-group">
             <label>@Labels.Attachment</label>
             <div class="col-md-8">
-                <input type="file" id="FileContent" name="FileContent" @(Model.DistributionID == 0 ? "required" : "") accept="image/*,.pdf" />
+                <input type="file" id="FileContent" name="FileContent" @(Model.ReusableDistributionID == 0 ? "required" : "") accept="image/*,.pdf" />
             </div>
         </div>
     </div>
@@ -259,7 +259,7 @@
                     </div>
                 </section>
 
-                <form id="assign_item_form" action="@Url.Action("GetItem","Distribution")" autocomplete="off" class="margin-top-10">
+                <form id="assign_item_form" action="@Url.Action("GetItem","ReusableDistribution")" autocomplete="off" class="margin-top-10">
                     <div class="row">
                         <div class="col-md-3 form-group">
                             <label>@Labels.Quantity</label>
@@ -388,8 +388,8 @@
         var model = @Html.Raw(Json.Encode(Model));
         $(function () {
             var DistributionItems = [];
-            var DistributionID = '@Model.DistributionID';
-            if (DistributionID != '0') {
+            var ReusableDistributionID = '@Model.ReusableDistributionID';
+            if (ReusableDistributionID != '0') {
                 //var model = JSON.parse($("#model_json").val());
                 DistributionItems = model.DistributionItems;
             }

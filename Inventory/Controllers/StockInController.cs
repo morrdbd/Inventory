@@ -150,6 +150,7 @@ namespace Inventory.Controllers
                                 var _item = new StockInItem()
                                 {
                                     StockInID = _stockIn.StockInID,
+                                    UsageTypeID = row.UsageTypeID,
                                     UnitID = row.UnitID,
                                     ItemName = row.ItemName,
                                     GroupID = row.GroupID,

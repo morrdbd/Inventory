@@ -1,15 +1,11 @@
-﻿using Inventory.Models.Procedures;
-using Inventory.Models.Tables;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace Inventory.Models.ViewModels
 {
-    public class Distribution_VM
+    public class ReusableDistribution_Form_VM
     {
         public int DistributionID { get; set; }
 
@@ -17,7 +13,6 @@ namespace Inventory.Models.ViewModels
 
         public string TicketIssuedDateForm { get; set; }
 
-        [StringLength(500)]
         public string Warehouse { get; set; }
 
         public int? RequestNumber { get; set; }
@@ -38,8 +33,6 @@ namespace Inventory.Models.ViewModels
 
         public string Details { get; set; }
 
-        public List<DistributionItemVM> DistributionItems { get; set; }
+        public ReusableDistributionItemVM[] ReusableDistributionItems { get; set; }
     }
-    
-
 }

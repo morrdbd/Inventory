@@ -44,20 +44,17 @@
             <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.SuggestionBillNumber</label>
-                        <input type="text" name="OrderNumber" id="OrderNumber" value="@Model.OrderNumber" class="form-control input-sm" required data-msg="" placeholder="">
-                  
+                    <input type="text" name="OrderNumber" id="OrderNumber" value="@Model.OrderNumber" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.Mem3Date</label>
-                        <input type="text" name="OrderDateForm" id="OrderDateForm" value="@Model.OrderDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
-              
+                    <input type="text" name="OrderDateForm" id="OrderDateForm" value="@Model.OrderDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                 </div>
             </section>
             <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.Attachment</label>
-                        <input type="file" id="FileContent" name="FileContent" @_ImageRequired accept="image/*,.pdf" />
-                  
+                    <input type="file" id="FileContent" name="FileContent" @_ImageRequired accept="image/*,.pdf" />
                 </div>
             </section>
         </div>
@@ -130,9 +127,7 @@
     <div class="row">
         <div class="col-md-12 form-group">
             <label>@Labels.Details</label>
-            
-                <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Details</textarea>
-            
+            <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Details</textarea>
         </div>
     </div>
     <section class="row">
@@ -404,9 +399,12 @@
                     .replace("{{ItemName}}",row.ItemName)
                     .replace("{{ItemCode}}",row.ItemCode)
                     //.replace("{{ItemName}}",$('#item_form [name=ItemCode] option:selected').text())
-                    .replace("{{SizeName}}",$('#item_form [name=SizeID] option:selected').text())
-                    .replace("{{OriginName}}",$('#item_form [name=OriginID] option:selected').text())
-                    .replace("{{BrandName}}",$('#item_form [name=BrandID] option:selected').text())
+                    .replace("{{SizeName}}",
+                    $('#item_form [name=SizeID] option:selected').val() ? $('#item_form [name=SizeID] option:selected').text() : '')
+                    .replace("{{OriginName}}",
+                    $('#item_form [name=OriginID] option:selected').val() ? $('#item_form [name=OriginID] option:selected').text() : '')
+                    .replace("{{BrandName}}",
+                    $('#item_form [name=BrandID] option:selected').val() ? $('#item_form [name=BrandID] option:selected').text() : '')
 
                     .replace("{{UnitPrice}}", row.UnitPrice)
                     .replace("{{TotalPrice}}", row.UnitPrice * row.Quantity)

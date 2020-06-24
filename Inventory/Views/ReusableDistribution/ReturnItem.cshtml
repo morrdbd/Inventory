@@ -5,11 +5,11 @@
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
 <div class="margin-bottom-10">
-    @if (_user.HasAccess("Distribution", "Search"))
+    @if (_user.HasAccess("ReusableDistribution", "Search"))
     {
         <a href="@Url.Action("ItemsInUse")" class="btn btn-sm">@Labels.back_to_list</a>
     }
-    @if (_user.HasAccess("Distribution", "Delete"))
+    @if (_user.HasAccess("ReusableDistribution", "Delete"))
     {
         <a href="@Url.Action("ReturnItem", new { id=Model.DistributionItemID })" class="btn btn-sm btn-success" id="btn_return"><i class="fa fa-undo"></i> @Labels.return_item</a>
     }

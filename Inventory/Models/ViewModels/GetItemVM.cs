@@ -14,8 +14,5 @@ namespace Inventory.Models.ViewModels
         [Required]
         public int Quantity { get; set; }
 
-        public  int UnitPrice { get; set; }
-
-        public string DealWithAccount { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.search as Inventory.Models.ViewModels.ItemInUseSearch;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
-    var _canView = _user.HasAccess("Distribution", "View");
+    var _canView = _user.HasAccess("ReusableDistribution", "View");
 }
 
 <form method="post" action="@Url.Action("ListPartial")" id="search_form" autocomplete="off">
@@ -288,7 +288,7 @@
             }
             let id = $(this).find('a').data().id;
             if(id){
-                window.location.href = `@Url.Action("ViewItemInUse", "Distribution")/`+id;
+                window.location.href = `@Url.Action("ViewItemInUse", "ReusableDistribution")/`+id;
             }
         });
 

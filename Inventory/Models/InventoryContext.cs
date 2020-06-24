@@ -16,9 +16,14 @@ namespace Inventory.Models
 
         public DbSet<RoleAccess> RoleAccess { get; set; }
 
-        public DbSet<Distribution> Distributions { get; set; }
+        public DbSet<ReusableDistribution> ReusableDistributions { get; set; }
 
-        public DbSet<DistributionItem> DistributionItems { get; set; }
+        public DbSet<ReusableDistributionItem> ReusableDistributionItems { get; set; }
+
+        public DbSet<DisposableDistribution> DisposableDistributions { get; set; }
+
+        public DbSet<DisposableDistributionItem> DisposableDistributionItems { get; set; }
+
 
         public DbSet<StockIn> StockIns { get; set; }
 
