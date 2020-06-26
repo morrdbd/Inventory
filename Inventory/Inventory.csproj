@@ -313,6 +313,8 @@
     <Compile Include="HelperCode\AllowFileSizeAttribute.cs" />
     <Compile Include="Models\Procedures\Receipt_Report_Item.cs" />
     <Compile Include="Models\Procedures\Ticket_Item.cs" />
+    <Compile Include="Models\Tables\Category.cs" />
+    <Compile Include="Models\Tables\Group.cs" />
     <Compile Include="Models\Tables\Restore.cs" />
     <Compile Include="Models\Tables\RestoreItem.cs" />
     <Compile Include="Models\Tables\Employee.cs" />
@@ -3080,6 +3082,7 @@
     <Folder Include="Content\assets\admin\pages\img\" />
     <Folder Include="Content\assets_rtl\frontend\pages\temp\" />
     <Folder Include="Resources\" />
+    <Folder Include="Uploads\DisposableDistribution\" />
     <Folder Include="Uploads\RestoreScan\" />
     <Folder Include="Uploads\ReusableDistribution\" />
     <Folder Include="Uploads\StockInScan\" />

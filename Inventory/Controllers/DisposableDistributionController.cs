@@ -70,6 +70,7 @@ namespace Inventory.Controllers
                 DepartmentID = model.DepartmentID,
                 DepartmentName = db.Departments.Where(d => d.IsActive == true && d.DepartmentID == model.DepartmentID).Select(d=> Language == "dr" ? d.DrName : Language == "pa" ? d.PaName : d.EnName).FirstOrDefault(),
                 Details = model.Details,
+                FilePath = model.FilePath,
                 DistributionItems = db.DisposableDistributionItems.Where(i =>i.DisposableDistributionID == model.DisposableDistributionID)
                 .ToList().Select(i => new DisposableDistributionItemVM
                 {
@@ -367,33 +368,34 @@ namespace Inventory.Controllers
             {
                 try
                 {
-                    var _distribution = db.ReusableDistributions.Where(d => d.IsActive == true && d.ReusableDistributionID == id).FirstOrDefault();
+                    var _distribution = db.DisposableDistributions.Where(d => d.IsActive == true && d.DisposableDistributionID == id).FirstOrDefault();
                     if (_distribution == null) return Json(false);
                     _distribution.IsActive = false;
+                    db.DisposableDistributions.Remove(_distribution);
                     db.SaveChanges();
-
+       
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "Distributions",
-                        ModfiedId = _distribution.ReusableDistributionID,
+                        ModifiedTable = "DisposableDistributions",
+                        ModfiedId = _distribution.DisposableDistributionID,
                         Action = "Delete",
                         UserId = AppUser.Id,
                         ModifiedTime = DateTime.Now,
                         ModifiedData = JsonConvert.SerializeObject(_distribution),
                     });
                     db.SaveChanges();
-                    var distributedItems = db.ReusableDistributionItems.Where(d => d.ReusableDistributionID == _distribution.ReusableDistributionID).ToList();
+                    var distributedItems = db.DisposableDistributionItems.Where(d => d.DisposableDistributionID == _distribution.DisposableDistributionID).ToList();
                     foreach (var dItem in distributedItems)
                     {
-                        var stockInItem = db.StockInItems.Find(dItem.ItemID);
+                        var stockInItem = db.StockInItems.Find(dItem.StockInItemID);
                         if (stockInItem != null)
                         {
                             stockInItem.AvailableQuantity += dItem.Quantity;
-                            var dItemTobeDeleted = db.ReusableDistributionItems.Find(dItem.ID);
-                            db.ReusableDistributionItems.Remove(dItemTobeDeleted);
+                            var dItemTobeDeleted = db.DisposableDistributionItems.Find(dItem.ID);
+                            db.DisposableDistributionItems.Remove(dItemTobeDeleted);
                             db.ActivityLogs.Add(new ActivityLog
                             {
-                                ModifiedTable = "DistributionItems",
+                                ModifiedTable = "DisposableDistributionItems",
                                 ModfiedId = dItem.ID,
                                 Action = "Delete",
                                 UserId = AppUser.Id,
@@ -456,12 +458,12 @@ namespace Inventory.Controllers
             }
             try
             {
-                var obj = db.StockInItems.Where(i => i.ID == model.ItemID && i.IsActive == true).FirstOrDefault();
+                var obj = db.StockInItems.Where(i => i.ID == model.StockInItemID && i.IsActive == true).FirstOrDefault();
                 if (obj != null && obj.AvailableQuantity >= model.Quantity)
                 {
                     var item = new {
                         obj.ID,
-                        ItemID = model.ItemID,
+                        ItemID = model.StockInItemID,
                         Quantity = model.Quantity,
                         obj.ItemName,
                         obj.ItemCode,
@@ -503,37 +505,8 @@ namespace Inventory.Controllers
             return View("Form", model);
         }
 
-        public JsonResult SaveScanImage(FileUpload model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Json(false);
-            }
-            try
-            {
-                string FileName = Path.GetFileNameWithoutExtension(model.FileContent.FileName);
-
-                string FileExtension = Path.GetExtension(model.FileContent.FileName);
-
-                FileName = model.RecordID + FileExtension;
-                string DistributionScanFolder = ConfigurationManager.AppSettings["ReusableDistributionScan"].ToString();
-                var filePathForDB = DistributionScanFolder + FileName;
-                var UploadedFilePath = Server.MapPath(DistributionScanFolder + FileName);
-
-                var modelInDb = db.ReusableDistributions.Where(s => s.ReusableDistributionID == model.RecordID).FirstOrDefault();
-                modelInDb.FilePath = filePathForDB;
-                db.SaveChanges();
-                model.FileContent.SaveAs(UploadedFilePath);
-                return Json(true);
-            }
-            catch (Exception e)
-            {
-                return Json(false);
-            }
-        }
-
         [AccessControl("Search")]
-        public JsonResult DistributedItemsListPartial(ItemInUseSearch model)
+        public JsonResult DistributedItemsListPartial(DisposableDistributedSearch model)
         {
             var _dateFrom = model.DateFrom.ToDate(Language);
             var _dateTo = model.DateTo.ToDate(Language);
@@ -590,6 +563,10 @@ namespace Inventory.Controllers
             {
                 query = query.Where(r => r.SizeID == model.SizeID);
             }
+            if (model.OriginID != null)
+            {
+                query = query.Where(r => r.OriginID == model.OriginID);
+            }
             if (model.BrandID != null)
             {
                 query = query.Where(r => r.BrandID == model.BrandID);
@@ -635,59 +612,35 @@ namespace Inventory.Controllers
             });
         }
 
-
-        [AccessControl("Delete")]
-        public JsonResult ReturnItem(int id = 0)
+        public JsonResult SaveScanImage(FileUpload model)
         {
-            using (var trans = db.Database.BeginTransaction())
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    var _itemInUse = db.ReusableDistributionItems.Where(d => d.IsReturned == false && d.ID == id).FirstOrDefault();
-                    if (_itemInUse == null) return Json(false);
-                    _itemInUse.IsReturned = true;
-                    _itemInUse.ReturnDate = DateTime.Now;
-                    db.SaveChanges();
-
-                    db.ActivityLogs.Add(new ActivityLog
-                    {
-                        ModifiedTable = "DistributionItems",
-                        ModfiedId = _itemInUse.ID,
-                        Action = "Returned",
-                        UserId = AppUser.Id,
-                        ModifiedTime = DateTime.Now,
-                        ModifiedData = JsonConvert.SerializeObject(_itemInUse),
-                    });
-                    db.SaveChanges();
-                    var stockInItem = db.StockInItems.Where(d => d.IsActive == true && d.ID == _itemInUse.ItemID).FirstOrDefault();
-             
-                    if (stockInItem != null)
-                    {
-                        stockInItem.AvailableQuantity += _itemInUse.Quantity;
-                        db.ActivityLogs.Add(new ActivityLog
-                        {
-                            ModifiedTable = "StockInItems",
-                            ModfiedId = stockInItem.ID,
-                            Action = "Return",
-                            UserId = AppUser.Id,
-                            ModifiedTime = DateTime.Now,
-                        });
-                    }
-                    
-                    db.SaveChanges();
-                    trans.Commit();
-                    return Json(true, JsonRequestBehavior.AllowGet);
-                }
-                catch (Exception e)
-                {
-                    trans.Rollback();
-                    Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-                }
+                return Json(false);
             }
+            try
+            {
+                string FileName = Path.GetFileNameWithoutExtension(model.FileContent.FileName);
 
-            return Json(false, JsonRequestBehavior.AllowGet);
+                string FileExtension = Path.GetExtension(model.FileContent.FileName);
+
+                FileName = model.RecordID + FileExtension;
+                string DistributionScanFolder = ConfigurationManager.AppSettings["DisposableDistributionScan"].ToString();
+                var filePathForDB = DistributionScanFolder + FileName;
+                var UploadedFilePath = Server.MapPath(DistributionScanFolder + FileName);
+
+                var modelInDb = db.DisposableDistributions.Where(s => s.DisposableDistributionID == model.RecordID).FirstOrDefault();
+                modelInDb.FilePath = filePathForDB;
+                db.SaveChanges();
+                model.FileContent.SaveAs(UploadedFilePath);
+                return Json(true);
+            }
+            catch (Exception e)
+            {
+                return Json(false);
+            }
         }
 
     }
-    
+
 }

@@ -24,7 +24,6 @@ namespace Inventory.Models
 
         public DbSet<DisposableDistributionItem> DisposableDistributionItems { get; set; }
 
-
         public DbSet<StockIn> StockIns { get; set; }
 
         public DbSet<StockInItem> StockInItems { get; set; }
@@ -38,9 +37,6 @@ namespace Inventory.Models
         public DbSet<Restore> Restores { get; set; }
 
         public DbSet<RestoreItem> RestoreItems { get; set; }
-
-        public DbSet<InHandStock> InHandStocks { get; set; }
-
 
         public InventoryDBContext() : base("InventoryCONN")
         {

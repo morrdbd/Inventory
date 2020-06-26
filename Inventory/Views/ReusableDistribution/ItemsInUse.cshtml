@@ -40,14 +40,8 @@
             <section class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label>@Labels.Usage_Type</label>
-                        @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new { onchange = "loadGroup()", @class = "form-control input-sm", @ID = "UsageTypeID" })
-                    </div>
-                </div>
-                <div class=" col-md-3">
-                    <div class="form-group">
                         <label>@Labels.Item_Group</label>
-                        <select id="GroupID" name="GroupID" onchange="loadCategories()" class="form-control input-sm"></select>
+                        @Html.DropDownList("GroupID", ViewBag.GroupDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "GroupID" })
                     </div>
                 </div>
                 <div class=" col-md-3">
@@ -62,14 +56,14 @@
                         <input type="text" name="ItemName" id="ItemName" class="form-control input-sm" data-msg="" placeholder="">
                     </div>
                 </div>
-            </section>
-            <section class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.Item_Code</label>
                         <input type="text" name="ItemCode" id="ItemCode" class="form-control input-sm" data-msg="" placeholder="">
                     </div>
                 </div>
+            </section>
+            <section class="row">
                 <div class=" col-md-3">
                     <div class="form-group">
                         <label>@Labels.Size</label>
@@ -92,7 +86,7 @@
 
             <div class="row">
                 <div class="col-md-8">
-                    <button type="submit" id="btnSearch" class="btn btn-sm"><i class="fa fa-search"></i> @Labels.search</button>
+                    <button type="submit" id="btnSearch" class="btn btn-sm btn-success"><i class="fa fa-search"></i> @Labels.search</button>
                     <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
                 </div>
                 <div class="col-md-2">
@@ -130,7 +124,6 @@
                     <th>@Labels.RequestDate</th>
                     <th>@Labels.Quantity</th>
                     <th>@Labels.Unit</th>
-                    <th>@Labels.Usage_Type</th>
                     <th>@Labels.Group</th>
                     <th>@Labels.Item_Category</th>
                     <th>@Labels.ItemName</th>
@@ -206,7 +199,6 @@
                     { data: 'RequestDate' },
                     { data: 'Quantity' },
                     { data: 'UnitName' },
-                    { data: 'UsageTypeName' },
                     { data: 'GroupName' },
                     { data: 'CategoryName' },
                     { data: 'ItemName' },
@@ -221,7 +213,7 @@
                         data: null,
                         visible: canView,
                         render: function (row) {
-                            return '<a href="@Url.Action("ViewItemInUse")/'+row.distributionItemID+'" title="@Labels.return_item" data-id="' + row.distributionItemID + '" class="btn btn-xs blue view-item"><i class="fa fa-undo"></i>@Labels.return_item</a>';
+                            return '<a href="@Url.Action("View")/'+row.ReusableDistributionID+'" title="@Labels.return_item" data-id="' + row.distributionItemID + '" class="btn btn-xs blue view-item"><i class="fa fa-file-text"></i>View Form</a>';
                         }
                     }
                 ],
@@ -279,19 +271,6 @@
             ////////////////////////////////////////////////////
 
 
-
-        $('#data_table tbody').on('click', 'tr', function(){
-            if($(this).hasClass('selectedItem')){
-                $(this).removeClass('selectedItem');
-            } else {
-            $(this).addClass('selectedItem').siblings().removeClass('selectedItem');
-            }
-            let id = $(this).find('a').data().id;
-            if(id){
-                window.location.href = `@Url.Action("ViewItemInUse", "ReusableDistribution")/`+id;
-            }
-        });
-
         $("#DepartmentID" ).change(function() {
             var departmentId = $(this).val();
             if (departmentId) {
@@ -305,71 +284,25 @@
                 })
             }
         });
-    })
-</script>
-<script>
-        function loadGroup(groupId){
-            var usageTypId = $("#UsageTypeID").val();
-            console.log("Inside the ca >>>>>>>>>>>>>>>>");
-            console.log("groupId is "+ groupId);
-            console.log("usageTypId  is >>>>>>>>>>>>>>>>"+ usageTypId);
-            if (usageTypId) {
+
+        $("#GroupID").change(function(){
+            var grouId = $(this).val();
+            if(!grouId){
+                $('#CategoryID').empty();
+            }
+            if (grouId) {
                 $.ajax({
                     type: "post",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
-                    data: "{id:'" + usageTypId + "'}",
-                    success: function (data) {
-                        $('#GroupID').empty();
-                        $('#GroupID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
-                        $.each(data, function (i, d) {
-                            $('#GroupID').append('<option value=' + d.Value + '>' + d.Text + '</option>');
-                            if(data.length == i+1){
-                                var index =  $('#item_form [name=index]').val();
-                                if(data.length == i+1 && groupId){
-                                    $('#GroupID').val(groupId);
-                                }
-
-                            }
-                        });
-                    },
-                    failure: function (data) {
-                        alert('error occured');
-                    },
-                    complete: function(data) {
-
-                    }
-                });
-            }
-        }
-        function loadCategories(groupId,categoryId){
-            //console.log("Inside the ca >>>>>>>>>>>>>>>>");
-            //console.log("groupId is "+ groupId);
-            var groupId = groupId;
-            if(!groupId){
-                groupId = $("#GroupID").val();
-            }
-            if (groupId) {
-                $.ajax({
-                    type: "post",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
-                    data: "{id:'" + groupId + "'}",
+                    data: "{id:'" + grouId + "'}",
                     success: function (data) {
                         console.log(">>>>>>>>>>>>>>>>>>>>>>>Category>><<<<<<<<<<<<<<<<"+ JSON.stringify(data));
                         $('#CategoryID').empty();
                         $('#CategoryID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
                         $.each(data, function (i, d) {
                             $('#CategoryID').append('<option value=' + d.Value + '>' + d.Text + '</option>');
-                            if(data.length == i+1){
-                                var index =  $('#item_form [name=index]').val();
-                                if(data.length == i+1 && categoryId){
-                                    $('#CategoryID').val(categoryId);
-                                }
-
-                            }
                         });
                     },
                     failure: function (data) {
@@ -380,11 +313,9 @@
                     }
                 });
             }
-        }
-
-    </script>
-
-    
+        });
+    })
+</script>
 }
 
 

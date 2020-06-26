@@ -14,6 +14,8 @@ namespace Inventory.Models.Tables
 
         public int UnitPrice { get; set; }
 
+        public bool IsSecondHand { get; set; }
+
         public int? SecondHandPrice { get; set; }
 
         public int Quantity { get; set; }
@@ -66,8 +68,6 @@ namespace Inventory.Models.Tables
         public bool IsExpired { get; set; }
 
         public DateTime? DateExpired { get; set; }
-
-        public bool IsSecondHand { get; set; }
 
         public int InsertedBy { get; set; }
 

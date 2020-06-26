@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = Labels.ItemInUse;
+    ViewBag.Title = "Disposable Item Distribution Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.search as Inventory.Models.ViewModels.DisposableDistributionItemsSearch;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
@@ -30,14 +30,14 @@
                         <input type="text" class="form-control input-sm shpicker" name="DateTo" value="@search.DateTo" placeholder="@Labels.ToDate" data-rule-date="true" data-msg="" />
                     </div>
                 </div>
-            </div>
-            <section class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.Item_Group</label>
                         @Html.DropDownList("GroupID", ViewBag.GroupDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "GroupID" })
                     </div>
                 </div>
+            </div>
+            <section class="row">
                 <div class=" col-md-3">
                     <div class="form-group">
                         <label>@Labels.Item_Category</label>
@@ -50,8 +50,6 @@
                         <input type="text" name="ItemName" id="ItemName" class="form-control input-sm" data-msg="" placeholder="">
                     </div>
                 </div>
-            </section>
-            <section class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.Item_Code</label>
@@ -64,6 +62,8 @@
                         @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
                     </div>
                 </div>
+            </section>
+            <section class="row">
                 <div class=" col-md-3">
                     <div class="form-group">
                         <label>@Labels.Origin</label>
@@ -80,7 +80,7 @@
 
             <div class="row">
                 <div class="col-md-8">
-                    <button type="submit" id="btnSearch" class="btn btn-sm"><i class="fa fa-search"></i> @Labels.search</button>
+                    <button type="submit" id="btnSearch" class="btn btn-sm btn-success"><i class="fa fa-search"></i> @Labels.search</button>
                     <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
                 </div>
                 <div class="col-md-2">
@@ -91,7 +91,6 @@
                     </select>
                     <input type="hidden" name="hdStart" id="StartRow" value="@search.start" />
                 </div>
-
             </div>
         </div>
     </div>

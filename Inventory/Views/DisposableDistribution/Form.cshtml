@@ -554,8 +554,9 @@
                         var imageData = new FormData();
                         imageData.append('RecordID', recordId);
                         imageData.append('FileContent', file);
+                        var url =
                         $.ajax({
-                            url: 'SaveScanImage',
+                            url: '@Url.Action("SaveScanImage", "DisposableDistribution")',
                             type: 'POST',
                             data: imageData,
                             contentType: false,

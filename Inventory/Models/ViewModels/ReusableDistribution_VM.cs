@@ -38,6 +38,12 @@ namespace Inventory.Models.ViewModels
 
         public string Details { get; set; }
 
+        public string FilePath { get; set; }
+
+        public bool IsSecondHand { get; set; }
+
+        public int? SecondHandPrice { get; set; }
+
         public List<ReusableDistributionItemVM> DistributionItems { get; set; }
     }
     

@@ -9,19 +9,15 @@ namespace Inventory.Models.ViewModels
     {
         public int ID { get; set; }
 
-        public int ItemID { get; set; }
+        public int StockInItemID { get; set; }
 
         public int ReusableDistributionID { get; set; }
 
         public string UnitName { get; set; }
 
-        public int UsageTypeID { get; set; }
-
         public string ItemCode { get; set; }
 
         public string ItemName { get; set; }
-
-        public string UsageTypeName { get; set; }
 
         public string ItemSizeName { get; set; }
 

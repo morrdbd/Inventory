@@ -9,10 +9,12 @@ namespace Inventory.Models.ViewModels
     public class GetItemVM
     {
         [Required]
-        public int ItemID { get; set; }
+        public int StockInItemID { get; set; }
 
         [Required]
         public int Quantity { get; set; }
+
+        public string DealWithAccount { get; set; }
 
     }
 }
