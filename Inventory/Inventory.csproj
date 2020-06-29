@@ -2990,8 +2990,6 @@
     <Content Include="Views\ReusableDistribution\Search.cshtml" />
     <Content Include="Views\ReusableDistribution\ItemsInUse.cshtml" />
     <Content Include="Views\Employee\Search.cshtml" />
-    <Content Include="Views\Lookups\ProductSearch.cshtml" />
-    <Content Include="Views\Lookups\ProductForm.cshtml" />
     <Content Include="Content\resources\select2\select2.min.css" />
     <Content Include="Views\StockIn\Form.cshtml" />
     <Content Include="Views\StockIn\ItemInWarehouse.cshtml" />
@@ -3005,6 +3003,7 @@
     <Content Include="Views\DisposableDistribution\Form.cshtml" />
     <Content Include="Views\DisposableDistribution\Search.cshtml" />
     <Content Include="Views\DisposableDistribution\View.cshtml" />
+    <Content Include="Views\Lookups\Group.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

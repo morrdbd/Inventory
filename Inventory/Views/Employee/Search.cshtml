@@ -11,7 +11,7 @@
 <div class="margin-bottom-10">
     @if (_user.HasAccess("Employee", "Add"))
     {
-        <a href="#popup_record" data-toggle="modal" class="btn blue"><i class="fa fa-plus-circle"></i>@Labels.AddNewRecord</a>
+        <a href="#popup_record" data-toggle="modal" class="btn blue btn-sm"><i class="fa fa-plus-circle"></i>@Labels.AddNewRecord</a>
     }
 </div>
 
@@ -112,46 +112,32 @@
                         @Labels.Employee
                     </div>
                 <div class="modal-body">
-                    <div class="form-horizontal" >
-                        <div class="portlet box blue-hoki margin-bottom-10" >
-                            <div class="portlet-title" >
-                                <div class="caption">@Labels.EmployeeInfo</div>
-                            </div>
-                            <div class="portlet-body " style="padding:0 15px;">
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label>@Labels.Name</label>
-                                            <input type="text" name="Name" id="Name" class="form-control input-sm" required data-msg="" placeholder="">
-                                       
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>@Labels.FatherName</label>
-                                            <input type="text" name="FatherName" id="FatherName" class="form-control input-sm" required data-msg="" placeholder="">
-                                     
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label>@Labels.PhoneNumber</label>
-                                            <input type="text" name="PhoneNumber" id="PhoneNumber" class="form-control input-sm" data-msg="" placeholder="">
-                                      
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>@Labels.Occupation</label>
-                                            <input type="text" name="Occupation" id="Occupation" class="form-control input-sm" required data-msg="" placeholder="">
-                                       
-                                    </div>
-                                </div>
-                                <div class="row">
+                    <section class="row">
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.Name</label>
+                            <input type="text" name="Name" id="Name" class="form-control input-sm" required data-msg="" placeholder="">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.FatherName</label>
+                            <input type="text" name="FatherName" id="FatherName" class="form-control input-sm" required data-msg="" placeholder="">
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.PhoneNumber</label>
+                            <input type="text" name="PhoneNumber" id="PhoneNumber" class="form-control input-sm" data-msg="" placeholder="">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.Occupation</label>
+                            <input type="text" name="Occupation" id="Occupation" class="form-control input-sm" required data-msg="" placeholder="">
+                        </div>
+                    </section>
+                    <section class="row">
                                     <div class=" col-md-6 form-group">
                                         <label>@Labels.Requester</label>
-                                            @Html.DropDownListFor(model => model.DepartmentID, ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control", @required = "required" })
-                                 
+                                        @Html.DropDownListFor(model => model.DepartmentID, ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control", @required = "required" })
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                </section>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>
@@ -205,6 +191,8 @@
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (data) {
+                        console.log("form data is >>>>>>>>>> "+ JSON.stringify($('#search_form').serialize()));
+                        console.log("data is >>>>>>>>>> "+ JSON.stringify(data));
                         var form_data = $('#search_form').serializeJSON();
                         form_data['draw'] = data.draw;
                         form_data['start'] = data.start;

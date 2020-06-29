@@ -75,7 +75,7 @@ namespace Inventory.Controllers
                 .ToList().Select(i => new DisposableDistributionItemVM
                 {
                     ID = i.ID,
-                    ItemID = i.StockInItemID,
+                    StockInItemID = i.StockInItemID,
                     DisposableDistributionID = i.DisposableDistributionID,
                     ItemCode = db.StockInItems.Where(item => item.IsActive == true && item.ID == i.StockInItemID).Select(item => item.ItemCode).FirstOrDefault(),
                     ItemName = db.StockInItems.Where(item => item.IsActive == true && item.ID == i.StockInItemID).Select(item => item.ItemName).FirstOrDefault(),
@@ -224,7 +224,7 @@ namespace Inventory.Controllers
                                 var _item = new DisposableDistributionItem()
                                 {
                                     DisposableDistributionID = _distribution.DisposableDistributionID,
-                                    StockInItemID = row.ItemID,
+                                    StockInItemID = row.StockInItemID,
                                     Quantity = row.Quantity,
                                 };
 
@@ -242,7 +242,7 @@ namespace Inventory.Controllers
                                 });
                                 db.SaveChanges();
                                 //minus item from item in hand
-                                var _stockInHand = db.StockInItems.Where(s => s.ID == row.ItemID).First();
+                                var _stockInHand = db.StockInItems.Where(s => s.ID == row.StockInItemID).First();
                                 if (_stockInHand.AvailableQuantity < _item.Quantity)
                                 {
                                     return Json(false);
@@ -335,7 +335,7 @@ namespace Inventory.Controllers
                     }
                     foreach (var dItem in model.DistributionItems)
                     {
-                        var stockInItem = db.StockInItems.Find(dItem.ItemID);
+                        var stockInItem = db.StockInItems.Find(dItem.StockInItemID);
                         if (stockInItem != null && dItem.Quantity <= stockInItem.AvailableQuantity)
                         {
                             stockInItem.AvailableQuantity -= dItem.Quantity;
@@ -343,7 +343,7 @@ namespace Inventory.Controllers
                             {
                                 DisposableDistributionID = _distribution.DisposableDistributionID,
                                 Quantity = dItem.Quantity,
-                                StockInItemID = dItem.ItemID,
+                                StockInItemID = dItem.StockInItemID,
                             };
                             db.DisposableDistributionItems.Add(dItemTableObj);
                         }
@@ -463,7 +463,7 @@ namespace Inventory.Controllers
                 {
                     var item = new {
                         obj.ID,
-                        ItemID = model.StockInItemID,
+                        StockInItemID = model.StockInItemID,
                         Quantity = model.Quantity,
                         obj.ItemName,
                         obj.ItemCode,

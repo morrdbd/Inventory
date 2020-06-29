@@ -9,7 +9,7 @@ namespace Inventory.Models.ViewModels
     {
         public int ID { get; set; }
 
-        public int ItemID { get; set; }
+        public int StockInItemID { get; set; }
 
         public int DisposableDistributionID { get; set; }
 

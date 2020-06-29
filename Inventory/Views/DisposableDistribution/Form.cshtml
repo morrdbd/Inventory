@@ -215,7 +215,7 @@
                         <button type="submit" class="btn green btn-sm">@Labels.save</button>
                         <button type="button" class="btn default btn-sm" data-dismiss="modal">@Labels.cancel</button>
                         <button type="reset" id="btnResetModal" class="btn btn-sm">@Labels.reset</button>
-                        <input type="hidden" name="ItemID" id="ItemID" />
+                        <input type="hidden" name="StockInItemID" id="StockInItemID" />
                     </div>
                 </form>
             </div>
@@ -300,7 +300,7 @@
                 $('#distribute_item_modal').modal('show');
                 $('#assign_item_form').clearForm();
                 data_table.ajax.reload();
-                $('#assign_item_form [name=ItemID]').val('0');
+                $('#assign_item_form [name=StockInItemID]').val('0');
                 $('#assign_item_form [name=index]').val('-1');
             })
 
@@ -327,7 +327,7 @@
                     //    return;
                     //}
                     //var formData = $(form).serializeJSON();
-                    console.log("row <<<<<<<<<<<<<<<<<< "+formData.ItemID);
+                    console.log("row <<<<<<<<<<<<<<<<<< "+formData.StockInItemID);
                     console.log($('#assign_item_form').attr('action'));
                     console.log("row form data is <<<<<<<<<<<<<<<<<< "+JSON.stringify(formData));
                     $.ajax({
@@ -382,7 +382,7 @@
                             data_table.ajax.reload();
                         }
                     })
-                    //console.log("id is row is >>>>>>>>"+ console.log(JSON.stringify(row.ItemID)));
+                    //console.log("id is row is >>>>>>>>"+ console.log(JSON.stringify(row.StockInItemID)));
                     //var _index = (row.index == -1) ? DistributionItems.length : row.index;
                     //var tr = $('#temp_item').clone().html()
                     //.replace("{{Quantity}}", row.Quantity)
@@ -502,7 +502,7 @@
                         if(response){
                             console.log(response.AvailableQuantity);
                             console.log(response.UnitPrice);
-                            $("#ItemID").val(response.ID);
+                            $("#StockInItemID").val(response.ID);
                         }
                         Metronic.unblockUI('#item_list_div');
                     }

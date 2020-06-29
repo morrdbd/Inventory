@@ -582,7 +582,7 @@ namespace Inventory.Controllers
                 {
                     var item = new {
                         obj.ID,
-                        ItemID = model.StockInItemID,
+                        StockInItemID = model.StockInItemID,
                         model.Quantity,
                         obj.ItemName,
                         obj.ItemCode,

@@ -1,0 +1,341 @@
+﻿@model Inventory.Models.ViewModels.DisposableDistributionVM
+@{
+    ViewBag.Title = "Group";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var search = ViewBag.search as Inventory.Models.ViewModels.LookupGroupSearch;
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
+    var _canEdit = _user.HasAccess("Lookups", "Edit");
+    var _canDelete = _user.HasAccess("Lookups", "Delete");
+    var _canPrint = _user.HasAccess("Lookups", "Print");
+}
+<div class="margin-bottom-10">
+    @if (_user.HasAccess("Lookups", "Add"))
+    {
+        <a href="#popup_record" data-toggle="modal" id="addvaluebtn" class="btn btn-sm blue"><i class="fa fa-plus-circle"></i>@Labels.AddNewRecord</a>
+
+        @*<button class="btn margin-bottom-10" id="addvaluebtn"><i class="fa fa-plus-circle" aria-hidden="true"></i>Add New Group</button>*@
+    }
+</div>
+
+@*Lookup Group Search*@
+<div class="portlet box blue-hoki margin-bottom-10">
+    <div class="portlet-title">
+        <div class="caption">
+            @Labels.search_criteria
+        </div>
+    </div>
+    <div class="portlet-body">
+        <form id="search_form" autocomplete="off">
+            <section class="row">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.DropDownList("LookupGroupType", ViewBag.Lookups_drp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @id = "_lookup_type" })
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control input-sm" name="LookupName" placeholder="@Labels.search" id="LookupName" />
+                    </div>
+                </div>
+            </section>
+            <section class="row">
+                <div class="col-md-2 col-md-offset-10">
+                    <div class="form-group">
+                        <label>@Labels.RecordsPerPage</label>
+                        <select name="PageSize" class="form-control input-sm pull-right" id="drpLimit">
+                            <option value="10" @(search.length == 10 ? "selected" : "")>10</option>
+                            <option value="20" @(search.length == 20 ? "selected" : "")>20</option>
+                            <option value="50" @(search.length == 50 ? "selected" : "")>50</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="hdStart" id="StartRow" value="@search.start" />
+                </div>
+                <div class="col-md-5">
+                    <button type="submit" class="btn btn-sm blue"><i class="fa fa-search"></i> @Labels.search</button>
+                    <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>
+<!-- Lookup Value List -->
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+                <div class="caption">
+                    @Labels.lookup_values
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                        <table class="table table-striped table-hover table-condensed" id="data_table">
+                            <thead>
+                                <tr>
+                                    <th>@Labels.english_name</th>
+                                    <th>@Labels.dari_name</th>
+                                    <th>@Labels.pashtu_name</th>
+                                    <th>@Labels.code</th>
+                                    <th>Lookup Group Name</th>
+                                    <th>@Labels.active</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+            </div>
+        </div>
+        <!-- END SAMPLE TABLE PORTLET-->
+    </div>
+</div>
+
+<!-- Add Lookup value Div -->
+
+<div id="value_div" class="modal fade" tabindex="-1" data-width="200" data-backdrop="static">
+    <div class="modal-dialog">
+        <section class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Add New Item Group</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-body">
+                            <form method="post" id="value_form" action="@Url.Action("SaveGroupValue")">
+                                <div class="form-group">
+                                    <label>Lookup Type</label>
+                                    @Html.DropDownList("GroupValueId", ViewBag.Lookups_drp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @required = "true", @data_msg = "", @id = "GroupValueId" })
+                                </div>
+                                <div class="form-group" id="value_code_div">
+                                    <label>@Labels.code</label>
+                                    <input type="text" name="ValueCode" id="value_code" class="form-control input-sm" required data-msg="" data-msg-remote="@Labels.duplicate_code" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>@Labels.english_name</label>
+                                    <input type="text" name="EnName" id="en_name" class="form-control input-sm" required data-msg="" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>@Labels.dari_name</label>
+                                    <input type="text" name="DrName" id="dr_name" class="form-control input-sm" required data-msg="" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>@Labels.pashtu_name</label>
+                                    <input type="text" name="PaName" id="pa_name" class="form-control input-sm" required data-msg="" placeholder="">
+                                </div>
+                                <div class="form-actions right">
+                                    <button type="button" class="btn default" data-dismiss="modal">@Labels.cancel</button>
+                                    <button type="submit" class="btn green" id="btnsubmit">@Labels.save</button>
+                                </div>
+                                <input type="hidden" name="ValueId" id="v_rowid" value="0">
+                                <input type="hidden" name="LookupCode" id="LookupCode" value="ITEMGROUP">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section scripts{
+<script type="text/javascript">
+
+        $(function () {
+
+            //------------------Lookup Value Funcs-----------------
+
+            $('#addvaluebtn').click(function () {
+                $("#value_form").get(0).reset();
+                $('.error').removeClass('error')
+                $('#value_form').find('input , select').tooltip('destroy')
+                $('#value_div').modal('show');
+                $('#v_rowid').val('0');
+                $('#lookup_code').val($('#_lookup_type').val());
+                $('#value_code').prop('disabled', false);
+                $('#value_code_div').show();
+            })
+
+            $('#value_form').validate({
+                ignore: ':disabled',
+                rules: {
+                    ValueCode: {
+                        required: true,
+                        remote: {
+                            url: '@Url.Action("CheckValueCode")',
+                            type: 'post',
+                            data: {
+                                ValueCode: function () {
+                                    return $('#value_code').val();
+                                },
+                                id: function () {
+                                    return $('#v_rowid').val();
+                                }
+                            }
+                        }
+                    }
+                },
+                submitHandler: function (form) {
+                    $('#btnsubmit').button('loading');
+                    $(form).ajaxSubmit({
+                        success: function (response) {
+                            $('#value_div').modal('hide');
+                            toastr.success('@Labels.operation_done_suc');
+                            $('#btnsubmit').button('reset');
+                            data_table.ajax.reload();
+                        },
+                        error: function () {
+                            $('#btnsubmit').button('reset');
+                        }
+                    })
+                }
+            });
+
+            //////////////////////Groups list///////////////////////////
+            var canEdit = @Html.Raw(Json.Encode(_canEdit));
+            var canDelete = @Html.Raw(Json.Encode(_canDelete));
+            var canPrint = @Html.Raw(Json.Encode(_canPrint));
+
+            $.fn.dataTable.ext.errMode = 'none';
+            var data_table = $('#data_table').DataTable({
+                ajax: {
+                    url: '@Url.Action("GroupListPartial")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function (data) {
+                        console.log("form data is >>>>>>>>>> "+ JSON.stringify($('#search_form').serialize()));
+                        var form_data = $('#search_form').serializeJSON();
+                        form_data['draw'] = data.draw;
+                        form_data['start'] = data.start;
+                        form_data['length'] = data.length;
+                        return JSON.stringify(form_data);
+                    },
+                },
+                columns: [
+                    { data: 'EnName' },
+                    { data: 'DrName' },
+                    { data: 'PaName' },
+                    { data: 'ValueCode' },
+                    { data: 'GroupName' },
+                    {
+                        data: null,
+                        visible: true,
+                        render: function (row){
+                            var isActive = row.IsActive ? 'checked' : "";
+                            return '<input type="checkbox"'+isActive+' disabled />';
+                        }
+                    },
+                    {
+                        data: null,
+                        visible: canEdit,
+                        render: function (row) {
+                            return ' <a href="javascript:;" data-id="'+row.ValueId+'" class="btn default btn-xs blue-hoki v_edit"> <i class="fa fa-edit"></i></a>';
+                        }
+                    },
+                    {
+                        data: null,
+                        visible: canDelete,
+                        render: function (row) {
+                            return '<a href="javascript:;" data-id="'+row.ValueId+'" class="btn default btn-xs red v_delete"><i class="fa fa-trash"></i></a>';
+                        }
+                    },
+                    {
+                        data: null,
+                        visible: canDelete,
+                        render: function (row) {
+                            return '<a href="javascript:;" data-id="'+row.ValueId+'" class="btn default btn-xs blue-hoki v_restore"><i class="fa fa-share"></i></a>';
+                        }
+                    }
+                ],
+
+                searching: false,
+                bInfo: false,
+                bLengthChange: false,
+                ordering: false,
+                serverSide: true,
+                pageLength: $('#drpLimit').val(),
+            });
+
+            $('#data_table').on('processing.dt', function (e, s, p) {
+                if (p == true) {
+                    Metronic.blockUI({
+                        target: '#list_div',
+                        animate: true
+                    });
+                } else {
+                    Metronic.unblockUI('#list_div');
+                }
+            })
+
+            $('#drpLimit').change(function () {
+                data_table.page.len($(this).val()).draw();
+            })
+            $('#search_form').submit(function (e, param) {
+                e.preventDefault();
+                data_table.ajax.reload();
+            })
+
+            $('#btnReset').click(function (e) {
+                e.preventDefault();
+                $('#search_form').clearForm();
+                data_table.ajax.reload();
+            })
+
+            $('body').on('click', '.v_edit', function () {
+                $('#value_div').modal('show')
+                $('.error').removeClass('error')
+                $('#value_form').find('input , select').tooltip('destroy')
+
+                var id = $(this).data().id;
+                var url = '@Url.Action("GetLookupValue")/' + id;
+
+                $('#v_rowid').val(id);
+                $('#value_code').prop('disabled', true);
+                $('#value_code_div').hide();
+
+                $.get(url, function (row) {
+                    $('#en_name').val(row.EnName);
+                    $('#dr_name').val(row.DrName);
+                    $('#pa_name').val(row.PaName);
+                    $('#lookup_code').val(row.LookupCode);
+                    $('#GroupValueId').val(row.GroupValueId);
+                })
+            })
+
+            $('body').on('click', '.v_delete', function () {
+                var id = $(this).data().id;
+                var url = '@Url.Action("DeleteRestoreLookupValue")/' + id + '?value=false';
+                bootbox.confirm('@Labels.are_you_sure', function (result) {
+                    if (result) {
+                        $.get(url, function () {
+                            data_table.ajax.reload();
+                        })
+                    }
+                })
+            })
+
+            $('body').on('click', '.v_restore', function () {
+                var id = $(this).data().id;
+                var url = '@Url.Action("DeleteRestoreLookupValue")/' + id + '?value=true';
+                $.get(url, function () {
+                    data_table.ajax.reload();
+                })
+            })
+
+            $('body').on('keyup', '#search_input', function (e) {
+                e.preventDefault();
+                if ($('#_lookup_type').val() != '') {
+                    data_table.ajax.reload();
+                }
+            })
+        })
+
+</script>
+}
+
