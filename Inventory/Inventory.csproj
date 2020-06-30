@@ -324,6 +324,7 @@
     <Compile Include="Models\Tables\StockInItem.cs" />
     <Compile Include="Models\ViewModels\DisposableDistributionItemVM.cs" />
     <Compile Include="Models\ViewModels\DisposableDistributionVM.cs" />
+    <Compile Include="Models\ViewModels\LookupCategoryVM.cs" />
     <Compile Include="Models\ViewModels\RestoreItemVM.cs" />
     <Compile Include="Models\ViewModels\RestoreVM.cs" />
     <Compile Include="Models\ViewModels\GetItemVM.cs" />
@@ -3004,6 +3005,7 @@
     <Content Include="Views\DisposableDistribution\Search.cshtml" />
     <Content Include="Views\DisposableDistribution\View.cshtml" />
     <Content Include="Views\Lookups\Group.cshtml" />
+    <Content Include="Views\Lookups\Category.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

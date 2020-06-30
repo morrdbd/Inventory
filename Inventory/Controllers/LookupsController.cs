@@ -123,23 +123,24 @@ namespace Inventory.Controllers
             ViewBag.search = new LookupGroupSearch();
             var Lookups_drp = db.LookupValues.Where(l=> l.IsActive == true && l.LookupCode == "UTYPE")
                 .OrderBy(x => Language == "prs" ? x.DrName : Language == "ps" ? x.PaName : x.EnName);
-            ViewBag.Lookups_drp = new SelectList(Lookups_drp, "ValueId", TextField);
+            ViewBag.LookupsUsageType_drp = new SelectList(Lookups_drp, "ValueId", TextField);
             return View();
         }
 
-        [AccessControl]
+        [AccessControl("Search")]
         [HttpPost]
         public JsonResult GroupListPartial(LookupGroupSearch model)
         {
             
             var query = db.LookupValues.Where(c => c.LookupCode == "ITEMGROUP");
-            if(model.LookupGroupType != null)
+            if(model.LookupUsageType != null)
             {
-                query = query.Where(l=>l.GroupValueId == model.LookupGroupType);
+                query = query.Where(l=>l.GroupValueId == model.LookupUsageType);
             }
             if (!string.IsNullOrWhiteSpace(model.LookupName))
             {
-                query = query.Where(l=>l.EnName.Contains(model.LookupName) || l.DrName.Contains(model.LookupName) || l.PaName.Contains(model.LookupName));
+                query = query.Where(l=>l.EnName.Contains(model.LookupName) || l.DrName.Contains(model.LookupName)
+                || l.PaName.Contains(model.LookupName) || l.ValueCode.Contains(model.LookupName));
             }
             var records = query.OrderBy(x => Language == "prs" ? x.DrName : Language == "ps" ? x.PaName : x.EnName).OrderBy(l => l.ForOrdering).ToList();
             var data = records.Select(e => new
@@ -149,7 +150,7 @@ namespace Inventory.Controllers
                 e.DrName,
                 e.PaName,
                 e.ValueCode,
-                GroupName = db.LookupValues.Where(r => r.IsActive == true && r.ValueId == e.GroupValueId).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault(),
+                UsageTypeName = db.LookupValues.Where(r => r.IsActive == true && r.ValueId == e.GroupValueId).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault(),
                 e.IsActive
             }).ToList();
 
@@ -166,7 +167,6 @@ namespace Inventory.Controllers
         [AccessControl("Add,Edit")]
         public JsonResult SaveGroupValue(LookupValue LookupValue)
         {
-            LookupValue.LookupCode = "ITEMGROUP";
             if (LookupValue.ValueId != 0)
             {
                 ModelState.Remove("ValueCode");
@@ -200,7 +200,143 @@ namespace Inventory.Controllers
             return Json(false);
         }
 
+        public ActionResult Category()
+        {
+            ViewBag.search = new LookupCategorySearch();
+            var LookupsUsageType_drp = db.LookupValues.Where(l => l.IsActive == true && l.LookupCode == "UTYPE")
+                .OrderBy(x => Language == "prs" ? x.DrName : Language == "ps" ? x.PaName : x.EnName);
+            ViewBag.LookupsUsageType_drp = new SelectList(LookupsUsageType_drp, "ValueId", TextField);
+            return View();
+        }
 
+        [AccessControl("Search")]
+        [HttpPost]
+        public JsonResult CategoryListPartial(LookupCategorySearch model)
+        {
+            var query = (from l in db.LookupValues
+                          join g in db.LookupValues on l.GroupValueId equals g.ValueId
+                          join u in db.LookupValues on  g.GroupValueId equals u.ValueId
+                          where l.LookupCode == "ITEMCATEGORY"
+                          select new
+                          {
+                              l.ValueId,
+                              l.ValueCode,
+                              l.EnName,
+                              l.DrName,
+                              l.PaName,
+                              UsageTypeId = u.ValueId,
+                              UsageTypeName = (Language == "prs" ? u.DrName : Language == "ps" ? u.PaName : u.EnName),
+                              GroupId = g.ValueId,
+                              GroupName = (Language == "prs" ? g.DrName : Language == "ps" ? g.PaName : g.EnName),
+                              l.IsActive
+                          }
+                          ).ToList();
+
+            if (model.SLookupUsageType != null)
+            {
+                query = query.Where(l => l.UsageTypeId == model.SLookupUsageType).ToList();
+            }
+            if (model.SLookupGroupType != null)
+            {
+                query = query.Where(l => l.GroupId == model.SLookupGroupType).ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(model.SLookupName))
+            {
+                query = query.Where(l => l.EnName.Contains(model.SLookupName) || l.DrName.Contains(model.SLookupName)
+                || l.PaName.Contains(model.SLookupName) || l.ValueCode.Contains(model.SLookupName)).ToList();
+            }
+            var records = query.OrderBy(x => Language == "prs" ? x.DrName : Language == "ps" ? x.PaName : x.EnName).ToList();
+            var data = records.Select(e => new
+            {
+                e.ValueId,
+                e.EnName,
+                e.DrName,
+                e.PaName,
+                e.ValueCode,
+                e.GroupName,
+                e.UsageTypeName,
+                e.IsActive
+            }).ToList();
+
+            ViewBag.search = model;
+            return Json(new
+            {
+                data = data.Skip(model.start).Take(model.length).ToList(),
+                recordsTotal = data.Count(),
+                recordsFiltered = data.Count(),
+                draw = model.draw,
+            });
+        }
+
+        public JsonResult GetCategoryLookupValue(int id = 0)
+        {
+            //var obj = db.LookupValues.Find(id);
+            var obj = (from l in db.LookupValues
+                         join g in db.LookupValues on l.GroupValueId equals g.ValueId
+                         join u in db.LookupValues on g.GroupValueId equals u.ValueId
+                         where l.LookupCode == "ITEMCATEGORY" && l.ValueId == id
+                         select new
+                         {
+                             l.ValueId,
+                             l.ValueCode,
+                             l.EnName,
+                             l.DrName,
+                             l.PaName,
+                             GroupId = g.ValueId,
+                             UsageTypeId = u.ValueId,
+                             l.IsActive
+                         }
+                          ).FirstOrDefault();
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+
+        [AccessControl("Add,Edit")]
+        public JsonResult SaveCategoryValue(LookupCategoryVM model)
+        {
+            if (model.ValueId != 0)
+            {
+                ModelState.Remove("ValueCode");
+            }
+            var errors = this.ModelState.Keys.SelectMany(key => this.ModelState[key].Errors);
+            if (!ModelState.IsValid)
+            {
+                LogModelErrors();
+                return Json(false);
+            }
+            try
+            {
+                if (model.ValueId == 0)
+                {
+                    var obj = new LookupValue() {
+                        LookupCode = "ITEMCATEGORY",
+                        ValueCode = model.ValueCode,
+                        EnName = model.EnName,
+                        DrName = model.DrName,
+                        PaName = model.PaName,
+                        GroupValueId = model.GroupId,
+                        IsActive = true
+                    };
+                    db.LookupValues.Add(obj);
+                }
+                else
+                {
+                    var obj = db.LookupValues.Where(l=>l.ValueId == model.ValueId).FirstOrDefault();
+                    obj.ValueCode = model.ValueCode;
+                    obj.EnName = model.EnName;
+                    obj.DrName = model.DrName;
+                    obj.PaName = model.PaName;
+                    obj.GroupValueId = model.GroupId;
+                    obj.IsActive = true;
+                }
+                db.SaveChanges();
+                return Json(true);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+            }
+            return Json(false);
+        }
 
     }
 }

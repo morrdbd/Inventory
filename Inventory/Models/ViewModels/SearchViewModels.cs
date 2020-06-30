@@ -249,8 +249,20 @@ namespace Inventory.Models.ViewModels
     }
     public class LookupGroupSearch
     {
-        public int? LookupGroupType { get; set; }
+        public int? LookupUsageType { get; set; }
         public string LookupName { get; set; }
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
+
+    public class LookupCategorySearch
+    {
+        public int? SLookupUsageType { get; set; }
+        public int? SLookupGroupType { get; set; }
+        public string SLookupName { get; set; }
         public int PageSize { get; set; }
         public int? PageNo { get; set; }
         public int draw { get; set; }
