@@ -133,11 +133,11 @@
                         </div>
                     </section>
                     <section class="row">
-                                    <div class=" col-md-6 form-group">
-                                        <label>@Labels.Requester</label>
-                                        @Html.DropDownListFor(model => model.DepartmentID, ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control", @required = "required" })
-                                    </div>
-                                </section>
+                        <div class=" col-md-6 form-group">
+                            <label>@Labels.Requester</label>
+                            @Html.DropDownListFor(model => model.DepartmentID, ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control", @required = "required" })
+                        </div>
+                    </section>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>

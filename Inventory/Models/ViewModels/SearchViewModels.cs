@@ -269,4 +269,15 @@ namespace Inventory.Models.ViewModels
         public int start { get; set; }
         public int length { get; set; }
     }
+
+    public class DepartmentSearch
+    {
+        public int? ParentDepartmentID { get; set; }
+        public string DepartmentName { get; set; }
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
 }
