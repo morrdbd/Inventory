@@ -204,7 +204,6 @@
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (data) {
-                        console.log("form data is >>>>>>>>>> "+ JSON.stringify($('#search_form').serialize()));
                         var form_data = $('#search_form').serializeJSON();
                         form_data['draw'] = data.draw;
                         form_data['start'] = data.start;
@@ -255,7 +254,6 @@
                 ordering: false,
                 serverSide: true,
                 pageLength: $('#drpLimit').val(),
-                dom: 'Bfrtip',
             });
 
             $('#data_table').on('processing.dt', function (e, s, p) {
@@ -322,13 +320,6 @@
                 $.get(url, function () {
                     data_table.ajax.reload();
                 })
-            })
-
-            $('body').on('keyup', '#search_input', function (e) {
-                e.preventDefault();
-                if ($('#_lookup_type').val() != '') {
-                    data_table.ajax.reload();
-                }
             })
         })
 

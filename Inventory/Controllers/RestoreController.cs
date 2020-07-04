@@ -85,7 +85,7 @@ namespace Inventory.Controllers
         {
             var query = (from d in db.ReusableDistributions
                          join di in db.ReusableDistributionItems on d.ReusableDistributionID equals di.ReusableDistributionID
-                         join s in db.StockInItems on di.StockInItemID equals s.ID
+                         join s in db.StockInItems on di.StockInItemID equals s.StockInItemID
                          where di.IsReturned == false && d.IsActive == true && s.IsExpired == false
                          && d.EmployeeID == search.EmpID
                          select new
@@ -181,14 +181,14 @@ namespace Inventory.Controllers
             {
                 var obj = (from d in db.ReusableDistributions
                            join di in db.ReusableDistributionItems on d.ReusableDistributionID equals di.ReusableDistributionID
-                           join si in db.StockInItems on di.StockInItemID equals si.ID
+                           join si in db.StockInItems on di.StockInItemID equals si.StockInItemID
                            where di.ID == id && d.IsActive == true && di.IsReturned == false &&
                            si.IsActive == true && si.IsExpired == false
                            select new
                            {
                                di.ID,
                                si.Quantity,
-                               StockInItemID = si.ID,
+                               StockInItemID = si.StockInItemID,
                                si.ItemName,
                                si.ItemCode,
                                si.UnitPrice,
@@ -287,7 +287,7 @@ namespace Inventory.Controllers
                                     RestoreID = _restore.RestoreID
                                 };
                                 db.RestoreItems.Add(_item);
-                                var stockinItem = db.StockInItems.Where(i => i.ID == row.StockInItemID).FirstOrDefault();
+                                var stockinItem = db.StockInItems.Where(i => i.StockInItemID == row.StockInItemID).FirstOrDefault();
                                 if (model.ItemInCondition == "Usable")
                                 {
                                     stockinItem.IsExpired = false;
@@ -367,7 +367,7 @@ namespace Inventory.Controllers
                             distributionItem.IsReturned = false;
                             distributionItem.ReturnDate = null;
                         }
-                        var stockinItem = db.StockInItems.Where(i => i.ID == x.StockInItemID).FirstOrDefault();
+                        var stockinItem = db.StockInItems.Where(i => i.StockInItemID == x.StockInItemID).FirstOrDefault();
                         stockinItem.IsExpired = false;
                         db.RestoreItems.Remove(x);
                     }
@@ -384,7 +384,7 @@ namespace Inventory.Controllers
                                 distributionItem.IsReturned = true;
                                 distributionItem.ReturnDate = DateTime.Now;
                             }
-                            var stockinItem = db.StockInItems.Where(i => i.ID == x.StockInItemID).FirstOrDefault();
+                            var stockinItem = db.StockInItems.Where(i => i.StockInItemID == x.StockInItemID).FirstOrDefault();
                             if (model.ItemInCondition == "Usable")
                             {
                                 stockinItem.IsExpired = false;
@@ -462,7 +462,7 @@ namespace Inventory.Controllers
                 .ToList();
             foreach(var item in restoreItems)
             {
-                var itemInStockIn = db.StockInItems.Where(i => i.ID == item.StockInItemID).FirstOrDefault();
+                var itemInStockIn = db.StockInItems.Where(i => i.StockInItemID == item.StockInItemID).FirstOrDefault();
                 if(itemInStockIn != null)
                 {
                     var restoreItem = new RestoreItemVM
@@ -496,7 +496,7 @@ namespace Inventory.Controllers
             var test = db.Restores.ToList();
             var query = (from r in db.Restores
                          join rItem in db.RestoreItems on r.RestoreID equals rItem.RestoreID
-                         join sItem in db.StockInItems on rItem.StockInItemID equals sItem.ID
+                         join sItem in db.StockInItems on rItem.StockInItemID equals sItem.StockInItemID
                          join emp in db.Employees on r.EmployeeID equals emp.EmployeeID
                          join dep in db.Departments on emp.DepartmentID equals dep.DepartmentID
                          join disItem in db.ReusableDistributionItems on rItem.StockInItemID equals disItem.StockInItemID
@@ -644,7 +644,7 @@ namespace Inventory.Controllers
                                 distributionItem.IsReturned = false;
                                 distributionItem.ReturnDate = null;
                             }
-                            var stockInItem = db.StockInItems.Where(i=>i.ID == item.StockInItemID).FirstOrDefault();
+                            var stockInItem = db.StockInItems.Where(i=>i.StockInItemID == item.StockInItemID).FirstOrDefault();
                             if(stockInItem != null)
                             {
                                 stockInItem.IsExpired = false;

@@ -44,18 +44,6 @@
                     </div>
                 </div>
             </section>
-            @*<section class="row">
-                <div class="col-md-6">
-                    <label>Insert Date</label>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-sm shpicker_f" id="DateFrom" value="@search.DateFrom" name="DateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
-                            <span class="input-group-addon input-sm">To Date</span>
-                            <input type="text" class="form-control input-sm shpicker_f" id="DateTo" value="@search.DateTo" name="DateTo" placeholder="@Labels.ToDate" data-rule-date="true" data-msg="" />
-                        </div>
-                    </div>
-                </div>
-            </section>*@
             <section class="row">
                 <div class="col-md-2 col-md-offset-10">
                     <div class="form-group">
@@ -98,9 +86,7 @@
                     <th></th>
                 </tr>
             </thead>
-
         </table>
-
     </div>
 </div>
 
@@ -191,8 +177,6 @@
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (data) {
-                        console.log("form data is >>>>>>>>>> "+ JSON.stringify($('#search_form').serialize()));
-                        console.log("data is >>>>>>>>>> "+ JSON.stringify(data));
                         var form_data = $('#search_form').serializeJSON();
                         form_data['draw'] = data.draw;
                         form_data['start'] = data.start;
@@ -295,6 +279,7 @@
             $("body").on("click", ".delete_row", function (e) {
                 e.preventDefault();
                 var id = $(this).data().id;
+                console.log("is is >>>>>>>>"+ id);
                 var url = "@Url.Action("DeleteEmployee")/" + id;
                 bootbox.confirm("@Labels.are_you_sure", function (result) {
                     if (result == true) {
@@ -310,7 +295,7 @@
 
             $("#popup_record").on("hide.bs.modal", function (e) {
                 $("#record_form").clearForm();
-                $("#record_form").find("[name=ID]").val(0);
+                $("#record_form").find("[name=EmployeeID]").val(0);
             })
             $("#popup_record").on('show.bs.modal', function () {
             });

@@ -101,6 +101,7 @@ namespace Inventory.Models.ViewModels
 
     public class Item_In_Warehouse_Search
     {
+        public string BarCode { get; set; }
         public string ReportNumber { get; set; }
         public string DateFrom { get; set; }
         public string DateTo { get; set; }
@@ -139,6 +140,8 @@ namespace Inventory.Models.ViewModels
         public int? GroupID { get; set; }
 
         public int? CategoryID { get; set; }
+
+        public string BarCode { get; set; }
 
         public string ItemName { get; set; }
 

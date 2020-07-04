@@ -77,16 +77,16 @@ namespace Inventory.Controllers
                     ID = i.ID,
                     StockInItemID = i.StockInItemID,
                     DisposableDistributionID = i.DisposableDistributionID,
-                    ItemCode = db.StockInItems.Where(item => item.IsActive == true && item.ID == i.StockInItemID).Select(item => item.ItemCode).FirstOrDefault(),
-                    ItemName = db.StockInItems.Where(item => item.IsActive == true && item.ID == i.StockInItemID).Select(item => item.ItemName).FirstOrDefault(),
-                    ItemCategoryName = AdminRepo.LookupName(Language,db.StockInItems.Where(item => item.IsActive == true && item.ID == i.StockInItemID).Select(item => item.CategoryID).FirstOrDefault()),
-                    ItemGroupName = AdminRepo.LookupName(Language, db.StockInItems.Where(item => item.IsActive == true && item.ID == i.StockInItemID).Select(item => item.GroupID).FirstOrDefault()),
-                    UnitName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.ID == i.StockInItemID).Select(p => p.UnitID).FirstOrDefault()),
-                    ItemSizeName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.ID == i.StockInItemID).Select(p => p.SizeID).FirstOrDefault()),
-                    ItemOriginName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.ID == i.StockInItemID).Select(p => p.OriginID).FirstOrDefault()),
-                    BrandName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.ID == i.StockInItemID).Select(p => p.BrandID).FirstOrDefault()),
+                    ItemCode = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.ItemCode).FirstOrDefault(),
+                    ItemName = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.ItemName).FirstOrDefault(),
+                    ItemCategoryName = AdminRepo.LookupName(Language,db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.CategoryID).FirstOrDefault()),
+                    ItemGroupName = AdminRepo.LookupName(Language, db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.GroupID).FirstOrDefault()),
+                    UnitName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.StockInItemID == i.StockInItemID).Select(p => p.UnitID).FirstOrDefault()),
+                    ItemSizeName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.StockInItemID == i.StockInItemID).Select(p => p.SizeID).FirstOrDefault()),
+                    ItemOriginName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.StockInItemID == i.StockInItemID).Select(p => p.OriginID).FirstOrDefault()),
+                    BrandName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.StockInItemID == i.StockInItemID).Select(p => p.BrandID).FirstOrDefault()),
                     Quantity = i.Quantity,
-                    UnitPrice = db.StockInItems.Where(item => item.IsActive == true && item.ID == i.StockInItemID).Select(item => item.UnitPrice).FirstOrDefault(),
+                    UnitPrice = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.UnitPrice).FirstOrDefault(),
                 }
                 ).ToList(),
             };
@@ -144,7 +144,7 @@ namespace Inventory.Controllers
             var items = query.ToList();
               var data = items.Select(i => new StockInItemVM
             {
-                ID = i.ID,
+                StockInItemID = i.StockInItemID,
                 ItemName = i.ItemName,
                 UnitName = AdminRepo.LookupName(Language, i.UnitID),
                 UnitID = i.UnitID,
@@ -242,7 +242,7 @@ namespace Inventory.Controllers
                                 });
                                 db.SaveChanges();
                                 //minus item from item in hand
-                                var _stockInHand = db.StockInItems.Where(s => s.ID == row.StockInItemID).First();
+                                var _stockInHand = db.StockInItems.Where(s => s.StockInItemID == row.StockInItemID).First();
                                 if (_stockInHand.AvailableQuantity < _item.Quantity)
                                 {
                                     return Json(false);
@@ -422,11 +422,11 @@ namespace Inventory.Controllers
         {
             try
             {
-                var obj = db.StockInItems.Where(i => i.ID == id && i.IsActive == true && i.AvailableQuantity > 0).FirstOrDefault();
+                var obj = db.StockInItems.Where(i => i.StockInItemID == id && i.IsActive == true && i.AvailableQuantity > 0).FirstOrDefault();
                 if (obj != null)
                 {
                     var item = new {
-                        obj.ID,
+                        obj.StockInItemID,
                         obj.AvailableQuantity,
                         obj.ItemName,
                         obj.ItemCode,
@@ -458,13 +458,12 @@ namespace Inventory.Controllers
             }
             try
             {
-                var obj = db.StockInItems.Where(i => i.ID == model.StockInItemID && i.IsActive == true).FirstOrDefault();
+                var obj = db.StockInItems.Where(i => i.StockInItemID == model.StockInItemID && i.IsActive == true).FirstOrDefault();
                 if (obj != null && obj.AvailableQuantity >= model.Quantity)
                 {
                     var item = new {
-                        obj.ID,
-                        StockInItemID = model.StockInItemID,
-                        Quantity = model.Quantity,
+                        obj.StockInItemID,
+                        model.Quantity,
                         obj.ItemName,
                         obj.ItemCode,
                         obj.UnitPrice,
@@ -512,7 +511,7 @@ namespace Inventory.Controllers
             var _dateTo = model.DateTo.ToDate(Language);
             var query = (from d in db.DisposableDistributions
                                      join dItem in db.DisposableDistributionItems on d.DisposableDistributionID equals dItem.DisposableDistributionID
-                                     join sItem in db.StockInItems on dItem.StockInItemID equals sItem.ID
+                                     join sItem in db.StockInItems on dItem.StockInItemID equals sItem.StockInItemID
                                      join dep in db.Departments on d.DepartmentID equals dep.DepartmentID
                                      where d.IsActive == true
                                      select new

@@ -341,14 +341,12 @@
             var RestoreItems = [];
             var RestoreID = '@Model.RestoreID';
             if (RestoreID != '0') {
-                //var model = JSON.parse($("#model_json").val());
                 RestoreItems = model.RestoreItems;
             }
             
             // FORM VALIDATION AND SUBMISSION
             $('#main_form').validate({
                 submitHandler: function (form) {
-                    console.log("Inside the main_form the >>>>>>>");
                     var data = $('#main_form').serializeJSON({
                         parseAll: true,
                         useIntKeysAsArrayIndex: true,
@@ -358,9 +356,7 @@
                         toastr.error('Please Add Item');
                         return;
                     }
-                    console.log("data is >>>>>>>?????????"+JSON.stringify(data));
                     var formData = ObjectToFormData(data);
-                    console.log("items are >>>>>>>>>>><<<<<<<<<<<"+ JSON.stringify(formData));
                     //******************
                     Metronic.blockUI({ animate: true });
                     $.ajax({
@@ -423,19 +419,8 @@
                 $('#restore_item_modal').modal('show');
                 data_table.ajax.reload();
             })
-
         
-            //$('body').on('click', '.item_delete', function (e) {
-            //    e.preventDefault()
-            //    $(this).confirmation('show');
-            //})
-            //$('body').on('confirmed.bs.confirmation', '.item_delete', function (e) {
-            //    var index = $(this).data().index;
-            //    DistributionItems[index] = null;
-            //    $(this).closest('tr').remove();
-            //})
             $('#employee_search_form').submit(function (e, param) {
-                console.log(">>>>>>>>>>>>>>>>>>><<<<<<< Insdie the call funtion");
                 e.preventDefault();
                 Metronic.blockUI({
                     target: '#list_div',
@@ -444,7 +429,6 @@
                 var data = $('#employee_search_form').serializeJSON();
                 var json = JSON.stringify(data);
                 var url = '@Url.Action("SearchEmployee", "Employee")';
-                console.log("url is >>>>>>>>"+ JSON.stringify(url));
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -482,12 +466,7 @@
                 $('#EmpOccupation').val(Occpation);
                 $('#EmpDepartmentName').val(Department);
                 $('#popup_employee').modal('hide');
-               // $('#employee_search_form').reset();
                 $("#employee_search_form").trigger("reset");
-                console.log("Name is >>>>>>>>>>"+Name);
-                console.log("Father name is >>>>>>>>>>"+FatherName);
-                console.log("occpation is >>>>>>>>>>"+Occpation);
-                console.log("Department is >>>>>>>>>>"+Department);
             })
 
             var data_table = $('#item_table').DataTable({
@@ -544,7 +523,6 @@
             })
             $('#item_search_form').submit(function (e, param) {
                 e.preventDefault();
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
                 data_table.ajax.reload();
             })
             $('#btnResetItemSearch').click(function (e) {
@@ -562,7 +540,6 @@
                         .removeClass('selectedItem');
                 }
                 var id = $(this).data().id;
-                console.log("Id is >>>>>>>>>>>>>>>>>>>>> "+id);
                 var isDuplicate = false;
                 RestoreItems.forEach(function(i){
                     if(i.ID == id){
@@ -586,9 +563,6 @@
                     success: function (response) {
                         console.log("reponse is <<<<<<<<<<<<<<>>>>>>>>>>>> "+JSON.stringify(response));
                         if(response){
-                            //console.log(response.AvailableQuantity);
-                            //console.log(response.UnitPrice);
-
                             var _index = RestoreItems.length
                             var tr = $('#temp_item').clone().html()
                             .replace("{{UnitName}}", response.UnitName)
@@ -621,8 +595,6 @@
     </script>
     <script>
         function loadCategories(groupId,categoryId){
-            //console.log("Inside the ca >>>>>>>>>>>>>>>>");
-            //console.log("groupId is "+ groupId);
             var groupId = groupId;
             if(!groupId){
                 groupId = $("#GroupID").val();
@@ -635,7 +607,6 @@
                     url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
                     data: "{id:'" + groupId + "'}",
                     success: function (data) {
-                        console.log(">>>>>>>>>>>>>>>>>>>>>>>Category>><<<<<<<<<<<<<<<<"+ JSON.stringify(data));
                         $('#CategoryID').empty();
                         $('#CategoryID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
                         $.each(data, function (i, d) {
@@ -658,44 +629,39 @@
             }
         }
         function saveImage(recordId){
-            console.log("Inside the save image >>>>>"+recordId);
-            //setTimeout(function(){
-            //    console.log("Inside the timeout ");
-            //},6000)
-                if($("#FileContent").val()){
-                    var file = $("#FileContent")[0].files[0];
-                        var imageData = new FormData();
-                        imageData.append('RecordID', recordId);
-                        imageData.append('FileContent', file);
-                        $.ajax({
-                            url: 'SaveScanImage',
-                            type: 'POST',
-                            data: imageData,
-                            contentType: false,
-                            processData: false,
-                            success: function(response){
-                                if(response != false){
-                                    bootbox.alert('@Labels.operation_done_suc', function () {
-                                        window.location.href = '@Url.Action("View")/' + recordId;
-                                    })
-                                }
-                                else{
-                                    toastr.error('Unable to upload image');
+            if($("#FileContent").val()){
+                var file = $("#FileContent")[0].files[0];
+                    var imageData = new FormData();
+                    imageData.append('RecordID', recordId);
+                    imageData.append('FileContent', file);
+                    $.ajax({
+                        url: 'SaveScanImage',
+                        type: 'POST',
+                        data: imageData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response){
+                            if(response != false){
+                                bootbox.alert('@Labels.operation_done_suc', function () {
                                     window.location.href = '@Url.Action("View")/' + recordId;
-                                }
-                            },
-                            complete: function () {
-                                console.log("Inside the complete ");
-                                Metronic.unblockUI();
+                                })
                             }
-                        });
-                }else{
-                    Metronic.unblockUI();
-                    bootbox.alert('@Labels.operation_done_suc', function () {
-                        window.location.href = '@Url.Action("View")/' + recordId;
-                    })
-                    console.log("file content do not have value");
-                }
+                            else{
+                                toastr.error('Unable to upload image');
+                                window.location.href = '@Url.Action("View")/' + recordId;
+                            }
+                        },
+                        complete: function () {
+                            console.log("Inside the complete ");
+                            Metronic.unblockUI();
+                        }
+                    });
+            }else{
+                Metronic.unblockUI();
+                bootbox.alert('@Labels.operation_done_suc', function () {
+                    window.location.href = '@Url.Action("View")/' + recordId;
+                })
+            }
             }
     </script>
 

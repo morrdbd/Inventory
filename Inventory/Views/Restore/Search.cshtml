@@ -303,8 +303,6 @@
 </script>
     <script>
         function loadCategories(groupId,categoryId){
-            //console.log("Inside the ca >>>>>>>>>>>>>>>>");
-            //console.log("groupId is "+ groupId);
             var groupId = groupId;
             if(!groupId){
                 groupId = $("#GroupID").val();
@@ -317,7 +315,6 @@
                     url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
                     data: "{id:'" + groupId + "'}",
                     success: function (data) {
-                        console.log(">>>>>>>>>>>>>>>>>>>>>>>Category>><<<<<<<<<<<<<<<<"+ JSON.stringify(data));
                         $('#CategoryID').empty();
                         $('#CategoryID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
                         $.each(data, function (i, d) {

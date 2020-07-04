@@ -242,8 +242,6 @@
             <td>{{TotalPrice}}</td>
             <td>
                 <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
-                @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="{{index}}"><i class="fa fa-edit"></i></a>
-            <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="{{index}}" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>*@
             </td>
         </tr>
     </script>
@@ -253,14 +251,12 @@
             var DistributionItems = [];
             var DisposableDistributionID = '@Model.DisposableDistributionID';
             if (DisposableDistributionID != '0') {
-                //var model = JSON.parse($("#model_json").val());
                 DistributionItems = model.DistributionItems;
             }
 
             // FORM VALIDATION AND SUBMISSION
             $('#main_form').validate({
                 submitHandler: function (form) {
-                    console.log("Inside the main_form the >>>>>>>");
                     var data = $('#main_form').serializeJSON({
                         parseAll: true,
                         useIntKeysAsArrayIndex: true,
@@ -270,9 +266,7 @@
                         toastr.error('Please Add Item');
                         return;
                     }
-                    console.log("data is >>>>>>>?????????"+JSON.stringify(data));
                     var formData = ObjectToFormData(data);
-                    console.log("items are >>>>>>>>>>><<<<<<<<<<<"+ JSON.stringify(formData));
                     //******************
                     Metronic.blockUI({ animate: true });
                     $.ajax({
@@ -284,7 +278,6 @@
                         success: function (response) {
                             if (response != false) {
                                 saveImage(response);
-                                console.log("response received >>>>>>>>>><<<<<<");
                             } else {
                                 toastr.error('@Labels.unable_to_update');
                             }
@@ -307,7 +300,6 @@
             $('#assign_item_form').validate({
 
                 submitHandler: function (form) {
-                    console.log(">>>>>>>>>>>>>>>>>>>>>>> inside the ");
                     var data = $('#assign_item_form').serializeJSON({
                         parseAll: true,
                         useIntKeysAsArrayIndex: true,
@@ -315,21 +307,6 @@
                     var formData = ObjectToFormData(data);
                     //******************
                     Metronic.blockUI({ animate: true });
-                    //var isDuplicate = false;
-                    //DistributionItems.forEach(function(i){
-                    //    if(i.ItemCode == $('#ItemCode').val()){
-                    //        isDuplicate = true;
-                    //        return;
-                    //    }
-                    //})
-                    //if(isDuplicate && $('#index').val() === "-1"){
-                    //    toastr.error("Duplicate Item");
-                    //    return;
-                    //}
-                    //var formData = $(form).serializeJSON();
-                    console.log("row <<<<<<<<<<<<<<<<<< "+formData.StockInItemID);
-                    console.log($('#assign_item_form').attr('action'));
-                    console.log("row form data is <<<<<<<<<<<<<<<<<< "+JSON.stringify(formData));
                     $.ajax({
                         url: $('#assign_item_form').attr('action'),
                         type: 'POST',
@@ -349,7 +326,6 @@
                                     toastr.error('Item already exist pelase.');
                                     return;
                                 }
-                                console.log("response is >>>>>>>>>>>>>>> "+JSON.stringify(response));
                                 var _index = DistributionItems.length
                                 var tr = $('#temp_item').clone().html()
                                 .replace("{{UnitName}}", response.UnitName)
@@ -382,28 +358,6 @@
                             data_table.ajax.reload();
                         }
                     })
-                    //console.log("id is row is >>>>>>>>"+ console.log(JSON.stringify(row.StockInItemID)));
-                    //var _index = (row.index == -1) ? DistributionItems.length : row.index;
-                    //var tr = $('#temp_item').clone().html()
-                    //.replace("{{Quantity}}", row.Quantity)
-                    //.replace("{{UnitName}}", row.UnitName)
-                    //.replace("{{ItemName}}", $('#assign_item_form [name=ItemCode] option:selected').text())
-                    //.replace("{{UnitPrice}}", row.UnitPrice)
-                    //.replace("{{TotalPrice}}", row.Quantity * row.UnitPrice)
-                    //.replace("{{DealWithAccount}}", row.DealWithAccount)
-                    //.replace("{{index}}", _index);
-                    //if (row.index == -1) {
-                    //    $('#tbody_item').append(tr);
-                    //    $('#assign_item_form').clearForm();
-                    //    $('#assign_item_form input:first').focus();
-                    //    DistributionItems.push(row);
-                    //} else {
-                    //    $('#tbody_item').find('[data-index=' + row.index + ']').closest('tr').replaceWith(tr);
-                    //    $('#assign_item_modal').modal('hide');
-                    //    console.log("row in item form valided +++++++"+JSON.stringify(row));
-                    //    DistributionItems[row.index] = row;
-                    //}
-                    //console.log("items are >>>>>>>>>>>>>"+JSON.stringify(DistributionItems));
                 }
             })
             //$('body').on('click', '.item_delete', function (e) {
@@ -470,7 +424,6 @@
             })
             $('#item_search_form').submit(function (e, param) {
                 e.preventDefault();
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
                 data_table.ajax.reload();
             })
             $('#btnResetItemSearch').click(function (e) {
@@ -487,7 +440,6 @@
                         .removeClass('selectedItem');
                 }
                 var id = $(this).data().id;
-                console.log("Id is >>>>>>>>>>>>>>>>>>>>> "+id);
                 Metronic.blockUI({
                     target: '#item_list_div',
                     animate: true
@@ -498,7 +450,6 @@
                     type: 'POST',
                     contentType: 'application/json',
                     success: function (response) {
-                        console.log("reponse is >>>>>>>>>>>> "+JSON.stringify(response));
                         if(response){
                             console.log(response.AvailableQuantity);
                             console.log(response.UnitPrice);
@@ -509,7 +460,6 @@
                 })
             })
             $('#GroupID').on('change', function(){
-                console.log("select value is >>>>>> "+$(this).val());
                 var groupId = $(this).val();
                 if(!groupId)
                 {
@@ -523,7 +473,6 @@
                         url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
                         data: "{id:'" + groupId + "'}",
                         success: function (data) {
-                            console.log(">>>>>>>>>>>>>>>>>>>>>>>Category>><<<<<<<<<<<<<<<<"+ JSON.stringify(data));
                             $('#CategoryID').empty();
                             $('#CategoryID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
                             $.each(data, function (i, d) {
@@ -539,51 +488,43 @@
                     });
                 }
             });
-
-
     })
     </script>
     <script>
         function saveImage(recordId){
-            console.log("Inside the save image >>>>>"+recordId);
-            //setTimeout(function(){
-            //    console.log("Inside the timeout ");
-            //},6000)
-                if($("#FileContent").val()){
-                    var file = $("#FileContent")[0].files[0];
-                        var imageData = new FormData();
-                        imageData.append('RecordID', recordId);
-                        imageData.append('FileContent', file);
-                        var url =
-                        $.ajax({
-                            url: '@Url.Action("SaveScanImage", "DisposableDistribution")',
-                            type: 'POST',
-                            data: imageData,
-                            contentType: false,
-                            processData: false,
-                            success: function(response){
-                                if(response != false){
-                                    bootbox.alert('@Labels.operation_done_suc', function () {
-                                        window.location.href = '@Url.Action("View")/' + recordId;
-                                    })
-                                }
-                                else{
-                                    toastr.error('Unable to upload image');
+            if($("#FileContent").val()){
+                var file = $("#FileContent")[0].files[0];
+                    var imageData = new FormData();
+                    imageData.append('RecordID', recordId);
+                    imageData.append('FileContent', file);
+                    var url =
+                    $.ajax({
+                        url: '@Url.Action("SaveScanImage", "DisposableDistribution")',
+                        type: 'POST',
+                        data: imageData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response){
+                            if(response != false){
+                                bootbox.alert('@Labels.operation_done_suc', function () {
                                     window.location.href = '@Url.Action("View")/' + recordId;
-                                }
-                            },
-                            complete: function () {
-                                console.log("Inside the complete ");
-                                Metronic.unblockUI();
+                                })
                             }
-                        });
-                }else{
-                    Metronic.unblockUI();
-                    bootbox.alert('@Labels.operation_done_suc', function () {
-                        window.location.href = '@Url.Action("View")/' + recordId;
-                    })
-                    console.log("file content do not have value");
-                }
+                            else{
+                                toastr.error('Unable to upload image');
+                                window.location.href = '@Url.Action("View")/' + recordId;
+                            }
+                        },
+                        complete: function () {
+                            Metronic.unblockUI();
+                        }
+                    });
+            }else{
+                Metronic.unblockUI();
+                bootbox.alert('@Labels.operation_done_suc', function () {
+                    window.location.href = '@Url.Action("View")/' + recordId;
+                })
+            }
             }
     </script>
 

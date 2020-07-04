@@ -325,6 +325,7 @@
     <Compile Include="Models\ViewModels\DisposableDistributionItemVM.cs" />
     <Compile Include="Models\ViewModels\DisposableDistributionVM.cs" />
     <Compile Include="Models\ViewModels\LookupCategoryVM.cs" />
+    <Compile Include="Models\ViewModels\PrintLabelVM.cs" />
     <Compile Include="Models\ViewModels\RestoreItemVM.cs" />
     <Compile Include="Models\ViewModels\RestoreVM.cs" />
     <Compile Include="Models\ViewModels\GetItemVM.cs" />
@@ -2996,7 +2997,6 @@
     <Content Include="Views\StockIn\ItemInWarehouse.cshtml" />
     <Content Include="Views\StockIn\Search.cshtml" />
     <Content Include="Views\StockIn\View.cshtml" />
-    <Content Include="Views\ReusableDistribution\ReturnItem.cshtml" />
     <Content Include="Views\Restore\Form.cshtml" />
     <Content Include="Views\Restore\Search.cshtml" />
     <Content Include="obj\Release\Inventory.csproj.CoreCompileInputs.cache" />
@@ -3007,6 +3007,7 @@
     <Content Include="Views\Lookups\Group.cshtml" />
     <Content Include="Views\Lookups\Category.cshtml" />
     <Content Include="Views\Lookups\Department.cshtml" />
+    <Content Include="Views\StockIn\PrintLabel.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -3089,7 +3090,6 @@
     <Folder Include="Uploads\ReusableDistribution\" />
     <Folder Include="Uploads\StockInScan\" />
     <Folder Include="Views\Helper\" />
-    <Folder Include="Views\Suggestion\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

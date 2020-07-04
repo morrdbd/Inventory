@@ -256,21 +256,8 @@
                 data_table.page.len($(this).val()).draw();
             })
 
-            ////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////
 
-
-
-        @*$('#data_table tbody').on('click', 'tr', function(){
-            if($(this).hasClass('selectedItem')){
-                $(this).removeClass('selectedItem');
-            } else {
-            $(this).addClass('selectedItem').siblings().removeClass('selectedItem');
-            }
-            let id = $(this).find('a').data().id;
-            if(id){
-                window.location.href = `@Url.Action("ViewItemInUse", "ReusableDistribution")/`+id;
-            }
-        });*@
         $("#GroupID").change(function(){
             var groupId = $("#GroupID").val();
             $('#CategoryID').empty();
