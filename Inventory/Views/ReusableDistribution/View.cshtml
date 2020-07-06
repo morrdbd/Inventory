@@ -28,32 +28,32 @@
         <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%;">
             <thead>
                 <tr>
-                    <th colspan="4" style="text-align:right; border-right:none;">@Labels.PC5Form</th>
-                    <th colspan="8" style="text-align:right; border-right:none;">@Labels.DistributionTicket</th>
+                    <th  style="text-align:right; border-right:none;">@Labels.PC5Form</th>
+                    <th  style="text-align:right; border-right:none;">@Labels.DistributionTicket</th>
                 </tr>
             </thead>
         </table>
         <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%;">
             <thead>
                 <tr>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.TicketNumber</th>
-                    <th colspan="4" style="text-align:right; word-wrap:normal;">@Model.TicketNumber</th>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.RequestNumber</th>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.RequestNumber</th>
+                    <th style="text-align:right; word-wrap:normal;">@Labels.TicketNumber</th>
+                    <th style="text-align:right; word-wrap:normal;">@Model.TicketNumber</th>
+                    <th style="text-align:right; word-wrap:normal;">@Labels.RequestNumber</th>
+                    <th style="text-align:right; word-wrap:normal;">@Model.RequestNumber</th>
 
                 </tr>
                 <tr>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.date</th>
-                    <th colspan="4" style="text-align:right; word-wrap:normal;">@Model.TicketIssuedDateForm</th>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.RequestDate</th>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.RequestDateForm</th>
+                    <th style="text-align:right; word-wrap:normal;">@Labels.date</th>
+                    <th style="text-align:right; word-wrap:normal;">@Model.TicketIssuedDateForm</th>
+                    <th style="text-align:right; word-wrap:normal;">@Labels.RequestDate</th>
+                    <th style="text-align:right; word-wrap:normal;">@Model.RequestDateForm</th>
 
                 </tr>
                 <tr>
-                    <th colspan="3" style="text-align:right; word-wrap:normal; width:20%">@Labels.Warehouse </th>
-                    <th colspan="4" style="text-align:right; word-wrap:normal;">@Model.Warehouse</th>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Labels.Requester</th>
-                    <th colspan="3" style="text-align:right; word-wrap:normal;">@Model.EmpDepartmentName</th>
+                    <th style="text-align:right; word-wrap:normal; width:20%">@Labels.Warehouse </th>
+                    <th style="text-align:right; word-wrap:normal;">@Model.Warehouse</th>
+                    <th style="text-align:right; word-wrap:normal;">@Labels.Requester</th>
+                    <th style="text-align:right; word-wrap:normal;">@Model.EmpDepartmentName</th>
                 </tr>
                 </thead>
         </table>
@@ -61,11 +61,12 @@
                     <thead>
                         <tr>
                             <th style="text-align:center; word-wrap:normal; word-wrap:normal;  width:5%;">#</th>
+                            <th style="text-align:center; word-wrap:normal; word-wrap:normal;  width:5%;">@Labels.Bar_Code</th>
                             <th style="text-align:center; word-wrap:normal; word-wrap:normal;">@Labels.Quantity</th>
                             <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.Unit</th>
                             <th style="text-align:center; word-wrap:normal;">@Labels.Item_Group</th>
                             <th style="text-align:center; word-wrap:normal;">@Labels.Item_Category</th>
-                            <th style="text-align:center; word-wrap:normal;">@Labels.ItemName</th>
+                            <th style="text-align:center; word-wrap:normal;">@Labels.Item_Name</th>
                             <th style="text-align:center; word-wrap:normal;">@Labels.Item_Code</th>
                             <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.UnitPrice</th>
                             <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.TotalPrice</th>
@@ -79,6 +80,7 @@
                             int index = 1;
                             <tr>
                                 <th style="text-align:center;">@index</th>
+                                <th style="text-align:center;">@item.BarCode</th>
                                 <th style="text-align:center;">@item.Quantity</th>
                                 <th style="text-align:center;">@item.UnitName</th>
                                 <th style="text-align:center;">@item.ItemGroupName</th>

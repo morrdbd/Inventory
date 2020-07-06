@@ -30,6 +30,8 @@ namespace Inventory.Models.ViewModels
 
         public int? UsageTypeID { get; set; }
 
+        public string BarCode { get; set; }
+
         public int? GroupID { get; set; }
 
         public int? CategoryID { get; set; }
@@ -196,6 +198,8 @@ namespace Inventory.Models.ViewModels
         public int? EmployeeID { get; set; }
 
         public string ItemInCondition { get; set; }
+
+        public string BarCode { get; set; }
 
         public int? GroupID { get; set; }
 

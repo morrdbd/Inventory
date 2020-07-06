@@ -40,6 +40,12 @@
             <section class="row">
                 <div class="col-md-3">
                     <div class="form-group">
+                        <label>@Labels.Bar_Code</label>
+                        <input type="text" class="form-control input-sm" name="BarCode" value="@search.BarCode" placeholder="@Labels.Bar_Code" id="BarCode" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
                         <label>@Labels.Item_Group</label>
                         @Html.DropDownList("GroupID", ViewBag.GroupDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "GroupID" })
                     </div>
@@ -56,14 +62,15 @@
                         <input type="text" name="ItemName" id="ItemName" class="form-control input-sm" data-msg="" placeholder="">
                     </div>
                 </div>
+                
+            </section>
+            <section class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.Item_Code</label>
                         <input type="text" name="ItemCode" id="ItemCode" class="form-control input-sm" data-msg="" placeholder="">
                     </div>
                 </div>
-            </section>
-            <section class="row">
                 <div class=" col-md-3">
                     <div class="form-group">
                         <label>@Labels.Size</label>
@@ -115,6 +122,7 @@
         <table id="data_table" class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
+                    <th>@Labels.Bar_Code</th>
                     <th>@Labels.Requester</th>
                     <th>@Labels.Employee</th>
                     <th>@Labels.FatherName</th>
@@ -124,9 +132,9 @@
                     <th>@Labels.RequestDate</th>
                     <th>@Labels.Quantity</th>
                     <th>@Labels.Unit</th>
-                    <th>@Labels.Group</th>
                     <th>@Labels.Item_Category</th>
-                    <th>@Labels.ItemName</th>
+                    <th>@Labels.Item_Category</th>
+                    <th>@Labels.Item_Name</th>
                     <th>@Labels.Item_Code</th>
                     <th>@Labels.Size</th>
                     <th>@Labels.Origin</th>
@@ -190,6 +198,7 @@
                     },
                 },
                 columns: [
+                    { data: 'BarCode' },
                     { data: 'DepartmentName' },
                     { data: 'EmployeeName' },
                     { data: 'EmployeeFName' },

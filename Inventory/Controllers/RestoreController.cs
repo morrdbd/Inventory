@@ -503,12 +503,13 @@ namespace Inventory.Controllers
                          where r.IsActive == true && disItem.IsReturned == true
                          select new
                          {
+                             sItem.BarCode,
                              r.RestoreID,
                              RestoreDate = r.DocumentIssuedDate,
                              r.DocumentIssuedNo,
                              r.ItemInCondition,
                              RestoreItemID = rItem.ID,
-                             rItem.StockInItemID,
+                             sItem.StockInItemID,
                              emp.DepartmentID,
                              r.EmployeeID,
                              EmployeeName = emp.Name,
@@ -526,6 +527,8 @@ namespace Inventory.Controllers
                              sItem.UnitPrice,
                              disItem.DealWithAccount
                          });
+            var test2 = query.ToList();
+
             if (model.DepartmentID != null)
             {
                 query = query.Where(c => c.DepartmentID == model.DepartmentID);
@@ -537,6 +540,10 @@ namespace Inventory.Controllers
             if (model.EmployeeID != null)
             {
                 query = query.Where(c => c.EmployeeID == model.EmployeeID);
+            }
+            if (!string.IsNullOrWhiteSpace(model.BarCode))
+            {
+                query = query.Where(r => r.BarCode.Contains(model.BarCode));
             }
             if (model.GroupID != null)
             {
@@ -582,6 +589,7 @@ namespace Inventory.Controllers
             var queryResult = query.OrderByDescending(i => i.RestoreDate).ToList();
             var data = queryResult.Select(i => new
             {
+                i.BarCode,
                 i.RestoreID,
                 RestoreDate = i.RestoreDate.ToDateString(Language),
                 i.DocumentIssuedNo,

@@ -14,8 +14,6 @@ namespace Inventory.Models.Tables
 
         public int StockInItemID { get; set; }
 
-        public int Quantity { get; set; }
-
         public string DealWithAccount { get; set; }
 
         public bool IsReturned { get; set; }

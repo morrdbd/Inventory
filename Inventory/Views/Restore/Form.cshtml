@@ -4,7 +4,7 @@
     var empSearch = ViewBag.emSearch as Inventory.Models.ViewModels.Employee_Search;
     var itemSearch = ViewBag.itemSearch as Inventory.Models.ViewModels.Item_Search;
 
-    ViewBag.Title = "Expired Items";
+    ViewBag.Title = Labels.RestoreItems;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
     string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
@@ -15,10 +15,10 @@
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
             <div class="caption">
-                Expired Item submitter Information
+                @Labels.RestoreByInfo
             </div>
             <div class="actions">
-                <a href="#popup_employee" data-toggle="modal" class="btn btn-xs btn-circle blue-steel"><i class="fa fa-user"></i>Select Employee</a>
+                <a href="#popup_employee" data-toggle="modal" class="btn btn-xs btn-circle blue-steel"><i class="fa fa-user"></i>@Labels.Select_Employee</a>
             </div>
         </div>
         <div class="portlet-body">
@@ -45,21 +45,21 @@
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
             <div class="caption">
-                Form Information
+                @Labels.FormInfo
             </div>
         </div>
         <div class="portlet-body">
             <section class="row">
                 <div class="col-md-3 form-group">
-                    <label>Issued Number</label>
+                    <label>@Labels.Issued</label>
                     <input type="text" name="DocumentIssuedNo" id="DocumentIssuedNo" value="@Model.DocumentIssuedNo" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
                 <div class="col-md-3 form-group">
-                    <label>Date</label>
+                    <label>@Labels.IssueDate</label>
                     <input type="text" name="DocumentIssuedDateForm" id="DocumentIssuedDateForm" value="@Model.DocumentIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                 </div>
                 <div class=" col-md-3 form-group">
-                    <label>Item Condition</label>
+                    <label>@Labels.ItemCodition</label>
                     @Html.DropDownListFor(m=> m.ItemInCondition, ViewBag.ItemInConditionDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @Required = "required" })
                 </div>
                 <div class="col-md-3 form-group">
@@ -72,7 +72,7 @@
 
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
-            <div class="caption">Expired Items</div>
+            <div class="caption">@Labels.ItemsTobeRestored</div>
             <div class="actions">
                 <a href="javascript:;" class="btn btn-xs btn-circle blue-steel" id="btn_add_item">
                     <i class="fa fa-plus"></i> @Labels.AddItem
@@ -85,13 +85,13 @@
                     <tr>
                         <th>@Labels.Unit</th>
                         <th>@Labels.Quantity</th>
-                        <th>Group</th>
-                        <th>Category</th>
-                        <th>Name</th>
-                        <th>Code</th>
-                        <th>Size</th>
-                        <th>Origin</th>
-                        <th>Brand</th>
+                        <th>@Labels.Item_Group</th>
+                        <th>@Labels.Item_Category</th>
+                        <th>@Labels.Item_Name</th>
+                        <th>@Labels.district_code</th>
+                        <th>@Labels.Size</th>
+                        <th>@Labels.Origin</th>
+                        <th>@Labels.Brand</th>
                         <th>@Labels.UnitPrice</th>
                         <th>@Labels.TotalPrice</th>
                         <th>@Labels.DealWithAccount</th>
@@ -158,13 +158,13 @@
                 <form method="post" action="ItemList" id="item_search_form" autocomplete="off" class="margin-top-10">
                     <section class="row">
                         <div class=" col-md-4 form-group">
-                            <label>Item Group</label>
+                            <label>@Labels.Item_Group</label>
                             <div class="col-md-8">
                                 @Html.DropDownList("GroupID", ViewBag.GroupDrp as SelectList, Labels.please_select, new { onchange = "loadCategories()", @class = "form-control input-sm", @ID = "GroupID" })
                             </div>
                         </div>
                         <div class=" col-md-4 form-group">
-                            <label>Item Category</label>
+                            <label>@Labels.Item_Category</label>
                             <div class="col-md-8">
                                 <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
                             </div>
@@ -172,19 +172,19 @@
                     </section>
                     <section class="row">
                         <div class="col-md-4 form-group">
-                            <label>Item Name</label>
+                            <label>@Labels.Item_Name</label>
                             <div class="col-md-8">
                                 <input type="text" name="ItemName" id="ItemName" value="@itemSearch.ItemName" class="form-control input-sm" data-msg="" placeholder="">
                             </div>
                         </div>
                         <div class="col-md-4 form-group">
-                            <label>Item Code</label>
+                            <label>@Labels.Item_Code</label>
                             <div class="col-md-8">
                                 <input type="text" name="ItemCode" id="ItemCode" value="@itemSearch.ItemCode" class="form-control input-sm" data-msg="" placeholder="">
                             </div>
                         </div>
                         <div class=" col-md-4 form-group">
-                            <label>Unit</label>
+                            <label>@Labels.Unit</label>
                             <div class="col-md-8">
                                 @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "UnitID" })
                             </div>
@@ -192,19 +192,19 @@
                     </section>
                     <section class="row">
                         <div class=" col-md-4 form-group">
-                            <label>Item Brand</label>
+                            <label>@Labels.Brand</label>
                             <div class="col-md-8">
                                 @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
                             </div>
                         </div>
                         <div class=" col-md-4 form-group">
-                            <label>Item Size</label>
+                            <label>@Labels.Size</label>
                             <div class="col-md-8">
                                 @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
                             </div>
                         </div>
                         <div class=" col-md-4 form-group">
-                            <label>Item Origin</label>
+                            <label>@Labels.Origin</label>
                             <div class="col-md-8">
                                 @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
                             </div>
@@ -224,14 +224,14 @@
                             <thead>
                                 <tr>
                                     <th>@Labels.Unit</th>
-                                    <th>Group Name</th>
-                                    <th>Category Name</th>
-                                    <th>Item Name</th>
-                                    <th>Item Code</th>
-                                    <th>Item Size</th>
-                                    <th>Item Origin</th>
-                                    <th>Item Brand</th>
-                                    <th>Unit Price</th>
+                                    <th>@Labels.Item_Group</th>
+                                    <th>@Labels.Item_Category</th>
+                                    <th>@Labels.Item_Name</th>
+                                    <th>@Labels.Item_Code</th>
+                                    <th>@Labels.Size</th>
+                                    <th>@Labels.Origin</th>
+                                    <th>@Labels.Brand</th>
+                                    <th>@Labels.UnitPrice</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -251,7 +251,7 @@
         <div class="modal-content">
             <div class="modal-header blue">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                Employee
+                @Labels.Employee
             </div>
             <div class="portlet-body">
                 <form id="employee_search_form" autocomplete="off" class="margin-top-10">
@@ -277,9 +277,9 @@
                             </div>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Department</label>
+                            <label>@Labels.Department</label>
                             <div class="col-md-8">
-                                @Html.DropDownList("sDepartmentID", ViewBag.DepartmentDrp as SelectList, "Select Department", new { @class = "form-control" })
+                                @Html.DropDownList("sDepartmentID", ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control" })
                             </div>
                         </div>
                     </section>
@@ -299,7 +299,7 @@
                                     <th>@Labels.Name</th>
                                     <th>@Labels.FatherName</th>
                                     <th>@Labels.Occupation</th>
-                                    <th>Department</th>
+                                    <th>@Labels.Department</th>
                                     <th></th>
                                 </tr>
                             </thead>

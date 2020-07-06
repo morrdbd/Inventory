@@ -834,9 +834,6 @@
   <data name="DistributionTicketList" xml:space="preserve">
     <value>لیست تکت توزیع</value>
   </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>نام جنس</value>
-  </data>
   <data name="Mem3Date" xml:space="preserve">
     <value>تاریخ م 3</value>
   </data>
@@ -942,17 +939,11 @@
   <data name="Brand" xml:space="preserve">
     <value>براند</value>
   </data>
-  <data name="Category" xml:space="preserve">
-    <value>نوع</value>
-  </data>
   <data name="Contractor_Name" xml:space="preserve">
     <value>قراردادی / از باز اخذګردیده</value>
   </data>
   <data name="Department" xml:space="preserve">
     <value>دیپارتمنت</value>
-  </data>
-  <data name="Group" xml:space="preserve">
-    <value>گروپ</value>
   </data>
   <data name="Item_Category" xml:space="preserve">
     <value>نوع جنس</value>
@@ -995,5 +986,32 @@
   </data>
   <data name="Usage_Type" xml:space="preserve">
     <value>نوع استعمال</value>
+  </data>
+  <data name="Bar_Code" xml:space="preserve">
+    <value>بار کود</value>
+  </data>
+  <data name="FormInfo" xml:space="preserve">
+    <value>معلومات فارم</value>
+  </data>
+  <data name="ItemCodition" xml:space="preserve">
+    <value>وضیعت جنس</value>
+  </data>
+  <data name="ItemsTobeRestored" xml:space="preserve">
+    <value>اجناس تسلیمی</value>
+  </data>
+  <data name="RestoreByInfo" xml:space="preserve">
+    <value>معلومات تسلیم کننده</value>
+  </data>
+  <data name="Restored_items" xml:space="preserve">
+    <value>اجناس اعاده</value>
+  </data>
+  <data name="Restored_items_list" xml:space="preserve">
+    <value>لست اجناس اعاده</value>
+  </data>
+  <data name="RestoreItems" xml:space="preserve">
+    <value>اجناسو تسلیمی</value>
+  </data>
+  <data name="View_Form" xml:space="preserve">
+    <value>نمایش فارم</value>
   </data>
 </root>

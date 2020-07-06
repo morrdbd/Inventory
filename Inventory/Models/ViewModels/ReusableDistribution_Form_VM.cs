@@ -7,7 +7,7 @@ namespace Inventory.Models.ViewModels
 {
     public class ReusableDistribution_Form_VM
     {
-        public int DistributionID { get; set; }
+        public int ReusableDistributionID { get; set; }
 
         public int? TicketNumber { get; set; }
 
@@ -33,6 +33,6 @@ namespace Inventory.Models.ViewModels
 
         public string Details { get; set; }
 
-        public ReusableDistributionItemVM[] ReusableDistributionItems { get; set; }
+        public ReusableDistributionItemVM[] DistributionItems { get; set; }
     }
 }

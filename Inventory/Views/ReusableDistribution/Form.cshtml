@@ -93,11 +93,11 @@
             <table id="assign_items_table" class="table table-striped table-condensed">
                 <thead id="thead_items">
                     <tr>
-                        <th>Bar Code</th>
+                        <th>@Labels.Bar_Code</th>
                         <th>@Labels.Unit</th>
                         <th>@Labels.Quantity</th>
-                        <th>@Labels.Group</th>
-                        <th>@Labels.Category</th>
+                        <th>@Labels.Item_Group</th>
+                        <th>@Labels.Item_Category</th>
                         <th>@Labels.Item_Name</th>
                         <th>@Labels.Item_Code</th>
                         <th>@Labels.Size</th>
@@ -226,8 +226,8 @@
                                 <tr>
                                     <th>Bar Code</th>
                                     <th>@Labels.Unit</th>
-                                    <th>@Labels.Group</th>
-                                    <th>@Labels.Category</th>
+                                    <th>@Labels.Item_Group</th>
+                                    <th>@Labels.Item_Category</th>
                                     <th>@Labels.Item_Name</th>
                                     <th>@Labels.Item_Code</th>
                                     <th>@Labels.Size</th>
@@ -466,7 +466,7 @@
                             if (response != false) {
                                 var isDuplicate = false;
                                 DistributionItems.forEach(function(i){
-                                    if(i.ID == response.ID){
+                                    if(i.StockInItemID == response.StockInItemID){
                                         isDuplicate = true;
                                         return;
                                     }
@@ -585,7 +585,7 @@
                         data: null,
                         visible: true,
                         render: function (row) {
-                            return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.ID + '">Select</button>';
+                            return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.StockInItemID + '">Select</button>';
                         }
                     }
                 ],
@@ -642,7 +642,7 @@
                             console.log(response.UnitPrice);
                             $("#Quantity").val(response.AvailableQuantity);
                             $("#UnitPrice").val(response.UnitPrice);
-                            $("#StockInItemID").val(response.ID);
+                            $("#StockInItemID").val(response.StockInItemID);
                         }
                         Metronic.unblockUI('#item_list_div');
                     }
