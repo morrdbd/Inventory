@@ -482,9 +482,9 @@ namespace Inventory.Controllers
                                     i.UnitPrice,
                                     i.Remarks
                                 });
-            if(search.BarCode != null)
+            if(!string.IsNullOrWhiteSpace(search.BarCode))
             {
-                query = query.Where(i=>i.BarCode == search.BarCode);
+                query = query.Where(i=>i.BarCode.Contains(search.BarCode));
             }
             if (!string.IsNullOrWhiteSpace(search.ReportNumber))
             {
