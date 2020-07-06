@@ -459,7 +459,7 @@ namespace Inventory.Controllers
             var DateTo = search.DateTo.ToDate(Language);
             var query = (from s in db.StockIns
                                 join i in db.StockInItems on s.StockInID equals i.StockInID
-                                where s.IsActive == true
+                                where s.IsActive == true && i.AvailableQuantity > 0
                                 select new
                                 {
                                     s.StockInID,

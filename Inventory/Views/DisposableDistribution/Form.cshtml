@@ -2,7 +2,7 @@
 
 @{
     var itemSearch = ViewBag.itemSearch as Inventory.Models.ViewModels.Item_Search;
-    ViewBag.Title = "Disposable Items Distribution Form";
+    ViewBag.Title = Model.DisposableDistributionID == 0 ? Labels.add_disposable_distribution : Labels.edit_disposable_distribution;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
     string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
@@ -65,8 +65,8 @@
                     <tr>
                         <th>@Labels.Unit</th>
                         <th>@Labels.Quantity</th>
-                        <th>@Labels.Group</th>
-                        <th>@Labels.Category</th>
+                        <th>@Labels.Item_Group</th>
+                        <th>@Labels.Item_Category</th>
                         <th>@Labels.Item_Name</th>
                         <th>@Labels.Item_Code</th>
                         <th>@Labels.Size</th>
@@ -187,8 +187,8 @@
                             <thead>
                                 <tr>
                                     <th>@Labels.Unit</th>
-                                    <th>@Labels.Group</th>
-                                    <th>@Labels.Category</th>
+                                    <th>@Labels.Item_Group</th>
+                                    <th>@Labels.Item_Category</th>
                                     <th>@Labels.Item_Name</th>
                                     <th>@Labels.Item_Code</th>
                                     <th>@Labels.Size</th>

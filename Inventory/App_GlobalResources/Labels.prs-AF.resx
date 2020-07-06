@@ -987,11 +987,20 @@
   <data name="Usage_Type" xml:space="preserve">
     <value>نوع استعمال</value>
   </data>
+  <data name="add_disposable_distribution" xml:space="preserve">
+    <value>فورمه توزیع اجسام مصرفی</value>
+  </data>
   <data name="add_restore_form" xml:space="preserve">
     <value>فورمه ازدیاد اعاده</value>
   </data>
   <data name="Bar_Code" xml:space="preserve">
     <value>بار کود</value>
+  </data>
+  <data name="disposable_item_distribution_search" xml:space="preserve">
+    <value>جستجو اجسام مصرفی توضیع شده</value>
+  </data>
+  <data name="edit_disposable_distribution" xml:space="preserve">
+    <value>تغیر فورمه اجسام مصرفی</value>
   </data>
   <data name="edit_restore_form" xml:space="preserve">
     <value>تغیر فورمه اعاده</value>

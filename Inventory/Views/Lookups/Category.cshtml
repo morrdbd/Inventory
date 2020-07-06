@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Category";
+    ViewBag.Title = Labels.Item_Category;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.search as Inventory.Models.ViewModels.LookupCategorySearch;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
@@ -29,7 +29,7 @@
                     @Html.DropDownList("SLookupUsageType", ViewBag.LookupsUsageType_drp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @id = "SLookupUsageType" })
                 </div>
                 <div class="col-md-3">
-                    <label>@Labels.Group</label>
+                    <label>@Labels.Item_Group</label>
                     <select id="SLookupGroupType" name="SLookupGroupType" class="form-control input-sm"></select>
                 </div>
                 <div class="col-md-3">
@@ -81,8 +81,8 @@
                                     <th>@Labels.dari_name</th>
                                     <th>@Labels.pashtu_name</th>
                                     <th>@Labels.code</th>
-                                    <th>Group Name</th>
-                                    <th>Usage Type Name</th>
+                                    <th>@Labels.Item_Group</th>
+                                    <th>@Labels.Usage_Type</th>
                                     <th>@Labels.active</th>
                                     <th></th>
                                     <th></th>
@@ -116,7 +116,7 @@
                                     @Html.DropDownList("UsageTypeId", ViewBag.LookupsUsageType_drp as SelectList, Labels.please_select, new { onchange = "loadCategories()", @class = "form-control input-sm", @required = "true", @data_msg = "", @id = "UsageTypeId" })
                                 </div>
                                 <div class="form-group">
-                                    <label>@Labels.Group</label>
+                                    <label>@Labels.Item_Group</label>
                                     <select id="GroupId" name="GroupId" class="form-control input-sm"></select>
                                 </div>
                                 <div class="form-group" id="value_code_div">

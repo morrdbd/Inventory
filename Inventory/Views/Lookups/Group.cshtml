@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Group";
+    ViewBag.Title = Labels.Item_Group;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.search as Inventory.Models.ViewModels.LookupGroupSearch;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
@@ -75,7 +75,7 @@
                                     <th>@Labels.dari_name</th>
                                     <th>@Labels.pashtu_name</th>
                                     <th>@Labels.code</th>
-                                    <th>Lookup Group Name</th>
+                                    <th>@Labels.Usage_Type</th>
                                     <th>@Labels.active</th>
                                     <th></th>
                                     <th></th>
@@ -216,7 +216,7 @@
                     { data: 'DrName' },
                     { data: 'PaName' },
                     { data: 'ValueCode' },
-                    { data: 'GroupName' },
+                    { data: 'UsageTypeName' },
                     {
                         data: null,
                         visible: true,

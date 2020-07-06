@@ -124,6 +124,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Disposable Distribution Form.
+        /// </summary>
+        internal static string add_disposable_distribution {
+            get {
+                return ResourceManager.GetString("add_disposable_distribution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add District.
         /// </summary>
         internal static string add_district {
@@ -619,6 +628,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disposable Item Distribution Search.
+        /// </summary>
+        internal static string disposable_item_distribution_search {
+            get {
+                return ResourceManager.GetString("disposable_item_distribution_search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Distribution Ticket.
         /// </summary>
         internal static string DistributionTicket {
@@ -777,6 +795,15 @@ namespace Resources {
         internal static string edit_case {
             get {
                 return ResourceManager.GetString("edit_case", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Disposable Distribution Form.
+        /// </summary>
+        internal static string edit_disposable_distribution {
+            get {
+                return ResourceManager.GetString("edit_disposable_distribution", resourceCulture);
             }
         }
         
