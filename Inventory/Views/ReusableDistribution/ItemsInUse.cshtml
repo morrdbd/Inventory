@@ -222,7 +222,7 @@
                         data: null,
                         visible: canView,
                         render: function (row) {
-                            return '<a href="@Url.Action("View")/'+row.ReusableDistributionID+'" title="@Labels.return_item" data-id="' + row.distributionItemID + '" class="btn btn-xs blue view-item"><i class="fa fa-file-text"></i>View Form</a>';
+                            return '<a href="@Url.Action("View")/'+row.ReusableDistributionID+'" title="@Labels.return_item" data-id="' + row.distributionItemID + '" class="btn btn-xs blue view-item"><i class="fa fa-file-text"></i>@Labels.View_Form</a>';
                         }
                     }
                 ],

@@ -1005,8 +1005,14 @@
   <data name="Usage_Type" xml:space="preserve">
     <value>د استعمال نوعه</value>
   </data>
+  <data name="add_restore_form" xml:space="preserve">
+    <value>فورمه ازدیاد اعاده</value>
+  </data>
   <data name="Bar_Code" xml:space="preserve">
     <value>بار کود</value>
+  </data>
+  <data name="edit_restore_form" xml:space="preserve">
+    <value>تغیر فورمه اعاده</value>
   </data>
   <data name="FormInfo" xml:space="preserve">
     <value>فارم معلومات</value>
@@ -1025,9 +1031,6 @@
   </data>
   <data name="Restored_items_list" xml:space="preserve">
     <value>تسلیم شوو توکو لست</value>
-  </data>
-  <data name="RestoreItems" xml:space="preserve">
-    <value>تسلیمیدونکی توکی</value>
   </data>
   <data name="View_Form" xml:space="preserve">
     <value>فارم لیدل</value>

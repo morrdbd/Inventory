@@ -4,7 +4,7 @@
     var empSearch = ViewBag.emSearch as Inventory.Models.ViewModels.Employee_Search;
     var itemSearch = ViewBag.itemSearch as Inventory.Models.ViewModels.Item_Search;
 
-    ViewBag.Title = Labels.RestoreItems;
+    ViewBag.Title = Model.RestoreID == 0 ? Labels.add_restore_form : Labels.edit_restore_form;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
     string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);

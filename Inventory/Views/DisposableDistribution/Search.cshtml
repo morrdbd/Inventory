@@ -201,7 +201,7 @@
                         data: null,
                         visible: canView,
                         render: function (row) {
-                            return '<a href="@Url.Action("View")/'+row.DisposableDistributionID+'" title="View Form" data-id="' + row.DisposableDistributionID + '" class="btn btn-xs blue view-item"><i class="fa fa-eye"></i>View Form</a>';
+                            return '<a href="@Url.Action("View")/'+row.DisposableDistributionID+'" title="@Labels.View_Form" data-id="' + row.DisposableDistributionID + '" class="btn btn-xs blue view-item"><i class="fa fa-eye"></i>@Labels.View_Form</a>';
                         }
                     }
                 ],

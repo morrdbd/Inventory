@@ -160,6 +160,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Restore.
+        /// </summary>
+        internal static string add_restore_form {
+            get {
+                return ResourceManager.GetString("add_restore_form", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New User.
         /// </summary>
         internal static string add_user {
@@ -768,6 +777,15 @@ namespace Resources {
         internal static string edit_case {
             get {
                 return ResourceManager.GetString("edit_case", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Restore Form.
+        /// </summary>
+        internal static string edit_restore_form {
+            get {
+                return ResourceManager.GetString("edit_restore_form", resourceCulture);
             }
         }
         
@@ -2001,15 +2019,6 @@ namespace Resources {
         internal static string Restored_items_list {
             get {
                 return ResourceManager.GetString("Restored_items_list", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Restore Items.
-        /// </summary>
-        internal static string RestoreItems {
-            get {
-                return ResourceManager.GetString("RestoreItems", resourceCulture);
             }
         }
         
