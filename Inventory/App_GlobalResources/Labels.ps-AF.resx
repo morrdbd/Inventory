@@ -1044,14 +1044,12 @@
   <data name="View_Form" xml:space="preserve">
     <value>فارم لیدل</value>
   </data>
-<<<<<<< HEAD
   <data name="AddNewDepartment" xml:space="preserve">
     <value>د یپارمنټ اضافه کول </value>
   </data>
   <data name="AddNewItemCategory" xml:space="preserve">
     <value>د توکی کټګوری اضافه کول</value>
   </data>
-=======
   <data name="Item_already_exist" xml:space="preserve">
     <value>توکی اضافه شوی دی</value>
   </data>
@@ -1085,7 +1083,6 @@
   <data name="second_hand_price" xml:space="preserve">
     <value>دوهم لاس قیمت</value>
  </data>
->>>>>>> 5c6721e6011e36f98e9d4d7f6f2a2a24457c75c6
   <data name="AddNewItemGroup" xml:space="preserve">
     <value>د توکی ګروپ اضافه کول </value>
   </data>
