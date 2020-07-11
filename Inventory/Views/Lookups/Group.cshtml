@@ -97,7 +97,7 @@
         <section class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Add New Item Group</h4>
+                <h4 class="modal-title">@Labels.AddNewItemGroup</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -105,7 +105,7 @@
                         <div class="form-body">
                             <form method="post" id="value_form" action="@Url.Action("SaveGroupValue")">
                                 <div class="form-group">
-                                    <label>Lookup Type</label>
+                                    <label>@Labels.lookups</label>
                                     @Html.DropDownList("GroupValueId", ViewBag.LookupsUsageType_drp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @required = "true", @data_msg = "", @id = "GroupValueId" })
                                 </div>
                                 <div class="form-group" id="value_code_div">

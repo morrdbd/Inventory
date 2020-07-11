@@ -52,7 +52,7 @@
 
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
-            <div class="caption">Items</div>
+            <div class="caption">@Labels.Item_Name</div>
             <div class="actions">
                 <a href="javascript:;" class="btn btn-xs btn-circle blue-steel" id="btn_add_item">
                     <i class="fa fa-plus"></i> @Labels.AddItem
@@ -398,7 +398,7 @@
                         data: null,
                         visible: true,
                         render: function (row) {
-                            return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.ID + '">Select</button>';
+                            return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.ID + '">@Labels.please_select</button>';
                         }
                     }
                 ],

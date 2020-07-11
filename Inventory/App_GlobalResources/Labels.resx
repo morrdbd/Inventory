@@ -966,4 +966,10 @@
   <data name="View_Form" xml:space="preserve">
     <value>View Form</value>
   </data>
+  <data name="AddNewItemGroup" xml:space="preserve">
+    <value>Add New Item Group</value>
+  </data>
+  <data name="LookupName" xml:space="preserve">
+    <value>Lookup Name</value>
+  </data>
 </root>

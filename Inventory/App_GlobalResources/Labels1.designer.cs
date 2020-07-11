@@ -97,6 +97,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New Item Group.
+        /// </summary>
+        internal static string AddNewItemGroup {
+            get {
+                return ResourceManager.GetString("AddNewItemGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New Record.
         /// </summary>
         internal static string AddNewRecord {
@@ -1362,6 +1371,15 @@ namespace Resources {
         internal static string logout {
             get {
                 return ResourceManager.GetString("logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lookup Name.
+        /// </summary>
+        internal static string LookupName {
+            get {
+                return ResourceManager.GetString("LookupName", resourceCulture);
             }
         }
         

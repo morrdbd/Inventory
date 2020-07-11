@@ -69,7 +69,7 @@
                         <div class="form-body">
                             <form method="post" id="value_form" action="@Url.Action("SaveLookupValue")">
                                 <div class="form-group">
-                                    <label>Lookup Type</label>
+                                    <label>@Labels.lookups</label>
                                     @Html.DropDownList("LookupCode", ViewBag.Lookups_drp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @required = "true", @data_msg = "", @id = "lookup_code" })
                                 </div>
                                 <div class="form-group" id="value_code_div">
