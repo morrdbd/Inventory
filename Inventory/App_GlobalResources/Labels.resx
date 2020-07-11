@@ -966,13 +966,12 @@
   <data name="View_Form" xml:space="preserve">
     <value>View Form</value>
   </data>
-<<<<<<< HEAD
   <data name="AddNewDepartment" xml:space="preserve">
     <value>Add New Department</value>
   </data>
   <data name="AddNewItemCategory" xml:space="preserve">
     <value>Add New Item Category</value>
-=======
+  </data>
   <data name="Item_already_exist" xml:space="preserve">
     <value>Item already exist</value>
   </data>
@@ -1005,7 +1004,6 @@
   </data>
   <data name="second_hand_price" xml:space="preserve">
     <value>Second Hand Price</value>
->>>>>>> 5c6721e6011e36f98e9d4d7f6f2a2a24457c75c6
   </data>
   <data name="AddNewItemGroup" xml:space="preserve">
     <value>Add New Item Group</value>
