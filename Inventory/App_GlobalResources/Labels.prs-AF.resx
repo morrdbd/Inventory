@@ -1059,4 +1059,10 @@
   <data name="second_hand_price" xml:space="preserve">
     <value>قیمت دست دوم</value>
   </data>
+  <data name="AddNewItemGroup" xml:space="preserve">
+    <value>ازدیاد جنس جدید در گروف  </value>
+  </data>
+  <data name="LookupName" xml:space="preserve">
+    <value>نام لوکاپ</value>
+  </data>
 </root>

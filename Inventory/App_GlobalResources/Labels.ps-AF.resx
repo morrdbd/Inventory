@@ -877,7 +877,7 @@
     <value>درسیداتو راپور معلومات</value>
   </data>
   <data name="ReceiptReportItems" xml:space="preserve">
-    <value>رسیداتو راپور اجناس</value>
+    <value>د توکو د رسیداتو راپور</value>
   </data>
   <data name="Remarks" xml:space="preserve">
     <value>ملاحظات</value>
@@ -1012,7 +1012,7 @@
     <value>فورمه ازدیاد اعاده</value>
   </data>
   <data name="Bar_Code" xml:space="preserve">
-    <value>بار کود</value>
+    <value>بار کوډ</value>
   </data>
   <data name="disposable_item_distribution_search" xml:space="preserve">
     <value> د ویشل شوی مصرفی اجسامو لټون </value>
@@ -1076,5 +1076,11 @@
   </data>
   <data name="second_hand_price" xml:space="preserve">
     <value>دوهم لاس قیمت</value>
+ </data>
+  <data name="AddNewItemGroup" xml:space="preserve">
+    <value>ګروپ ته د نوی جنس اضافه کول</value>
+  </data>
+  <data name="LookupName" xml:space="preserve">
+    <value>د لټون نوم</value>
   </data>
 </root>

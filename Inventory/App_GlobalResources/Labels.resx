@@ -999,4 +999,10 @@
   <data name="second_hand_price" xml:space="preserve">
     <value>Second Hand Price</value>
   </data>
+  <data name="AddNewItemGroup" xml:space="preserve">
+    <value>Add New Item Group</value>
+  </data>
+  <data name="LookupName" xml:space="preserve">
+    <value>Lookup Name</value>
+  </data>
 </root>
