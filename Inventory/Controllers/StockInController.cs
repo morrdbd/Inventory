@@ -483,7 +483,9 @@ namespace Inventory.Controllers
                                     i.OriginID,
                                     i.BrandID,
                                     i.UnitPrice,
-                                    i.Remarks
+                                    i.Remarks,
+                                    i.IsSecondHand,
+                                    i.SecondHandPrice
                                 });
             if(!string.IsNullOrWhiteSpace(search.BarCode))
             {
@@ -551,7 +553,9 @@ namespace Inventory.Controllers
                 BrandName = AdminRepo.LookupName(Language, r.BrandID),
                 r.UnitPrice,
                 Total = r.Quantity * r.UnitPrice,
-                r.Remarks
+                r.Remarks,
+                r.IsSecondHand,
+                r.SecondHandPrice
             }).ToList();
             return Json(new
             {

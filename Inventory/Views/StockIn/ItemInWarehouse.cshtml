@@ -139,6 +139,8 @@
                     <th>@Labels.UnitPrice</th>
                     <th>@Labels.TotalPrice</th>
                     <th>@Labels.Remarks</th>
+                    <th>@Labels.is_second_hand</th>
+                    <th>@Labels.second_hand_price</th>
                     <th></th>
                 </tr>
             </thead>
@@ -147,7 +149,7 @@
 </div>
 
 @section scripts{
-    <script>
+<script>
     var model = @Html.Raw(Json.Encode(Model));
     $(function () {
             $("#record_form").validate({
@@ -216,6 +218,17 @@
                     { data: 'UnitPrice'},
                     { data: 'Total'},
                     { data: 'Remarks'},
+                    {
+                        data: null,
+                        render: function(row){
+                            if(row.IsSecondHand){
+                                return '@Labels.yes';
+                            }else{
+                                return '@Labels.no';
+                            }
+                        }
+                    },
+                    { data: 'SecondHandPrice'},
                     {
                         data: null,
                         visible: canView,
@@ -356,7 +369,7 @@
         });
 
     })
-    </script>
+</script>
     <script>
         function saveImage(recordId){
             if($("#FileContent").val()){
