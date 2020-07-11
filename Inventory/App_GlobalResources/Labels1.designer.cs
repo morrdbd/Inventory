@@ -97,6 +97,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New Department.
+        /// </summary>
+        internal static string AddNewDepartment {
+            get {
+                return ResourceManager.GetString("AddNewDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Item Category.
+        /// </summary>
+        internal static string AddNewItemCategory {
+            get {
+                return ResourceManager.GetString("AddNewItemCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New Item Group.
         /// </summary>
         internal static string AddNewItemGroup {

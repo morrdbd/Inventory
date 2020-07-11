@@ -538,7 +538,7 @@
                         console.log(JSON.stringify(response));
                         $('#employee_table > tbody').empty();
                         response.forEach(function(emp){
-                            var selectBtn = '<button class="btn btn-xs btn-primary btn_select_employee" data-id="' + emp.EmployeeID + '">Select</button>';
+                            var selectBtn = '<button class="btn btn-xs btn-primary btn_select_employee" data-id="' + emp.EmployeeID + '">@Labels.please_select</button>';
                             $('#employee_table > tbody').append('<tr><td>'+emp.Name+'</td><td>'+emp.FatherName+'</td><td>'+emp.Occupation+'</td><td>'+emp.DepartmentName+'</td><td>'+selectBtn+'</td></tr>');
                         })
                         Metronic.unblockUI('#list_div');
