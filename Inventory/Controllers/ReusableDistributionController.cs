@@ -195,7 +195,9 @@ namespace Inventory.Controllers
                 UnitPrice = i.UnitPrice,
                 AvailableQuantity = i.AvailableQuantity,
                 UsageTypeID = i.UsageTypeID,
-                ItemCode = i.ItemCode
+                ItemCode = i.ItemCode,
+                IsSecondHand = i.IsSecondHand,
+                SecondHandPrice = i.SecondHandPrice
             }
             ).ToList();
             var tes = data.ToList();
@@ -599,6 +601,7 @@ namespace Inventory.Controllers
                 if (obj != null && obj.AvailableQuantity >= model.Quantity)
                 {
                     var item = new {
+                        obj.BarCode,
                         obj.StockInItemID,
                         model.Quantity,
                         obj.ItemName,
@@ -612,7 +615,9 @@ namespace Inventory.Controllers
                         SizeName = AdminRepo.LookupName(Language, obj.SizeID),
                         OriginName = AdminRepo.LookupName(Language, obj.OriginID),
                         BrandName = AdminRepo.LookupName(Language, obj.BrandID),
-                        model.DealWithAccount
+                        model.DealWithAccount,
+                        obj.IsSecondHand,
+                        obj.SecondHandPrice
                     };
                     return Json(item, JsonRequestBehavior.AllowGet);
                 }

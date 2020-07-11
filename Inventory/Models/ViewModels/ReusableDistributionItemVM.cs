@@ -38,5 +38,10 @@ namespace Inventory.Models.ViewModels
         public int TotalPrice { get; set; }
 
         public string DealWithAccount { get; set; }
+
+        public int? SecondHandPrice { get; set; }
+
+        public bool IsSecondHand { get; set; }
+
     }
 }

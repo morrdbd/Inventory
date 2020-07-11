@@ -106,6 +106,8 @@
                         <th>@Labels.UnitPrice</th>
                         <th>@Labels.TotalPrice</th>
                         <th>@Labels.DealWithAccount</th>
+                        <th>@Labels.is_second_hand</th>
+                        <th>@Labels.second_hand_price</th>
                         <th></th>
                         @* <th></th>*@
                     </tr>
@@ -117,25 +119,27 @@
                         {
                             foreach (var item in Model.DistributionItems)
                             {
-                                <tr>
-                                    <td>@item.BarCode</td>
-                                    <td>@item.UnitName</td>
-                                    <td>@item.Quantity</td>
-                                    <td>@item.ItemGroupName</td>
-                                    <td>@item.ItemCategoryName</td>
-                                    <td>@item.ItemName</td>
-                                    <td>@item.ItemCode</td>
-                                    <td>@item.ItemSizeName</td>
-                                    <td>@item.ItemOriginName</td>
-                                    <td>@item.BrandName</td>
-                                    <td>@item.UnitPrice</td>
-                                    <td>@item.TotalPrice</td>
-                                    <td>@item.DealWithAccount</td>
-                                    <td>
-                                        @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>*@
-                                        <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
+                    <tr>
+                        <td>@item.BarCode</td>
+                        <td>@item.UnitName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.ItemGroupName</td>
+                        <td>@item.ItemCategoryName</td>
+                        <td>@item.ItemName</td>
+                        <td>@item.ItemCode</td>
+                        <td>@item.ItemSizeName</td>
+                        <td>@item.ItemOriginName</td>
+                        <td>@item.BrandName</td>
+                        <td>@item.UnitPrice</td>
+                        <td>@item.TotalPrice</td>
+                        <td>@item.DealWithAccount</td>
+                        <td>@item.IsSecondHand</td>
+                        <td>@item.SecondHandPrice</td>
+                        <td>
+                            @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>*@
+                            <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
                                 index++;
                             }
                         }
@@ -351,6 +355,8 @@
             <td>{{UnitPrice}}</td>
             <td>{{TotalPrice}}</td>
             <td>{{DealWithAccount}}</td>
+            <td>{{IsSecondHand}}</td>
+            <td>{{SecondHandPrice}}</td>
             <td>
                 <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
                 @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="{{index}}"><i class="fa fa-edit"></i></a>
@@ -492,6 +498,8 @@
                                 .replace("{{UnitPrice}}", response.UnitPrice)
                                 .replace("{{TotalPrice}}", response.Quantity * response.UnitPrice)
                                 .replace("{{DealWithAccount}}", response.DealWithAccount)
+                                .replace("{{IsSecondHand}}", response.IsSecondHand == true ? "@Labels.yes" : "@Labels.no")
+                                .replace("{{SecondHandPrice}}", response.SecondHandPrice != null ? response.SecondHandPrice : '')
                                 .replace("{{index}}", _index);
                                 //if (row.index == -1) {
 

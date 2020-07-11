@@ -53,9 +53,10 @@ namespace Inventory.Models.Tables
 
         public int? SecondHandPrice { get; set; }
 
+        public bool IsSecondHand { get; set; }
+
         public string Remarks { get; set; }
 
-        public bool IsSecondHand { get; set; }
 
     }
 }

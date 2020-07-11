@@ -70,7 +70,9 @@
                             <th style="text-align:center; word-wrap:normal;">@Labels.Item_Code</th>
                             <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.UnitPrice</th>
                             <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.TotalPrice</th>
-                            <th colspan="3" style="text-align:center; word-wrap:normal;">@Labels.DealWithAccount</th>
+                            <th style="text-align:center; word-wrap:normal;">@Labels.DealWithAccount</th>
+                            <th style="text-align:center; word-wrap:normal;">@Labels.is_second_hand</th>
+                            <th style="text-align:center; word-wrap:normal;">@Labels.second_hand_price</th>
                         </tr>
 
                     </thead>
@@ -88,25 +90,23 @@
                                 <th style="text-align:center;">@item.ItemName</th>
                                 <th style="text-align:center;">@item.ItemCode</th>
                                 <th style="text-align:center;">@item.UnitPrice</th>
-                                <th style="text-align:center;"> @(item.Quantity * item.UnitPrice)</th>
-                                <th style="text-align:center;" colspan="3">@item.DealWithAccount</th>
+                                <th style="text-align:center;">@(item.Quantity * item.UnitPrice)</th>
+                                <th style="text-align:center;">@item.DealWithAccount</th>
+                                <th style="text-align:center;">@(item.IsSecondHand == true ? Labels.yes : Labels.no)</th>
+                                <th style="text-align:center;">@item.SecondHandPrice</th>
                             </tr>
                             index++;
 
                         }
-                        <tr>
-                            <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                            <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                            <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                            <th colspan="5" style="text-align:center; word-wrap:normal; width:40%;">@Model.Details</th>
-                            <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                            <th style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                            <th colspan="3" style="text-align:center; word-wrap:normal;">&nbsp;</th>
-                        </tr>
+                            <tr>
+                                <td colspan="13" style="text-align:center; word-wrap:normal;">@Model.Details</td>
+                            </tr>
                         <tr>
                             <th colspan="9" style="text-align:center;"> مجموع قیمت</th>
                             <th style="text-align:center;"> @Model.DistributionItems.Sum(i => i.UnitPrice * i.Quantity)</th>
-                            <th colspan="3" style="text-align:center;">افغانی </th>
+                            <th style="text-align:center;">افغانی </th>
+                            <th style="text-align:center;">&nbsp;</th>
+                            <th style="text-align:center;">&nbsp;</th>
                         </tr>
                     </tbody>
                 </table>
