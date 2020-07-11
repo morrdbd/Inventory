@@ -946,7 +946,7 @@
     <value>دیپارتمنت</value>
   </data>
   <data name="Item_Category" xml:space="preserve">
-    <value>نوع جنس</value>
+    <value>کتگوری جنس</value>
   </data>
   <data name="Item_Code" xml:space="preserve">
     <value>جنس کود</value>
@@ -1026,8 +1026,14 @@
   <data name="View_Form" xml:space="preserve">
     <value>نمایش فارم</value>
   </data>
+  <data name="AddNewDepartment" xml:space="preserve">
+    <value>ازدیاد د یپارمنت</value>
+  </data>
+  <data name="AddNewItemCategory" xml:space="preserve">
+    <value>ازدیاد کتګوری جنس</value>
+  </data>
   <data name="AddNewItemGroup" xml:space="preserve">
-    <value>ازدیاد جنس جدید در گروف  </value>
+    <value>ازدیاد گروپ جنس  </value>
   </data>
   <data name="LookupName" xml:space="preserve">
     <value>نام لوکاپ</value>

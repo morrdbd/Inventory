@@ -964,7 +964,7 @@
     <value>دیپارتمنټ</value>
   </data>
   <data name="Item_Category" xml:space="preserve">
-    <value>د توکی نوعه</value>
+    <value>د توکی کټګوری</value>
   </data>
   <data name="Item_Code" xml:space="preserve">
     <value> د توکی کوډ</value>
@@ -1044,8 +1044,14 @@
   <data name="View_Form" xml:space="preserve">
     <value>فارم لیدل</value>
   </data>
+  <data name="AddNewDepartment" xml:space="preserve">
+    <value>د یپارمنټ اضافه کول </value>
+  </data>
+  <data name="AddNewItemCategory" xml:space="preserve">
+    <value>د توکی کټګوری اضافه کول</value>
+  </data>
   <data name="AddNewItemGroup" xml:space="preserve">
-    <value>ګروپ ته د نوی جنس اضافه کول</value>
+    <value>د توکی ګروپ اضافه کول </value>
   </data>
   <data name="LookupName" xml:space="preserve">
     <value>د لټون نوم</value>

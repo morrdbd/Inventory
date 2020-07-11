@@ -439,7 +439,7 @@
                         $('#employee_table > tbody').empty();
                         if(response.length){
                             response.forEach(function(emp){
-                                var selectBtn = '<button class="btn btn-xs btn-primary btn_select_employee" data-id="' + emp.EmployeeID + '">Select</button>';
+                                var selectBtn = '<button class="btn btn-xs btn-primary btn_select_employee" data-id="' + emp.EmployeeID + '">@Labels.please_select</button>';
                                 $('#employee_table > tbody').append('<tr><td>'+emp.Name+'</td><td>'+emp.FatherName+'</td><td>'+emp.Occupation+'</td><td>'+emp.DepartmentName+'</td><td>'+selectBtn+'</td></tr>');
                             })
                         }else{
@@ -497,7 +497,7 @@
                         data: null,
                         visible: true,
                         render: function (row) {
-                            return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.ID + '">Select</button>';
+                            return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.ID + '">@Labels.please_select</button>';
                         }
                     }
                 ],
