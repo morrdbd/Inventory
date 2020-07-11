@@ -966,4 +966,37 @@
   <data name="View_Form" xml:space="preserve">
     <value>View Form</value>
   </data>
+  <data name="Item_already_exist" xml:space="preserve">
+    <value>Item already exist</value>
+  </data>
+  <data name="please_add_item" xml:space="preserve">
+    <value>Please add item</value>
+  </data>
+  <data name="please_select_employee" xml:space="preserve">
+    <value>Please select employee</value>
+  </data>
+  <data name="Unable_to_upload_image" xml:space="preserve">
+    <value>Unable to upload image</value>
+  </data>
+  <data name="issue_number" xml:space="preserve">
+    <value>Issue Number</value>
+  </data>
+  <data name="restore_form" xml:space="preserve">
+    <value>Restore Form</value>
+  </data>
+  <data name="all_stockin" xml:space="preserve">
+    <value>All Stockin</value>
+  </data>
+  <data name="date_expired" xml:space="preserve">
+    <value>Date Expired</value>
+  </data>
+  <data name="is_expired" xml:space="preserve">
+    <value>Is Expired</value>
+  </data>
+  <data name="is_second_hand" xml:space="preserve">
+    <value>Is Second Hand</value>
+  </data>
+  <data name="second_hand_price" xml:space="preserve">
+    <value>Second Hand Price</value>
+  </data>
 </root>

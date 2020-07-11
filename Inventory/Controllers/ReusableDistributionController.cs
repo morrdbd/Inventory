@@ -281,6 +281,10 @@ namespace Inventory.Controllers
                                 {
                                     return Json(false);
                                 }
+                                if(_stockInHand.IsSecondHand == true)
+                                {
+                                    _stockInHand.SecondHandPrice = row.UnitPrice;
+                                }
                                 _stockInHand.AvailableQuantity -= 1;
 
                                 db.SaveChanges();
@@ -452,19 +456,21 @@ namespace Inventory.Controllers
                     var distributedItems = db.ReusableDistributionItems.Where(d => d.ReusableDistributionID == _distribution.ReusableDistributionID).ToList();
                     foreach(var dItem in distributedItems)
                     {
-                        var stockInItem = db.StockInItems.Find(dItem.StockInItemID);
-                        if(stockInItem != null)
+                        var _stockInItem = db.StockInItems.Find(dItem.StockInItemID);
+                        if(_stockInItem != null)
                         {
-                            stockInItem.AvailableQuantity += 1;
+                            _stockInItem.AvailableQuantity += 1;
+                            _stockInItem.SecondHandPrice = null;
                             db.ReusableDistributionItems.Remove(dItem);
                         }
                     }
+                    db.SaveChanges();
                     foreach(var dItem in model.DistributionItems)
                     {
-                        var stockInItem = db.StockInItems.Find(dItem.StockInItemID);
-                        if(stockInItem != null && dItem.Quantity<= stockInItem.AvailableQuantity)
+                        var _stockInItem = db.StockInItems.Find(dItem.StockInItemID);
+                        if(_stockInItem != null && dItem.Quantity<= _stockInItem.AvailableQuantity)
                         {
-                            stockInItem.AvailableQuantity -= dItem.Quantity;
+                            _stockInItem.AvailableQuantity -= dItem.Quantity;
                             var dItemTableObj = new ReusableDistributionItem
                             {
                                 ReusableDistributionID = _distribution.ReusableDistributionID,
@@ -472,6 +478,10 @@ namespace Inventory.Controllers
                                 DealWithAccount = dItem.DealWithAccount,
                             };
                             db.ReusableDistributionItems.Add(dItemTableObj);
+                            if(_stockInItem.IsSecondHand == true)
+                            {
+                                _stockInItem.SecondHandPrice = dItem.UnitPrice;
+                            }
                         }
                     }
                     db.SaveChanges();
@@ -512,10 +522,12 @@ namespace Inventory.Controllers
                     var distributedItems = db.ReusableDistributionItems.Where(d => d.ReusableDistributionID == _distribution.ReusableDistributionID).ToList();
                     foreach (var dItem in distributedItems)
                     {
-                        var stockInItem = db.StockInItems.Find(dItem.StockInItemID);
-                        if (stockInItem != null)
+                        var _stockInItem = db.StockInItems.Find(dItem.StockInItemID);
+                        if (_stockInItem != null)
                         {
-                            stockInItem.AvailableQuantity += 1;
+                            _stockInItem.AvailableQuantity += 1;
+                            _stockInItem.SecondHandPrice = null;
+
                             var dItemTobeDeleted = db.ReusableDistributionItems.Find(dItem.ID);
                             db.ReusableDistributionItems.Remove(dItemTobeDeleted);
                             db.ActivityLogs.Add(new ActivityLog

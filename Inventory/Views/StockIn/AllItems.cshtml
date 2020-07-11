@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = Labels.ItemInWarehouse;
+    ViewBag.Title = Labels.all_stockin;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.search as Inventory.Models.ViewModels.StockIn_Search;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
@@ -90,6 +90,12 @@
                     </div>
                 </div>
             </section>
+            <section class="row">
+                <div class=" col-md-3 form-group">
+                    <label>@Labels.ItemCodition</label>
+                    @Html.DropDownList("ItemInCondition", ViewBag.ItemInConditionDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "ItemInCondition" })
+                </div>
+            </section>
             <div class="row">
                 <div class="col-md-8">
                     <button type="submit" id="btnSearch" class="btn btn-sm btn-success"><i class="fa fa-search"></i> @Labels.search</button>
@@ -139,6 +145,10 @@
                     <th>@Labels.UnitPrice</th>
                     <th>@Labels.TotalPrice</th>
                     <th>@Labels.Remarks</th>
+                    <th>@Labels.is_expired.</th>
+                    <th>@Labels.date_expired</th>
+                    <th>@Labels.is_second_hand</th>
+                    <th>@Labels.second_hand_price</th>
                     <th></th>
                 </tr>
             </thead>
@@ -147,7 +157,7 @@
 </div>
 
 @section scripts{
-    <script>
+<script>
     var model = @Html.Raw(Json.Encode(Model));
     $(function () {
             $("#record_form").validate({
@@ -184,7 +194,7 @@
             $.fn.dataTable.ext.errMode = 'none';
             var data_table = $('#data_table').DataTable({
                 ajax: {
-                    url: '@Url.Action("ListItemInWarehouse")',
+                    url: '@Url.Action("AllItemsPartialList")',
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (data) {
@@ -216,6 +226,28 @@
                     { data: 'UnitPrice'},
                     { data: 'Total'},
                     { data: 'Remarks'},
+                    {
+                        data: null,
+                        render: function(row){
+                            if(row.IsExpired){
+                                return '@Labels.yes';
+                            }else{
+                                return '@Labels.no';
+                            }
+                        }
+                    },
+                    { data: 'DateExpired'},
+                    {
+                        data: null,
+                        render: function(row){
+                            if(row.IsSecondHand){
+                                return '@Labels.yes';
+                            }else{
+                                return '@Labels.no';
+                            }
+                        }
+                    },
+                    { data: 'SecondHandPrice'},
                     {
                         data: null,
                         visible: canView,
@@ -356,7 +388,7 @@
         });
 
     })
-    </script>
+</script>
     <script>
         function saveImage(recordId){
             if($("#FileContent").val()){
