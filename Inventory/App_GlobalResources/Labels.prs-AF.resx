@@ -1026,11 +1026,46 @@
   <data name="View_Form" xml:space="preserve">
     <value>نمایش فارم</value>
   </data>
+<<<<<<< HEAD
   <data name="AddNewDepartment" xml:space="preserve">
     <value>ازدیاد د یپارمنت</value>
   </data>
   <data name="AddNewItemCategory" xml:space="preserve">
     <value>ازدیاد کتګوری جنس</value>
+=======
+  <data name="Item_already_exist" xml:space="preserve">
+    <value>جنس ازضافه شده است</value>
+  </data>
+  <data name="please_add_item" xml:space="preserve">
+    <value>لطفٌ جنس را انتخاب نماید</value>
+  </data>
+  <data name="please_select_employee" xml:space="preserve">
+    <value>لطفً کارمند را انتخاب نماید</value>
+  </data>
+  <data name="Unable_to_upload_image" xml:space="preserve">
+    <value>قادر به ازدیاد تصویر نشد</value>
+  </data>
+  <data name="all_stockin" xml:space="preserve">
+    <value>تمام اجناس</value>
+  </data>
+  <data name="date_expired" xml:space="preserve">
+    <value>تاریخ داغمه</value>
+  </data>
+  <data name="issue_number" xml:space="preserve">
+    <value>نمبر صادره</value>
+  </data>
+  <data name="is_expired" xml:space="preserve">
+    <value>ایا داغمه شده</value>
+  </data>
+  <data name="is_second_hand" xml:space="preserve">
+    <value>ایا مستعمل است</value>
+  </data>
+  <data name="restore_form" xml:space="preserve">
+    <value>فورمه اعاده</value>
+  </data>
+  <data name="second_hand_price" xml:space="preserve">
+    <value>قیمت دست دوم</value>
+>>>>>>> 5c6721e6011e36f98e9d4d7f6f2a2a24457c75c6
   </data>
   <data name="AddNewItemGroup" xml:space="preserve">
     <value>ازدیاد گروپ جنس  </value>

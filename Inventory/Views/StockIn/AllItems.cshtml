@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = Labels.ItemInWarehouse;
+    ViewBag.Title = Labels.all_stockin;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.search as Inventory.Models.ViewModels.StockIn_Search;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
@@ -26,7 +26,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.ReportNumber</label>
-                        <input type="number" class="form-control input-sm" name="ReportNumber" value="@search.ReportNumber" placeholder="@Labels.ReportNumber" id="ReportNumber" />
+                        <input type="number" class="form-control input-sm" name="Number" value="@search.ReportNumber" placeholder="@Labels.ReportNumber" id="ReportNumber" />
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
@@ -90,6 +90,12 @@
                     </div>
                 </div>
             </section>
+            <section class="row">
+                <div class=" col-md-3 form-group">
+                    <label>@Labels.ItemCodition</label>
+                    @Html.DropDownList("ItemInCondition", ViewBag.ItemInConditionDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "ItemInCondition" })
+                </div>
+            </section>
             <div class="row">
                 <div class="col-md-8">
                     <button type="submit" id="btnSearch" class="btn btn-sm btn-success"><i class="fa fa-search"></i> @Labels.search</button>
@@ -139,6 +145,8 @@
                     <th>@Labels.UnitPrice</th>
                     <th>@Labels.TotalPrice</th>
                     <th>@Labels.Remarks</th>
+                    <th>@Labels.is_expired.</th>
+                    <th>@Labels.date_expired</th>
                     <th>@Labels.is_second_hand</th>
                     <th>@Labels.second_hand_price</th>
                     <th></th>
@@ -186,7 +194,7 @@
             $.fn.dataTable.ext.errMode = 'none';
             var data_table = $('#data_table').DataTable({
                 ajax: {
-                    url: '@Url.Action("ListItemInWarehouse")',
+                    url: '@Url.Action("AllItemsPartialList")',
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (data) {
@@ -218,6 +226,17 @@
                     { data: 'UnitPrice'},
                     { data: 'Total'},
                     { data: 'Remarks'},
+                    {
+                        data: null,
+                        render: function(row){
+                            if(row.IsExpired){
+                                return '@Labels.yes';
+                            }else{
+                                return '@Labels.no';
+                            }
+                        }
+                    },
+                    { data: 'DateExpired'},
                     {
                         data: null,
                         render: function(row){

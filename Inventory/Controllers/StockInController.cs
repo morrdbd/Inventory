@@ -30,6 +30,9 @@ namespace Inventory.Controllers
 
         private void CreateDropDown()
         {
+            var ItemInCondition = AdminRepo.LookupValueList(Language, "ItemInCondition");
+            ViewBag.ItemInConditionDrp = new SelectList(ItemInCondition, "ValueCode", TextField);
+
             var usageTypeList = AdminRepo.LookupValueList(Language, "UTYPE");
             ViewBag.UsageTypeDrp = new SelectList(usageTypeList, "ValueId", TextField);
 
@@ -447,13 +450,13 @@ namespace Inventory.Controllers
         [AccessControl("Search")]
         public ActionResult ItemInWarehouse()
         {
-            ViewBag.search = new Item_In_Warehouse_Search();
+            ViewBag.search = new StockIn_Search();
             CreateDropDown();
             return View("ItemInWarehouse");
         }
 
         [AccessControl("Search")]
-        public JsonResult ListItemInWarehouse(Item_In_Warehouse_Search search)
+        public JsonResult ListItemInWarehouse(StockIn_Search search)
         {
             var DateFrom = search.DateFrom.ToDate(Language);
             var DateTo = search.DateTo.ToDate(Language);
@@ -480,7 +483,9 @@ namespace Inventory.Controllers
                                     i.OriginID,
                                     i.BrandID,
                                     i.UnitPrice,
-                                    i.Remarks
+                                    i.Remarks,
+                                    i.IsSecondHand,
+                                    i.SecondHandPrice
                                 });
             if(!string.IsNullOrWhiteSpace(search.BarCode))
             {
@@ -548,7 +553,140 @@ namespace Inventory.Controllers
                 BrandName = AdminRepo.LookupName(Language, r.BrandID),
                 r.UnitPrice,
                 Total = r.Quantity * r.UnitPrice,
-                r.Remarks
+                r.Remarks,
+                r.IsSecondHand,
+                r.SecondHandPrice
+            }).ToList();
+            return Json(new
+            {
+                data = data.Skip(search.start).Take(search.length).ToList(),
+                recordsTotal = data.Count(),
+                recordsFiltered = data.Count(),
+                draw = search.draw,
+            });
+        }
+
+        [AccessControl("Search")]
+        public ActionResult AllItems()
+        {
+            ViewBag.search = new StockIn_Search();
+            CreateDropDown();
+            return View("AllItems");
+        }
+
+        [AccessControl("Search")]
+        public JsonResult AllItemsPartialList(StockIn_Search search)
+        {
+            var DateFrom = search.DateFrom.ToDate(Language);
+            var DateTo = search.DateTo.ToDate(Language);
+            var query = (from s in db.StockIns
+                                join i in db.StockInItems on s.StockInID equals i.StockInID
+                                where s.IsActive == true
+                                select new
+                                {
+                                    s.StockInID,
+                                    i.BarCode,
+                                    s.M7Number,
+                                    s.StockInDate,
+                                    s.OrderNumber,
+                                    s.OrderDate,
+                                    i.Quantity,
+                                    i.AvailableQuantity,
+                                    i.UnitID,
+                                    i.UsageTypeID,
+                                    i.ItemName,
+                                    i.ItemCode,
+                                    i.GroupID,
+                                    i.CategoryID,
+                                    i.SizeID,
+                                    i.OriginID,
+                                    i.BrandID,
+                                    i.UnitPrice,
+                                    i.Remarks,
+                                    i.IsExpired,
+                                    i.DateExpired,
+                                    i.IsSecondHand,
+                                    i.SecondHandPrice
+                                });
+            if(!string.IsNullOrWhiteSpace(search.ItemInCondition) && search.ItemInCondition == "Usable")
+            {
+                query = query.Where(i=>i.IsExpired == false);
+            }
+            if (!string.IsNullOrWhiteSpace(search.ItemInCondition) && search.ItemInCondition == "Expired")
+            {
+                query = query.Where(i=>i.IsExpired == true);
+            }
+            if (!string.IsNullOrWhiteSpace(search.BarCode))
+            {
+                query = query.Where(i=>i.BarCode.Contains(search.BarCode));
+            }
+            if (!string.IsNullOrWhiteSpace(search.ReportNumber))
+            {
+                query = query.Where(i => i.M7Number.Contains(search.ReportNumber));
+            }
+            if (DateFrom != null)
+            {
+                query = query.Where(r => r.StockInDate >= DateFrom);
+            }
+            if (DateTo != null)
+            {
+                query = query.Where(r => r.StockInDate <= DateTo);
+            }
+            if (search.UsageTypeID != null)
+            {
+                query = query.Where(r => r.UsageTypeID == search.UsageTypeID);
+            }
+            if (search.GroupID != null)
+            {
+                query = query.Where(r => r.GroupID == search.GroupID);
+            }
+            if (search.CategoryID != null)
+            {
+                query = query.Where(r => r.CategoryID == search.CategoryID);
+            }
+            if (search.ItemName != null)
+            {
+                query = query.Where(r => r.ItemName.Contains(search.ItemName));
+            }
+            if (search.ItemCode != null)
+            {
+                query = query.Where(r => r.ItemCode.Contains(search.ItemCode));
+            }
+            if (search.SizeID != null)
+            {
+                query = query.Where(r => r.SizeID == search.SizeID);
+            }
+            if (search.BrandID != null)
+            {
+                query = query.Where(r => r.BrandID == search.BrandID);
+            }
+            var searchResult = query.OrderByDescending(i=>i.StockInDate).ToList();
+            var data = searchResult.Select(r => new
+            {
+                r.StockInID,
+                r.BarCode,
+                r.M7Number,
+                StockInDate = r.StockInDate.ToDateString(Language),
+                r.OrderNumber,
+                OrderDate = r.OrderDate.ToDateString(Language),
+                UnitName = AdminRepo.LookupName(Language,r.UnitID),
+                r.Quantity,
+                r.AvailableQuantity,
+                UsageTypeName = AdminRepo.LookupName(Language,r.UsageTypeID),
+                r.ItemName,
+                r.ItemCode,
+                GroupName = AdminRepo.LookupName(Language,r.GroupID),
+                CategoryName = AdminRepo.LookupName(Language, r.CategoryID),
+                SizeName = AdminRepo.LookupName(Language, r.SizeID),
+                OriginName = AdminRepo.LookupName(Language, r.OriginID),
+                BrandName = AdminRepo.LookupName(Language, r.BrandID),
+                r.UnitPrice,
+                Total = r.Quantity * r.UnitPrice,
+                r.Remarks,
+                r.IsExpired,
+                DateExpired = r.DateExpired.ToDateString(Language),
+                r.IsSecondHand,
+                r.SecondHandPrice
             }).ToList();
             return Json(new
             {

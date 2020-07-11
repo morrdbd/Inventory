@@ -235,6 +235,8 @@
                                     <th>@Labels.Brand</th>
                                     <th>@Labels.UnitPrice</th>
                                     <th>@Labels.Available_Quantity</th>
+                                    <th>@Labels.is_second_hand</th>
+                                    <th>@Labels.second_hand_price</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -497,7 +499,7 @@
                                     $('#assign_item_form').clearForm();
                                     $('#assign_item_form input:first').focus();
                                     DistributionItems.push(response);
-                                //} 
+                                //}
 
                             } else {
                                 toastr.error('Please check item availabe quanity and try again.');
@@ -583,6 +585,17 @@
                     { data: 'AvailableQuantity' },
                     {
                         data: null,
+                        render: function(row){
+                            if(row.IsSecondHand){
+                                return '@Labels.yes';
+                            }else{
+                                return '@Labels.no';
+                            }
+                        }
+                    },
+                    { data: 'SecondHandPrice'},
+                    {
+                        data: null,
                         visible: true,
                         render: function (row) {
                             return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.StockInItemID + '">@Labels.please_select</button>';
@@ -620,10 +633,10 @@
             })
             $("body").on("click", ".btn_select_item", function (e) {
                 e.preventDefault();
-                var row = $(this).parent().parent();                
+                var row = $(this).parent().parent();
                 if(!row.hasClass('selectedItem')){
-                    row.addClass('selectedItem')       
-                        .siblings() 
+                    row.addClass('selectedItem')
+                        .siblings()
                         .removeClass('selectedItem');
                 }
                 var id = $(this).data().id;
@@ -676,7 +689,7 @@
                         }
                     });
                 }
-                
+
             });
     })
     </script>

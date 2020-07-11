@@ -14,7 +14,7 @@ namespace Inventory.Models.Tables
 
         public int RestoreID { get; set; }
 
-        public int StockInItemID { get; set; } 
+        public int StockInItemID { get; set; }
 
     }
 }

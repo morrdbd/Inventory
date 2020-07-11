@@ -90,6 +90,7 @@ namespace Inventory.Controllers
                          && d.EmployeeID == search.EmpID
                          select new
                          {
+                             s.BarCode,
                              di.ID,
                              di.StockInItemID,
                              d.EmployeeID,
@@ -110,6 +111,10 @@ namespace Inventory.Controllers
                          });
                 //db.StockInItems.Where(i => i.IsActive == true && i.IsExpired == false).AsQueryable();
 
+            if (!string.IsNullOrWhiteSpace(search.BarCode))
+            {
+                query = query.Where(c => c.BarCode.Contains(search.BarCode));
+            }
             if (!string.IsNullOrWhiteSpace(search.ItemName))
             {
                 query = query.Where(c => c.ItemName.Contains(search.ItemName));
@@ -153,6 +158,8 @@ namespace Inventory.Controllers
                 ID = i.ID,
                 StockInItemID = i.StockInItemID,
                 ItemName = i.ItemName,
+                BarCode = i.BarCode,
+                Quantity = i.Quantity,
                 UnitName = AdminRepo.LookupName(Language, i.UnitID),
                 GroupName = AdminRepo.LookupName(Language, i.GroupID),
                 CategoryName = AdminRepo.LookupName(Language, i.CategoryID),
@@ -160,8 +167,9 @@ namespace Inventory.Controllers
                 OriginName = AdminRepo.LookupName(Language, i.OriginID),
                 BrandName = AdminRepo.LookupName(Language, i.BrandID),
                 UnitPrice = i.UnitPrice,
+                TotalPrice = i.Quantity * i.UnitPrice,
                 ItemCode = i.ItemCode,
-                
+                DealWithAccount = i.DealWithAccount
             }
           ).ToList();
             var tes = data.ToList();
@@ -188,7 +196,8 @@ namespace Inventory.Controllers
                            {
                                di.ID,
                                si.Quantity,
-                               StockInItemID = si.StockInItemID,
+                               si.StockInItemID,
+                               si.BarCode,
                                si.ItemName,
                                si.ItemCode,
                                si.UnitPrice,
@@ -202,11 +211,12 @@ namespace Inventory.Controllers
                            }).FirstOrDefault();
                 if (obj != null)
                 {
-                    var distribution = new
+                    var item = new
                     {
                         obj.ID,
                         obj.Quantity,
                         obj.StockInItemID,
+                        obj.BarCode,
                         obj.ItemName,
                         obj.ItemCode,
                         obj.UnitPrice,
@@ -218,7 +228,7 @@ namespace Inventory.Controllers
                         OriginName = AdminRepo.LookupName(Language, obj.OriginID),
                         BrandName = AdminRepo.LookupName(Language, obj.BrandID),
                     };
-                    return Json(distribution, JsonRequestBehavior.AllowGet);
+                    return Json(item, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception e)
@@ -228,6 +238,8 @@ namespace Inventory.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        [AccessControl("Add")]
         public JsonResult Insert(RestoreVM model)
         {
             var _docIssucedDate = model.DocumentIssuedDateForm.ToDate(Language);
@@ -292,12 +304,17 @@ namespace Inventory.Controllers
                                 {
                                     stockinItem.IsExpired = false;
                                     stockinItem.IsSecondHand = true;
+                                    stockinItem.AvailableQuantity += 1;
                                 }
                                 else if (model.ItemInCondition == "Expired")
                                 {
                                     stockinItem.IsExpired = true;
                                     stockinItem.DateExpired = DateTime.Now;
                                     stockinItem.IsSecondHand = true;
+                                }
+                                else
+                                {
+                                    return Json(false);
                                 }
                                 db.SaveChanges();
                                 db.ActivityLogs.Add(new ActivityLog
@@ -389,6 +406,7 @@ namespace Inventory.Controllers
                             {
                                 stockinItem.IsExpired = false;
                                 stockinItem.IsSecondHand = true;
+                                stockinItem.AvailableQuantity += 1;
                             }else if (model.ItemInCondition == "Expired") {
                                 stockinItem.IsExpired = true;
                                 stockinItem.DateExpired = DateTime.Now;
@@ -453,7 +471,7 @@ namespace Inventory.Controllers
                 EmpFatherName = employee.FatherName,
                 EmpOccupation = employee.Occupation,
                 EmpDepartmentName = db.Departments.Where(d=>d.DepartmentID == employee.DepartmentID)
-                .Select(d=> Language == "dr" ? d.DrName: Language == "pa" ? d.PaName: d.EnName).FirstOrDefault(),
+                .Select(d=> Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
                 ItemInCondition = AdminRepo.LookupNameByVlueCode(Language, model.ItemInCondition),
                 Details = model.Details
             };
@@ -469,6 +487,7 @@ namespace Inventory.Controllers
                     {
                         ID = item.ID,
                         StockInItemID = item.StockInItemID,
+                        BarCode = itemInStockIn.BarCode,
                         RestoreID = restore.RestoreID,
                         ItemName = itemInStockIn.ItemName,
                         UnitName = AdminRepo.LookupName(Language, itemInStockIn.UnitID),
@@ -479,7 +498,8 @@ namespace Inventory.Controllers
                         BrandName = AdminRepo.LookupName(Language, itemInStockIn.BrandID),
                         UnitPrice = itemInStockIn.UnitPrice,
                         Quantity = itemInStockIn.Quantity,
-                        ItemCode = itemInStockIn.ItemCode
+                        ItemCode = itemInStockIn.ItemCode,
+                        DealWithAccount = db.ReusableDistributionItems.Where(i=>i.StockInItemID == item.StockInItemID).Select(i=>i.DealWithAccount).FirstOrDefault()
                     };
                     restore.RestoreItems.Add(restoreItem);
                 }

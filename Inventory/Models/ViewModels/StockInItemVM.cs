@@ -51,7 +51,7 @@ namespace Inventory.Models.Tables
 
         public int UnitPrice { get; set; }
 
-        public int SecondHandPrice { get; set; }
+        public int? SecondHandPrice { get; set; }
 
         public string Remarks { get; set; }
 

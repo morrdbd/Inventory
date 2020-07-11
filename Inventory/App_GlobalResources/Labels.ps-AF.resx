@@ -1044,12 +1044,48 @@
   <data name="View_Form" xml:space="preserve">
     <value>فارم لیدل</value>
   </data>
+<<<<<<< HEAD
   <data name="AddNewDepartment" xml:space="preserve">
     <value>د یپارمنټ اضافه کول </value>
   </data>
   <data name="AddNewItemCategory" xml:space="preserve">
     <value>د توکی کټګوری اضافه کول</value>
   </data>
+=======
+  <data name="Item_already_exist" xml:space="preserve">
+    <value>توکی اضافه شوی دی</value>
+  </data>
+  <data name="please_add_item" xml:space="preserve">
+    <value>مهربانی وکړی توکی وټاکې</value>
+  </data>
+  <data name="please_select_employee" xml:space="preserve">
+    <value>مهربانی وکړی کارمند انتخات کړی </value>
+  </data>
+  <data name="Unable_to_upload_image" xml:space="preserve">
+    <value>تصویر اضافه نه شو</value>
+  </data>
+  <data name="issue_number" xml:space="preserve">
+    <value>صادره نمبر</value>
+  </data>
+  <data name="restore_form" xml:space="preserve">
+    <value>اعاده فورمه</value>
+  </data>
+  <data name="all_stockin" xml:space="preserve">
+    <value>ټول توکی</value>
+  </data>
+  <data name="date_expired" xml:space="preserve">
+    <value>داغمه تاریخ</value>
+  </data>
+  <data name="is_expired" xml:space="preserve">
+    <value>ایا داغمه ده</value>
+  </data>
+  <data name="is_second_hand" xml:space="preserve">
+    <value>ایا استعمالی دی</value>
+  </data>
+  <data name="second_hand_price" xml:space="preserve">
+    <value>دوهم لاس قیمت</value>
+ </data>
+>>>>>>> 5c6721e6011e36f98e9d4d7f6f2a2a24457c75c6
   <data name="AddNewItemGroup" xml:space="preserve">
     <value>د توکی ګروپ اضافه کول </value>
   </data>

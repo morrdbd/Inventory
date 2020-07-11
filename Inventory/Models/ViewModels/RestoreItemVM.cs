@@ -13,6 +13,8 @@ namespace Inventory.Models.ViewModels
 
         public int StockInItemID { get; set; }
 
+        public string BarCode { get; set; }
+
         public string UnitName { get; set; }
 
         public string ItemCode { get; set; }
@@ -32,6 +34,8 @@ namespace Inventory.Models.ViewModels
         public int Quantity { get; set; }
 
         public int UnitPrice { get; set; }
+
+        public int TotalPrice { get; set; }
 
         public string DealWithAccount { get; set; }
     }

@@ -1,6 +1,6 @@
 ﻿@model Inventory.Models.ViewModels.RestoreVM
 @{
-    ViewBag.Title = "Return Item";
+    ViewBag.Title = Labels.restore_form;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
@@ -18,13 +18,13 @@
         <a href="@Url.Action("Delete", new { id=Model.RestoreID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.return_item</a>
     }
 </div>
-<h4>Form information</h4>
+<h4>@Labels.FormInfo</h4>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Document Issued Number</th>
-            <th>Document Issued date</th>
-            <th>Items  in Condition</th>
+            <th>@Labels.issue_number</th>
+            <th>@Labels.IssueDate</th>
+            <th>@Labels.ItemCodition</th>
         </tr>
     </thead>
     <tbody>
@@ -36,7 +36,7 @@
     </tbody>
 
 </table>
-<h4>Restore Form Information</h4>
+<h4>@Labels.RestoreByInfo</h4>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -56,10 +56,12 @@
     </tbody>
 </table>
 
-<h4>Item information</h4>
+<h4>@Labels.Restored_items</h4>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
+            <th>#</th>
+            <th>@Labels.Bar_Code</th>
             <th>@Labels.Quantity</th>
             <td>@Labels.Unit</td>
             <th>@Labels.Item_Group</th>
@@ -75,10 +77,12 @@
     </thead>
     <tbody>
         @{
-            int index = 0;
+            int index = 1;
             foreach (var item in Model.RestoreItems)
             {
         <tr>
+            <td>@index</td>
+            <td>@item.BarCode</td>
             <td>@item.Quantity</td>
             <td>@item.UnitName</td>
             <td>@item.GroupName</td>
