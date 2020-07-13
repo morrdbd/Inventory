@@ -1026,13 +1026,12 @@
   <data name="View_Form" xml:space="preserve">
     <value>نمایش فارم</value>
   </data>
-<<<<<<< HEAD
   <data name="AddNewDepartment" xml:space="preserve">
     <value>ازدیاد د یپارمنت</value>
   </data>
   <data name="AddNewItemCategory" xml:space="preserve">
     <value>ازدیاد کتګوری جنس</value>
-=======
+  </data>
   <data name="Item_already_exist" xml:space="preserve">
     <value>جنس ازضافه شده است</value>
   </data>
@@ -1065,7 +1064,6 @@
   </data>
   <data name="second_hand_price" xml:space="preserve">
     <value>قیمت دست دوم</value>
->>>>>>> 5c6721e6011e36f98e9d4d7f6f2a2a24457c75c6
   </data>
   <data name="AddNewItemGroup" xml:space="preserve">
     <value>ازدیاد گروپ جنس  </value>
