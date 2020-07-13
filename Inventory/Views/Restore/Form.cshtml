@@ -52,7 +52,7 @@
             <section class="row">
                 <div class="col-md-3 form-group">
                     <label>@Labels.Issued</label>
-                    <input type="text" name="DocumentIssuedNo" id="DocumentIssuedNo" value="@Model.DocumentIssuedNo" class="form-control input-sm" required data-msg="" placeholder="">
+                    <input type="number" name="DocumentIssuedNo" id="DocumentIssuedNo" value="@Model.DocumentIssuedNo" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
                 <div class="col-md-3 form-group">
                     <label>@Labels.IssueDate</label>
@@ -379,7 +379,6 @@
                         success: function (response) {
                             if (response != false) {
                                 saveImage(response);
-                                console.log("response received >>>>>>>>>><<<<<<"+ response);
                             } else {
                                 toastr.error('@Labels.unable_to_update');
                             }
@@ -446,7 +445,6 @@
                     data: json,
                     contentType: 'application/json',
                     success: function (response) {
-                        console.log("response is >>>>>. "+JSON.stringify(response));
                         $('#employee_table > tbody').empty();
                         if(response.length){
                             response.forEach(function(emp){
@@ -466,7 +464,6 @@
                 //popup_employee
                 var tr = $(this).closest('tr');
                 var EmployeeID = $(this).data().id;
-                console.log(EmployeeID);
                 var Name = $(tr).find('td:first').text();
                 var FatherName = $(tr).find('td:nth-child(2)').text();
                 var Occpation = $(tr).find('td:nth-child(3)').text();
@@ -546,7 +543,6 @@
             })
             $("body").on("click", ".btn_select_item", function (e) {
                 e.preventDefault();
-                console.log("Inside the select section");
                 var row = $(this).parent().parent();
                 if(!row.hasClass('selectedItem')){
                     row.addClass('selectedItem')
@@ -575,7 +571,6 @@
                     type: 'POST',
                     contentType: 'application/json',
                     success: function (response) {
-                        console.log("reponse is <<<<<<<<<<<<<<>>>>>>>>>>>> "+JSON.stringify(response));
                         if(response){
                             var _index = RestoreItems.length
                             var tr = $('#temp_item').clone().html()
@@ -596,10 +591,7 @@
                             //if (row.index == -1) {
 
                             $('#tbody_item').append(tr);
-                            console.log("besfor push is >>>>>>>");
                             RestoreItems.push(response);
-                            
-                            console.log("items are "+JSON.stringify(RestoreItems));
                         }
                         Metronic.unblockUI('#item_list_div');
                     }
@@ -667,7 +659,6 @@
                             }
                         },
                         complete: function () {
-                            console.log("Inside the complete ");
                             Metronic.unblockUI();
                         }
                     });

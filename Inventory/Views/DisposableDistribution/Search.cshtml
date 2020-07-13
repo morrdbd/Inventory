@@ -6,7 +6,7 @@
     var _canView = _user.HasAccess("ReusableDistribution", "View");
 }
 
-<form method="post" action="@Url.Action("ListPartial")" id="search_form" autocomplete="off">
+<form method="post" id="search_form" autocomplete="off">
     <div class="portlet box blue-hoki" style="margin-bottom:10px">
         <div class="portlet-title">
             <div class="caption">@Labels.search_criteria</div>
@@ -76,6 +76,10 @@
                         @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
                     </div>
                 </div>
+                <div class=" col-md-3 form-group">
+                    <label>@Labels.Bar_Code</label>
+                    <input type="text" name="BarCode" id="BarCode" class="form-control input-sm" data-msg="" placeholder="@Labels.Bar_Code">
+                </div>
             </section>
 
             <div class="row">
@@ -108,6 +112,7 @@
         <table id="data_table" class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
+                    <th>@Labels.Bar_Code</th>
                     <th>@Labels.Requester</th>
                     <th>@Labels.Issued</th>
                     <th>@Labels.IssueDate</th>
@@ -173,7 +178,6 @@
                     contentType: 'application/json',
                     data: function (data) {
                         var form_data = $('#search_form').serializeJSON();
-                        console.log("form data is >>>>> "+ JSON.stringify(data));
                         form_data['draw'] = data.draw;
                         form_data['start'] = data.start;
                         form_data['length'] = data.length;
@@ -181,6 +185,7 @@
                     },
                 },
                 columns: [
+                    { data: 'BarCode' },
                     { data: 'DepartmentName' },
                     { data: 'DocumentIssueNumber' },
                     { data: 'DocumentIssuedDate' },

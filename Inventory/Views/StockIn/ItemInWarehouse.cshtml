@@ -395,7 +395,6 @@
                             }
                         },
                         complete: function () {
-                            console.log("Inside the complete ");
                             Metronic.unblockUI();
                         }
                     });
@@ -404,7 +403,6 @@
                 bootbox.alert('@Labels.operation_done_suc', function () {
                     window.location.href = '@Url.Action("View")/' + recordId;
                 })
-                console.log("file content do not have value");
             }
         }
 

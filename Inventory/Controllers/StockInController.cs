@@ -527,6 +527,10 @@ namespace Inventory.Controllers
             {
                 query = query.Where(r => r.SizeID == search.SizeID);
             }
+            if (search.OriginID != null)
+            {
+                query = query.Where(r => r.OriginID == search.OriginID);
+            }
             if (search.BrandID != null)
             {
                 query = query.Where(r => r.BrandID == search.BrandID);
@@ -655,6 +659,10 @@ namespace Inventory.Controllers
             if (search.SizeID != null)
             {
                 query = query.Where(r => r.SizeID == search.SizeID);
+            }
+            if (search.OriginID != null)
+            {
+                query = query.Where(r => r.OriginID == search.OriginID);
             }
             if (search.BrandID != null)
             {

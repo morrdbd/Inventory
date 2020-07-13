@@ -20,7 +20,7 @@
             <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.ReportNumber</label>
-                    <input type="text" name="M7Number" id="M7Number" value="@Model.M7Number" class="form-control input-sm" required data-msg="" placeholder="">
+                    <input type="number" name="M7Number" id="M7Number" value="@Model.M7Number" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.ReceiptDate</label>
@@ -40,7 +40,7 @@
             <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.SuggestionBillNumber</label>
-                    <input type="text" name="OrderNumber" id="OrderNumber" value="@Model.OrderNumber" class="form-control input-sm" required data-msg="" placeholder="">
+                    <input type="number" name="OrderNumber" id="OrderNumber" value="@Model.OrderNumber" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.Mem3Date</label>
@@ -282,8 +282,6 @@
                         success: function (response) {
                             if (response != false) {
                                 saveImage(response);
-                                console.log("response received >>>>>>>>>><<<<<<");
-
                             } else {
                                 toastr.error('@Labels.unable_to_update');
                             }
@@ -305,7 +303,6 @@
                 e.preventDefault();
                 var index = $(this).data().index;
                 var row = StockInItems[index];
-                console.log("row is >>>>>>>>>>>>>"+ JSON.stringify(row));
                 $('#item_form [name=UnitID]').val(row.UnitID);
                 $('#item_form [name=ItemName]').val(row.ItemName);
                 $('#item_form [name=UnitPrice]').val(row.UnitPrice);
@@ -320,7 +317,6 @@
                 $('#item_form [name=OriginID]').val(row.OriginID);
                 $('#item_form [name=BrandID]').val(row.BrandID);
                 $('#item_form [name=ItemName]').val(row.ItemName);
-                console.log("Item code is >>>>>>>>>>>> "+ row.ItemCode);
                 $('#item_form [name=ItemCode]').val(row.ItemCode);
 
                 $('#item_form [name=index]').val(index);
@@ -334,10 +330,7 @@
                 submitHandler: function (form) {
                     var isDuplicate = false;
                     StockInItems.forEach(function(i){
-                        console.log("Item code textbox value is >>>>>>> "+$('#ItemName').val());
-                        console.log("Item code value is >>>>>>> "+i.ItemName);
                         if($('#ItemName').val() && (i.ItemName === $('#ItemName').val())){
-                            console.log("Inside the Item Name >>>>"+i.ItemName);
                             isDuplicate = true;
                             return;
                         }
@@ -347,7 +340,6 @@
                         return;
                     }
                     var row = $(form).serializeJSON();
-                    console.log("form data is >>>>>>>>>>>>>> "+JSON.stringify(row));
                     var _index = (row.index == -1) ? StockInItems.length : row.index;
 
                     var tr = $('#temp_item').clone().html()
@@ -407,9 +399,6 @@
     <script>
         function loadGroup(groupId){
             var usageTypeId = $("#UsageTypeID").val();
-            console.log("Inside the ca >>>>>>>>>>>>>>>>");
-            console.log("groupId is "+ groupId);
-            console.log("usageTypeId  is >>>>>>>>>>>>>>>>"+ usageTypeId);
             if (usageTypeId) {
                 $.ajax({
                     type: "post",
@@ -418,7 +407,6 @@
                     url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
                     data: "{id:'" + usageTypeId + "'}",
                     success: function (data) {
-                        console.log(">>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<"+JSON.stringify(data));
                         $('#GroupID').empty();
                         $('#GroupID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
                         $.each(data, function (i, d) {
@@ -500,7 +488,6 @@
                             }
                         },
                         complete: function () {
-                            console.log("Inside the complete ");
                             Metronic.unblockUI();
                         }
                     });

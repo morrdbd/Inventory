@@ -76,6 +76,7 @@ namespace Inventory.Controllers
                 {
                     ID = i.ID,
                     StockInItemID = i.StockInItemID,
+                    BarCode = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.BarCode).FirstOrDefault(),
                     DisposableDistributionID = i.DisposableDistributionID,
                     ItemCode = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.ItemCode).FirstOrDefault(),
                     ItemName = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.ItemName).FirstOrDefault(),
@@ -99,7 +100,11 @@ namespace Inventory.Controllers
             var disposableValueId = AdminRepo.ValueID("Disposable");
             var query = db.StockInItems.Where(i => i.IsActive == true && i.AvailableQuantity != 0 
             && i.UsageTypeID == disposableValueId).AsQueryable();
-           
+
+            if (!string.IsNullOrWhiteSpace(search.BarCode))
+            {
+                query = query.Where(c => c.BarCode == search.BarCode);
+            }
             if (!string.IsNullOrWhiteSpace(search.ItemName))
             {
                 query = query.Where(c => c.ItemName.Contains(search.ItemName));
@@ -144,6 +149,7 @@ namespace Inventory.Controllers
             var items = query.ToList();
               var data = items.Select(i => new StockInItemVM
             {
+                BarCode = i.BarCode,
                 StockInItemID = i.StockInItemID,
                 ItemName = i.ItemName,
                 UnitName = AdminRepo.LookupName(Language, i.UnitID),
@@ -417,39 +423,6 @@ namespace Inventory.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
-        [AccessControl("Search")]
-        public JsonResult SelectItem(int id = 0)
-        {
-            try
-            {
-                var obj = db.StockInItems.Where(i => i.StockInItemID == id && i.IsActive == true && i.AvailableQuantity > 0).FirstOrDefault();
-                if (obj != null)
-                {
-                    var item = new {
-                        obj.StockInItemID,
-                        obj.AvailableQuantity,
-                        obj.ItemName,
-                        obj.ItemCode,
-                        obj.UnitPrice,
-                        obj.UsageTypeID,
-                        UsageTypeName = AdminRepo.LookupName(Language, obj.UsageTypeID),
-                        UnitName = AdminRepo.LookupName(Language, obj.UnitID),
-                        GroupName = AdminRepo.LookupName(Language, obj.GroupID),
-                        CategoryName = AdminRepo.LookupName(Language, obj.CategoryID),
-                        SizeName = AdminRepo.LookupName(Language, obj.SizeID),
-                        OriginName = AdminRepo.LookupName(Language, obj.OriginID),
-                        BrandName = AdminRepo.LookupName(Language, obj.BrandID),
-                        };
-                    return Json(obj, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception e)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-            }
-            return Json(false, JsonRequestBehavior.AllowGet);
-        }
-
         public JsonResult GetItem(GetItemVM model)
         {
             if (!ModelState.IsValid)
@@ -462,6 +435,7 @@ namespace Inventory.Controllers
                 if (obj != null && obj.AvailableQuantity >= model.Quantity)
                 {
                     var item = new {
+                        obj.BarCode,
                         obj.StockInItemID,
                         model.Quantity,
                         obj.ItemName,
@@ -516,7 +490,8 @@ namespace Inventory.Controllers
                                      where d.IsActive == true
                                      select new
                                      {
-                                         d.DisposableDistributionID,
+                                        sItem.BarCode,
+                                        d.DisposableDistributionID,
                                         distributionItemID = dItem.ID,
                                         dItem.StockInItemID,
                                         d.DepartmentID,
@@ -538,6 +513,10 @@ namespace Inventory.Controllers
                                          sItem.UnitPrice,
                                          Total = dItem.Quantity * sItem.UnitPrice
                                      });
+            if (!string.IsNullOrWhiteSpace(model.BarCode))
+            {
+                query = query.Where(c => c.BarCode == model.BarCode);
+            }
             if (model.DepartmentID != null)
             {
                 query = query.Where(c => c.DepartmentID == model.DepartmentID);
@@ -581,6 +560,7 @@ namespace Inventory.Controllers
             ViewBag.search = model;
             var queryResult = query.OrderByDescending(i => i.DocumentIssuedDate).ToList();
             var data = queryResult.Select(i => new {
+                i.BarCode,
                 i.DisposableDistributionID,
                 i.distributionItemID,
                 i.StockInItemID,

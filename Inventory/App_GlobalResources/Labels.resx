@@ -1011,4 +1011,7 @@
   <data name="LookupName" xml:space="preserve">
     <value>Lookup Name</value>
   </data>
+  <data name="check_available_quantity_try_again" xml:space="preserve">
+    <value>Please check item availabe quanity and try again.</value>
+  </data>
 </root>
