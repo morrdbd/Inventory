@@ -1071,4 +1071,7 @@
   <data name="LookupName" xml:space="preserve">
     <value>نام لوکاپ</value>
   </data>
+  <data name="check_available_quantity_try_again" xml:space="preserve">
+    <value>لطف مقدار موجوده را چیک نماید و دوباره کوشش نماید</value>
+  </data>
 </root>

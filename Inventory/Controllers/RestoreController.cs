@@ -589,6 +589,10 @@ namespace Inventory.Controllers
             {
                 query = query.Where(r => r.BrandID == model.BrandID);
             }
+            if (model.OriginID != null)
+            {
+                query = query.Where(r => r.OriginID == model.OriginID);
+            }
             if (restoredDateFrom != null)
             {
                 query = query.Where(c => c.RestoreDate >= restoredDateFrom);

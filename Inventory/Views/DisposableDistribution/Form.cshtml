@@ -63,6 +63,7 @@
             <table id="assign_items_table" class="table table-striped table-condensed">
                 <thead id="thead_items">
                     <tr>
+                        <th>@Labels.Bar_Code</th>
                         <th>@Labels.Unit</th>
                         <th>@Labels.Quantity</th>
                         <th>@Labels.Item_Group</th>
@@ -86,6 +87,7 @@
                             foreach (var item in Model.DistributionItems)
                             {
                                 <tr>
+                                    <td>@item.BarCode</td>
                                     <td>@item.UnitName</td>
                                     <td>@item.Quantity</td>
                                     <td>@item.ItemGroupName</td>
@@ -136,12 +138,16 @@
                 <form method="post" action="ItemList" id="item_search_form" autocomplete="off" class="margin-top-10">
                     <section class="row">
                         <div class=" col-md-4 form-group">
+                            <label>@Labels.Bar_Code</label>
+                            <input type="text" name="BarCode" id="BarCode" value="@itemSearch.BarCode" class="form-control input-sm" data-msg="" placeholder="@Labels.Bar_Code">
+                        </div>
+                        <div class=" col-md-4 form-group">
                             <label>@Labels.Item_Group</label>
                             @Html.DropDownList("GroupID", ViewBag.GroupDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "GroupID" })
                         </div>
                         <div class=" col-md-4 form-group">
                             <label>@Labels.Item_Category</label>
-                             <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
+                            <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
                         </div>
                     </section>
                     <section class="row">
@@ -185,6 +191,7 @@
                         <table class="table table-striped table-hover table-condensed" width="100%" id="item_table">
                             <thead>
                                 <tr>
+                                    <th>@Labels.Bar_Code</th>
                                     <th>@Labels.Unit</th>
                                     <th>@Labels.Item_Group</th>
                                     <th>@Labels.Item_Category</th>
@@ -228,6 +235,7 @@
 @section scripts{
     <script type="text/html" id="temp_item">
         <tr>
+            <td>{{BarCode}}</td>
             <td>{{UnitName}}</td>
             <td>{{Quantity}}</td>
             <td>{{GroupName}}</td>
@@ -303,6 +311,7 @@
                         parseAll: true,
                         useIntKeysAsArrayIndex: true,
                     });
+                    console.log($('#assign_item_form').attr('action'));
                     var formData = ObjectToFormData(data);
                     //******************
                     Metronic.blockUI({ animate: true });
@@ -327,6 +336,7 @@
                                 }
                                 var _index = DistributionItems.length
                                 var tr = $('#temp_item').clone().html()
+                                .replace("{{BarCode}}", response.BarCode)
                                 .replace("{{UnitName}}", response.UnitName)
                                 .replace("{{Quantity}}", response.Quantity)
                                 .replace("{{UsageTypeName}}", response.UsageTypeName)
@@ -349,7 +359,7 @@
                                 //} 
 
                             } else {
-                                toastr.error('Please check item availabe quanity and try again.');
+                                toastr.error('@Labels.check_available_quantity_try_again');
                             }
                         },
                         complete: function () {
@@ -383,6 +393,7 @@
                     },
                 },
                 columns: [
+                    { data: 'BarCode' },
                     { data: 'UnitName' },
                     { data: 'GroupName' },
                     { data: 'CategoryName' },
@@ -397,7 +408,7 @@
                         data: null,
                         visible: true,
                         render: function (row) {
-                            return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.ID + '">@Labels.please_select</button>';
+                            return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.StockInItemID + '">@Labels.please_select</button>';
                         }
                     }
                 ],
@@ -439,24 +450,7 @@
                         .removeClass('selectedItem');
                 }
                 var id = $(this).data().id;
-                Metronic.blockUI({
-                    target: '#item_list_div',
-                    animate: true
-                });
-                var url = '@Url.Action("SelectItem")/'+id;
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    contentType: 'application/json',
-                    success: function (response) {
-                        if(response){
-                            console.log(response.AvailableQuantity);
-                            console.log(response.UnitPrice);
-                            $("#StockInItemID").val(response.ID);
-                        }
-                        Metronic.unblockUI('#item_list_div');
-                    }
-                })
+                $("#StockInItemID").val(id);
             })
             $('#GroupID').on('change', function(){
                 var groupId = $(this).val();

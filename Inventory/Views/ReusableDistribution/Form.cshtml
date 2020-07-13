@@ -52,7 +52,7 @@
             <section class="row">
                 <div class="col-md-4">
                      <label>@Labels.TicketNumber</label>
-                    <input type="text" name="TicketNumber" id="TicketNumber" value="@Model.TicketNumber" class="form-control input-sm" required data-msg="" placeholder="">
+                    <input type="number" name="TicketNumber" id="TicketNumber" value="@Model.TicketNumber" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
                 <div class="col-md-4">
                     <label>@Labels.TicketIssedDate</label>
@@ -66,7 +66,7 @@
             <section class="row margin-top-10">
                 <div class="col-md-4">
                     <label>@Labels.RequestNumber</label>
-                    <input type="text" name="RequestNumber" id="RequestNumber" value="@Model.RequestNumber" class="form-control input-sm" required data-msg="" placeholder="">
+                    <input type="number" name="RequestNumber" id="RequestNumber" value="@Model.RequestNumber" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
                 <div class="col-md-4">
                     <label>@Labels.RequestDate</label>
@@ -377,7 +377,6 @@
             // FORM VALIDATION AND SUBMISSION
             $('#main_form').validate({
                 submitHandler: function (form) {
-                    console.log("Inside the main_form the >>>>>>>");
                     var data = $('#main_form').serializeJSON({
                         parseAll: true,
                         useIntKeysAsArrayIndex: true,
@@ -387,9 +386,7 @@
                         toastr.error('Please Add Item');
                         return;
                     }
-                    console.log("data is >>>>>>>?????????"+JSON.stringify(data));
                     var formData = ObjectToFormData(data);
-                    console.log("items are >>>>>>>>>>><<<<<<<<<<<"+ JSON.stringify(formData));
                     //******************
                     Metronic.blockUI({ animate: true });
                     $.ajax({
@@ -401,7 +398,6 @@
                         success: function (response) {
                             if (response != false) {
                                 saveImage(response);
-                                console.log("response received >>>>>>>>>><<<<<<");
                             } else {
                                 toastr.error('@Labels.unable_to_update');
                             }
@@ -455,13 +451,11 @@
             $('#assign_item_form').validate({
 
                 submitHandler: function (form) {
-                    console.log(">>>>>>>>>>>>>>>>>>>>>>> inside the ");
                     var data = $('#assign_item_form').serializeJSON({
                         parseAll: true,
                         useIntKeysAsArrayIndex: true,
                     });
                     var formData = ObjectToFormData(data);
-                    console.log("formData is >>>>>>>>>>> "+ JSON.stringify(formData));
                     //******************
                     Metronic.blockUI({ animate: true });
                     $.ajax({
@@ -535,7 +529,6 @@
                     data: json,
                     contentType: 'application/json',
                     success: function (response) {
-                        console.log(JSON.stringify(response));
                         $('#employee_table > tbody').empty();
                         response.forEach(function(emp){
                             var selectBtn = '<button class="btn btn-xs btn-primary btn_select_employee" data-id="' + emp.EmployeeID + '">@Labels.please_select</button>';
@@ -551,7 +544,6 @@
                 //popup_employee
                 var tr = $(this).closest('tr');
                 var EmployeeID = $(this).data().id;
-                console.log(EmployeeID);
                 var Name = $(tr).find('td:first').text();
                 var FatherName = $(tr).find('td:nth-child(2)').text();
                 var Occpation = $(tr).find('td:nth-child(3)').text();
@@ -659,8 +651,6 @@
                     contentType: 'application/json',
                     success: function (response) {
                         if(response){
-                            console.log(response.AvailableQuantity);
-                            console.log(response.UnitPrice);
                             $("#Quantity").val(response.AvailableQuantity);
                             $("#UnitPrice").val(response.UnitPrice);
                             $("#StockInItemID").val(response.StockInItemID);
@@ -726,7 +716,6 @@
                             }
                         },
                         complete: function () {
-                            console.log("Inside the complete ");
                             Metronic.unblockUI();
                         }
                     });

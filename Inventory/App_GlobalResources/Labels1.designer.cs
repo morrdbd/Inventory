@@ -403,6 +403,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please check item availabe quanity and try again..
+        /// </summary>
+        internal static string check_available_quantity_try_again {
+            get {
+                return ResourceManager.GetString("check_available_quantity_try_again", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose an option.
         /// </summary>
         internal static string choose_an_option {

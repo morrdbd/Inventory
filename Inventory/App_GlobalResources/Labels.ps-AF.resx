@@ -1082,11 +1082,14 @@
   </data>
   <data name="second_hand_price" xml:space="preserve">
     <value>دوهم لاس قیمت</value>
- </data>
+  </data>
   <data name="AddNewItemGroup" xml:space="preserve">
     <value>د توکی ګروپ اضافه کول </value>
   </data>
   <data name="LookupName" xml:space="preserve">
     <value>د لټون نوم</value>
+  </data>
+  <data name="check_available_quantity_try_again" xml:space="preserve">
+    <value>موجوده مقدار چیک کړی او بیا کوښښ وکړی</value>
   </data>
 </root>

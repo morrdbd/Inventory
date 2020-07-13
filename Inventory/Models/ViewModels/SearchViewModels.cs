@@ -65,6 +65,8 @@ namespace Inventory.Models.ViewModels
 
         public int? CategoryID { get; set; }
 
+        public string BarCode { get; set; }
+
         public string ItemName { get; set; }
 
         public string ItemCode { get; set; }
@@ -254,6 +256,8 @@ namespace Inventory.Models.ViewModels
         public int? GroupID { get; set; }
 
         public int? CategoryID { get; set; }
+
+        public string BarCode { get; set; }
 
         public string ItemName { get; set; }
 

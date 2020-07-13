@@ -13,6 +13,8 @@ namespace Inventory.Models.ViewModels
 
         public int DisposableDistributionID { get; set; }
 
+        public string BarCode { get; set; }
+
         public string UnitName { get; set; }
 
         public string ItemCode { get; set; }

@@ -140,7 +140,7 @@ namespace Inventory.Controllers
             {
                 query = query.Where(c => c.UsageTypeID == search.UsageTypeID);
             }
-            if (search.BarCode != null)
+            if (!string.IsNullOrWhiteSpace(search.BarCode))
             {
                 query = query.Where(c => c.BarCode == search.BarCode);
             }
@@ -158,7 +158,7 @@ namespace Inventory.Controllers
             }
             if (search.UnitID != null)
             {
-                query = query.Where(c => c.CategoryID == search.UnitID);
+                query = query.Where(c => c.UnitID == search.UnitID);
             }
             if (search.SizeID != null)
             {
