@@ -30,6 +30,8 @@ namespace Inventory.Models.ViewModels
 
         public string Details { get; set; }
 
+        public string FilePath { get; set; }
+
         public List<StockInItemVM> StockInItems { get; set; }
 
     }

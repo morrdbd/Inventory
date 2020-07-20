@@ -852,9 +852,6 @@
   <data name="DistributionTicketList" xml:space="preserve">
     <value>د توزیع تکت لست</value>
   </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>د توکی نوم</value>
-  </data>
   <data name="Mem3Date" xml:space="preserve">
     <value>م ۳ تاریخ</value>
   </data>
@@ -880,7 +877,7 @@
     <value>درسیداتو راپور معلومات</value>
   </data>
   <data name="ReceiptReportItems" xml:space="preserve">
-    <value>رسیداتو راپور اجناس</value>
+    <value>د توکو د رسیداتو راپور</value>
   </data>
   <data name="Remarks" xml:space="preserve">
     <value>ملاحظات</value>
@@ -953,5 +950,146 @@
   </data>
   <data name="return_item" xml:space="preserve">
     <value>جنس تسلیمول</value>
+  </data>
+  <data name="Available_Quantity" xml:space="preserve">
+    <value>موجوده تعداد</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>برانډ</value>
+  </data>
+  <data name="Contractor_Name" xml:space="preserve">
+    <value>قراردادی / د بازار څخه اخستل شوی </value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>دیپارتمنټ</value>
+  </data>
+  <data name="Item_Category" xml:space="preserve">
+    <value>د توکی کټګوری</value>
+  </data>
+  <data name="Item_Code" xml:space="preserve">
+    <value> د توکی کوډ</value>
+  </data>
+  <data name="Item_Group" xml:space="preserve">
+    <value>د توکی ګروپ</value>
+  </data>
+  <data name="Item_Name" xml:space="preserve">
+    <value>د توکی نوم</value>
+  </data>
+  <data name="List_of_ticket" xml:space="preserve">
+    <value>د ټیکیټ لیست</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>د حکم تاریخ</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>د حکم نمبر</value>
+  </data>
+  <data name="Requester_Information" xml:space="preserve">
+    <value>د درخواست کونکی معلومات</value>
+  </data>
+  <data name="ReturnDate" xml:space="preserve">
+    <value>د تسلیمی تاریخ</value>
+  </data>
+  <data name="Select_Department" xml:space="preserve">
+    <value>--- د دیپارتمنټ انتخابول ---</value>
+  </data>
+  <data name="Select_Employee" xml:space="preserve">
+    <value>د کارمند انتخابول</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>اندازه</value>
+  </data>
+  <data name="StockInDate" xml:space="preserve">
+    <value>د ذخیره کولو دتاریخ</value>
+  </data>
+  <data name="Usage_Type" xml:space="preserve">
+    <value>د استعمال نوعه</value>
+  </data>
+  <data name="add_disposable_distribution" xml:space="preserve">
+    <value>مصرفی توکو د ویش فورمه</value>
+  </data>
+  <data name="add_restore_form" xml:space="preserve">
+    <value>فورمه ازدیاد اعاده</value>
+  </data>
+  <data name="Bar_Code" xml:space="preserve">
+    <value>بار کوډ</value>
+  </data>
+  <data name="disposable_item_distribution_search" xml:space="preserve">
+    <value> د ویشل شوی مصرفی اجسامو لټون </value>
+  </data>
+  <data name="edit_disposable_distribution" xml:space="preserve">
+    <value>مصرفی توکو د ویش فورمه بدلون</value>
+  </data>
+  <data name="edit_restore_form" xml:space="preserve">
+    <value>تغیر فورمه اعاده</value>
+  </data>
+  <data name="FormInfo" xml:space="preserve">
+    <value>فارم معلومات</value>
+  </data>
+  <data name="ItemCodition" xml:space="preserve">
+    <value>وضیعت جنس</value>
+  </data>
+  <data name="ItemsTobeRestored" xml:space="preserve">
+    <value>تسلیمیدونکی اجناس</value>
+  </data>
+  <data name="RestoreByInfo" xml:space="preserve">
+    <value>تسلیموونکی معلومات</value>
+  </data>
+  <data name="Restored_items" xml:space="preserve">
+    <value>تسلیم شوی توکی</value>
+  </data>
+  <data name="Restored_items_list" xml:space="preserve">
+    <value>تسلیم شوو توکو لست</value>
+  </data>
+  <data name="View_Form" xml:space="preserve">
+    <value>فارم لیدل</value>
+  </data>
+  <data name="AddNewDepartment" xml:space="preserve">
+    <value>د یپارمنټ اضافه کول </value>
+  </data>
+  <data name="AddNewItemCategory" xml:space="preserve">
+    <value>د توکی کټګوری اضافه کول</value>
+  </data>
+  <data name="Item_already_exist" xml:space="preserve">
+    <value>توکی اضافه شوی دی</value>
+  </data>
+  <data name="please_add_item" xml:space="preserve">
+    <value>مهربانی وکړی توکی وټاکې</value>
+  </data>
+  <data name="please_select_employee" xml:space="preserve">
+    <value>مهربانی وکړی کارمند انتخات کړی </value>
+  </data>
+  <data name="Unable_to_upload_image" xml:space="preserve">
+    <value>تصویر اضافه نه شو</value>
+  </data>
+  <data name="issue_number" xml:space="preserve">
+    <value>صادره نمبر</value>
+  </data>
+  <data name="restore_form" xml:space="preserve">
+    <value>اعاده فورمه</value>
+  </data>
+  <data name="all_stockin" xml:space="preserve">
+    <value>ټول توکی</value>
+  </data>
+  <data name="date_expired" xml:space="preserve">
+    <value>داغمه تاریخ</value>
+  </data>
+  <data name="is_expired" xml:space="preserve">
+    <value>ایا داغمه ده</value>
+  </data>
+  <data name="is_second_hand" xml:space="preserve">
+    <value>ایا استعمالی دی</value>
+  </data>
+  <data name="second_hand_price" xml:space="preserve">
+    <value>دوهم لاس قیمت</value>
+  </data>
+  <data name="AddNewItemGroup" xml:space="preserve">
+    <value>د توکی ګروپ اضافه کول </value>
+  </data>
+  <data name="LookupName" xml:space="preserve">
+    <value>د لټون نوم</value>
+  </data>
+  <data name="check_available_quantity_try_again" xml:space="preserve">
+    <value>موجوده مقدار چیک کړی او بیا کوښښ وکړی</value>
   </data>
 </root>

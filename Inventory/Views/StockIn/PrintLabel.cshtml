@@ -1,0 +1,52 @@
+﻿ 
+@model Inventory.Models.ViewModels.PrintLabelVM
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Print Label</title>
+    <link rel="shortcut icon" href="@Url.Content("~/Content/resources/img/favicon.ico")" />
+
+    <link href="@Url.Content("~/Content/resources/fontcss/barcode.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/resources/fontcss/fonts.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/resources/fontcss/noto.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="itemLabel" style="width:400px; height:100px;">
+        <div style="width:40%; text-align:center;  float:left;">
+        </div>
+        <div style="width:60%;">
+            <table>
+                <tr>
+                    <td style="text-align:center;" colspan="3">
+                        <img style="width:30px; text-align:center; height:30px; margin:auto;" src="~/Content/resources/img/morr.png" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>@Labels.Item_Group:</th>
+                    <td>@Model.GroupName</td>
+                    <td rowspan="3">
+                        <p style="text-align:center; font-family:Barcode;font-size:34px;padding:0px; margin:0px;" id="lblBarcode">*@Model.BarCode*</p>
+                        <p style="text-align:center; margin-top:0px; padding-top:0px;" id="lblBarcodeText">@Model.BarCode</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>@Labels.Item_Category:</th>
+                    <td>@Model.CategoryName</td>
+                </tr>
+                <tr>
+                    <th>@Labels.Item_Name:</th>
+                    <td>@Model.ItemName</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+

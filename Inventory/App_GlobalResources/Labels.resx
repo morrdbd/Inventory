@@ -774,9 +774,6 @@
   <data name="DistributionTicketList" xml:space="preserve">
     <value>Distribution Ticket List</value>
   </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>Item Name</value>
-  </data>
   <data name="Mem3Date" xml:space="preserve">
     <value>Mem3Date</value>
   </data>
@@ -875,5 +872,146 @@
   </data>
   <data name="return_item" xml:space="preserve">
     <value>Return Item</value>
+  </data>
+  <data name="Available_Quantity" xml:space="preserve">
+    <value>Available Quantity</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>Brand</value>
+  </data>
+  <data name="Contractor_Name" xml:space="preserve">
+    <value>Contractor Name</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Item_Category" xml:space="preserve">
+    <value>Item Category</value>
+  </data>
+  <data name="Item_Code" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="Item_Group" xml:space="preserve">
+    <value>Item Group</value>
+  </data>
+  <data name="Item_Name" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="List_of_ticket" xml:space="preserve">
+    <value>List of ticket</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>Order Date</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Order Number</value>
+  </data>
+  <data name="Requester_Information" xml:space="preserve">
+    <value>Requester Information</value>
+  </data>
+  <data name="ReturnDate" xml:space="preserve">
+    <value>Return Date</value>
+  </data>
+  <data name="Select_Department" xml:space="preserve">
+    <value>--- Select Department ---</value>
+  </data>
+  <data name="Select_Employee" xml:space="preserve">
+    <value>Select Employee</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="StockInDate" xml:space="preserve">
+    <value>Stock in Date</value>
+  </data>
+  <data name="Usage_Type" xml:space="preserve">
+    <value>Usage Type</value>
+  </data>
+  <data name="add_disposable_distribution" xml:space="preserve">
+    <value>Add Disposable Distribution Form</value>
+  </data>
+  <data name="add_restore_form" xml:space="preserve">
+    <value>Add Restore</value>
+  </data>
+  <data name="Bar_Code" xml:space="preserve">
+    <value>Bar Code</value>
+  </data>
+  <data name="disposable_item_distribution_search" xml:space="preserve">
+    <value>Disposable Item Distribution Search</value>
+  </data>
+  <data name="edit_disposable_distribution" xml:space="preserve">
+    <value>Edit Disposable Distribution Form</value>
+  </data>
+  <data name="edit_restore_form" xml:space="preserve">
+    <value>Edit Restore Form</value>
+  </data>
+  <data name="FormInfo" xml:space="preserve">
+    <value>Form Information</value>
+  </data>
+  <data name="ItemCodition" xml:space="preserve">
+    <value>Item Condition</value>
+  </data>
+  <data name="ItemsTobeRestored" xml:space="preserve">
+    <value>Items To Be Retored</value>
+  </data>
+  <data name="RestoreByInfo" xml:space="preserve">
+    <value>Restore By Information</value>
+  </data>
+  <data name="Restored_items" xml:space="preserve">
+    <value>Restored Items</value>
+  </data>
+  <data name="Restored_items_list" xml:space="preserve">
+    <value>Restored Items List</value>
+  </data>
+  <data name="View_Form" xml:space="preserve">
+    <value>View Form</value>
+  </data>
+  <data name="AddNewDepartment" xml:space="preserve">
+    <value>Add New Department</value>
+  </data>
+  <data name="AddNewItemCategory" xml:space="preserve">
+    <value>Add New Item Category</value>
+  </data>
+  <data name="Item_already_exist" xml:space="preserve">
+    <value>Item already exist</value>
+  </data>
+  <data name="please_add_item" xml:space="preserve">
+    <value>Please add item</value>
+  </data>
+  <data name="please_select_employee" xml:space="preserve">
+    <value>Please select employee</value>
+  </data>
+  <data name="Unable_to_upload_image" xml:space="preserve">
+    <value>Unable to upload image</value>
+  </data>
+  <data name="issue_number" xml:space="preserve">
+    <value>Issue Number</value>
+  </data>
+  <data name="restore_form" xml:space="preserve">
+    <value>Restore Form</value>
+  </data>
+  <data name="all_stockin" xml:space="preserve">
+    <value>All Stockin</value>
+  </data>
+  <data name="date_expired" xml:space="preserve">
+    <value>Date Expired</value>
+  </data>
+  <data name="is_expired" xml:space="preserve">
+    <value>Is Expired</value>
+  </data>
+  <data name="is_second_hand" xml:space="preserve">
+    <value>Is Second Hand</value>
+  </data>
+  <data name="second_hand_price" xml:space="preserve">
+    <value>Second Hand Price</value>
+  </data>
+  <data name="AddNewItemGroup" xml:space="preserve">
+    <value>Add New Item Group</value>
+  </data>
+  <data name="LookupName" xml:space="preserve">
+    <value>Lookup Name</value>
+  </data>
+  <data name="check_available_quantity_try_again" xml:space="preserve">
+    <value>Please check item availabe quanity and try again.</value>
   </data>
 </root>

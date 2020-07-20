@@ -30,6 +30,8 @@ namespace Inventory.Models.ViewModels
 
         public int? UsageTypeID { get; set; }
 
+        public string BarCode { get; set; }
+
         public int? GroupID { get; set; }
 
         public int? CategoryID { get; set; }
@@ -54,6 +56,38 @@ namespace Inventory.Models.ViewModels
         public int start { get; set; }
         public int length { get; set; }
     }
+
+    public class DisposableDistributedSearch
+    {
+        public int? DepartmentID { get; set; }
+
+        public int? GroupID { get; set; }
+
+        public int? CategoryID { get; set; }
+
+        public string BarCode { get; set; }
+
+        public string ItemName { get; set; }
+
+        public string ItemCode { get; set; }
+
+        public int? SizeID { get; set; }
+
+        public int? OriginID { get; set; }
+
+        public int? BrandID { get; set; }
+
+        public string DateFrom { get; set; }
+
+        public string DateTo { get; set; }
+
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
+
     public class Durable_StockIn_Search
     {
         public string ReportNumber { get; set; }
@@ -69,23 +103,42 @@ namespace Inventory.Models.ViewModels
         public int length { get; set; }
     }
 
-    public class Item_In_Warehouse_Search
+    public class StockIn_Search
     {
+        public string BarCode { get; set; }
+
         public string ReportNumber { get; set; }
+
         public string DateFrom { get; set; }
+
         public string DateTo { get; set; }
+
+        public string ItemInCondition { get; set; }
+
         public int? UsageTypeID { get; set; }
+
         public int? GroupID { get; set; }
+
         public int? CategoryID { get; set; }
+
         public string ItemName { get; set; }
+
         public string ItemCode { get; set; }
+
         public int? SizeID { get; set; }
+
         public int? OriginID { get; set; }
+
         public int? BrandID { get; set; }
+
         public int PageSize { get; set; }
+
         public int? PageNo { get; set; }
+
         public int draw { get; set; }
+
         public int start { get; set; }
+
         public int length { get; set; }
     }
     public class Employee_Search
@@ -110,6 +163,8 @@ namespace Inventory.Models.ViewModels
 
         public int? CategoryID { get; set; }
 
+        public string BarCode { get; set; }
+
         public string ItemName { get; set; }
 
         public string ItemCode { get; set; }
@@ -122,6 +177,135 @@ namespace Inventory.Models.ViewModels
 
         public int? BrandID { get; set; }
 
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
+
+    public class RestoreItemSearch
+    {
+        public int? EmpID { get; set; }
+
+        public int? GroupID { get; set; }
+
+        public int? CategoryID { get; set; }
+
+        public string ItemName { get; set; }
+
+        public string BarCode { get; set; }
+
+        public string ItemCode { get; set; }
+
+        public int? UnitID { get; set; }
+
+        public int? SizeID { get; set; }
+
+        public int? OriginID { get; set; }
+
+        public int? BrandID { get; set; }
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
+
+    public class ItemsRestoredSearch
+    {
+        public int? DocumentIssuedNo { get; set; }
+
+        public int? DepartmentID { get; set; }
+
+        public int? EmployeeID { get; set; }
+
+        public string ItemInCondition { get; set; }
+
+        public string BarCode { get; set; }
+
+        public int? GroupID { get; set; }
+
+        public int? CategoryID { get; set; }
+
+        public string ItemName { get; set; }
+
+        public string ItemCode { get; set; }
+
+        public int? UnitID { get; set; }
+
+        public int? SizeID { get; set; }
+
+        public int? OriginID { get; set; }
+
+        public int? BrandID { get; set; }
+
+        public string DateFrom { get; set; }
+
+        public string DateTo { get; set; }
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
+    public class DisposableDistributionItemsSearch
+    {
+        public int? DepartmentID { get; set; }
+
+        public int? GroupID { get; set; }
+
+        public int? CategoryID { get; set; }
+
+        public string BarCode { get; set; }
+
+        public string ItemName { get; set; }
+
+        public string ItemCode { get; set; }
+
+        public int? SizeID { get; set; }
+
+        public int? OriginID { get; set; }
+
+        public int? BrandID { get; set; }
+
+        public string DateFrom { get; set; }
+
+        public string DateTo { get; set; }
+
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
+    public class LookupGroupSearch
+    {
+        public int? LookupUsageType { get; set; }
+        public string LookupName { get; set; }
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
+
+    public class LookupCategorySearch
+    {
+        public int? SLookupUsageType { get; set; }
+        public int? SLookupGroupType { get; set; }
+        public string SLookupName { get; set; }
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
+
+    public class DepartmentSearch
+    {
+        public int? ParentDepartmentID { get; set; }
+        public string DepartmentName { get; set; }
         public int PageSize { get; set; }
         public int? PageNo { get; set; }
         public int draw { get; set; }

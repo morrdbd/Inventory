@@ -834,9 +834,6 @@
   <data name="DistributionTicketList" xml:space="preserve">
     <value>لیست تکت توزیع</value>
   </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>نام جنس</value>
-  </data>
   <data name="Mem3Date" xml:space="preserve">
     <value>تاریخ م 3</value>
   </data>
@@ -935,5 +932,146 @@
   </data>
   <data name="return_item" xml:space="preserve">
     <value>تسلیمی جنس</value>
+  </data>
+  <data name="Available_Quantity" xml:space="preserve">
+    <value>تعداد موجوده</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>براند</value>
+  </data>
+  <data name="Contractor_Name" xml:space="preserve">
+    <value>قراردادی / از باز اخذګردیده</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>دیپارتمنت</value>
+  </data>
+  <data name="Item_Category" xml:space="preserve">
+    <value>کتگوری جنس</value>
+  </data>
+  <data name="Item_Code" xml:space="preserve">
+    <value>کود جنس</value>
+  </data>
+  <data name="Item_Group" xml:space="preserve">
+    <value>کروپ جنس</value>
+  </data>
+  <data name="Item_Name" xml:space="preserve">
+    <value>اسم جنس</value>
+  </data>
+  <data name="List_of_ticket" xml:space="preserve">
+    <value>لیست تیکیت</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>تاریخ حکم</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>نمبر حکم</value>
+  </data>
+  <data name="Requester_Information" xml:space="preserve">
+    <value>معلومات درخواست کننده</value>
+  </data>
+  <data name="ReturnDate" xml:space="preserve">
+    <value>تاریخ تسلیم</value>
+  </data>
+  <data name="Select_Department" xml:space="preserve">
+    <value>--- انتخاب دیپارتمنت ---</value>
+  </data>
+  <data name="Select_Employee" xml:space="preserve">
+    <value>انتخاب کارمند</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>اندازه</value>
+  </data>
+  <data name="StockInDate" xml:space="preserve">
+    <value>تاریخ ازدیاد</value>
+  </data>
+  <data name="Usage_Type" xml:space="preserve">
+    <value>نوع استعمال</value>
+  </data>
+  <data name="add_disposable_distribution" xml:space="preserve">
+    <value>فورمه توزیع اجسام مصرفی</value>
+  </data>
+  <data name="add_restore_form" xml:space="preserve">
+    <value>فورمه ازدیاد اعاده</value>
+  </data>
+  <data name="Bar_Code" xml:space="preserve">
+    <value>بار کود</value>
+  </data>
+  <data name="disposable_item_distribution_search" xml:space="preserve">
+    <value>جستجو اجسام مصرفی توضیع شده</value>
+  </data>
+  <data name="edit_disposable_distribution" xml:space="preserve">
+    <value>تغیر فورمه اجسام مصرفی</value>
+  </data>
+  <data name="edit_restore_form" xml:space="preserve">
+    <value>تغیر فورمه اعاده</value>
+  </data>
+  <data name="FormInfo" xml:space="preserve">
+    <value>معلومات فارم</value>
+  </data>
+  <data name="ItemCodition" xml:space="preserve">
+    <value>وضیعت جنس</value>
+  </data>
+  <data name="ItemsTobeRestored" xml:space="preserve">
+    <value>اجناس اعاده</value>
+  </data>
+  <data name="RestoreByInfo" xml:space="preserve">
+    <value>معلومات تسلیم کننده</value>
+  </data>
+  <data name="Restored_items" xml:space="preserve">
+    <value>اجناس اعاده</value>
+  </data>
+  <data name="Restored_items_list" xml:space="preserve">
+    <value>لست اجناس اعاده</value>
+  </data>
+  <data name="View_Form" xml:space="preserve">
+    <value>نمایش فارم</value>
+  </data>
+  <data name="AddNewDepartment" xml:space="preserve">
+    <value>ازدیاد د یپارمنت</value>
+  </data>
+  <data name="AddNewItemCategory" xml:space="preserve">
+    <value>ازدیاد کتګوری جنس</value>
+  </data>
+  <data name="Item_already_exist" xml:space="preserve">
+    <value>جنس ازضافه شده است</value>
+  </data>
+  <data name="please_add_item" xml:space="preserve">
+    <value>لطفٌ جنس را انتخاب نماید</value>
+  </data>
+  <data name="please_select_employee" xml:space="preserve">
+    <value>لطفً کارمند را انتخاب نماید</value>
+  </data>
+  <data name="Unable_to_upload_image" xml:space="preserve">
+    <value>قادر به ازدیاد تصویر نشد</value>
+  </data>
+  <data name="all_stockin" xml:space="preserve">
+    <value>تمام اجناس</value>
+  </data>
+  <data name="date_expired" xml:space="preserve">
+    <value>تاریخ داغمه</value>
+  </data>
+  <data name="issue_number" xml:space="preserve">
+    <value>نمبر صادره</value>
+  </data>
+  <data name="is_expired" xml:space="preserve">
+    <value>ایا داغمه شده</value>
+  </data>
+  <data name="is_second_hand" xml:space="preserve">
+    <value>ایا مستعمل است</value>
+  </data>
+  <data name="restore_form" xml:space="preserve">
+    <value>فورمه اعاده</value>
+  </data>
+  <data name="second_hand_price" xml:space="preserve">
+    <value>قیمت دست دوم</value>
+  </data>
+  <data name="AddNewItemGroup" xml:space="preserve">
+    <value>ازدیاد گروپ جنس  </value>
+  </data>
+  <data name="LookupName" xml:space="preserve">
+    <value>نام لوکاپ</value>
+  </data>
+  <data name="check_available_quantity_try_again" xml:space="preserve">
+    <value>لطف مقدار موجوده را چیک نماید و دوباره کوشش نماید</value>
   </data>
 </root>

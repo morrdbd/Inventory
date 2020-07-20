@@ -33,7 +33,7 @@ namespace Inventory.Models
 
         public bool IsActive { get; set; }
 
-        public int InsertedBy { get; set; }
+        public int? InsertedBy { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? InsertedDate { get; set; }

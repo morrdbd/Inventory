@@ -1,0 +1,122 @@
+﻿@model Inventory.Models.ViewModels.RestoreVM
+@{
+    ViewBag.Title = Labels.restore_form;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
+}
+<div class="margin-bottom-10">
+    @if (_user.HasAccess("Restore", "Search"))
+    {
+        <a href="@Url.Action("Search")" class="btn btn-sm">@Labels.back_to_list</a>
+    }
+    @if (_user.HasAccess("Restore", "Edit"))
+    {
+        <a href="@Url.Action("Edit", new { id=Model.RestoreID })" class="btn btn-sm btn-success" id="btn_edit"><i class="fa fa-edit"></i> @Labels.edit</a>
+    }
+    @if (_user.HasAccess("Restore", "Delete"))
+    {
+        <a href="@Url.Action("Delete", new { id=Model.RestoreID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.return_item</a>
+    }
+</div>
+<h4>@Labels.FormInfo</h4>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>@Labels.issue_number</th>
+            <th>@Labels.IssueDate</th>
+            <th>@Labels.ItemCodition</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.DocumentIssuedNo</td>
+            <td>@Model.DocumentIssuedDateForm</td>
+            <td>@Model.ItemInCondition</td>
+        </tr>
+    </tbody>
+
+</table>
+<h4>@Labels.RestoreByInfo</h4>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>@Labels.Requester</th>
+            <th>@Labels.Name</th>
+            <th>@Labels.FatherName</th>
+            <th>@Labels.Occupation</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.EmpDepartmentName</td>
+            <td>@Model.EmpName</td>
+            <td>@Model.EmpFatherName</td>
+            <td>@Model.EmpOccupation</td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>@Labels.Restored_items</h4>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>@Labels.Bar_Code</th>
+            <th>@Labels.Quantity</th>
+            <td>@Labels.Unit</td>
+            <th>@Labels.Item_Group</th>
+            <th>@Labels.Item_Category</th>
+            <th>@Labels.Item_Name</th>
+            <th>@Labels.code</th>
+            <th>@Labels.Size</th>
+            <th>@Labels.Origin</th>
+            <th>@Labels.Brand</th>
+            <td>@Labels.UnitPrice</td>
+            <td>@Labels.DealWithAccount</td>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int index = 1;
+            foreach (var item in Model.RestoreItems)
+            {
+        <tr>
+            <td>@index</td>
+            <td>@item.BarCode</td>
+            <td>@item.Quantity</td>
+            <td>@item.UnitName</td>
+            <td>@item.GroupName</td>
+            <td>@item.CategoryName</td>
+            <td>@item.ItemName</td>
+            <td>@item.ItemCode</td>
+            <td>@item.SizeName</td>
+            <td>@item.OriginName</td>
+            <td>@item.BrandName</td>
+            <td>@item.UnitPrice</td>
+            <td>@item.DealWithAccount</td>
+        </tr>
+                index++;
+            }
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('body').on('click', '#btn_delete', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                bootbox.confirm('@Labels.are_you_sure', function (result) {
+                    if (result == true) {
+                        $.get(url, function (response) {
+                            if (response == true) {
+                                window.location.href = '@Url.Action("Search")';
+                            }
+                        })
+                    }
+                })
+            })
+        })
+    </script>
+}

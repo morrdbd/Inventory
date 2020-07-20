@@ -16,55 +16,41 @@
                 @Labels.ReceiptReportInfo
             </div>
         </div>
-        <div class="portlet-body">
+        <div class="portlet-body" style="padding:0 15px;">
             <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.ReportNumber</label>
-                    <div class="col-md-8">
-                        <input type="text" name="M7Number" id="M7Number" value="@Model.M7Number" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
+                    <input type="number" name="M7Number" id="M7Number" value="@Model.M7Number" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.ReceiptDate</label>
-                    <div class="col-md-8">
-                        <input type="text" name="StockInDateForm" id="StockInDateForm" value="@Model.StockInDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
-                    </div>
+                    <input type="text" name="StockInDateForm" id="StockInDateForm" value="@Model.StockInDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                 </div>
             </section>
             <section class="row">
                 <div class="col-md-6 form-group">
-                    <label>Contractor Name</label>
-                    <div class="col-md-8">
-                        <input type="text" name="ContractorName" id="ContractorName" value="@Model.ContractorName" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
+                    <label>@Labels.Contractor_Name</label>
+                    <input type="text" name="ContractorName" id="ContractorName" value="@Model.ContractorName" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.DeliveryPlace</label>
-                    <div class="col-md-8">
-                        <input type="text" name="DeliveryPlace" id="DeliveryPlace" value="@Model.DeliveryPlace" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
+                    <input type="text" name="DeliveryPlace" id="DeliveryPlace" value="@Model.DeliveryPlace" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
             </section>
             <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.SuggestionBillNumber</label>
-                    <div class="col-md-8">
-                        <input type="text" name="OrderNumber" id="OrderNumber" value="@Model.OrderNumber" class="form-control input-sm" required data-msg="" placeholder="">
-                    </div>
+                    <input type="number" name="OrderNumber" id="OrderNumber" value="@Model.OrderNumber" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.Mem3Date</label>
-                    <div class="col-md-8">
-                        <input type="text" name="OrderDateForm" id="OrderDateForm" value="@Model.OrderDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
-                    </div>
+                    <input type="text" name="OrderDateForm" id="OrderDateForm" value="@Model.OrderDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                 </div>
             </section>
             <section class="row">
                 <div class="col-md-6 form-group">
                     <label>@Labels.Attachment</label>
-                    <div class="col-md-8">
-                        <input type="file" id="FileContent" name="FileContent" @_ImageRequired accept="image/*,.pdf" />
-                    </div>
+                    <input type="file" id="FileContent" name="FileContent" @_ImageRequired accept="image/*,.pdf" />
                 </div>
             </section>
         </div>
@@ -84,17 +70,17 @@
                 <thead id="thead_attendee">
                     <tr>
                         <th>@Labels.Unit</th>
-                        <th>Quantity</th>
-                        <th>Usage Type</th>
-                        <th>Group</th>
-                        <th>Category</th>
-                        <th>Name</th>
-                        <th>Code</th>
-                        <th>Size</th>
-                        <th>Origin</th>
-                        <th>Brand</th>
-                        <th>Unit Price</th>
-                        <th>Total Price</th>
+                        <th>@Labels.Quantity</th>
+                        <th>@Labels.Usage_Type</th>
+                        <th>@Labels.Item_Group</th>
+                        <th>@Labels.Item_Category</th>
+                        <th>@Labels.Name</th>
+                        <th>@Labels.Item_Code</th>
+                        <th>@Labels.Size</th>
+                        <th>@Labels.Origin</th>
+                        <th>@Labels.Brand</th>
+                        <th>@Labels.UnitPrice</th>
+                        <th>@Labels.TotalPrice</th>
                         <th>@Labels.Remarks</th>
                         <th></th>
                     </tr>
@@ -137,9 +123,7 @@
     <div class="row">
         <div class="col-md-12 form-group">
             <label>@Labels.Details</label>
-            <div class="col-md-10">
-                <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Details</textarea>
-            </div>
+            <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Details</textarea>
         </div>
     </div>
     <section class="row">
@@ -158,95 +142,71 @@
                     <button type="button" class="close red" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">@Labels.AddItem</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="padding:0 15px;">
                     <section class="row">
                         <div class=" col-md-6 form-group">
-                            <label>Usage Type</label>
-                            <div class="col-md-8">
-                                @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new {onchange = "loadGroup()", @class = "form-control input-sm", @ID = "UsageTypeID", @Required = "required" })
-                            </div>
+                            <label>@Labels.Usage_Type</label>
+                            @Html.DropDownList("UsageTypeID", ViewBag.UsageTypeDrp as SelectList, Labels.please_select, new {onchange = "loadGroup()", @class = "form-control input-sm", @ID = "UsageTypeID", @Required = "required" })
                         </div>
                     </section>
                     <section class="row">
                         <div class=" col-md-6 form-group">
-                            <label>Item Group</label>
-                            <div class="col-md-8">
-                                <select id="GroupID" name="GroupID" onchange="loadCategories()" class="form-control input-sm"></select>
-                                @*@Html.DropDownList("GroupID", ViewBag.ItemGroupDrp as SelectList, Labels.please_select, new { onchange = "", @class = "form-control input-sm", @ID = "GroupID", @Required = "required" })*@
-                            </div>
+                            <label>@Labels.Item_Group</label>
+                            <select id="GroupID" name="GroupID" onchange="loadCategories()" class="form-control input-sm"></select>
+                            @*@Html.DropDownList("GroupID", ViewBag.ItemGroupDrp as SelectList, Labels.please_select, new { onchange = "", @class = "form-control input-sm", @ID = "GroupID", @Required = "required" })*@
                         </div>
                         <div class=" col-md-6 form-group">
-                            <label>Item Category</label>
-                            <div class="col-md-8">
-                                <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
-                            </div>
+                            <label>@Labels.Item_Category</label>
+                            <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
                         </div>
                     </section>
-                    <div class="row">
+                    <div class="row" style="padding:0 15px;">
                         <section class="row">
                             <div class="col-md-6 form-group">
-                                <label>Item Name</label>
-                                <div class="col-md-8">
-                                    <input type="text" name="ItemName" id="ItemName" class="form-control input-sm" required data-msg="" placeholder="">
-                                </div>
+                                <label>@Labels.Item_Name</label>
+                                <input type="text" name="ItemName" id="ItemName" class="form-control input-sm" required data-msg="" placeholder="">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label>Item Code</label>
-                                <div class="col-md-8">
+                                <label>@Labels.Item_Code</label>
                                     <input type="text" name="ItemCode" id="ItemCode" class="form-control input-sm" data-msg="" placeholder="">
-                                </div>
                             </div>
                         </section>
                         <section class="row">
                             <div class=" col-md-6 form-group">
-                                <label>Unit</label>
-                                <div class="col-md-8">
-                                    @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @Required = "required", @ID = "UnitID" })
-                                </div>
+                                <label>@Labels.Unit</label>
+                                @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @Required = "required", @ID = "UnitID" })
                             </div>
                             <div class=" col-md-6 form-group">
-                                <label>Item Size</label>
-                                <div class="col-md-8">
-                                    @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
-                                </div>
+                                <label>@Labels.Size</label>
+                                @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
                             </div>
                         </section>
                         <section class="row"></section>
                         <section class="row">
                             <div class=" col-md-6 form-group">
-                                <label>Item Origin</label>
-                                <div class="col-md-8">
-                                    @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
-                                </div>
+                                <label>@Labels.Origin</label>
+                                @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
                             </div>
                             <div class=" col-md-6 form-group">
-                                <label>Item Brand</label>
-                                <div class="col-md-8">
-                                    @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
-                                </div>
+                                <label>@Labels.Brand</label>
+                                @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
                             </div>
                         </section>
                     </div>
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label>Quantity</label>
-                            <div class="col-md-8">
-                                <input type="number" name="Quantity" id="Quantity" class="form-control input-sm" required data-rule-digits="true" data-msg="" />
-                            </div>
+                            <label>@Labels.Quantity</label>
+                            <input type="number" name="Quantity" id="Quantity" class="form-control input-sm" required data-rule-digits="true" data-msg="" />
                         </div>
                         <div class="col-md-6 form-group">
-                            <label> Unit Price</label>
-                            <div class="col-md-8">
-                                <input type="number" name="UnitPrice" id="UnitPrice" class="form-control input-sm" required data-rule-digits="true" data-msg="" />
-                            </div>
+                            <label> @Labels.UnitPrice</label>
+                            <input type="number" name="UnitPrice" id="UnitPrice" class="form-control input-sm" required data-rule-digits="true" data-msg="" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label>@Labels.Remarks</label>
-                            <div class="col-md-10">
-                                <textarea type="text" name="Remarks" id="Remarks" class="form-control" data-msg="" placeholder=""></textarea>
-                            </div>
+                            <textarea type="text" name="Remarks" id="Remarks" class="form-control" data-msg="" placeholder=""></textarea>
                         </div>
                     </div>
                 </div>
@@ -255,7 +215,7 @@
                     <button type="button" class="btn default btn-sm" data-dismiss="modal">@Labels.cancel</button>
                     <button type="reset" id="btnResetModal" class="btn btn-sm">@Labels.reset</button>
                     <input type="hidden" id="index" name="index" value="-1">
-                    <input type="hidden" name="ID" value="0">
+                    <input type="hidden" name="StockInItemID" value="0">
                 </div>
             </div>
         </div>
@@ -297,29 +257,6 @@
                 $("#CategoryID").trigger("change");
             }
 
-            console.log("StockInItems >>>>>>>>>>>>>>>> "+JSON.stringify(StockInItems));
-            //Load Item Information
-            @*$('#ItemCode').change(function () {
-                var ItemCode = $(this).val();
-                $.ajax({
-                    type: "post",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    url: '@Url.Action("LoadItemInfo", "Helper")', // URL to fetch second ddl
-                    data: "{ItemCode:'" + ItemCode + "'}",
-                    success: function (data) {
-                        $("#ItemSize").val(data.ItemSize);
-                        $("#ItemCategory").val(data.ItemCategory);
-                        $("#ItemGroup").val(data.ItemGroup);
-                        $("#ItemOrigin").val(data.ItemOrigin);
-                        $("#UnitName").val(data.UnitName);
-                    },
-                    failure: function (data) {
-                        alert('error occured');
-                    }
-                });
-            });*@
-
             // FORM VALIDATION AND SUBMISSION
             $('#main_form').validate({
                 submitHandler: function (form) {
@@ -334,7 +271,6 @@
                     }
                     var formData = ObjectToFormData(data);
 
-                    console.log("form data is >>>>>>>> "+ JSON.stringify(formData));
                     //******************
                     Metronic.blockUI({ animate: true });
                     $.ajax({
@@ -346,8 +282,6 @@
                         success: function (response) {
                             if (response != false) {
                                 saveImage(response);
-                                console.log("response received >>>>>>>>>><<<<<<");
-
                             } else {
                                 toastr.error('@Labels.unable_to_update');
                             }
@@ -361,7 +295,7 @@
                 e.preventDefault();
                 $('#item_modal').modal('show');
                 $('#item_form').clearForm();
-                $('#item_form [name=ID]').val('0');
+                $('#item_form [name=StockInItemID]').val('0');
                 $('#item_form [name=index]').val('-1');
             })
 
@@ -369,13 +303,12 @@
                 e.preventDefault();
                 var index = $(this).data().index;
                 var row = StockInItems[index];
-                console.log("row is >>>>>>>>>>>>>"+ JSON.stringify(row));
                 $('#item_form [name=UnitID]').val(row.UnitID);
                 $('#item_form [name=ItemName]').val(row.ItemName);
                 $('#item_form [name=UnitPrice]').val(row.UnitPrice);
                 $('#item_form [name=Quantity]').val(row.Quantity);
                 $('#item_form [name=Remarks]').val(row.Remarks);
-                $('#item_form [name=ID]').val(row.ID);
+                $('#item_form [name=StockInItemID]').val(row.StockInItemID);
               
                 $('#item_form [name=SizeID]').val(row.SizeID);
                 $('#item_form [name=UsageTypeID]').val(row.UsageTypeID);
@@ -384,7 +317,6 @@
                 $('#item_form [name=OriginID]').val(row.OriginID);
                 $('#item_form [name=BrandID]').val(row.BrandID);
                 $('#item_form [name=ItemName]').val(row.ItemName);
-                console.log("Item code is >>>>>>>>>>>> "+ row.ItemCode);
                 $('#item_form [name=ItemCode]').val(row.ItemCode);
 
                 $('#item_form [name=index]').val(index);
@@ -398,10 +330,7 @@
                 submitHandler: function (form) {
                     var isDuplicate = false;
                     StockInItems.forEach(function(i){
-                        console.log("Item code textbox value is >>>>>>> "+$('#ItemName').val());
-                        console.log("Item code value is >>>>>>> "+i.ItemName);
                         if($('#ItemName').val() && (i.ItemName === $('#ItemName').val())){
-                            console.log("Inside the Item Name >>>>"+i.ItemName);
                             isDuplicate = true;
                             return;
                         }
@@ -411,7 +340,6 @@
                         return;
                     }
                     var row = $(form).serializeJSON();
-                    console.log("form data is >>>>>>>>>>>>>> "+JSON.stringify(row));
                     var _index = (row.index == -1) ? StockInItems.length : row.index;
 
                     var tr = $('#temp_item').clone().html()
@@ -423,9 +351,12 @@
                     .replace("{{ItemName}}",row.ItemName)
                     .replace("{{ItemCode}}",row.ItemCode)
                     //.replace("{{ItemName}}",$('#item_form [name=ItemCode] option:selected').text())
-                    .replace("{{SizeName}}",$('#item_form [name=SizeID] option:selected').text())
-                    .replace("{{OriginName}}",$('#item_form [name=OriginID] option:selected').text())
-                    .replace("{{BrandName}}",$('#item_form [name=BrandID] option:selected').text())
+                    .replace("{{SizeName}}",
+                    $('#item_form [name=SizeID] option:selected').val() ? $('#item_form [name=SizeID] option:selected').text() : '')
+                    .replace("{{OriginName}}",
+                    $('#item_form [name=OriginID] option:selected').val() ? $('#item_form [name=OriginID] option:selected').text() : '')
+                    .replace("{{BrandName}}",
+                    $('#item_form [name=BrandID] option:selected').val() ? $('#item_form [name=BrandID] option:selected').text() : '')
 
                     .replace("{{UnitPrice}}", row.UnitPrice)
                     .replace("{{TotalPrice}}", row.UnitPrice * row.Quantity)
@@ -467,19 +398,15 @@
     </script>
     <script>
         function loadGroup(groupId){
-            var usageTypId = $("#UsageTypeID").val();
-            console.log("Inside the ca >>>>>>>>>>>>>>>>");
-            console.log("groupId is "+ groupId);
-            console.log("usageTypId  is >>>>>>>>>>>>>>>>"+ usageTypId);
-            if (usageTypId) {
+            var usageTypeId = $("#UsageTypeID").val();
+            if (usageTypeId) {
                 $.ajax({
                     type: "post",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
-                    data: "{id:'" + usageTypId + "'}",
+                    data: "{id:'" + usageTypeId + "'}",
                     success: function (data) {
-                        console.log(">>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<"+JSON.stringify(data));
                         $('#GroupID').empty();
                         $('#GroupID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
                         $.each(data, function (i, d) {
@@ -503,8 +430,6 @@
             }
         }
         function loadCategories(groupId,categoryId){
-            //console.log("Inside the ca >>>>>>>>>>>>>>>>");
-            //console.log("groupId is "+ groupId);
             var groupId = groupId;
             if(!groupId){
                 groupId = $("#GroupID").val();
@@ -517,7 +442,6 @@
                     url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
                     data: "{id:'" + groupId + "'}",
                     success: function (data) {
-                        console.log(">>>>>>>>>>>>>>>>>>>>>>>Category>><<<<<<<<<<<<<<<<"+ JSON.stringify(data));
                         $('#CategoryID').empty();
                         $('#CategoryID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
                         $.each(data, function (i, d) {
@@ -541,45 +465,38 @@
             }
         }
         function saveImage(recordId){
-            console.log("Inside the save image >>>>>"+recordId);
-            //setTimeout(function(){
-            //    console.log("Inside the timeout ");
-            //},6000)
-
-                if($("#FileContent").val()){
-                    var file = $("#FileContent")[0].files[0];
-                        var imageData = new FormData();
-                        imageData.append('RecordID', recordId);
-                        imageData.append('FileContent', file);
-                        $.ajax({
-                            url: 'SaveScanImage',
-                            type: 'POST',
-                            data: imageData,
-                            contentType: false,
-                            processData: false,
-                            success: function(response){
-                                if(response != false){
-                                    bootbox.alert('@Labels.operation_done_suc', function () {
-                                        window.location.href = '@Url.Action("View")/' + recordId;
-                                    })
-                                }
-                                else{
-                                    toastr.error('Unable to upload image');
+            if($("#FileContent").val()){
+                var file = $("#FileContent")[0].files[0];
+                    var imageData = new FormData();
+                    imageData.append('RecordID', recordId);
+                    imageData.append('FileContent', file);
+                    $.ajax({
+                        url: 'SaveScanImage',
+                        type: 'POST',
+                        data: imageData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response){
+                            if(response != false){
+                                bootbox.alert('@Labels.operation_done_suc', function () {
                                     window.location.href = '@Url.Action("View")/' + recordId;
-                                }
-                            },
-                            complete: function () {
-                                console.log("Inside the complete ");
-                                Metronic.unblockUI();
+                                })
                             }
-                        });
-                }else{
-                    Metronic.unblockUI();
-                    bootbox.alert('@Labels.operation_done_suc', function () {
-                        window.location.href = '@Url.Action("View")/' + recordId;
-                    })
-                    console.log("file content do not have value");
-                }
+                            else{
+                                toastr.error('Unable to upload image');
+                                window.location.href = '@Url.Action("View")/' + recordId;
+                            }
+                        },
+                        complete: function () {
+                            Metronic.unblockUI();
+                        }
+                    });
+            }else{
+                Metronic.unblockUI();
+                bootbox.alert('@Labels.operation_done_suc', function () {
+                    window.location.href = '@Url.Action("View")/' + recordId;
+                })
+            }
         }
 
     </script>

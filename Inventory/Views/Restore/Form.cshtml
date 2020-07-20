@@ -1,0 +1,674 @@
+﻿@model Inventory.Models.ViewModels.RestoreVM
+
+@{
+    var empSearch = ViewBag.emSearch as Inventory.Models.ViewModels.Employee_Search;
+    var itemSearch = ViewBag.itemSearch as Inventory.Models.ViewModels.Item_Search;
+
+    ViewBag.Title = Model.RestoreID == 0 ? Labels.add_restore_form : Labels.edit_restore_form;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
+    string model_json = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
+}
+<form action="@Url.Action(Model.RestoreID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
+    <input type="hidden" name="RestoreID" value="@Model.RestoreID" />
+    <input type="hidden" name="EmpID" id="EmpID" value="@Model.EmpID" />
+    <div class="portlet box blue-hoki margin-bottom-10">
+        <div class="portlet-title">
+            <div class="caption">
+                @Labels.RestoreByInfo
+            </div>
+            <div class="actions">
+                <a href="#popup_employee" data-toggle="modal" class="btn btn-xs btn-circle blue-steel"><i class="fa fa-user"></i>@Labels.Select_Employee</a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <section class="row">
+                <div class="col-md-2 form-group">
+                    <label>@Labels.Name</label>
+                    <input type="text" name="EmpName" id="EmpName" readonly value="@Model.EmpName" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>@Labels.FatherName</label>
+                    <input type="text" name="EmpFatherName" id="EmpFatherName" readonly value="@Model.EmpFatherName" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>@Labels.Occupation</label>
+                    <input type="text" name="EmpOccupation" id="EmpOccupation" readonly value="@Model.EmpOccupation" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>@Labels.Department</label>
+                    <input type="text" name="EmpDepartmentName" id="EmpDepartmentName" readonly value="@Model.EmpDepartmentName" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="portlet box blue-hoki margin-bottom-10">
+        <div class="portlet-title">
+            <div class="caption">
+                @Labels.FormInfo
+            </div>
+        </div>
+        <div class="portlet-body">
+            <section class="row">
+                <div class="col-md-3 form-group">
+                    <label>@Labels.Issued</label>
+                    <input type="number" name="DocumentIssuedNo" id="DocumentIssuedNo" value="@Model.DocumentIssuedNo" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>@Labels.IssueDate</label>
+                    <input type="text" name="DocumentIssuedDateForm" id="DocumentIssuedDateForm" value="@Model.DocumentIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                </div>
+                <div class=" col-md-3 form-group">
+                    <label>@Labels.ItemCodition</label>
+                    @Html.DropDownList("ItemInCondition", ViewBag.ItemInConditionDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "ItemInCondition" })
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>@Labels.Attachment</label>
+                    <input type="file" id="FileContent" name="FileContent" @(Model.RestoreID == 0 ? "required" : "") accept="image/*,.pdf" />
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="portlet box blue-hoki margin-bottom-10">
+        <div class="portlet-title">
+            <div class="caption">@Labels.ItemsTobeRestored</div>
+            <div class="actions">
+                <a href="javascript:;" class="btn btn-xs btn-circle blue-steel" id="btn_add_item">
+                    <i class="fa fa-plus"></i> @Labels.AddItem
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <table id="restore_items_table" class="table table-striped table-condensed">
+                <thead id="thead_items">
+                    <tr>
+                        <th>@Labels.Bar_Code</th>
+                        <th>@Labels.Unit</th>
+                        <th>@Labels.Quantity</th>
+                        <th>@Labels.Item_Group</th>
+                        <th>@Labels.Item_Category</th>
+                        <th>@Labels.Item_Name</th>
+                        <th>@Labels.district_code</th>
+                        <th>@Labels.Size</th>
+                        <th>@Labels.Origin</th>
+                        <th>@Labels.Brand</th>
+                        <th>@Labels.UnitPrice</th>
+                        <th>@Labels.TotalPrice</th>
+                        <th>@Labels.DealWithAccount</th>
+                        <th></th>
+                        @* <th></th>*@
+                    </tr>
+                </thead>
+                <tbody id="tbody_item">
+                    @{
+                        int index = 0;
+                        foreach (var item in Model.RestoreItems)
+                        {
+                            <tr>
+                                <td>@item.UnitName</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.GroupName</td>
+                                <td>@item.CategoryName</td>
+                                <td>@item.ItemName</td>
+                                <td>@item.ItemCode</td>
+                                <td>@item.SizeName</td>
+                                <td>@item.OriginName</td>
+                                <td>@item.BrandName</td>
+                                <td>@item.UnitPrice</td>
+                                <td>@(item.UnitPrice * item.Quantity)</td>
+                                <td>@item.DealWithAccount</td>
+                                <td>
+                                    @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>*@
+                                    <button data-toggle="modal" class="btn btn-xs btn-danger delete_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>@Labels.Details</label>
+            <div class="col-md-11">
+                <textarea type="text" name="Details" id="Details" class="form-control" required data-msg="" placeholder="">@Model.Details</textarea>
+            </div>
+        </div>
+    </div>
+    <section class="row">
+        <div class="col-md-5">
+            <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>
+            <a href="@Url.Action("Search")" class="btn btn-sm">@Labels.cancel</a>
+        </div>
+    </section>
+
+</form>
+@*Select Item to be restored dialog*@
+<div class="modal fade" id="restore_item_modal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" style="width:80%;">
+        <div class="modal-content">
+            <div class="modal-header blue">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">@Labels.AddItem</h4>
+            </div>
+            <div class="portlet-body">
+                <form method="post" action="ItemList" id="item_search_form" autocomplete="off" class="margin-top-10">
+                    <section class="row">
+                        <div class="col-md-4 form-group">
+                            <label>@Labels.Bar_Code</label>
+                            <div class="col-md-8">
+                                <input type="text" name="BarCode" id="BarCode" value="@itemSearch.BarCode" class="form-control input-sm" data-msg="" placeholder="@Labels.Bar_Code">
+                            </div>
+                        </div>
+                        <div class=" col-md-4 form-group">
+                            <label>@Labels.Item_Group</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("GroupID", ViewBag.GroupDrp as SelectList, Labels.please_select, new { onchange = "loadCategories()", @class = "form-control input-sm", @ID = "GroupID" })
+                            </div>
+                        </div>
+                        <div class=" col-md-4 form-group">
+                            <label>@Labels.Item_Category</label>
+                            <div class="col-md-8">
+                                <select id="CategoryID" name="CategoryID" class="form-control input-sm"></select>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class="col-md-4 form-group">
+                            <label>@Labels.Item_Name</label>
+                            <div class="col-md-8">
+                                <input type="text" name="ItemName" id="ItemName" value="@itemSearch.ItemName" class="form-control input-sm" data-msg="" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label>@Labels.Item_Code</label>
+                            <div class="col-md-8">
+                                <input type="text" name="ItemCode" id="ItemCode" value="@itemSearch.ItemCode" class="form-control input-sm" data-msg="" placeholder="">
+                            </div>
+                        </div>
+                        <div class=" col-md-4 form-group">
+                            <label>@Labels.Unit</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("UnitID", ViewBag.UnitDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "UnitID" })
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class=" col-md-4 form-group">
+                            <label>@Labels.Brand</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
+                            </div>
+                        </div>
+                        <div class=" col-md-4 form-group">
+                            <label>@Labels.Size</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("SizeID", ViewBag.SizeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "SizeID" })
+                            </div>
+                        </div>
+                        <div class=" col-md-4 form-group">
+                            <label>@Labels.Origin</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("OriginID", ViewBag.OriginDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "OriginID" })
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class="col-md-12 form-group" style="margin-left:10px; margin-right:10px;">
+                            <input type="hidden" name="hdStart" id="StartRow" value="@itemSearch.start" />
+                            <button type="submit" class="btn btn-sm blue "><i class="fa fa-search"></i> @Labels.search</button>
+                            <button type="reset" id="btnResetItemSearch" class="btn btn-sm ">@Labels.reset</button>
+                        </div>
+                    </section>
+                </form>
+                <section class="row" style="margin: 10px auto;">
+                    <div class="col-md-12" id="item_list_div" style="overflow:auto">
+                        <table class="table table-striped table-hover table-condensed" width="100%" id="item_table">
+                            <thead>
+                                <tr>
+                                    <th>@Labels.Bar_Code</th>
+                                    <th>@Labels.Quantity</th>
+                                    <th>@Labels.Unit</th>
+                                    <th>@Labels.Item_Group</th>
+                                    <th>@Labels.Item_Category</th>
+                                    <th>@Labels.Item_Name</th>
+                                    <th>@Labels.Item_Code</th>
+                                    <th>@Labels.Size</th>
+                                    <th>@Labels.Origin</th>
+                                    <th>@Labels.Brand</th>
+                                    <th>@Labels.UnitPrice</th>
+                                    <th>@Labels.TotalPrice</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="popup_employee" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" style="width:800px;">
+        <div class="modal-content">
+            <div class="modal-header blue">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                @Labels.Employee
+            </div>
+            <div class="portlet-body">
+                <form id="employee_search_form" autocomplete="off" class="margin-top-10">
+                    <section class="row">
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.Name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control input-sm" name="sName" value="@empSearch.sName" placeholder="@Labels.Name" id="sName" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.FatherName</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control input-sm" name="sFatherName" value="@empSearch.sFatherName" placeholder="@Labels.FatherName" id="sFatherName" />
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.Occupation</label>
+                            <div class="col-md-8">
+                                <input type="text" name="sOccupation" id="sOccupation" value="@empSearch.sOccupation" class="form-control input-sm" data-msg="" placeholder="@Labels.Occupation">
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>@Labels.Department</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("sDepartmentID", ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </section>
+                    <section class="row">
+                        <div class="col-md-12 form-group" style="margin-left:10px; margin-right:10px;">
+                            <button type="submit" class="btn btn-sm blue "><i class="fa fa-search"></i> @Labels.search</button>
+                            <button type="reset" id="btnReset" class="btn btn-sm ">@Labels.reset</button>
+                        </div>
+                    </section>
+                </form>
+
+                <section class="row">
+                    <div class="col-md-12" id="list_div" style="overflow:auto">
+                        <table class="table table-striped table-hover table-condensed" id="employee_table">
+                            <thead>
+                                <tr>
+                                    <th>@Labels.Name</th>
+                                    <th>@Labels.FatherName</th>
+                                    <th>@Labels.Occupation</th>
+                                    <th>@Labels.Department</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/html" id="temp_item">
+        <tr>
+            <td>{{BarCode}}</td>
+            <td>{{UnitName}}</td>
+            <td>{{Quantity}}</td>
+            <td>{{GroupName}}</td>
+            <td>{{CategoryName}}</td>
+            <td>{{ItemName}}</td>
+            <td>{{ItemCode}}</td>
+            <td>{{SizeName}}</td>
+            <td>{{OriginName}}</td>
+            <td>{{BrandName}}</td>
+            <td>{{UnitPrice}}</td>
+            <td>{{TotalPrice}}</td>
+            <td>{{DealWithAccount}}</td>
+            <td>
+                <button data-toggle="modal" class="btn btn-xs btn-danger delete_item" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="{{index}}"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="{{index}}" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>*@
+            </td>
+        </tr>
+    </script>
+    <script>
+        var model = @Html.Raw(Json.Encode(Model));
+        $(function () {
+            var RestoreItems = [];
+            var RestoreID = '@Model.RestoreID';
+            if (RestoreID != '0') {
+                RestoreItems = model.RestoreItems;
+            }
+            
+            // FORM VALIDATION AND SUBMISSION
+            $('#main_form').validate({
+                submitHandler: function (form) {
+                    var data = $('#main_form').serializeJSON({
+                        parseAll: true,
+                        useIntKeysAsArrayIndex: true,
+                    });
+                    data['RestoreItems'] = RestoreItems.filter(function (obj) { return obj != null; });
+                    if (data['RestoreItems'].length == 0) {
+                        toastr.error('@Labels.please_add_item');
+                        return;
+                    }
+                    var formData = ObjectToFormData(data);
+                    //******************
+                    Metronic.blockUI({ animate: true });
+                    $.ajax({
+                        url: $('#main_form').attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            if (response != false) {
+                                saveImage(response);
+                            } else {
+                                toastr.error('@Labels.unable_to_update');
+                            }
+                        },
+                        complete: function () {
+                            Metronic.unblockUI();
+                        }
+                    })
+                }
+            })
+            // Employee search FORM VALIDATION AND SUBMISSION
+            $('#employee_form').validate({
+                submitHandler: function (form) {
+                    var data = $('#main_form').serializeJSON({
+                        parseAll: true,
+                        useIntKeysAsArrayIndex: true,
+                    });
+                    var formData = ObjectToFormData(data);
+                    //******************
+                    Metronic.blockUI({ animate: true });
+                    $.ajax({
+                        url: $('#employee_form').attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            if (response != false) {
+                                bootbox.alert('@Labels.operation_done_suc', function () {
+                                    window.location.href = '@Url.Action("View")/' + response;
+                                })
+                            } else {
+                                toastr.error('@Labels.unable_to_update');
+                            }
+                        },
+                        complete: function () {
+                            Metronic.unblockUI();
+                        }
+                    })
+                }
+            })
+            $('body').on('click', '#btn_add_item', function (e) {
+                e.preventDefault();
+                if($("#EmpID").val() == 0){
+                    toastr.error('@Labels.please_select_employee');
+                    return;
+                }
+                $('#restore_item_modal').modal('show');
+                data_table.ajax.reload();
+            })
+        
+            $('#employee_search_form').submit(function (e, param) {
+                e.preventDefault();
+                Metronic.blockUI({
+                    target: '#list_div',
+                    animate: true
+                });
+                var data = $('#employee_search_form').serializeJSON();
+                var json = JSON.stringify(data);
+                var url = '@Url.Action("SearchEmployee", "Employee")';
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: json,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        $('#employee_table > tbody').empty();
+                        if(response.length){
+                            response.forEach(function(emp){
+                                var selectBtn = '<button class="btn btn-xs btn-primary btn_select_employee" data-id="' + emp.EmployeeID + '">@Labels.please_select</button>';
+                                $('#employee_table > tbody').append('<tr><td>'+emp.Name+'</td><td>'+emp.FatherName+'</td><td>'+emp.Occupation+'</td><td>'+emp.DepartmentName+'</td><td>'+selectBtn+'</td></tr>');
+                            })
+                        }else{
+                            $('#employee_table > tbody').append('<tr><td colspan="5" style="text-align:center;">'+'No employee found'+'</td></tr>');
+                        }
+                        Metronic.unblockUI('#list_div');
+                    }
+                })
+            });
+
+            $('body').on('click', '.btn_select_employee', function (e) {
+                e.preventDefault();
+                //popup_employee
+                var tr = $(this).closest('tr');
+                var EmployeeID = $(this).data().id;
+                var Name = $(tr).find('td:first').text();
+                var FatherName = $(tr).find('td:nth-child(2)').text();
+                var Occpation = $(tr).find('td:nth-child(3)').text();
+                var Department = $(tr).find('td:nth-child(4)').text();
+                $('#EmpID').val(EmployeeID);
+                $('#EmpName').val(Name);
+                $('#EmpFatherName').val(FatherName);
+                $('#EmpOccupation').val(Occpation);
+                $('#EmpDepartmentName').val(Department);
+                $('#popup_employee').modal('hide');
+                $("#employee_search_form").trigger("reset");
+            })
+
+            var data_table = $('#item_table').DataTable({
+                ajax: {
+                    url: '@Url.Action("EmployeeItemsList")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function (data) {
+                        var form_data = $('#item_search_form').serializeJSON();
+                        form_data['draw'] = data.draw;
+                        form_data['start'] = data.start;
+                        form_data['length'] = data.length;
+                        form_data['EmpID'] = $("#EmpID").val();
+                        return JSON.stringify(form_data);
+                    },
+                },
+                columns: [
+                    { data: 'BarCode' },
+                    { data: 'Quantity' },
+                    { data: 'UnitName' },
+                    { data: 'GroupName' },
+                    { data: 'CategoryName' },
+                    { data: 'ItemName' },
+                    { data: 'ItemCode' },
+                    { data: 'SizeName' },
+                    { data: 'OriginName' },
+                    { data: 'BrandName' },
+                    { data: 'UnitPrice' },
+                    { data: 'TotalPrice' },
+                    {
+                        data: null,
+                        visible: true,
+                        render: function (row) {
+                            return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.ID + '">@Labels.please_select</button>';
+                        }
+                    }
+                ],
+                searching: false,
+                bInfo: false,
+                bLengthChange: false,
+                ordering: false,
+                serverSide: true,
+                pageLength: 5,
+                //dom: 'Bfrtip',
+            });
+            //Remove from list of assign items
+            $("body").on("click", ".delete_item", function (e) {
+                e.preventDefault();
+                var index = $(this).data().index;
+                var tr = $(this);
+                bootbox.confirm("@Labels.are_you_sure", function (result) {
+                    if (result == true) {
+                        RestoreItems.splice(index,1);
+                        tr.closest('tr').remove();
+                    }
+                })
+            })
+            $('#item_search_form').submit(function (e, param) {
+                e.preventDefault();
+                data_table.ajax.reload();
+            })
+            $('#btnResetItemSearch').click(function (e) {
+                e.preventDefault();
+                $('#item_search_form').clearForm();
+                data_table.ajax.reload();
+            })
+            $("body").on("click", ".btn_select_item", function (e) {
+                e.preventDefault();
+                var row = $(this).parent().parent();
+                if(!row.hasClass('selectedItem')){
+                    row.addClass('selectedItem')
+                        .siblings()
+                        .removeClass('selectedItem');
+                }
+                var id = $(this).data().id;
+                var isDuplicate = false;
+                RestoreItems.forEach(function(i){
+                    if(i.ID == id){
+                        isDuplicate = true;
+                        return;
+                    }
+                })
+                if(isDuplicate){
+                    toastr.error('@Labels.Item_already_exist');
+                    return;
+                }
+                Metronic.blockUI({
+                    target: '#item_list_div',
+                    animate: true
+                });
+                var url = '@Url.Action("SelectItem")/'+id;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if(response){
+                            var _index = RestoreItems.length
+                            var tr = $('#temp_item').clone().html()
+                            .replace("{{BarCode}}", response.BarCode)
+                            .replace("{{UnitName}}", response.UnitName)
+                            .replace("{{Quantity}}", response.Quantity)
+                            .replace("{{GroupName}}", response.GroupName)
+                            .replace("{{CategoryName}}", response.CategoryName)
+                            .replace("{{ItemName}}", response.ItemName)
+                            .replace("{{ItemCode}}", response.ItemCode)
+                            .replace("{{SizeName}}", response.SizeName)
+                            .replace("{{OriginName}}", response.OriginName)
+                            .replace("{{BrandName}}", response.BrandName)
+                            .replace("{{UnitPrice}}", response.UnitPrice)
+                            .replace("{{TotalPrice}}", response.Quantity * response.UnitPrice)
+                            .replace("{{DealWithAccount}}", response.DealWithAccount)
+                            .replace("{{index}}", _index);
+                            //if (row.index == -1) {
+
+                            $('#tbody_item').append(tr);
+                            RestoreItems.push(response);
+                        }
+                        Metronic.unblockUI('#item_list_div');
+                    }
+                })
+            })
+
+    })
+    </script>
+    <script>
+        function loadCategories(groupId,categoryId){
+            var groupId = groupId;
+            if(!groupId){
+                groupId = $("#GroupID").val();
+            }
+            if (groupId) {
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
+                    data: "{id:'" + groupId + "'}",
+                    success: function (data) {
+                        $('#CategoryID').empty();
+                        $('#CategoryID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
+                        $.each(data, function (i, d) {
+                            $('#CategoryID').append('<option value=' + d.Value + '>' + d.Text + '</option>');
+                            if(data.length == i+1){
+                                if(data.length == i+1 && categoryId){
+                                    $('#CategoryID').val(categoryId);
+                                }
+
+                            }
+                        });
+                    },
+                    failure: function (data) {
+                        alert('error occured');
+                    },
+                    complete: function(data) {
+
+                    }
+                });
+            }
+        }
+        function saveImage(recordId){
+            if($("#FileContent").val()){
+                var file = $("#FileContent")[0].files[0];
+                    var imageData = new FormData();
+                    imageData.append('RecordID', recordId);
+                    imageData.append('FileContent', file);
+                    $.ajax({
+                        url: 'SaveScanImage',
+                        type: 'POST',
+                        data: imageData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response){
+                            if(response != false){
+                                bootbox.alert('@Labels.operation_done_suc', function () {
+                                    window.location.href = '@Url.Action("View")/' + recordId;
+                                })
+                            }
+                            else{
+                                toastr.error('@Labels.Unable_to_upload_image');
+                                window.location.href = '@Url.Action("View")/' + recordId;
+                            }
+                        },
+                        complete: function () {
+                            Metronic.unblockUI();
+                        }
+                    });
+            }else{
+                Metronic.unblockUI();
+                bootbox.alert('@Labels.operation_done_suc', function () {
+                    window.location.href = '@Url.Action("View")/' + recordId;
+                })
+            }
+            }
+    </script>
+
+}

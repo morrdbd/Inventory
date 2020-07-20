@@ -7,9 +7,11 @@ namespace Inventory.Models.Tables
 {
     public class StockInItemVM
     {
-        public int ID { get; set; }
+        public int StockInItemID { get; set; }
 
         public int StockInID { get; set; }
+
+        public string BarCode { get; set; }
 
         public string ItemName { get; set; }
 
@@ -49,6 +51,12 @@ namespace Inventory.Models.Tables
 
         public int UnitPrice { get; set; }
 
+        public int? SecondHandPrice { get; set; }
+
+        public bool IsSecondHand { get; set; }
+
         public string Remarks { get; set; }
+
+
     }
 }

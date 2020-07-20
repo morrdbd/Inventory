@@ -6,17 +6,13 @@ using System.Web;
 
 namespace Inventory.Models.Tables
 {
-    public class DistributionItem
+    public class ReusableDistributionItem
     {
         public int ID { get; set; }
 
-        public int DistributionID { get; set; }
+        public int ReusableDistributionID { get; set; }
 
-        public int Quantity { get; set; }
-
-        public int ItemID { get; set; } 
-
-        public int UnitPrice { get; set; }
+        public int StockInItemID { get; set; }
 
         public string DealWithAccount { get; set; }
 

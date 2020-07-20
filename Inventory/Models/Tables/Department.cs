@@ -18,8 +18,6 @@ namespace Inventory.Models.Tables
         [Required]
         public string PaName { get; set; }
 
-        public string ForOrdering { get; set; }
-
         public bool IsActive { get; set; }
 
         public int InsertedBy { get; set; }

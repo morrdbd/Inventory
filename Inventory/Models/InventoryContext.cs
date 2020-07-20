@@ -9,15 +9,20 @@ namespace Inventory.Models
         public DbSet<ActivityLog> ActivityLogs { get; set; }
 
         public DbSet<LookupType> LookupTypes { get; set; }
+
         public DbSet<LookupValue> LookupValues { get; set; }
 
         public DbSet<SigninLog> SigninLogs { get; set; }
 
         public DbSet<RoleAccess> RoleAccess { get; set; }
 
-        public DbSet<Distribution> Distributions { get; set; }
+        public DbSet<ReusableDistribution> ReusableDistributions { get; set; }
 
-        public DbSet<DistributionItem> DistributionItems { get; set; }
+        public DbSet<ReusableDistributionItem> ReusableDistributionItems { get; set; }
+
+        public DbSet<DisposableDistribution> DisposableDistributions { get; set; }
+
+        public DbSet<DisposableDistributionItem> DisposableDistributionItems { get; set; }
 
         public DbSet<StockIn> StockIns { get; set; }
 
@@ -29,8 +34,9 @@ namespace Inventory.Models
 
         public DbSet<Employee> Employees { get; set; }
 
-        public DbSet<InHandStock> InHandStocks { get; set; }
+        public DbSet<Restore> Restores { get; set; }
 
+        public DbSet<RestoreItem> RestoreItems { get; set; }
 
         public InventoryDBContext() : base("InventoryCONN")
         {

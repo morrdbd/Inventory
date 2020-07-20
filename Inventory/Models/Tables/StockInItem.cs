@@ -8,11 +8,17 @@ namespace Inventory.Models.Tables
 {
     public class StockInItem
     {
-        public int ID { get; set; }
+        public int StockInItemID { get; set; }
 
         public int StockInID { get; set; }
 
+        public string BarCode { get; set; }
+
         public int UnitPrice { get; set; }
+
+        public bool IsSecondHand { get; set; }
+
+        public int? SecondHandPrice { get; set; }
 
         public int Quantity { get; set; }
 
@@ -60,6 +66,10 @@ namespace Inventory.Models.Tables
         public string Remarks { get; set; }
 
         public bool IsActive { get; set; }
+        
+        public bool IsExpired { get; set; }
+
+        public DateTime? DateExpired { get; set; }
 
         public int InsertedBy { get; set; }
 

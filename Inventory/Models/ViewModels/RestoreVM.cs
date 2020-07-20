@@ -9,20 +9,13 @@ using System.Web;
 
 namespace Inventory.Models.ViewModels
 {
-    public class Distribution_VM
+    public class RestoreVM
     {
-        public int DistributionID { get; set; }
+        public int RestoreID { get; set; }
 
-        public int? TicketNumber { get; set; }
+        public int? DocumentIssuedNo { get; set; }
 
-        public string TicketIssuedDateForm { get; set; }
-
-        [StringLength(500)]
-        public string Warehouse { get; set; }
-
-        public int? RequestNumber { get; set; }
-
-        public string RequestDateForm { get; set; }
+        public string DocumentIssuedDateForm { get; set; }
 
         public int EmpID { get; set; }
 
@@ -36,9 +29,16 @@ namespace Inventory.Models.ViewModels
 
         public string EmpDepartmentName { get; set; }
 
+        public string ItemInCondition { get; set; }
+
         public string Details { get; set; }
 
-        public List<DistributionItemVM> DistributionItems { get; set; }
+        public List<RestoreItemVM> RestoreItems { get; set; }
+
+        public RestoreVM()
+        {
+            this.RestoreItems = new List<RestoreItemVM>();
+        }
     }
     
 

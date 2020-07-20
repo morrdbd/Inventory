@@ -6,23 +6,18 @@ using System.Data.Entity.Spatial;
 
 namespace Inventory.Models
 {
-    public class Distribution
+    public class Restore
     {
         [Key]
-        public int DistributionID { get; set; }
-
-        public int? TicketNumber { get; set; }
-
-        public DateTime? TicketIssuedDate { get; set; }
-
-        [StringLength(500)]
-        public string Warehouse { get; set; }
-
-        public int? RequestNumber { get; set; }
-
-        public DateTime? RequestDate { get; set; }
+        public int RestoreID { get; set; }
 
         public int EmployeeID { get; set; }
+
+        public int? DocumentIssuedNo { get; set; }
+
+        public DateTime? DocumentIssuedDate { get; set; }
+
+        public string ItemInCondition { get; set; }
 
         public string Details { get; set; }
 
