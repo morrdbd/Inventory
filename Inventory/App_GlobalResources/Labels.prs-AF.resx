@@ -1074,4 +1074,7 @@
   <data name="check_available_quantity_try_again" xml:space="preserve">
     <value>لطف مقدار موجوده را چیک نماید و دوباره کوشش نماید</value>
   </data>
+  <data name="PC10Form" xml:space="preserve">
+    <value>فارم ف س ۱۰</value>
+  </data>
 </root>
