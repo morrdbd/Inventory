@@ -1519,7 +1519,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to فارم م 7.
+        ///   Looks up a localized string similar to Mem 7 Form.
         /// </summary>
         internal static string Mem7Form {
             get {
@@ -1812,6 +1812,15 @@ namespace Resources {
         internal static string pass_error {
             get {
                 return ResourceManager.GetString("pass_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PC 10 Form.
+        /// </summary>
+        internal static string PC10Form {
+            get {
+                return ResourceManager.GetString("PC10Form", resourceCulture);
             }
         }
         

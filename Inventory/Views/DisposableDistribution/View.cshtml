@@ -1,6 +1,6 @@
 ﻿@model Inventory.Models.ViewModels.DisposableDistributionVM
 @{
-    ViewBag.Title = "PC 10 Form";
+    ViewBag.Title = Labels.PC10Form;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
@@ -27,7 +27,7 @@
     <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%;">
         <thead>
             <tr>
-                <th>Department</th>
+                <th>@Labels.Department</th>
                 <th>@Labels.Issued</th>
                 <th>@Labels.IssueDate</th>
                 <th>@Labels.OrderNumber</th>
