@@ -131,7 +131,7 @@ namespace Inventory.Controllers
             }
             if (search.UnitID != null)
             {
-                query = query.Where(c => c.CategoryID == search.UnitID);
+                query = query.Where(c => c.UnitID == search.UnitID);
             }
             if (search.SizeID != null)
             {
@@ -146,7 +146,7 @@ namespace Inventory.Controllers
                 query = query.Where(c => c.BrandID == search.BrandID);
             }
             ViewBag.search = search;
-            var items = query.ToList();
+            var items = query.OrderByDescending(i=>i.InsertedDate).ToList();
               var data = items.Select(i => new StockInItemVM
             {
                 BarCode = i.BarCode,
@@ -167,6 +167,7 @@ namespace Inventory.Controllers
                 Remarks = i.Remarks,
                 UnitPrice = i.UnitPrice,
                 AvailableQuantity = i.AvailableQuantity,
+                Quantity = i.Quantity,
                 UsageTypeID = i.UsageTypeID,
                 ItemCode = i.ItemCode
             }

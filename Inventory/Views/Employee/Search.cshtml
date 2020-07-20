@@ -36,11 +36,18 @@
                         <input type="text" class="form-control input-sm" name="sFatherName" value="@search.sFatherName" placeholder="@Labels.FatherName" id="sFatherName" />
                     </div>
                 </div>
-                <div class=" col-md-6 ">
-                    
+                <div class=" col-md-6">
                     <div class="form-group">
                         <label>@Labels.Requester</label>
-                        @Html.DropDownListFor(model => search.sDepartmentID, ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control", @ID = "sBranchID" })
+                        @Html.DropDownList("sDepartmentID", ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control", @ID = "sDepartmentID" })
+                    </div>
+                </div>
+            </section>
+            <section class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>@Labels.Occupation</label>
+                        <input type="text" class="form-control input-sm" name="sOccupation" value="@search.sOccupation" placeholder="@Labels.Occupation" id="sOccupation" />
                     </div>
                 </div>
             </section>

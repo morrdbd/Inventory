@@ -40,11 +40,15 @@ namespace Inventory.Controllers
             }
             if (!string.IsNullOrWhiteSpace(model.sFatherName))
             {
-                query = query.Where(c => c.Name.Contains(model.sFatherName));
+                query = query.Where(c => c.FatherName.Contains(model.sFatherName));
             }
             if (model.sDepartmentID != null)
             {
                 query = query.Where(c => c.DepartmentID == model.sDepartmentID);
+            }
+            if (!string.IsNullOrWhiteSpace(model.sOccupation))
+            {
+                query = query.Where(c => c.Occupation.Contains(model.sOccupation));
             }
             var records = query.OrderBy(e => e.InsertedDate).ToList();
             var data = records.Select(e => new
