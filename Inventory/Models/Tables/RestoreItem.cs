@@ -10,7 +10,7 @@ namespace Inventory.Models.Tables
     public class RestoreItem
     {
         [Key]
-        public int ID { get; set; }
+        public int RestoreItemID { get; set; }
 
         public int RestoreID { get; set; }
 

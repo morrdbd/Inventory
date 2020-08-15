@@ -18,7 +18,7 @@ using System.Web.Mvc;
 namespace Inventory.Controllers
 {
     [AccessControl]
-    public class ReusableDistributionController : BaseController
+    public class DistributionController : BaseController
     {
         InventoryDBContext db = new InventoryDBContext();
         AdminRepository AdminRepo = new AdminRepository();
@@ -28,7 +28,7 @@ namespace Inventory.Controllers
             CreateDropDown();
             ViewBag.emSearch = new Employee_Search();
             ViewBag.itemSearch = new Item_Search();
-            return View("Form", new ReusableDistribution_VM());
+            return View("Form", new Distribution_VM());
         }
 
         private void CreateDropDown()
@@ -58,11 +58,11 @@ namespace Inventory.Controllers
             ViewBag.DepartmentDrp = new SelectList(departmentList, "DepartmentID", "DepartmentName");
         }
 
-        private ReusableDistribution_VM CreateModel(ReusableDistribution model)
+        private Distribution_VM CreateModel(Distribution model)
         {
-            var objectToReturn = new ReusableDistribution_VM
+            var objectToReturn = new Distribution_VM
             {
-                ReusableDistributionID = model.ReusableDistributionID,
+                DistributionID = model.DistributionID,
                 TicketNumber = model.TicketNumber,
                 TicketIssuedDateForm = model.TicketIssuedDate.ToDateString(Language),
                 Warehouse = model.Warehouse,
@@ -78,34 +78,38 @@ namespace Inventory.Controllers
                 FilePath = model.FilePath,
                 Details = model.Details
             };
-            var itemsList = (from d in db.ReusableDistributionItems
+            var itemsList = (from d in db.DistributionItems
                              join s in db.StockInItems on d.StockInItemID equals s.StockInItemID
-                             where d.ReusableDistributionID == model.ReusableDistributionID
+                             where d.DistributionID == model.DistributionID
                              select new {
-                                 d.ID,
+                                 d.DistributionItemID,
                                  s.BarCode,
                                  d.StockInItemID,
-                                 d.ReusableDistributionID,
+                                 d.DistributionID,
                                  s.ItemName,
+                                 s.UsageTypeID,
                                  s.CategoryID,
                                  s.GroupID,
                                  s.UnitID,
                                  s.SizeID,
                                  s.OriginID,
                                  s.BrandID,
-                                 s.Quantity,
+                                 d.Quantity,
                                  d.DealWithAccount,
                                  s.UnitPrice,
+                                 s.IsSecondHand,
+                                 s.SecondHandPrice
                              }).ToList();
-            objectToReturn.DistributionItems = itemsList.Select(i => new ReusableDistributionItemVM
+            objectToReturn.DistributionItems = itemsList.Select(i => new DistributionItemVM
             {
-                ID = i.ID,
+                DistributionItemID = i.DistributionItemID,
                 BarCode = i.BarCode,
                 StockInItemID = i.StockInItemID,
-                ReusableDistributionID = i.ReusableDistributionID,
+                DistributionID = i.DistributionID,
                 ItemCode = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.ItemCode).FirstOrDefault(),
                 ItemName = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.ItemName).FirstOrDefault(),
                 ItemCategoryName = AdminRepo.LookupName(Language, db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.CategoryID).FirstOrDefault()),
+                UsageTypeName = AdminRepo.LookupName(Language, db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.UsageTypeID).FirstOrDefault()),
                 ItemGroupName = AdminRepo.LookupName(Language, db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.GroupID).FirstOrDefault()),
                 UnitName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.StockInItemID == i.StockInItemID).Select(p => p.UnitID).FirstOrDefault()),
                 ItemSizeName = AdminRepo.LookupName(Language, db.StockInItems.Where(p => p.IsActive == true && p.StockInItemID == i.StockInItemID).Select(p => p.SizeID).FirstOrDefault()),
@@ -114,7 +118,9 @@ namespace Inventory.Controllers
                 Quantity = i.Quantity,
                 DealWithAccount = i.DealWithAccount,
                 UnitPrice = i.UnitPrice,
-                TotalPrice = i.Quantity * i.UnitPrice
+                TotalPrice = i.Quantity * i.UnitPrice,
+                IsSecondHand = i.IsSecondHand,
+                SecondHandPrice = i.SecondHandPrice
             }).ToList();
 
             return objectToReturn;
@@ -124,9 +130,7 @@ namespace Inventory.Controllers
         [AccessControl("Search")]
         public JsonResult ItemList(Item_Search search)
         {
-            var reusableLookupId = AdminRepo.ValueID("Reusable");
-            var query = db.StockInItems.Where(i => i.IsActive == true && i.AvailableQuantity != 0 && 
-            i.UsageTypeID == reusableLookupId).AsQueryable();
+            var query = db.StockInItems.Where(i => i.IsActive == true && i.AvailableQuantity != 0).AsQueryable();
            
             if (!string.IsNullOrWhiteSpace(search.ItemName))
             {
@@ -180,21 +184,22 @@ namespace Inventory.Controllers
                 BarCode = i.BarCode,
                 ItemName = i.ItemName,
                 UnitName = AdminRepo.LookupName(Language, i.UnitID),
-                UnitID = i.UnitID,
-                GroupID = i.GroupID,
+                //UnitID = i.UnitID,
+                //GroupID = i.GroupID,
                 GroupName = AdminRepo.LookupName(Language, i.GroupID),
-                CategoryID = i.CategoryID,
+                //CategoryID = i.CategoryID,
                 CategoryName = AdminRepo.LookupName(Language, i.CategoryID),
-                SizeID = i.SizeID,
+                //SizeID = i.SizeID,
                 SizeName = AdminRepo.LookupName(Language, i.SizeID),
-                OriginID = i.OriginID,
+                //OriginID = i.OriginID,
                 OriginName = AdminRepo.LookupName(Language, i.OriginID),
-                BrandID = i.BrandID,
+                //BrandID = i.BrandID,
                 BrandName = AdminRepo.LookupName(Language, i.BrandID),
                 Remarks = i.Remarks,
                 UnitPrice = i.UnitPrice,
                 AvailableQuantity = i.AvailableQuantity,
                 UsageTypeID = i.UsageTypeID,
+                UsageTypeName = AdminRepo.LookupName(Language, i.UsageTypeID),
                 ItemCode = i.ItemCode,
                 IsSecondHand = i.IsSecondHand,
                 SecondHandPrice = i.SecondHandPrice
@@ -212,7 +217,7 @@ namespace Inventory.Controllers
 
         [HttpPost]
         [AccessControl("Add")]
-        public JsonResult Insert(ReusableDistribution_Form_VM model)
+        public JsonResult Insert(Distribution_Form_VM model)
         {
             if (ModelState.IsValid == false)
             {
@@ -223,7 +228,7 @@ namespace Inventory.Controllers
             {
                 try
                 {
-                    var _distribution = new ReusableDistribution
+                    var _distribution = new Distribution
                     {
                         TicketNumber = model.TicketNumber,
                         TicketIssuedDate = model.TicketIssuedDateForm.ToDate(Language),
@@ -237,13 +242,13 @@ namespace Inventory.Controllers
                         IsActive = true,
                     };
 
-                    db.ReusableDistributions.Add(_distribution);
+                    db.Distributions.Add(_distribution);
                     db.SaveChanges();
 
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "ReusableDistribution",
-                        ModfiedId = _distribution.ReusableDistributionID,
+                        ModifiedTable = "Distribution",
+                        ModfiedId = _distribution.DistributionID,
                         Action = "Insert",
                         UserId = AppUser.Id,
                         ModifiedTime = DateTime.Now,
@@ -257,20 +262,20 @@ namespace Inventory.Controllers
                         {
                             if (row != null)
                             {
-                                var _item = new ReusableDistributionItem()
+                                var _item = new DistributionItem()
                                 {
-                                    ReusableDistributionID = _distribution.ReusableDistributionID,
+                                    DistributionID = _distribution.DistributionID,
                                     StockInItemID = row.StockInItemID,
                                     DealWithAccount = row.DealWithAccount
                                 };
 
-                                db.ReusableDistributionItems.Add(_item);
+                                db.DistributionItems.Add(_item);
                                 db.SaveChanges();
 
                                 db.ActivityLogs.Add(new ActivityLog
                                 {
                                     ModifiedTable = "DistributionItem",
-                                    ModfiedId = row.ID,
+                                    ModfiedId = row.DistributionItemID,
                                     Action = "Insert",
                                     UserId = AppUser.Id,
                                     ModifiedTime = DateTime.Now,
@@ -279,7 +284,7 @@ namespace Inventory.Controllers
                                 db.SaveChanges();
                                 //minus item from item in hand
                                 var _stockInHand = db.StockInItems.Where(s => s.StockInItemID == row.StockInItemID).First();
-                                if(_stockInHand.AvailableQuantity <= 0)
+                                if(_stockInHand.AvailableQuantity <= 0 || _stockInHand.Quantity < row.Quantity)
                                 {
                                     return Json(false);
                                 }
@@ -287,7 +292,7 @@ namespace Inventory.Controllers
                                 {
                                     _stockInHand.SecondHandPrice = row.UnitPrice;
                                 }
-                                _stockInHand.AvailableQuantity -= 1;
+                                _stockInHand.AvailableQuantity -= row.Quantity;
 
                                 db.SaveChanges();
                             }
@@ -295,7 +300,7 @@ namespace Inventory.Controllers
                     }
 
                     trans.Commit();
-                    return Json(_distribution.ReusableDistributionID);
+                    return Json(_distribution.DistributionID);
                 }
                 catch (Exception e)
                 {
@@ -323,13 +328,13 @@ namespace Inventory.Controllers
             var RequestDateFrom = model.RequestDateFrom.ToDate(Language);
             var RequestDateTo = model.RequestDateTo.ToDate(Language);
 
-            var query = (from d in db.ReusableDistributions
+            var query = (from d in db.Distributions
                          join e in db.Employees on d.EmployeeID equals e.EmployeeID
                          join dep in db.Departments on e.DepartmentID equals dep.DepartmentID
                          where d.IsActive == true
                          select new
                          {
-                             d.ReusableDistributionID,
+                             d.DistributionID,
                              d.TicketNumber,
                              d.TicketIssuedDate,
                              d.Warehouse,
@@ -384,10 +389,10 @@ namespace Inventory.Controllers
             }
 
             ViewBag.search = model;
-            var records = query.OrderBy(t => t.TicketIssuedDate).ToList();
+            var records = query.OrderByDescending(t => t.TicketIssuedDate).ToList();
             var data = records.Select(t => new
             {
-                t.ReusableDistributionID,
+                t.DistributionID,
                 t.TicketNumber,
                 TicketIssuedDate = t.TicketIssuedDate.ToDateString(Language),
                 t.Warehouse,
@@ -409,7 +414,7 @@ namespace Inventory.Controllers
         [AccessControl("View")]
         public ActionResult View(int id = 0)
         {
-            var ticket = db.ReusableDistributions.Where(t => t.IsActive == true).SingleOrDefault(t => t.ReusableDistributionID == id);
+            var ticket = db.Distributions.Where(t => t.IsActive == true).SingleOrDefault(t => t.DistributionID == id);
             if (ticket == null)
             {
                 return HttpNotFound();
@@ -420,9 +425,9 @@ namespace Inventory.Controllers
 
         [HttpPost]
         [AccessControl("Edit")]
-        public JsonResult Update(ReusableDistribution_Form_VM model)
+        public JsonResult Update(Distribution_Form_VM model)
         {
-            if (ModelState.IsValid == false)
+            if (ModelState.IsValid == false && model.DistributionItems.Length == 0)
             {
                 LogModelErrors();
                 return Json(false);
@@ -431,7 +436,7 @@ namespace Inventory.Controllers
             {
                 try
                 {
-                    var _distribution = db.ReusableDistributions.Where(d=>d.IsActive == true && d.ReusableDistributionID == model.ReusableDistributionID).FirstOrDefault();
+                    var _distribution = db.Distributions.Where(d=>d.IsActive == true && d.DistributionID == model.DistributionID).FirstOrDefault();
                     if (_distribution == null) return Json(false);
                     _distribution.TicketNumber = model.TicketNumber;
                     _distribution.TicketIssuedDate = model.TicketIssuedDateForm.ToDate(Language);
@@ -447,23 +452,23 @@ namespace Inventory.Controllers
 
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "ReusableDistributions",
-                        ModfiedId = _distribution.ReusableDistributionID,
+                        ModifiedTable = "Distributions",
+                        ModfiedId = _distribution.DistributionID,
                         Action = "Update",
                         UserId = AppUser.Id,
                         ModifiedTime = DateTime.Now,
                         ModifiedData = JsonConvert.SerializeObject(_distribution),
                     });
                     db.SaveChanges();
-                    var distributedItems = db.ReusableDistributionItems.Where(d => d.ReusableDistributionID == _distribution.ReusableDistributionID).ToList();
+                    var distributedItems = db.DistributionItems.Where(d => d.DistributionID == _distribution.DistributionID).ToList();
                     foreach(var dItem in distributedItems)
                     {
                         var _stockInItem = db.StockInItems.Find(dItem.StockInItemID);
                         if(_stockInItem != null)
                         {
-                            _stockInItem.AvailableQuantity += 1;
+                            _stockInItem.AvailableQuantity += dItem.Quantity;
                             _stockInItem.SecondHandPrice = null;
-                            db.ReusableDistributionItems.Remove(dItem);
+                            db.DistributionItems.Remove(dItem);
                         }
                     }
                     db.SaveChanges();
@@ -473,22 +478,27 @@ namespace Inventory.Controllers
                         if(_stockInItem != null && dItem.Quantity<= _stockInItem.AvailableQuantity)
                         {
                             _stockInItem.AvailableQuantity -= dItem.Quantity;
-                            var dItemTableObj = new ReusableDistributionItem
+                            var dItemTableObj = new DistributionItem
                             {
-                                ReusableDistributionID = _distribution.ReusableDistributionID,
+                                DistributionID = _distribution.DistributionID,
                                 StockInItemID = dItem.StockInItemID,
+                                Quantity = dItem.Quantity,
                                 DealWithAccount = dItem.DealWithAccount,
                             };
-                            db.ReusableDistributionItems.Add(dItemTableObj);
+                            db.DistributionItems.Add(dItemTableObj);
                             if(_stockInItem.IsSecondHand == true)
                             {
                                 _stockInItem.SecondHandPrice = dItem.UnitPrice;
                             }
                         }
+                        else
+                        {
+                            return Json(false);
+                        }
                     }
                     db.SaveChanges();
                     trans.Commit();
-                    return Json(_distribution.ReusableDistributionID);
+                    return Json(_distribution.DistributionID);
                 }
                 catch (Exception e)
                 {
@@ -506,22 +516,22 @@ namespace Inventory.Controllers
             {
                 try
                 {
-                    var _distribution = db.ReusableDistributions.Where(d => d.IsActive == true && d.ReusableDistributionID == id).FirstOrDefault();
+                    var _distribution = db.Distributions.Where(d => d.IsActive == true && d.DistributionID == id).FirstOrDefault();
                     if (_distribution == null) return Json(false);
                     _distribution.IsActive = false;
                     db.SaveChanges();
 
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "ReusableDistributions",
-                        ModfiedId = _distribution.ReusableDistributionID,
+                        ModifiedTable = "Distributions",
+                        ModfiedId = _distribution.DistributionID,
                         Action = "Delete",
                         UserId = AppUser.Id,
                         ModifiedTime = DateTime.Now,
                         ModifiedData = JsonConvert.SerializeObject(_distribution),
                     });
                     db.SaveChanges();
-                    var distributedItems = db.ReusableDistributionItems.Where(d => d.ReusableDistributionID == _distribution.ReusableDistributionID).ToList();
+                    var distributedItems = db.DistributionItems.Where(d => d.DistributionID == _distribution.DistributionID).ToList();
                     foreach (var dItem in distributedItems)
                     {
                         var _stockInItem = db.StockInItems.Find(dItem.StockInItemID);
@@ -530,12 +540,12 @@ namespace Inventory.Controllers
                             _stockInItem.AvailableQuantity += 1;
                             _stockInItem.SecondHandPrice = null;
 
-                            var dItemTobeDeleted = db.ReusableDistributionItems.Find(dItem.ID);
-                            db.ReusableDistributionItems.Remove(dItemTobeDeleted);
+                            var dItemTobeDeleted = db.DistributionItems.Find(dItem.DistributionItemID);
+                            db.DistributionItems.Remove(dItemTobeDeleted);
                             db.ActivityLogs.Add(new ActivityLog
                             {
-                                ModifiedTable = "ReusableDistributionItems",
-                                ModfiedId = dItem.ID,
+                                ModifiedTable = "DistributionItems",
+                                ModfiedId = dItem.DistributionItemID,
                                 Action = "Delete",
                                 UserId = AppUser.Id,
                                 ModifiedTime = DateTime.Now,
@@ -639,7 +649,7 @@ namespace Inventory.Controllers
             CreateDropDown();
             ViewBag.emSearch = new Employee_Search();
             ViewBag.itemSearch = new Item_Search();
-            var ticket = db.ReusableDistributions.SingleOrDefault(t => t.ReusableDistributionID == id);
+            var ticket = db.Distributions.SingleOrDefault(t => t.DistributionID == id);
             if (ticket == null)
             {
                 return HttpNotFound();
@@ -661,11 +671,11 @@ namespace Inventory.Controllers
                 string FileExtension = Path.GetExtension(model.FileContent.FileName);
 
                 FileName = model.RecordID + FileExtension;
-                string DistributionScanFolder = ConfigurationManager.AppSettings["ReusableDistributionScan"].ToString();
+                string DistributionScanFolder = ConfigurationManager.AppSettings["DistributionScan"].ToString();
                 var filePathForDB = DistributionScanFolder + FileName;
                 var UploadedFilePath = Server.MapPath(DistributionScanFolder + FileName);
 
-                var modelInDb = db.ReusableDistributions.Where(s => s.ReusableDistributionID == model.RecordID).FirstOrDefault();
+                var modelInDb = db.Distributions.Where(s => s.DistributionID == model.RecordID).FirstOrDefault();
                 modelInDb.FilePath = filePathForDB;
                 db.SaveChanges();
                 model.FileContent.SaveAs(UploadedFilePath);
@@ -678,20 +688,20 @@ namespace Inventory.Controllers
         }
 
         [AccessControl("Search")]
-        public ActionResult ItemsInUse()
+        public ActionResult DistributedItems()
         {
             CreateDropDown();
-            ViewBag.search = new ItemInUseSearch();
-            return View("ItemsInUse");
+            ViewBag.search = new DistributedItemsSearch();
+            return View("DistributedItems");
         }
 
         [AccessControl("Search")]
-        public JsonResult ListItemInUse(ItemInUseSearch model)
+        public JsonResult DistributedItemsPartialList(DistributedItemsSearch model)
         {
             var TicketIssuedDateFrom = model.DateFrom.ToDate(Language);
             var TicketIssuedDateTo = model.DateTo.ToDate(Language);
-            var query = (from d in db.ReusableDistributions
-                                     join dItem in db.ReusableDistributionItems on d.ReusableDistributionID equals dItem.ReusableDistributionID
+            var query = (from d in db.Distributions
+                                     join dItem in db.DistributionItems on d.DistributionID equals dItem.DistributionID
                                      join sItem in db.StockInItems on dItem.StockInItemID equals sItem.StockInItemID
                                      join emp in db.Employees on d.EmployeeID equals emp.EmployeeID
                                      join dep in db.Departments on emp.DepartmentID equals dep.DepartmentID
@@ -699,8 +709,9 @@ namespace Inventory.Controllers
                                      select new
                                      {
                                         sItem.BarCode,
-                                        d.ReusableDistributionID,
-                                        distributionItemID = dItem.ID,
+                                        sItem.UsageTypeID,
+                                        d.DistributionID,
+                                        distributionItemID = dItem.DistributionItemID,
                                         dItem.StockInItemID,
                                         emp.DepartmentID,
                                         d.EmployeeID,
@@ -710,6 +721,8 @@ namespace Inventory.Controllers
                                         d.TicketIssuedDate,
                                         d.RequestNumber,
                                         d.RequestDate,
+                                        dItem.Quantity,
+                                        dItem.QuantityConsumed,
                                         sItem.UnitID,
                                         sItem.GroupID,
                                         sItem.CategoryID,
@@ -724,6 +737,10 @@ namespace Inventory.Controllers
             if (model.BarCode != null)
             {
                 query = query.Where(r => r.BarCode.Contains(model.BarCode));
+            }
+            if (model.UsageTypeID != null)
+            {
+                query = query.Where(r => r.UsageTypeID == model.UsageTypeID);
             }
             if (model.DepartmentID != null)
             {
@@ -769,7 +786,7 @@ namespace Inventory.Controllers
             var queryResult = query.OrderByDescending(i => i.TicketIssuedDate).ToList();
             var data = queryResult.Select(i => new {
                 i.BarCode,
-                i.ReusableDistributionID,
+                i.DistributionID,
                 i.distributionItemID,
                 i.StockInItemID,
                 DepartmentName = db.Departments.Where(d => d.DepartmentID == i.DepartmentID).Select(d => Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
@@ -781,6 +798,7 @@ namespace Inventory.Controllers
                 RequestDate = i.RequestDate.ToDateString(Language),
                 UnitName = AdminRepo.LookupName(Language, i.UnitID),
                 GroupName = AdminRepo.LookupName(Language, i.GroupID),
+                UsageType = AdminRepo.LookupName(Language, i.UsageTypeID),
                 CategoryName = AdminRepo.LookupName(Language, i.CategoryID),
                 i.ItemName,
                 i.ItemCode,
@@ -788,7 +806,9 @@ namespace Inventory.Controllers
                 OriginName = AdminRepo.LookupName(Language, i.OriginID),
                 BrandName = AdminRepo.LookupName(Language, i.BrandID),
                 i.UnitPrice,
-                i.DealWithAccount
+                i.DealWithAccount,
+                i.Quantity,
+                i.QuantityConsumed
             });
    
             return Json(new
@@ -804,15 +824,15 @@ namespace Inventory.Controllers
         public ActionResult ViewItemInUse(int id = 0)
         {
             //var itemInUse = db.DistributionItems.Where(i=>i.IsReturned == false && i.ID == id).FirstOrDefault();
-            var itemInUse = (from d in db.ReusableDistributions
-                         join dItem in db.ReusableDistributionItems on d.ReusableDistributionID equals dItem.ReusableDistributionID
+            var itemInUse = (from d in db.Distributions
+                         join dItem in db.DistributionItems on d.DistributionID equals dItem.DistributionID
                          join sItem in db.StockInItems on dItem.StockInItemID equals sItem.StockInItemID
                          join emp in db.Employees on d.EmployeeID equals emp.EmployeeID
                          join dep in db.Departments on emp.DepartmentID equals dep.DepartmentID
                          where d.IsActive == true && dItem.IsReturned == false
                          select new
                          {
-                             distributionItemID = dItem.ID,
+                             distributionItemID = dItem.DistributionItemID,
                              DepartmentName = (Language == "prs" ? dep.DrName : Language == "ps" ? dep.PaName : dep.EnName),
                              EmployeeName = emp.Name,
                              EmployeeFName = emp.FatherName,

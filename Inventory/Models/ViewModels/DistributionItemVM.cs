@@ -5,15 +5,17 @@ using System.Web;
 
 namespace Inventory.Models.ViewModels
 {
-    public class ReusableDistributionItemVM
+    public class DistributionItemVM
     {
-        public int ID { get; set; }
+        public int DistributionItemID { get; set; }
 
         public int StockInItemID { get; set; }
 
-        public int ReusableDistributionID { get; set; }
+        public int DistributionID { get; set; }
 
         public string BarCode { get; set; }
+
+        public string UsageTypeName { get; set; }
 
         public string UnitName { get; set; }
 
@@ -32,6 +34,8 @@ namespace Inventory.Models.ViewModels
         public string BrandName { get; set; }
 
         public int Quantity { get; set; }
+
+        public int QuantityConsumed { get; set; }
 
         public int UnitPrice { get; set; }
 

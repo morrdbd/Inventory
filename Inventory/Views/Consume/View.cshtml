@@ -1,25 +1,25 @@
-﻿@model Inventory.Models.ViewModels.DisposableDistributionVM
+﻿@model Inventory.Models.ViewModels.ConsumeVM
 @{
     ViewBag.Title = Labels.PC10Form;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
 <div class="margin-bottom-10">
-    @if (_user.HasAccess("DisposableDistribution", "Search"))
+    @if (_user.HasAccess("Consume", "Search"))
     {
         <a href="@Url.Action("Search")" class="btn btn-sm">@Labels.back_to_list</a>
     }
-    @if (_user.HasAccess("DisposableDistribution", "Edit"))
+    @if (_user.HasAccess("Consume", "Edit"))
     {
-        <a href="@Url.Action("Edit", new { id=Model.DisposableDistributionID })" class="btn btn-sm blue"><i class="fa fa-edit"></i> @Labels.edit</a>
+        <a href="@Url.Action("Edit", new { id=Model.ConsumeID })" class="btn btn-sm blue"><i class="fa fa-edit"></i> @Labels.edit</a>
     }
-    @if (_user.HasAccess("DisposableDistribution", "Print"))
+    @if (_user.HasAccess("Consume", "Print"))
     {
         <a href="#popup_attachment" data-toggle="modal" class="btn btn-sm btn-success showFile_row" id="btn_print" data-filepath="@Model.FilePath" title="@Labels.FinalSOAttachment"><i class="fa fa-paperclip"></i>@Labels.print_preview</a>
     }
-    @if (_user.HasAccess("DisposableDistribution", "Delete"))
+    @if (_user.HasAccess("Consume", "Delete"))
     {
-        <a href="@Url.Action("Delete", new { id=Model.DisposableDistributionID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.delete</a>
+        <a href="@Url.Action("Delete", new { id=Model.ConsumeID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.delete</a>
     }
 </div>
 
@@ -34,7 +34,7 @@
                 <th>@Labels.OrderDate</th>
             </tr>
             <tr>
-                <td>@Model.DepartmentName</td>
+                <td>Department Name</td>
                 <td>@Model.DocumentIssueNumber</td>
                 <td>@Model.DocumentIssuedDate</td>
                 <td>@Model.OrderNumber</td>
@@ -50,9 +50,7 @@
                 <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.Unit</th>
                 <th style="text-align:center; word-wrap:normal;">@Labels.Item_Group</th>
                 <th style="text-align:center; word-wrap:normal;">@Labels.Item_Category</th>
-                <th style="text-align:center; word-wrap:normal;">
-
-                </th>
+                <th style="text-align:center; word-wrap:normal;">@Labels.Item_Name</th>
                 <th style="text-align:center; word-wrap:normal;">@Labels.Item_Code</th>
                 <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.UnitPrice</th>
                 <th style="text-align:center; word-wrap:normal;word-wrap:normal;">@Labels.TotalPrice</th>
@@ -60,7 +58,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.DistributionItems)
+            @foreach (var item in Model.ConsumeItems)
             {
                 int index = 1;
                 <tr>
@@ -84,7 +82,7 @@
             </tr>
             <tr>
                 <th colspan="8" style="text-align:center;"> مجموع قیمت</th>
-                <th style="text-align:center;"> @Model.DistributionItems.Sum(i => i.UnitPrice * i.Quantity)</th>
+                <th style="text-align:center;"> @Model.ConsumeItems.Sum(i => i.UnitPrice * i.Quantity)</th>
                 <th style="text-align:center;">افغانی </th>
             </tr>
         </tbody>

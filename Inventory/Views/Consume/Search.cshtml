@@ -1,12 +1,12 @@
 ﻿@{
-    ViewBag.Title = Labels.ItemInUse;
+    ViewBag.Title = Labels.item_consumed_search;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var search = ViewBag.search as Inventory.Models.ViewModels.ItemInUseSearch;
+    var search = ViewBag.search as Inventory.Models.ViewModels.ConsumeItemsSearch;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
-    var _canView = _user.HasAccess("ReusableDistribution", "View");
+    var _canView = _user.HasAccess("Consume", "View");
 }
 
-<form method="post" action="@Url.Action("ListPartial")" id="search_form" autocomplete="off">
+<form method="post" id="search_form" autocomplete="off">
     <div class="portlet box blue-hoki" style="margin-bottom:10px">
         <div class="portlet-title">
             <div class="caption">@Labels.search_criteria</div>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label>@Labels.TicketIssedDate</label>
+                    <label>@Labels.IssueDate</label>
                     <div class="input-group">
                         <input type="text" class="form-control input-sm shpicker" name="DateFrom" value="@search.DateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
                         <span class="input-group-addon input-sm">@Labels.ToDate</span>
@@ -38,12 +38,6 @@
                 </div>
             </div>
             <section class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>@Labels.Bar_Code</label>
-                        <input type="text" class="form-control input-sm" name="BarCode" value="@search.BarCode" placeholder="@Labels.Bar_Code" id="BarCode" />
-                    </div>
-                </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.Item_Group</label>
@@ -62,15 +56,14 @@
                         <input type="text" name="ItemName" id="ItemName" class="form-control input-sm" data-msg="" placeholder="">
                     </div>
                 </div>
-                
-            </section>
-            <section class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.Item_Code</label>
                         <input type="text" name="ItemCode" id="ItemCode" class="form-control input-sm" data-msg="" placeholder="">
                     </div>
                 </div>
+            </section>
+            <section class="row">
                 <div class=" col-md-3">
                     <div class="form-group">
                         <label>@Labels.Size</label>
@@ -89,6 +82,10 @@
                         @Html.DropDownList("BrandID", ViewBag.BrandDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "BrandID" })
                     </div>
                 </div>
+                <div class=" col-md-3 form-group">
+                    <label>@Labels.Bar_Code</label>
+                    <input type="text" name="BarCode" id="BarCode" class="form-control input-sm" data-msg="" placeholder="@Labels.Bar_Code">
+                </div>
             </section>
 
             <div class="row">
@@ -104,7 +101,6 @@
                     </select>
                     <input type="hidden" name="hdStart" id="StartRow" value="@search.start" />
                 </div>
-
             </div>
         </div>
     </div>
@@ -124,15 +120,13 @@
                 <tr>
                     <th>@Labels.Bar_Code</th>
                     <th>@Labels.Requester</th>
-                    <th>@Labels.Employee</th>
-                    <th>@Labels.FatherName</th>
-                    <th>@Labels.TicketNumber</th>
-                    <th>@Labels.TicketIssedDate</th>
-                    <th>@Labels.RequestNumber</th>
-                    <th>@Labels.RequestDate</th>
+                    <th>@Labels.Issued</th>
+                    <th>@Labels.IssueDate</th>
+                    <th>@Labels.OrderNumber</th>
+                    <th>@Labels.OrderDate</th>
                     <th>@Labels.Quantity</th>
                     <th>@Labels.Unit</th>
-                    <th>@Labels.Item_Category</th>
+                    <th>@Labels.Item_Group</th>
                     <th>@Labels.Item_Category</th>
                     <th>@Labels.Item_Name</th>
                     <th>@Labels.Item_Code</th>
@@ -140,7 +134,7 @@
                     <th>@Labels.Origin</th>
                     <th>@Labels.Brand</th>
                     <th>@Labels.UnitPrice</th>
-                    <th>@Labels.DealWithAccount</th>
+                    <th>@Labels.Total</th>
                     <th></th>
                 </tr>
             </thead>
@@ -185,12 +179,11 @@
             $.fn.dataTable.ext.errMode = 'none';
             var data_table = $('#data_table').DataTable({
                 ajax: {
-                    url: '@Url.Action("ListItemInUse")',
+                    url: '@Url.Action("ConsumedItemsPartialList")',
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (data) {
                         var form_data = $('#search_form').serializeJSON();
-                        console.log("form data is >>>>> "+ JSON.stringify(data));
                         form_data['draw'] = data.draw;
                         form_data['start'] = data.start;
                         form_data['length'] = data.length;
@@ -200,12 +193,10 @@
                 columns: [
                     { data: 'BarCode' },
                     { data: 'DepartmentName' },
-                    { data: 'EmployeeName' },
-                    { data: 'EmployeeFName' },
-                    { data: 'TicketNumber' },
-                    { data: 'TicketIssuedDate' },
-                    { data: 'RequestNumber' },
-                    { data: 'RequestDate' },
+                    { data: 'DocumentIssueNumber' },
+                    { data: 'DocumentIssuedDate' },
+                    { data: 'OrderNumber' },
+                    { data: 'OrderDate' },
                     { data: 'Quantity' },
                     { data: 'UnitName' },
                     { data: 'GroupName' },
@@ -216,13 +207,12 @@
                     { data: 'OriginName' },
                     { data: 'BrandName' },
                     { data: 'UnitPrice' },
-                    { data: 'DealWithAccount' },
-
+                    { data: 'Total' },
                     {
                         data: null,
                         visible: canView,
                         render: function (row) {
-                            return '<a href="@Url.Action("View")/'+row.ReusableDistributionID+'" title="@Labels.View_Form" data-id="' + row.distributionItemID + '" class="btn btn-xs blue view-item"><i class="fa fa-file-text"></i>@Labels.View_Form</a>';
+                            return '<a href="@Url.Action("View")/'+row.ConsumeID+'" title="@Labels.View_Form" data-id="' + row.ConsumeID + '" class="btn btn-xs blue view-item"><i class="fa fa-eye"></i>@Labels.View_Form</a>';
                         }
                     }
                 ],
@@ -277,38 +267,34 @@
                 data_table.page.len($(this).val()).draw();
             })
 
-            ////////////////////////////////////////////////////
-
-
-        $("#DepartmentID" ).change(function() {
-            var departmentId = $(this).val();
-            if (departmentId) {
-                var url = "@Url.Action("loadDepartmentEmployee", "Employee")"+"/"+departmentId;
-                $.get(url, function (data) {
-                    $('#EmployeeID').empty();
-                    $('#EmployeeID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
-                    $.each(data, function (i, d) {
-                        $('#EmployeeID').append('<option value='+ d.employeeID +'>' + d.name + '</option>');
-                    });
-                })
-            }
-        });
+        ////////////////////////////////////////////////////
+            $("#DepartmentID" ).change(function() {
+                var departmentId = $(this).val();
+                if (departmentId) {
+                    var url = "@Url.Action("loadDepartmentEmployee", "Employee")"+"/"+departmentId;
+                    $.get(url, function (data) {
+                        console.log("Employee list is >>>>>>>>"+ JSON.stringify(data));
+                        $('#EmployeeID').empty();
+                        $('#EmployeeID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
+                        $.each(data, function (i, d) {
+                            $('#EmployeeID').append('<option value='+ d.employeeID +'>' + d.name + '</option>');
+                        });
+                    })
+                }
+            });
+        ////////////////////////////////////////////////////
 
         $("#GroupID").change(function(){
-            var grouId = $(this).val();
-            if(!grouId){
-                $('#CategoryID').empty();
-            }
-            if (grouId) {
+            var groupId = $("#GroupID").val();
+            $('#CategoryID').empty();
+            if (groupId) {
                 $.ajax({
                     type: "post",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     url: '@Url.Action("FilteredLookupAjax", "LookupHelper")', // URL to fetch second ddl
-                    data: "{id:'" + grouId + "'}",
+                    data: "{id:'" + groupId + "'}",
                     success: function (data) {
-                        console.log(">>>>>>>>>>>>>>>>>>>>>>>Category>><<<<<<<<<<<<<<<<"+ JSON.stringify(data));
-                        $('#CategoryID').empty();
                         $('#CategoryID').append('<option selected="selected" value="">'+"@Labels.please_select"+'</option>');
                         $.each(data, function (i, d) {
                             $('#CategoryID').append('<option value=' + d.Value + '>' + d.Text + '</option>');

@@ -7,7 +7,7 @@ namespace Inventory.Models.ViewModels
 {
     public class RestoreItemVM
     {
-        public int ID { get; set; }
+        public int RestoreItemID { get; set; }
 
         public int RestoreID { get; set; }
 

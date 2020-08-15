@@ -5,13 +5,13 @@ using System.Web;
 
 namespace Inventory.Models.ViewModels
 {
-    public class DisposableDistributionItemVM
+    public class ConsumeItemVM
     {
-        public int ID { get; set; }
+        public int ConsumeItemID { get; set; }
 
         public int StockInItemID { get; set; }
 
-        public int DisposableDistributionID { get; set; }
+        public int ConsumeID { get; set; }
 
         public string BarCode { get; set; }
 

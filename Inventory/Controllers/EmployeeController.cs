@@ -21,9 +21,7 @@ namespace Inventory.Controllers
         [AccessControl("View")]
         public ActionResult Search()
         {
-            var departmentList = db.Departments.Where(d => d.IsActive == true).Select(d =>
-                new { d.DepartmentID,DepartmentName = Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName }).ToList();
-            ViewBag.DepartmentDrp = new SelectList(departmentList, "DepartmentID", "DepartmentName");
+            CreateDropDown();
             ViewBag.search = new Employee_Search();
             return View("Search", new Employee());
         }
@@ -186,5 +184,21 @@ namespace Inventory.Controllers
             return Json(data);
         }
 
+        [ChildActionOnly]
+        public ActionResult SelectEmployee()
+        {
+            //EmployeeLoginViewModel model = new EmployeeLoginViewModel();
+            CreateDropDown();
+
+            return PartialView("_SelectEmployee", new Employee_Search());
+        }
+
+        private void CreateDropDown()
+        {
+
+            var departmentList = db.Departments.Where(d => d.IsActive == true).Select(d =>
+                new { d.DepartmentID, DepartmentName = Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName }).ToList();
+            ViewBag.DepartmentDrp = new SelectList(departmentList, "DepartmentID", "DepartmentName");
+        }
     }
 }

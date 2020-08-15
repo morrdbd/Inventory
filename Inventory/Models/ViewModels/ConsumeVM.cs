@@ -5,9 +5,9 @@ using System.Web;
 
 namespace Inventory.Models.ViewModels
 {
-    public class DisposableDistributionVM
+    public class ConsumeVM
     {
-        public int DisposableDistributionID { get; set; }
+        public int ConsumeID { get; set; }
 
         public int? DocumentIssueNumber { get; set; }
 
@@ -17,15 +17,25 @@ namespace Inventory.Models.ViewModels
 
         public string OrderDate { get; set; }
 
+        public int EmployeeID { get; set; }
+
         public int DepartmentID { get; set; }
 
-        public string DepartmentName { get; set; }
+        public string EmpName { get; set; }
+
+        public string EmpFatherName { get; set; }
+
+        public string EmpOccupation { get; set; }
+
+        public int EmpDepartmentID { get; set; }
+
+        public string EmpDepartmentName { get; set; }
 
         public string Details { get; set; }
 
         public string FilePath { get; set; }
 
-        public List<DisposableDistributionItemVM> DistributionItems { get; set; }
+        public List<ConsumeItemVM> ConsumeItems { get; set; }
 
     }
 }

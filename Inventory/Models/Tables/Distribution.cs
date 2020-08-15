@@ -6,10 +6,10 @@ using System.Data.Entity.Spatial;
 
 namespace Inventory.Models
 {
-    public class ReusableDistribution
+    public class Distribution
     {
         [Key]
-        public int ReusableDistributionID { get; set; }
+        public int DistributionID { get; set; }
 
         public int? TicketNumber { get; set; }
 

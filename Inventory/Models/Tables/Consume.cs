@@ -6,10 +6,10 @@ using System.Data.Entity.Spatial;
 
 namespace Inventory.Models
 {
-    public class DisposableDistribution
+    public class Consume
     {
         [Key]
-        public int DisposableDistributionID { get; set; }
+        public int ConsumeID { get; set; }
 
         public int? DocumentIssueNumber { get; set; }
 
@@ -18,6 +18,8 @@ namespace Inventory.Models
         public int? OrderNumber { get; set; }
 
         public DateTime? OrderDate { get; set; }
+
+        public int EmployeeID { get; set; }
 
         public int DepartmentID { get; set; }
 

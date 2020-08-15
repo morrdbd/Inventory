@@ -3,8 +3,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.search as Inventory.Models.ViewModels.TicketSearch;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
-    var _canView = _user.HasAccess("ReusableDistribution", "View");
-    var _canPrint = _user.HasAccess("ReusableDistribution", "Print");
+    var _canView = _user.HasAccess("Distribution", "View");
+    var _canPrint = _user.HasAccess("Distribution", "Print");
 
 }
 
@@ -179,7 +179,7 @@
                         data: null,
                         visible: canView,
                         render: function (row) {
-                            return '<a href="@Url.Action("View")/'+row.ReusableDistributionID+'" title="@Labels.View" class="btn btn-xs blue"><i class="fa fa-eye"></i></a>';
+                            return '<a href="@Url.Action("View")/'+row.DistributionID+'" title="@Labels.View" class="btn btn-xs blue"><i class="fa fa-eye"></i></a>';
                         }
                     }
                 ],

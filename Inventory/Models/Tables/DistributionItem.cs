@@ -6,11 +6,15 @@ using System.Web;
 
 namespace Inventory.Models.Tables
 {
-    public class ReusableDistributionItem
+    public class DistributionItem
     {
-        public int ID { get; set; }
+        public int DistributionItemID { get; set; }
 
-        public int ReusableDistributionID { get; set; }
+        public int DistributionID { get; set; }
+
+        public int Quantity { get; set; }
+
+        public int QuantityConsumed { get; set; }
 
         public int StockInItemID { get; set; }
 
