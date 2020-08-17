@@ -68,7 +68,7 @@ namespace Inventory.Controllers
                 Warehouse = model.Warehouse,
                 RequestNumber = model.RequestNumber,
                 RequestDateForm = model.RequestDate.ToDateString(Language),
-                EmpID = model.EmployeeID,
+                EmployeeID = model.EmployeeID,
                 EmpName = db.Employees.Where(e=>e.EmployeeID == model.EmployeeID).Select(e=>e.Name).FirstOrDefault(),
                 EmpFatherName = db.Employees.Where(e => e.EmployeeID == model.EmployeeID).Select(e => e.FatherName).FirstOrDefault(),
                 EmpOccupation = db.Employees.Where(e => e.EmployeeID == model.EmployeeID).Select(e => e.Occupation).FirstOrDefault(),
@@ -235,7 +235,7 @@ namespace Inventory.Controllers
                         Warehouse = model.Warehouse,
                         RequestNumber = model.RequestNumber,
                         RequestDate = model.RequestDateForm.ToDate(Language),
-                        EmployeeID = model.EmpID,
+                        EmployeeID = model.EmployeeID,
                         Details = model.Details,
                         InsertedBy = AppUser.Id,
                         InsertedDate = DateTime.Now,
@@ -247,7 +247,7 @@ namespace Inventory.Controllers
 
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "Distribution",
+                        ModifiedTable = "Distributions",
                         ModfiedId = _distribution.DistributionID,
                         Action = "Insert",
                         UserId = AppUser.Id,
@@ -266,7 +266,8 @@ namespace Inventory.Controllers
                                 {
                                     DistributionID = _distribution.DistributionID,
                                     StockInItemID = row.StockInItemID,
-                                    DealWithAccount = row.DealWithAccount
+                                    DealWithAccount = row.DealWithAccount,
+                                    Quantity = row.Quantity
                                 };
 
                                 db.DistributionItems.Add(_item);
@@ -274,7 +275,7 @@ namespace Inventory.Controllers
 
                                 db.ActivityLogs.Add(new ActivityLog
                                 {
-                                    ModifiedTable = "DistributionItem",
+                                    ModifiedTable = "DistributionItems",
                                     ModfiedId = row.DistributionItemID,
                                     Action = "Insert",
                                     UserId = AppUser.Id,
@@ -347,6 +348,7 @@ namespace Inventory.Controllers
                              DepartmentName = (Language == "prs"? dep.DrName:(Language == "pa" ? dep.PaName: dep.EnName))
                          });
 
+            var test = query.ToList();
             if (model.TicketNumber != null)
             {
                 query = query.Where(c => c.TicketNumber == model.TicketNumber);
@@ -443,7 +445,7 @@ namespace Inventory.Controllers
                     _distribution.Warehouse = model.Warehouse;
                     _distribution.RequestNumber = model.RequestNumber;
                     _distribution.RequestDate = model.RequestDateForm.ToDate(Language);
-                    _distribution.EmployeeID = model.EmpID;
+                    _distribution.EmployeeID = model.EmployeeID;
                     _distribution.Details = model.Details;
                     _distribution.LastUpdatedBy = AppUser.Id;
                     _distribution.LastUpdatedDate = DateTime.Now;
@@ -537,7 +539,7 @@ namespace Inventory.Controllers
                         var _stockInItem = db.StockInItems.Find(dItem.StockInItemID);
                         if (_stockInItem != null)
                         {
-                            _stockInItem.AvailableQuantity += 1;
+                            _stockInItem.AvailableQuantity += dItem.Quantity;
                             _stockInItem.SecondHandPrice = null;
 
                             var dItemTobeDeleted = db.DistributionItems.Find(dItem.DistributionItemID);

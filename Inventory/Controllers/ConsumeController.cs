@@ -85,6 +85,7 @@ namespace Inventory.Controllers
                 {
                     ConsumeItemID = i.ConsumeItemID,
                     StockInItemID = i.StockInItemID,
+                    DistributionID = i.DistributionID,
                     BarCode = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.BarCode).FirstOrDefault(),
                     ConsumeID = i.ConsumeID,
                     ItemCode = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.ItemCode).FirstOrDefault(),
@@ -128,6 +129,7 @@ namespace Inventory.Controllers
                              di.QuantityConsumed,
                              si.UnitPrice
                          });
+            var test = query.ToList();
                 //db.DistributionItems.Where(i => i.IsActive == true && i.AvailableQuantity != 0 
             //&& i.UsageTypeID == disposableValueId).AsQueryable();
 
@@ -186,6 +188,7 @@ namespace Inventory.Controllers
                 BrandName = AdminRepo.LookupName(Language, i.BrandID),
                 UnitPrice = i.UnitPrice,
                 Quantity = i.Quantity,
+                QuantityConsumed = i.QuantityConsumed,
                 ItemCode = i.ItemCode,
                 DistributionItemID = i.DistributionItemID
             }
@@ -232,7 +235,7 @@ namespace Inventory.Controllers
 
                     db.ActivityLogs.Add(new ActivityLog
                     {
-                        ModifiedTable = "Consume",
+                        ModifiedTable = "Consumes",
                         ModfiedId = _consume.ConsumeID,
                         Action = "Insert",
                         UserId = AppUser.Id,
@@ -252,6 +255,7 @@ namespace Inventory.Controllers
                                     ConsumeID = _consume.ConsumeID,
                                     StockInItemID = row.StockInItemID,
                                     Quantity = row.Quantity,
+                                    DistributionID = row.DistributionID
                                 };
 
                                 db.ConsumesItems.Add(_item);
@@ -268,7 +272,7 @@ namespace Inventory.Controllers
                                 });
                                 db.SaveChanges();
                                 //minus item from item in hand
-                                var _distributionItem = db.DistributionItems.Where(s => s.StockInItemID == row.StockInItemID).First();
+                                var _distributionItem = db.DistributionItems.Where(s => s.StockInItemID == row.StockInItemID && s.DistributionID == row.DistributionID).FirstOrDefault();
                                 if (_distributionItem.Quantity < (row.Quantity + _distributionItem.QuantityConsumed))
                                 {
                                     return Json(false);
@@ -353,30 +357,27 @@ namespace Inventory.Controllers
                     var consumedItems = db.ConsumesItems.Where(d => d.ConsumeID == _consume.ConsumeID).ToList();
                     foreach(var cItem in consumedItems)
                     {
-                        var _distributedItemID = (from d in db.Distributions
-                                                  join dItem in db.DistributionItems on d.DistributionID equals dItem.DistributionID
-                                                  where d.EmployeeID == model.EmployeeID && dItem.StockInItemID == cItem.StockInItemID
-                                                  select dItem.DistributionItemID).FirstOrDefault();
-                        var _distributedItem = db.DistributionItems.Find(_distributedItemID);
+                        var _distributedItem = db.DistributionItems.Where(di=>di.DistributionID == cItem.DistributionID && di.StockInItemID == cItem.StockInItemID).FirstOrDefault();
                         if(_distributedItem != null)
                         {
                             _distributedItem.QuantityConsumed -= cItem.Quantity;
                             db.ConsumesItems.Remove(cItem);
                         }
                     }
-                    foreach (var mcItem in model.ConsumeItems)
+                    foreach (var cItem in model.ConsumeItems)
                     {
-                        var ndistributedItem = db.DistributionItems.Find(mcItem.StockInItemID);
-                        if (ndistributedItem == null && ndistributedItem.Quantity < (ndistributedItem.QuantityConsumed + mcItem.Quantity))
+                        var distributedItem = db.DistributionItems.Where(di=>di.StockInItemID == cItem.StockInItemID && di.DistributionID == cItem.DistributionID).FirstOrDefault();
+                        if (distributedItem == null && distributedItem.Quantity < (distributedItem.QuantityConsumed + cItem.Quantity))
                         {
                             return Json(false);
                         }
-                        ndistributedItem.QuantityConsumed += mcItem.Quantity;
+                        distributedItem.QuantityConsumed += cItem.Quantity;
                         var cItemTableObj = new ConsumeItem
                         {
                             ConsumeID = _consume.ConsumeID,
-                            Quantity = mcItem.Quantity,
-                            StockInItemID = mcItem.StockInItemID,
+                            Quantity = cItem.Quantity,
+                            StockInItemID = cItem.StockInItemID,
+                            DistributionID = distributedItem.DistributionID
                         };
                         db.ConsumesItems.Add(cItemTableObj);
                         
@@ -422,11 +423,7 @@ namespace Inventory.Controllers
                     var consumeItems = db.ConsumesItems.Where(d => d.ConsumeID == _consume.ConsumeID).ToList();
                     foreach (var cItem in consumeItems)
                     {
-                        var _distributedItemID = (from d in db.Distributions
-                                                  join dItem in db.DistributionItems on d.DistributionID equals dItem.DistributionID
-                                                  where d.EmployeeID == _consume.EmployeeID && dItem.StockInItemID == cItem.StockInItemID
-                                                  select dItem.DistributionItemID).FirstOrDefault();
-                        var _distributedItem = db.DistributionItems.Find(_distributedItemID);
+                        var _distributedItem = db.DistributionItems.Where(di=>di.StockInItemID == cItem.StockInItemID && di.DistributionID == cItem.DistributionID).FirstOrDefault();
                         if (_distributedItem != null)
                         {
                             _distributedItem.QuantityConsumed -= cItem.Quantity;
@@ -469,6 +466,7 @@ namespace Inventory.Controllers
                              where d.IsActive == true && model.DistributionItemID == dItem.DistributionItemID
                              select new
                              {
+                                 d.DistributionID,
                                  s.StockInItemID,
                                  s.BarCode,
                                  s.ItemName,
@@ -485,11 +483,11 @@ namespace Inventory.Controllers
                                  dItem.Quantity,
                                  dItem.QuantityConsumed
                              }).FirstOrDefault() ;
-                //var obj = db.StockInItems.Where(i => i.StockInItemID == model.StockInItemID && i.IsActive == true).FirstOrDefault();
                 if (_item != null && _item.Quantity >= (_item.QuantityConsumed + model.Quantity))
                 {
                     var itemToReturn = new {
                         _item.StockInItemID,
+                        _item.DistributionID,
                         //Return the quantity consumed
                          model.Quantity,
                         _item.QuantityConsumed,

@@ -11,7 +11,7 @@
 }
 <form action="@Url.Action(Model.DistributionID == 0 ? "Insert" : "Update")" id="main_form" autocomplete="off">
     <input type="hidden" name="DistributionID" value="@Model.DistributionID" />
-    <input type="hidden" name="EmpID" id="EmpID" value="@Model.EmpID" />
+    <input type="hidden" name="EmployeeID" id="EmployeeID" value="@Model.EmployeeID" />
     <div class="portlet box blue-hoki margin-bottom-10">
         <div class="portlet-title">
             <div class="caption">
@@ -139,7 +139,7 @@
                                     <td>@item.SecondHandPrice</td>
                                     <td>
                                         @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>*@
-                                        <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                                        <button data-toggle="modal" type="button" class="btn btn-xs btn-danger delete_assign_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 index++;
@@ -322,7 +322,7 @@
             <td>{{IsSecondHand}}</td>
             <td>{{SecondHandPrice}}</td>
             <td>
-                <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" type="button" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
                 @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="{{index}}"><i class="fa fa-edit"></i></a>
                     <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="{{index}}" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>*@
             </td>
@@ -544,7 +544,7 @@
                     contentType: 'application/json',
                     success: function (response) {
                         if(response){
-                            $("#Quantity").val(response.AvailableQuantity);
+                            //$("#Quantity").val(response.AvailableQuantity);
                             $("#UnitPrice").val(response.UnitPrice);
                             $("#StockInItemID").val(response.StockInItemID);
                         }

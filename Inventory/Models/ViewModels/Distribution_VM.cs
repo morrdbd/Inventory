@@ -24,7 +24,7 @@ namespace Inventory.Models.ViewModels
 
         public string RequestDateForm { get; set; }
 
-        public int EmpID { get; set; }
+        public int EmployeeID { get; set; }
 
         public string EmpName { get; set; }
 

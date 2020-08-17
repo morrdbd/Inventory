@@ -13,6 +13,8 @@ namespace Inventory.Models.ViewModels
 
         public int ConsumeID { get; set; }
 
+        public int DistributionID { get; set; }
+
         public string BarCode { get; set; }
 
         public string UnitName { get; set; }

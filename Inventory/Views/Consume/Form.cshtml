@@ -227,7 +227,6 @@
                             <thead>
                                 <tr>
                                     <th>@Labels.Bar_Code</th>
-                                    <th>@Labels.Quantity</th>
                                     <th>@Labels.Unit</th>
                                     <th>@Labels.Item_Group</th>
                                     <th>@Labels.Item_Category</th>
@@ -237,6 +236,7 @@
                                     <th>@Labels.Origin</th>
                                     <th>@Labels.Brand</th>
                                     <th>@Labels.UnitPrice</th>
+                                    <th>@Labels.Quantity</th>
                                     <th>@Labels.quantity_consumed</th>
                                     <th></th>
                                 </tr>
@@ -372,6 +372,7 @@
                     var formData = ObjectToFormData(data);
                     //******************
                     Metronic.blockUI({ animate: true });
+                    console.log("Inside the add item form >>>>>>>>>>>>>>>>>>>");
                     $.ajax({
                         url: $('#add_item_form').attr('action'),
                         type: 'POST',
@@ -454,7 +455,6 @@
                 },
                 columns: [
                     { data: 'BarCode' },
-                    { data: 'Quantity' },
                     { data: 'UnitName' },
                     { data: 'ItemGroupName' },
                     { data: 'ItemCategoryName' },
@@ -464,6 +464,7 @@
                     { data: 'ItemOriginName' },
                     { data: 'BrandName' },
                     { data: 'UnitPrice' },
+                    { data: 'Quantity' },
                     { data: 'QuantityConsumed' },
                     {
                         data: null,

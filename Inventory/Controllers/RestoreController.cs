@@ -256,7 +256,7 @@ namespace Inventory.Controllers
                 {
                     var _restore = new Restore
                     {
-                        EmployeeID = model.EmpID,
+                        EmployeeID = model.EmployeeID,
                         DocumentIssuedNo = model.DocumentIssuedNo,
                         DocumentIssuedDate = _docIssucedDate,
                         ItemInCondition = model.ItemInCondition,
@@ -357,7 +357,7 @@ namespace Inventory.Controllers
                 {
                     var _Restore = db.Restores.Find(model.RestoreID);
                     if (_Restore == null) return Json(false);
-                    _Restore.EmployeeID = model.EmpID;
+                    _Restore.EmployeeID = model.EmployeeID;
                     _Restore.DocumentIssuedDate = model.DocumentIssuedDateForm.ToDate(Language);
                     _Restore.ItemInCondition = model.ItemInCondition;
                     _Restore.Details = model.Details;
@@ -466,13 +466,14 @@ namespace Inventory.Controllers
                 RestoreID = model.RestoreID,
                 DocumentIssuedDateForm = model.DocumentIssuedDate.ToDateString(Language),
                 DocumentIssuedNo = model.DocumentIssuedNo,
-                EmpID = employee.EmployeeID,
+                EmployeeID = employee.EmployeeID,
                 EmpName = employee.Name,
                 EmpFatherName = employee.FatherName,
                 EmpOccupation = employee.Occupation,
                 EmpDepartmentName = db.Departments.Where(d=>d.DepartmentID == employee.DepartmentID)
                 .Select(d=> Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
                 ItemInCondition = AdminRepo.LookupNameByVlueCode(Language, model.ItemInCondition),
+                FilePath = model.FilePath,
                 Details = model.Details
             };
           
