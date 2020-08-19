@@ -13,9 +13,13 @@
     {
         <a href="@Url.Action("Edit", new { id=Model.RestoreID })" class="btn btn-sm btn-success" id="btn_edit"><i class="fa fa-edit"></i> @Labels.edit</a>
     }
+    @if (_user.HasAccess("Restore", "Print"))
+    {
+        <a href="#popup_attachment" data-toggle="modal" class="btn btn-sm btn-success showFile_row" id="btn_print" data-filepath="@Model.FilePath" title="@Labels.FinalSOAttachment"><i class="fa fa-paperclip"></i>@Labels.print_preview</a>
+    }
     @if (_user.HasAccess("Restore", "Delete"))
     {
-        <a href="@Url.Action("Delete", new { id=Model.RestoreID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.return_item</a>
+        <a href="@Url.Action("Delete", new { id=Model.RestoreID })" class="btn btn-sm btn-danger" id="btn_delete"><i class="fa fa-trash"></i> @Labels.delete</a>
     }
 </div>
 <h4>@Labels.FormInfo</h4>
@@ -80,28 +84,54 @@
             int index = 1;
             foreach (var item in Model.RestoreItems)
             {
-        <tr>
-            <td>@index</td>
-            <td>@item.BarCode</td>
-            <td>@item.Quantity</td>
-            <td>@item.UnitName</td>
-            <td>@item.GroupName</td>
-            <td>@item.CategoryName</td>
-            <td>@item.ItemName</td>
-            <td>@item.ItemCode</td>
-            <td>@item.SizeName</td>
-            <td>@item.OriginName</td>
-            <td>@item.BrandName</td>
-            <td>@item.UnitPrice</td>
-            <td>@item.DealWithAccount</td>
-        </tr>
+                <tr>
+                    <td>@index</td>
+                    <td>@item.BarCode</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitName</td>
+                    <td>@item.GroupName</td>
+                    <td>@item.CategoryName</td>
+                    <td>@item.ItemName</td>
+                    <td>@item.ItemCode</td>
+                    <td>@item.SizeName</td>
+                    <td>@item.OriginName</td>
+                    <td>@item.BrandName</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@item.DealWithAccount</td>
+                </tr>
                 index++;
             }
         }
+        <tr>
+            <td colspan="13">@Model.Details</td>
+        </tr>
     </tbody>
 </table>
 
+<div class="modal fade" id="popup_attachment" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" style="width:1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                @Labels.DocumentPrveview
+            </div>
+            <div class="modal-body">
+                <div class="margin-bottom-10">
+                    <button type="button" id="printScan" class="btn btn-sm blue" data-dismiss="modal"><i class="fa fa-print"></i>@Labels.print_preview</button>
+                    <button type="button" class="btn btn-sm default" data-dismiss="modal">@Labels.cancel</button>
+                </div>
+                <div id="viewScan">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts{
+    <script>
+        var lblScanPreviewv = "@Labels.ScanPreview";
+    </script>
+    <script src="~/Content/resources/src/scanHandle.js"></script>
+
     <script type="text/javascript">
         $(function () {
             $('body').on('click', '#btn_delete', function (e) {

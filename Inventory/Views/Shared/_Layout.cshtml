@@ -306,6 +306,9 @@
 
     <script src="~/Scripts/select2.full.js"></script>
     <script>
+            @*User in select_emplyee js file*@
+        var searchEmployeeUrl = '@Url.Action("SearchEmployee", "Employee")'
+        var lblPleaseSelect = '@Labels.please_select';
         var mainvars = {
             lang: '@_lang',
             pass_needs_change: '@_user.AppUser.PassNeedsChange',

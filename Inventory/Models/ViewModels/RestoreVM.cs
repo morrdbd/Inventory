@@ -17,7 +17,7 @@ namespace Inventory.Models.ViewModels
 
         public string DocumentIssuedDateForm { get; set; }
 
-        public int EmpID { get; set; }
+        public int EmployeeID { get; set; }
 
         public string EmpName { get; set; }
 
@@ -32,6 +32,9 @@ namespace Inventory.Models.ViewModels
         public string ItemInCondition { get; set; }
 
         public string Details { get; set; }
+
+        public string FilePath { get; set; }
+
 
         public List<RestoreItemVM> RestoreItems { get; set; }
 

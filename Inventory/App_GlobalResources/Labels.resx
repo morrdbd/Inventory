@@ -774,8 +774,8 @@
   <data name="DistributionTicketList" xml:space="preserve">
     <value>Distribution Ticket List</value>
   </data>
-  <data name="Mem3Date" xml:space="preserve">
-    <value>Mem3Date</value>
+  <data name="Mem2or3Date" xml:space="preserve">
+    <value>Mem 3/2  Date</value>
   </data>
   <data name="Mem7Form" xml:space="preserve">
     <value>Mem 7 Form</value>
@@ -927,8 +927,8 @@
   <data name="Usage_Type" xml:space="preserve">
     <value>Usage Type</value>
   </data>
-  <data name="add_disposable_distribution" xml:space="preserve">
-    <value>Add Disposable Distribution Form</value>
+  <data name="add_consume_pc10" xml:space="preserve">
+    <value>Add Consume Form</value>
   </data>
   <data name="add_restore_form" xml:space="preserve">
     <value>Add Restore</value>
@@ -936,11 +936,11 @@
   <data name="Bar_Code" xml:space="preserve">
     <value>Bar Code</value>
   </data>
-  <data name="disposable_item_distribution_search" xml:space="preserve">
-    <value>Disposable Item Distribution Search</value>
+  <data name="item_consumed_search" xml:space="preserve">
+    <value>Item Consumed Search</value>
   </data>
-  <data name="edit_disposable_distribution" xml:space="preserve">
-    <value>Edit Disposable Distribution Form</value>
+  <data name="edit_consume_pc10" xml:space="preserve">
+    <value>Edit Consumption Form PC-10</value>
   </data>
   <data name="edit_restore_form" xml:space="preserve">
     <value>Edit Restore Form</value>
@@ -1016,5 +1016,17 @@
   </data>
   <data name="PC10Form" xml:space="preserve">
     <value>PC 10 Form</value>
+  </data>
+  <data name="error_occured" xml:space="preserve">
+    <value>Error occured</value>
+  </data>
+  <data name="branch_office" xml:space="preserve">
+    <value>Branch Office</value>
+  </data>
+  <data name="please_select_item" xml:space="preserve">
+    <value>Please select item</value>
+  </data>
+  <data name="quantity_consumed" xml:space="preserve">
+    <value>Quantity Consumed</value>
   </data>
 </root>

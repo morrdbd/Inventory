@@ -83,15 +83,15 @@ namespace Inventory.Controllers
         [AccessControl("Search")]
         public JsonResult EmployeeItemsList(RestoreItemSearch search)
         {
-            var query = (from d in db.ReusableDistributions
-                         join di in db.ReusableDistributionItems on d.ReusableDistributionID equals di.ReusableDistributionID
+            var query = (from d in db.Distributions
+                         join di in db.DistributionItems on d.DistributionID equals di.DistributionID
                          join s in db.StockInItems on di.StockInItemID equals s.StockInItemID
                          where di.IsReturned == false && d.IsActive == true && s.IsExpired == false
-                         && d.EmployeeID == search.EmpID
+                         && d.EmployeeID == search.EmployeeID
                          select new
                          {
                              s.BarCode,
-                             di.ID,
+                             di.DistributionItemID,
                              di.StockInItemID,
                              d.EmployeeID,
                              s.ItemName,
@@ -109,7 +109,6 @@ namespace Inventory.Controllers
                              s.ItemCode,
                              di.DealWithAccount
                          });
-                //db.StockInItems.Where(i => i.IsActive == true && i.IsExpired == false).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(search.BarCode))
             {
@@ -153,18 +152,18 @@ namespace Inventory.Controllers
             }
             ViewBag.search = search;
             var items = query.ToList();
-            var data = items.Select(i => new RestoreItemVM
+            var data = items.Select(i => new DistributionItemVM
             {
-                ID = i.ID,
+                DistributionItemID = i.DistributionItemID,
                 StockInItemID = i.StockInItemID,
                 ItemName = i.ItemName,
                 BarCode = i.BarCode,
                 Quantity = i.Quantity,
                 UnitName = AdminRepo.LookupName(Language, i.UnitID),
-                GroupName = AdminRepo.LookupName(Language, i.GroupID),
-                CategoryName = AdminRepo.LookupName(Language, i.CategoryID),
-                SizeName = AdminRepo.LookupName(Language, i.SizeID),
-                OriginName = AdminRepo.LookupName(Language, i.OriginID),
+                ItemGroupName = AdminRepo.LookupName(Language, i.GroupID),
+                ItemCategoryName = AdminRepo.LookupName(Language, i.CategoryID),
+                ItemSizeName = AdminRepo.LookupName(Language, i.SizeID),
+                ItemOriginName = AdminRepo.LookupName(Language, i.OriginID),
                 BrandName = AdminRepo.LookupName(Language, i.BrandID),
                 UnitPrice = i.UnitPrice,
                 TotalPrice = i.Quantity * i.UnitPrice,
@@ -187,14 +186,14 @@ namespace Inventory.Controllers
         {
             try
             {
-                var obj = (from d in db.ReusableDistributions
-                           join di in db.ReusableDistributionItems on d.ReusableDistributionID equals di.ReusableDistributionID
+                var obj = (from d in db.Distributions
+                           join di in db.DistributionItems on d.DistributionID equals di.DistributionID
                            join si in db.StockInItems on di.StockInItemID equals si.StockInItemID
-                           where di.ID == id && d.IsActive == true && di.IsReturned == false &&
+                           where di.DistributionItemID == id && d.IsActive == true && di.IsReturned == false &&
                            si.IsActive == true && si.IsExpired == false
                            select new
                            {
-                               di.ID,
+                               di.DistributionItemID,
                                si.Quantity,
                                si.StockInItemID,
                                si.BarCode,
@@ -213,7 +212,7 @@ namespace Inventory.Controllers
                 {
                     var item = new
                     {
-                        obj.ID,
+                        obj.DistributionItemID,
                         obj.Quantity,
                         obj.StockInItemID,
                         obj.BarCode,
@@ -256,7 +255,7 @@ namespace Inventory.Controllers
                 {
                     var _restore = new Restore
                     {
-                        EmployeeID = model.EmpID,
+                        EmployeeID = model.EmployeeID,
                         DocumentIssuedNo = model.DocumentIssuedNo,
                         DocumentIssuedDate = _docIssucedDate,
                         ItemInCondition = model.ItemInCondition,
@@ -283,14 +282,18 @@ namespace Inventory.Controllers
                     if (model.RestoreItems != null)
                     {
                         foreach (var row in model.RestoreItems)
-                        {
-                            var distributionObj = (from d in db.ReusableDistributions
-                                                   join dItem in db.ReusableDistributionItems on d.ReusableDistributionID equals dItem.ReusableDistributionID
-                                                   where d.EmployeeID == _restore.EmployeeID && row.StockInItemID == dItem.StockInItemID select new {distributoinItemID = dItem.ID, dItem.StockInItemID }).FirstOrDefault();
+                        { 
+                            var distributionObj = (from d in db.Distributions
+                                                   join dItem in db.DistributionItems on d.DistributionID equals dItem.DistributionID
+                                                   where d.EmployeeID == _restore.EmployeeID && row.StockInItemID == dItem.StockInItemID
+                                                   select new {
+                                                       dItem.DistributionItemID,
+                                                       dItem.StockInItemID
+                                                   }).FirstOrDefault();
 
                             if (row != null && distributionObj != null)
                             {
-                                var distributionItem = db.ReusableDistributionItems.Find(distributionObj.distributoinItemID);
+                                var distributionItem = db.DistributionItems.Find(distributionObj.DistributionItemID);
                                 distributionItem.IsReturned = true;
                                 distributionItem.ReturnDate = DateTime.Now;
                                 var _item = new RestoreItem()
@@ -320,7 +323,7 @@ namespace Inventory.Controllers
                                 db.ActivityLogs.Add(new ActivityLog
                                 {
                                     ModifiedTable = "RestoreItems",
-                                    ModfiedId = row.ID,
+                                    ModfiedId = row.RestoreItemID,
                                     Action = "Insert",
                                     UserId = AppUser.Id,
                                     ModifiedTime = DateTime.Now,
@@ -357,7 +360,7 @@ namespace Inventory.Controllers
                 {
                     var _Restore = db.Restores.Find(model.RestoreID);
                     if (_Restore == null) return Json(false);
-                    _Restore.EmployeeID = model.EmpID;
+                    _Restore.EmployeeID = model.EmployeeID;
                     _Restore.DocumentIssuedDate = model.DocumentIssuedDateForm.ToDate(Language);
                     _Restore.ItemInCondition = model.ItemInCondition;
                     _Restore.Details = model.Details;
@@ -378,7 +381,7 @@ namespace Inventory.Controllers
                     db.SaveChanges();
                     db.RestoreItems.Where(x => x.RestoreID == _Restore.RestoreID).ToList().ForEach(x =>
                     {
-                        var distributionItem = db.ReusableDistributionItems.Where(i => i.StockInItemID == x.StockInItemID).FirstOrDefault();
+                        var distributionItem = db.DistributionItems.Where(i => i.StockInItemID == x.StockInItemID).FirstOrDefault();
                         if (distributionItem != null)
                         {
                             distributionItem.IsReturned = false;
@@ -395,7 +398,7 @@ namespace Inventory.Controllers
                     {
                         model.RestoreItems.ForEach(x=>
                         {
-                            var distributionItem = db.ReusableDistributionItems.Where(i => i.StockInItemID == x.StockInItemID).FirstOrDefault();
+                            var distributionItem = db.DistributionItems.Where(i => i.StockInItemID == x.StockInItemID).FirstOrDefault();
                             if (distributionItem != null)
                             {
                                 distributionItem.IsReturned = true;
@@ -424,7 +427,7 @@ namespace Inventory.Controllers
                             db.ActivityLogs.Add(new ActivityLog
                             {
                                 ModifiedTable = "RestoreItems",
-                                ModfiedId = restoreItem.ID,
+                                ModfiedId = restoreItem.RestoreItemID,
                                 Action = action,
                                 UserId = AppUser.Id,
                                 ModifiedTime = DateTime.Now,
@@ -466,13 +469,14 @@ namespace Inventory.Controllers
                 RestoreID = model.RestoreID,
                 DocumentIssuedDateForm = model.DocumentIssuedDate.ToDateString(Language),
                 DocumentIssuedNo = model.DocumentIssuedNo,
-                EmpID = employee.EmployeeID,
+                EmployeeID = employee.EmployeeID,
                 EmpName = employee.Name,
                 EmpFatherName = employee.FatherName,
                 EmpOccupation = employee.Occupation,
                 EmpDepartmentName = db.Departments.Where(d=>d.DepartmentID == employee.DepartmentID)
                 .Select(d=> Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
                 ItemInCondition = AdminRepo.LookupNameByVlueCode(Language, model.ItemInCondition),
+                FilePath = model.FilePath,
                 Details = model.Details
             };
           
@@ -485,7 +489,7 @@ namespace Inventory.Controllers
                 {
                     var restoreItem = new RestoreItemVM
                     {
-                        ID = item.ID,
+                        RestoreItemID = item.RestoreItemID,
                         StockInItemID = item.StockInItemID,
                         BarCode = itemInStockIn.BarCode,
                         RestoreID = restore.RestoreID,
@@ -499,7 +503,7 @@ namespace Inventory.Controllers
                         UnitPrice = itemInStockIn.UnitPrice,
                         Quantity = itemInStockIn.Quantity,
                         ItemCode = itemInStockIn.ItemCode,
-                        DealWithAccount = db.ReusableDistributionItems.Where(i=>i.StockInItemID == item.StockInItemID).Select(i=>i.DealWithAccount).FirstOrDefault()
+                        DealWithAccount = db.DistributionItems.Where(i=>i.StockInItemID == item.StockInItemID).Select(i=>i.DealWithAccount).FirstOrDefault()
                     };
                     restore.RestoreItems.Add(restoreItem);
                 }
@@ -519,7 +523,7 @@ namespace Inventory.Controllers
                          join sItem in db.StockInItems on rItem.StockInItemID equals sItem.StockInItemID
                          join emp in db.Employees on r.EmployeeID equals emp.EmployeeID
                          join dep in db.Departments on emp.DepartmentID equals dep.DepartmentID
-                         join disItem in db.ReusableDistributionItems on rItem.StockInItemID equals disItem.StockInItemID
+                         join disItem in db.DistributionItems on rItem.StockInItemID equals disItem.StockInItemID
                          where r.IsActive == true && disItem.IsReturned == true
                          select new
                          {
@@ -528,7 +532,7 @@ namespace Inventory.Controllers
                              RestoreDate = r.DocumentIssuedDate,
                              r.DocumentIssuedNo,
                              r.ItemInCondition,
-                             RestoreItemID = rItem.ID,
+                             RestoreItemID = rItem.RestoreItemID,
                              sItem.StockInItemID,
                              emp.DepartmentID,
                              r.EmployeeID,
@@ -670,7 +674,7 @@ namespace Inventory.Controllers
                         var _restoreItems = db.RestoreItems.Where(s => s.RestoreID == _restore.RestoreID ).ToList();
                         _restoreItems.ForEach(item =>
                         {
-                            var distributionItem = db.ReusableDistributionItems.Where(i=>i.StockInItemID == item.StockInItemID).FirstOrDefault();
+                            var distributionItem = db.DistributionItems.Where(i=>i.StockInItemID == item.StockInItemID).FirstOrDefault();
                             if(distributionItem != null)
                             {
                                 distributionItem.IsReturned = false;

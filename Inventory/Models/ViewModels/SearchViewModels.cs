@@ -22,7 +22,8 @@ namespace Inventory.Models.ViewModels
         public int start { get; set; }
         public int length { get; set; }
     }
-    public class ItemInUseSearch
+
+    public class DistributedItemsSearch
     {
         public int? DepartmentID { get; set; }
 
@@ -32,6 +33,8 @@ namespace Inventory.Models.ViewModels
 
         public string BarCode { get; set; }
 
+        public int? UnitID { get; set; }
+
         public int? GroupID { get; set; }
 
         public int? CategoryID { get; set; }
@@ -57,9 +60,11 @@ namespace Inventory.Models.ViewModels
         public int length { get; set; }
     }
 
-    public class DisposableDistributedSearch
+    public class ConsumedSearch
     {
         public int? DepartmentID { get; set; }
+
+        public int? EmployeeID { get; set; }
 
         public int? GroupID { get; set; }
 
@@ -88,14 +93,14 @@ namespace Inventory.Models.ViewModels
         public int length { get; set; }
     }
 
-    public class Durable_StockIn_Search
+    public class StockIn_Form_Search
     {
         public string ReportNumber { get; set; }
         public string RequestNumber { get; set; }
         public string StockInDateFrom { get; set; }
         public string StockInDateTo { get; set; }
-        public string RequestDateFrom { get; set; }
-        public string RequestDateTo { get; set; }
+        public string OrderDateFrom { get; set; }
+        public string OrderDateTo { get; set; }
         public int PageSize { get; set; }
         public int? PageNo { get; set; }
         public int draw { get; set; }
@@ -141,6 +146,7 @@ namespace Inventory.Models.ViewModels
 
         public int length { get; set; }
     }
+
     public class Employee_Search
     {
         public string sName { get; set; }
@@ -155,6 +161,7 @@ namespace Inventory.Models.ViewModels
         public int start { get; set; }
         public int length { get; set; }
     }
+
     public class Item_Search
     {
         public int? UsageTypeID { get; set; }
@@ -186,7 +193,7 @@ namespace Inventory.Models.ViewModels
 
     public class RestoreItemSearch
     {
-        public int? EmpID { get; set; }
+        public int? EmployeeID { get; set; }
 
         public int? GroupID { get; set; }
 
@@ -249,7 +256,7 @@ namespace Inventory.Models.ViewModels
         public int start { get; set; }
         public int length { get; set; }
     }
-    public class DisposableDistributionItemsSearch
+    public class ConsumeItemsSearch
     {
         public int? DepartmentID { get; set; }
 

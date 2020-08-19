@@ -142,20 +142,20 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Consume Form.
+        /// </summary>
+        internal static string add_consume_pc10 {
+            get {
+                return ResourceManager.GetString("add_consume_pc10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Country.
         /// </summary>
         internal static string add_country {
             get {
                 return ResourceManager.GetString("add_country", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Disposable Distribution Form.
-        /// </summary>
-        internal static string add_disposable_distribution {
-            get {
-                return ResourceManager.GetString("add_disposable_distribution", resourceCulture);
             }
         }
         
@@ -345,6 +345,15 @@ namespace Resources {
         internal static string BranchName {
             get {
                 return ResourceManager.GetString("BranchName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Branch Office.
+        /// </summary>
+        internal static string branch_office {
+            get {
+                return ResourceManager.GetString("branch_office", resourceCulture);
             }
         }
         
@@ -682,15 +691,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disposable Item Distribution Search.
-        /// </summary>
-        internal static string disposable_item_distribution_search {
-            get {
-                return ResourceManager.GetString("disposable_item_distribution_search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Distribution Ticket.
         /// </summary>
         internal static string DistributionTicket {
@@ -853,11 +853,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Disposable Distribution Form.
+        ///   Looks up a localized string similar to Edit Consumption Form PC-10.
         /// </summary>
-        internal static string edit_disposable_distribution {
+        internal static string edit_consume_pc10 {
             get {
-                return ResourceManager.GetString("edit_disposable_distribution", resourceCulture);
+                return ResourceManager.GetString("edit_consume_pc10", resourceCulture);
             }
         }
         
@@ -984,6 +984,15 @@ namespace Resources {
         internal static string enter_village_name {
             get {
                 return ResourceManager.GetString("enter_village_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error occured.
+        /// </summary>
+        internal static string error_occured {
+            get {
+                return ResourceManager.GetString("error_occured", resourceCulture);
             }
         }
         
@@ -1330,6 +1339,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Consumed Search.
+        /// </summary>
+        internal static string item_consumed_search {
+            get {
+                return ResourceManager.GetString("item_consumed_search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Group.
         /// </summary>
         internal static string Item_Group {
@@ -1510,11 +1528,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mem3Date.
+        ///   Looks up a localized string similar to Mem 3/2  Date.
         /// </summary>
-        internal static string Mem3Date {
+        internal static string Mem2or3Date {
             get {
-                return ResourceManager.GetString("Mem3Date", resourceCulture);
+                return ResourceManager.GetString("Mem2or3Date", resourceCulture);
             }
         }
         
@@ -1879,6 +1897,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select item.
+        /// </summary>
+        internal static string please_select_item {
+            get {
+                return ResourceManager.GetString("please_select_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Previous.
         /// </summary>
         internal static string Previous {
@@ -1947,6 +1974,15 @@ namespace Resources {
         internal static string Quantity {
             get {
                 return ResourceManager.GetString("Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity Consumed.
+        /// </summary>
+        internal static string quantity_consumed {
+            get {
+                return ResourceManager.GetString("quantity_consumed", resourceCulture);
             }
         }
         

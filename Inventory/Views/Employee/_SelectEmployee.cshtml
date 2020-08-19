@@ -1,0 +1,55 @@
+﻿@model Inventory.Models.ViewModels.Employee_Search
+
+<form id="employee_search_form" autocomplete="off" class="margin-top-10">
+    <section class="row">
+        <div class="col-md-6 form-group">
+            <label>@Labels.Name</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control input-sm" name="sName" value="@Model.sName" placeholder="@Labels.Name" id="sName" />
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <label>@Labels.FatherName</label>
+            <div class="col-md-8">
+                 <input type="text" class="form-control input-sm" name="sFatherName" value="@Model.sFatherName" placeholder="@Labels.FatherName" id="sFatherName" />
+            </div>
+        </div>
+    </section>
+    <section class="row">
+        <div class="col-md-6 form-group">
+            <label>@Labels.Occupation</label>
+            <div class="col-md-8">
+                <input type="text" name="sOccupation" id="sOccupation" value="@Model.sOccupation" class="form-control input-sm" data-msg="" placeholder="@Labels.Occupation">
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <label>@Labels.Department</label>
+            <div class="col-md-8">
+                @Html.DropDownList("sDepartmentID", ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control" })
+            </div>
+        </div>
+    </section>
+    <section class="row">
+        <div class="col-md-12 form-group" style="margin-left:10px; margin-right:10px;">
+            <button type="submit" class="btn btn-sm blue "><i class="fa fa-search"></i> @Labels.search</button>
+            <button type="reset" id="btnReset" class="btn btn-sm ">@Labels.reset</button>
+        </div>
+    </section>
+</form>
+
+<section class="row">
+    <div class="col-md-12" id="list_div" style="overflow:auto">
+        <table class="table table-striped table-hover table-condensed" id="employee_table">
+            <thead>
+                <tr>
+                    <th>@Labels.Name</th>
+                    <th>@Labels.FatherName</th>
+                    <th>@Labels.Occupation</th>
+                    <th>@Labels.Department</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</section>

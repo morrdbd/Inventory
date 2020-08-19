@@ -207,17 +207,17 @@ namespace Inventory.Controllers
         [HttpGet]
         public ActionResult Search()
         {
-            ViewBag.search = new Durable_StockIn_Search();
+            ViewBag.search = new StockIn_Form_Search();
             return View("Search");
         }
 
         [AccessControl("Search")]
-        public JsonResult ListPartial(Durable_StockIn_Search search)
+        public JsonResult ListPartial(StockIn_Form_Search search)
         {
             var StockInDateFrom = search.StockInDateFrom.ToDate(Language);
             var StockInDateTo = search.StockInDateTo.ToDate(Language);
-            var RequestDateFrom = search.RequestDateFrom.ToDate(Language);
-            var RequestDateTo = search.RequestDateTo.ToDate(Language);
+            var OrderDateFrom = search.OrderDateFrom.ToDate(Language);
+            var OrderDateTo = search.OrderDateTo.ToDate(Language);
             var _Receipts = db.StockIns.Where(t => t.IsActive == true).OrderByDescending(s => s.StockInDate).ToList();
             if(StockInDateFrom != null)
             {
@@ -227,13 +227,13 @@ namespace Inventory.Controllers
             {
                 _Receipts = _Receipts.Where(r => r.StockInDate <= StockInDateTo).ToList();
             }
-            if (RequestDateFrom != null)
+            if (OrderDateFrom != null)
             {
-                _Receipts = _Receipts.Where(r => r.OrderDate >= RequestDateFrom).ToList();
+                _Receipts = _Receipts.Where(r => r.OrderDate >= OrderDateFrom).ToList();
             }
-            if (RequestDateTo != null)
+            if (OrderDateTo != null)
             {
-                _Receipts = _Receipts.Where(r => r.OrderDate <= RequestDateTo).ToList();
+                _Receipts = _Receipts.Where(r => r.OrderDate <= OrderDateTo).ToList();
             }
             if (!string.IsNullOrWhiteSpace(search.ReportNumber))
             {

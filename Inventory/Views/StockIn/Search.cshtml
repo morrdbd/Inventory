@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = Labels.SearchReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var search = ViewBag.search as Inventory.Models.ViewModels.Durable_StockIn_Search;
+    var search = ViewBag.search as Inventory.Models.ViewModels.StockIn_Form_Search;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
     var _canView = _user.HasAccess("StockIn", "View");
     var _canPrint = _user.HasAccess("StockIn", "Print");
@@ -35,22 +35,22 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>@Labels.RequestNumber</label>
-                        <input type="number" class="form-control input-sm" name="RequestNumber" value="" placeholder="@Labels.RequestNumber" id="RequestNumber" />
+                        <label>@Labels.SuggestionBillNumber</label>
+                        <input type="number" class="form-control input-sm" name="OrderNumber" value="" placeholder="@Labels.SuggestionBillNumber" id="OrderNumber" />
                     </div>
                 </div>
                 <div class="col-md-8 form-group">
-                    <label>@Labels.RequestDate</label>
+                    <label>@Labels.Mem2or3Date</label>
                     <div class="input-group">
-                        <input type="text" class="form-control input-sm shpicker" name="RequestDateFrom" value="@search.RequestDateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
+                        <input type="text" class="form-control input-sm shpicker" name="OrderDateFrom" value="@search.OrderDateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
                         <span class="input-group-addon input-sm">@Labels.ToDate</span>
-                        <input type="text" class="form-control input-sm shpicker" name="RequestDateTo" value="@search.RequestDateTo" placeholder="@Labels.ToDate" data-rule-date="true" data-msg="" />
+                        <input type="text" class="form-control input-sm shpicker" name="OrderDateTo" value="@search.OrderDateTo" placeholder="@Labels.ToDate" data-rule-date="true" data-msg="" />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-8">
-                    <button type="submit" id="btnSearch" class="btn btn-sm"><i class="fa fa-search"></i> @Labels.search</button>
+                    <button type="submit" id="btnSearch" class="btn btn-sm btn-success"><i class="fa fa-search"></i> @Labels.search</button>
                     <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
                 </div>
                 <div class="col-md-2">
@@ -82,8 +82,8 @@
                     <th>@Labels.StockInDate</th>
                     <th>@Labels.Contractor_Name</th>
                     <th>@Labels.DeliveryPlace</th>
-                    <th>@Labels.OrderNumber</th>
-                    <th>@Labels.OrderDate</th>
+                    <th>@Labels.SuggestionBillNumber</th>
+                    <th>@Labels.Mem2or3Date</th>
                     <th>@Labels.Details</th>
                     <th></th>
                     <th></th>
@@ -185,7 +185,7 @@
                         data: null,
                         visible: canView,
                         render: function (row) {
-                            return '<a href="@Url.Action("View")/'+row.StockInID+'" title="@Labels.View" class="btn btn-xs blue"><i class="fa fa-eye"></i></a>';
+                            return '<a href="@Url.Action("View")/'+row.StockInID+'" title="@Labels.View" class="btn btn-xs blue"><i class="fa fa-eye"></i>@Labels.View_Form</a>';
                         }
                     }
                 ],
