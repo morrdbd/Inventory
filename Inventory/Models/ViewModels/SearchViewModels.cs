@@ -193,7 +193,7 @@ namespace Inventory.Models.ViewModels
 
     public class RestoreItemSearch
     {
-        public int? EmpID { get; set; }
+        public int? EmployeeID { get; set; }
 
         public int? GroupID { get; set; }
 

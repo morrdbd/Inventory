@@ -87,7 +87,7 @@ namespace Inventory.Controllers
                          join di in db.DistributionItems on d.DistributionID equals di.DistributionID
                          join s in db.StockInItems on di.StockInItemID equals s.StockInItemID
                          where di.IsReturned == false && d.IsActive == true && s.IsExpired == false
-                         && d.EmployeeID == search.EmpID
+                         && d.EmployeeID == search.EmployeeID
                          select new
                          {
                              s.BarCode,
@@ -109,7 +109,6 @@ namespace Inventory.Controllers
                              s.ItemCode,
                              di.DealWithAccount
                          });
-                //db.StockInItems.Where(i => i.IsActive == true && i.IsExpired == false).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(search.BarCode))
             {
@@ -153,18 +152,18 @@ namespace Inventory.Controllers
             }
             ViewBag.search = search;
             var items = query.ToList();
-            var data = items.Select(i => new RestoreItemVM
+            var data = items.Select(i => new DistributionItemVM
             {
-                RestoreItemID = i.DistributionItemID,
+                DistributionItemID = i.DistributionItemID,
                 StockInItemID = i.StockInItemID,
                 ItemName = i.ItemName,
                 BarCode = i.BarCode,
                 Quantity = i.Quantity,
                 UnitName = AdminRepo.LookupName(Language, i.UnitID),
-                GroupName = AdminRepo.LookupName(Language, i.GroupID),
-                CategoryName = AdminRepo.LookupName(Language, i.CategoryID),
-                SizeName = AdminRepo.LookupName(Language, i.SizeID),
-                OriginName = AdminRepo.LookupName(Language, i.OriginID),
+                ItemGroupName = AdminRepo.LookupName(Language, i.GroupID),
+                ItemCategoryName = AdminRepo.LookupName(Language, i.CategoryID),
+                ItemSizeName = AdminRepo.LookupName(Language, i.SizeID),
+                ItemOriginName = AdminRepo.LookupName(Language, i.OriginID),
                 BrandName = AdminRepo.LookupName(Language, i.BrandID),
                 UnitPrice = i.UnitPrice,
                 TotalPrice = i.Quantity * i.UnitPrice,
@@ -283,14 +282,18 @@ namespace Inventory.Controllers
                     if (model.RestoreItems != null)
                     {
                         foreach (var row in model.RestoreItems)
-                        {
+                        { 
                             var distributionObj = (from d in db.Distributions
                                                    join dItem in db.DistributionItems on d.DistributionID equals dItem.DistributionID
-                                                   where d.EmployeeID == _restore.EmployeeID && row.StockInItemID == dItem.StockInItemID select new {distributoinItemID = dItem.DistributionItemID, dItem.StockInItemID }).FirstOrDefault();
+                                                   where d.EmployeeID == _restore.EmployeeID && row.StockInItemID == dItem.StockInItemID
+                                                   select new {
+                                                       dItem.DistributionItemID,
+                                                       dItem.StockInItemID
+                                                   }).FirstOrDefault();
 
                             if (row != null && distributionObj != null)
                             {
-                                var distributionItem = db.DistributionItems.Find(distributionObj.distributoinItemID);
+                                var distributionItem = db.DistributionItems.Find(distributionObj.DistributionItemID);
                                 distributionItem.IsReturned = true;
                                 distributionItem.ReturnDate = DateTime.Now;
                                 var _item = new RestoreItem()

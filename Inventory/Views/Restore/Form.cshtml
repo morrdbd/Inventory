@@ -338,6 +338,7 @@
                     })
                 }
             })
+
             $('body').on('click', '#btn_add_item', function (e) {
                 e.preventDefault();
                 if($("#EmployeeID").val() == 0){
@@ -348,135 +349,128 @@
                 data_table.ajax.reload();
             })
 
-            $('#employee_search_form').submit(function (e, param) {
-                e.preventDefault();
-                Metronic.blockUI({
-                    target: '#list_div',
-                    animate: true
-                });
-
-            var data_table = $('#item_table').DataTable({
-                ajax: {
-                    url: '@Url.Action("EmployeeItemsList")',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: function (data) {
-                        var form_data = $('#item_search_form').serializeJSON();
-                        form_data['draw'] = data.draw;
-                        form_data['start'] = data.start;
-                        form_data['length'] = data.length;
-                        form_data['EmployeeID'] = $("#EmployeeID").val();
-                        return JSON.stringify(form_data);
+                var data_table = $('#item_table').DataTable({
+                    ajax: {
+                        url: '@Url.Action("EmployeeItemsList")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: function (data) {
+                            var form_data = $('#item_search_form').serializeJSON();
+                            form_data['draw'] = data.draw;
+                            form_data['start'] = data.start;
+                            form_data['length'] = data.length;
+                            form_data['EmployeeID'] = $("#EmployeeID").val();
+                            return JSON.stringify(form_data);
+                        },
                     },
-                },
-                columns: [
-                    { data: 'BarCode' },
-                    { data: 'Quantity' },
-                    { data: 'UnitName' },
-                    { data: 'GroupName' },
-                    { data: 'CategoryName' },
-                    { data: 'ItemName' },
-                    { data: 'ItemCode' },
-                    { data: 'SizeName' },
-                    { data: 'OriginName' },
-                    { data: 'BrandName' },
-                    { data: 'UnitPrice' },
-                    { data: 'TotalPrice' },
-                    {
-                        data: null,
-                        visible: true,
-                        render: function (row) {
-                            return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.RestoreItemID + '">@Labels.please_select</button>';
+                    columns: [
+                        { data: 'BarCode' },
+                        { data: 'Quantity' },
+                        { data: 'UnitName' },
+                        { data: 'ItemGroupName' },
+                        { data: 'ItemCategoryName' },
+                        { data: 'ItemName' },
+                        { data: 'ItemCode' },
+                        { data: 'ItemSizeName' },
+                        { data: 'ItemOriginName' },
+                        { data: 'BrandName' },
+                        { data: 'UnitPrice' },
+                        { data: 'TotalPrice' },
+                        {
+                            data: null,
+                            visible: true,
+                            render: function (row) {
+                                return '<button class="btn btn-xs btn-primary btn_select_item" data-id="' + row.DistributionItemID + '">@Labels.please_select</button>';
+                            }
                         }
-                    }
-                ],
-                searching: false,
-                bInfo: false,
-                bLengthChange: false,
-                ordering: false,
-                serverSide: true,
-                pageLength: 5,
-                //dom: 'Bfrtip',
-            });
-            //Remove from list of assign items
-            $("body").on("click", ".delete_item", function (e) {
-                e.preventDefault();
-                var index = $(this).data().index;
-                var tr = $(this);
-                bootbox.confirm("@Labels.are_you_sure", function (result) {
-                    if (result == true) {
-                        RestoreItems.splice(index,1);
-                        tr.closest('tr').remove();
-                    }
+                    ],
+                    searching: false,
+                    bInfo: false,
+                    bLengthChange: false,
+                    ordering: false,
+                    serverSide: true,
+                    pageLength: 5,
+                    //dom: 'Bfrtip',
+                });
+                //Remove from list of assign items
+                $("body").on("click", ".delete_item", function (e) {
+                    e.preventDefault();
+                    var index = $(this).data().index;
+                    var tr = $(this);
+                    bootbox.confirm("@Labels.are_you_sure", function (result) {
+                        if (result == true) {
+                            RestoreItems.splice(index,1);
+                            tr.closest('tr').remove();
+                        }
+                    })
                 })
-            })
-            $('#item_search_form').submit(function (e, param) {
-                e.preventDefault();
-                data_table.ajax.reload();
-            })
-            $('#btnResetItemSearch').click(function (e) {
-                e.preventDefault();
-                $('#item_search_form').clearForm();
-                data_table.ajax.reload();
-            })
-            $("body").on("click", ".btn_select_item", function (e) {
-                e.preventDefault();
-                var row = $(this).parent().parent();
-                if(!row.hasClass('selectedItem')){
-                    row.addClass('selectedItem')
-                        .siblings()
-                        .removeClass('selectedItem');
-                }
-                var id = $(this).data().id;
-                var isDuplicate = false;
-                RestoreItems.forEach(function(i){
-                    if(i.ID == id){
-                        isDuplicate = true;
+                $('#item_search_form').submit(function (e, param) {
+                    e.preventDefault();
+                    data_table.ajax.reload();
+                })
+                $('#btnResetItemSearch').click(function (e) {
+                    e.preventDefault();
+                    $('#item_search_form').clearForm();
+                    data_table.ajax.reload();
+                })
+                $("body").on("click", ".btn_select_item", function (e) {
+                    e.preventDefault();
+                    var row = $(this).parent().parent();
+                    if(!row.hasClass('selectedItem')){
+                        row.addClass('selectedItem')
+                            .siblings()
+                            .removeClass('selectedItem');
+                    }
+                    var id = $(this).data().id;
+                    var isDuplicate = false;
+                    RestoreItems.forEach(function(i){
+                        if(i.ID == id){
+                            isDuplicate = true;
+                            return;
+                        }
+                    })
+                    if(isDuplicate){
+                        toastr.error('@Labels.Item_already_exist');
                         return;
                     }
-                })
-                if(isDuplicate){
-                    toastr.error('@Labels.Item_already_exist');
-                    return;
-                }
-                Metronic.blockUI({
-                    target: '#item_list_div',
-                    animate: true
-                });
-                var url = '@Url.Action("SelectItem")/'+id;
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    contentType: 'application/json',
-                    success: function (response) {
-                        if(response){
-                            var _index = RestoreItems.length
-                            var tr = $('#temp_item').clone().html()
-                            .replace("{{BarCode}}", response.BarCode)
-                            .replace("{{UnitName}}", response.UnitName)
-                            .replace("{{Quantity}}", response.Quantity)
-                            .replace("{{GroupName}}", response.GroupName)
-                            .replace("{{CategoryName}}", response.CategoryName)
-                            .replace("{{ItemName}}", response.ItemName)
-                            .replace("{{ItemCode}}", response.ItemCode)
-                            .replace("{{SizeName}}", response.SizeName)
-                            .replace("{{OriginName}}", response.OriginName)
-                            .replace("{{BrandName}}", response.BrandName)
-                            .replace("{{UnitPrice}}", response.UnitPrice)
-                            .replace("{{TotalPrice}}", response.Quantity * response.UnitPrice)
-                            .replace("{{DealWithAccount}}", response.DealWithAccount)
-                            .replace("{{index}}", _index);
-                            //if (row.index == -1) {
+                    Metronic.blockUI({
+                        target: '#item_list_div',
+                        animate: true
+                    });
+                    var url = '@Url.Action("SelectItem")/'+id;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        success: function (response) {
+                            if(response){
+                                var _index = RestoreItems.length
+                                var tr = $('#temp_item').clone().html()
+                                .replace("{{BarCode}}", response.BarCode)
+                                .replace("{{UnitName}}", response.UnitName)
+                                .replace("{{Quantity}}", response.Quantity)
+                                .replace("{{GroupName}}", response.GroupName)
+                                .replace("{{CategoryName}}", response.CategoryName)
+                                .replace("{{ItemName}}", response.ItemName)
+                                .replace("{{ItemCode}}", response.ItemCode)
+                                .replace("{{SizeName}}", response.SizeName)
+                                .replace("{{OriginName}}", response.OriginName)
+                                .replace("{{BrandName}}", response.BrandName)
+                                .replace("{{UnitPrice}}", response.UnitPrice)
+                                .replace("{{TotalPrice}}", response.Quantity * response.UnitPrice)
+                                .replace("{{DealWithAccount}}", response.DealWithAccount)
+                                .replace("{{index}}", _index);
+                                //if (row.index == -1) {
 
-                            $('#tbody_item').append(tr);
-                            RestoreItems.push(response);
+                                $('#tbody_item').append(tr);
+                                RestoreItems.push(response);
+                            }
+                            Metronic.unblockUI('#item_list_div');
                         }
-                        Metronic.unblockUI('#item_list_div');
-                    }
+                    })
                 })
-            })
 
-    })
+            })
     </script>
     <script>
         function loadCategories(groupId,categoryId){
