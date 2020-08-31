@@ -829,7 +829,7 @@
     <value>تفصیلات</value>
   </data>
   <data name="DistributionTicket" xml:space="preserve">
-    <value>تکت توزیع تحویلخانه</value>
+    <value>تکت توزیع (ف س 5)</value>
   </data>
   <data name="DistributionTicketList" xml:space="preserve">
     <value>لیست تکت توزیع</value>
@@ -853,7 +853,7 @@
     <value>تاریج راپور</value>
   </data>
   <data name="ReceiptReport" xml:space="preserve">
-    <value>راپور رسیدات (فارم م7)</value>
+    <value>راپور رسیدات (فورمه م7)</value>
   </data>
   <data name="ReceiptReportInfo" xml:space="preserve">
     <value>معلومات راپور رسیدات</value>
@@ -991,7 +991,7 @@
     <value>ازدیاد فورمه صرفیه(ف س 10)</value>
   </data>
   <data name="add_restore_form" xml:space="preserve">
-    <value>فورمه ازدیاد اعاده</value>
+    <value>فورمه اعاده(ف س 8)</value>
   </data>
   <data name="Bar_Code" xml:space="preserve">
     <value>بار کود</value>
@@ -1008,7 +1008,7 @@
   <data name="FormInfo" xml:space="preserve">
     <value>معلومات فارم</value>
   </data>
-  <data name="ItemCodition" xml:space="preserve">
+  <data name="ItemCondition" xml:space="preserve">
     <value>وضیعت جنس</value>
   </data>
   <data name="ItemsTobeRestored" xml:space="preserve">
@@ -1091,5 +1091,11 @@
   </data>
   <data name="quantity_consumed" xml:space="preserve">
     <value>مقدار مصرف شده</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>داغمه</value>
+  </data>
+  <data name="Usable" xml:space="preserve">
+    <value>قابل استعمال</value>
   </data>
 </root>

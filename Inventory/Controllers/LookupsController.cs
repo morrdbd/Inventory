@@ -124,7 +124,7 @@ namespace Inventory.Controllers
             var Lookups_drp = db.LookupValues.Where(l=> l.IsActive == true && l.LookupCode == "UTYPE")
                 .OrderBy(x => Language == "prs" ? x.DrName : Language == "ps" ? x.PaName : x.EnName);
             ViewBag.LookupsUsageType_drp = new SelectList(Lookups_drp, "ValueId", TextField);
-            return View();
+            return View("Group");
         }
 
         [AccessControl("Search")]
@@ -204,6 +204,8 @@ namespace Inventory.Controllers
         //***************************Category*******************************************
         //******************************************************************************
 
+        [AccessControl("Search,Add,Edit")]
+        [HttpGet]
         public ActionResult Category()
         {
             ViewBag.search = new LookupCategorySearch();
@@ -353,7 +355,7 @@ namespace Inventory.Controllers
             var departments_drp = db.Departments.ToList()
                 .OrderBy(x => Language == "prs" ? x.DrName : Language == "ps" ? x.PaName : x.EnName);
             ViewBag.departments_drp = new SelectList(departments_drp, "DepartmentID", TextField);
-            return View();
+            return View("Department");
         }
 
         [AccessControl("Search")]
@@ -435,6 +437,118 @@ namespace Inventory.Controllers
         public JsonResult DeleteRestoreDepartment(int id = 0, bool value = false)
         {
             var row = db.Departments.Find(id);
+            if (row != null)
+            {
+                row.IsActive = value;
+                db.SaveChanges();
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        
+        //******************************************************************************
+        //***************************Mobile Car*******************************************
+        //******************************************************************************
+
+        [AccessControl("Search,Add,Edit")]
+        [HttpGet]
+        public ActionResult MobileCar()
+        {
+            ViewBag.search = new MobileCar_Search();
+            var carTypeList = AdminRepo.LookupValueList(Language, "CARTYPE");
+            ViewBag.CarTypeDrp = new SelectList(carTypeList, "ValueCode", TextField);
+
+            return View("MobileCar");
+        }
+
+        [AccessControl("Search")]
+        [HttpPost]
+        public JsonResult MobileCarListPartial(MobileCar_Search model)
+        {
+            var query = db.MobileCars.Select(d=> new
+                         {
+                             d.MobileCarID,
+                             d.CarType,
+                             d.NumberPlate,
+                             d.DriverName,
+                             d.DriverPhoneNo,
+                             d.IsActive
+                         }
+                          ).ToList();
+            if (!string.IsNullOrWhiteSpace(model.sCarType))
+            {
+                query = query.Where(l => l.CarType.Contains(model.sCarType)).ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(model.sNumberPlate))
+            {
+                query = query.Where(l => l.NumberPlate.Contains(model.sNumberPlate)).ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(model.sDriverName))
+            {
+                query = query.Where(l => l.DriverName.Contains(model.sDriverName)).ToList();
+            }
+            var records = query.OrderBy(x => x.CarType).ToList();
+            var data = records.Select(e => new
+            {
+                e.MobileCarID,
+                CarType = AdminRepo.LookupNameByVlueCode(Language, e.CarType),
+                e.NumberPlate,
+                e.DriverName,
+                e.DriverPhoneNo,
+                e.IsActive
+            }).ToList();
+
+            ViewBag.search = model;
+            return Json(new
+            {
+                data = data.Skip(model.start).Take(model.length).ToList(),
+                recordsTotal = data.Count(),
+                recordsFiltered = data.Count(),
+                draw = model.draw,
+            });
+        }
+
+        public JsonResult GetMobileCar(int id = 0)
+        {
+            var obj = db.MobileCars.Find(id);
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+
+        [AccessControl("Add,Edit")]
+        public JsonResult SaveMobileCar(MobileCar model)
+        {
+            if (!ModelState.IsValid)
+            {
+                LogModelErrors();
+                return Json(false);
+            }
+            try
+            {
+                if (model.MobileCarID == 0)
+                {
+                    model.IsActive = true;
+                    model.InsertedBy = AppUser.Id;
+                    model.InsertedDate = DateTime.Now;
+                    db.MobileCars.Add(model);
+                }
+                else
+                {
+                    db.Entry(model).State = EntityState.Modified;
+                    db.Entry(model).Property(x => x.IsActive).IsModified = false;
+                }
+                db.SaveChanges();
+                return Json(true);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+            }
+            return Json(false);
+        }
+
+        [AccessControl("Delete")]
+        public JsonResult DeleteRestoreMobileCar(int id = 0, bool value = false)
+        {
+            var row = db.MobileCars.Find(id);
             if (row != null)
             {
                 row.IsActive = value;

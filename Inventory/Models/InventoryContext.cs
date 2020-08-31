@@ -30,13 +30,15 @@ namespace Inventory.Models
 
         public DbSet<Department> Departments { get; set; }
 
-        public DbSet<Product> Products { get; set; }
-
         public DbSet<Employee> Employees { get; set; }
 
         public DbSet<Restore> Restores { get; set; }
 
         public DbSet<RestoreItem> RestoreItems { get; set; }
+
+        public DbSet<MobileCarTicket> MobileCarTickets { get; set; }
+
+        public DbSet<MobileCar> MobileCars { get; set; }
 
         public InventoryDBContext() : base("InventoryCONN")
         {

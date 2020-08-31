@@ -196,7 +196,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Restore.
+        ///   Looks up a localized string similar to Add Restore (ف س 8).
         /// </summary>
         internal static string add_restore_form {
             get {
@@ -691,7 +691,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Distribution Ticket.
+        ///   Looks up a localized string similar to Distribution Ticket (ف س 5).
         /// </summary>
         internal static string DistributionTicket {
             get {
@@ -1006,6 +1006,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expired.
+        /// </summary>
+        internal static string Expired {
+            get {
+                return ResourceManager.GetString("Expired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export.
         /// </summary>
         internal static string export {
@@ -1278,9 +1287,9 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Item Condition.
         /// </summary>
-        internal static string ItemCodition {
+        internal static string ItemCondition {
             get {
-                return ResourceManager.GetString("ItemCodition", resourceCulture);
+                return ResourceManager.GetString("ItemCondition", resourceCulture);
             }
         }
         
@@ -1996,7 +2005,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Receipt Report( M7 form).
+        ///   Looks up a localized string similar to Receipt Report( فورمه م 7).
         /// </summary>
         internal static string ReceiptReport {
             get {
@@ -2676,6 +2685,15 @@ namespace Resources {
         internal static string UnitPrice {
             get {
                 return ResourceManager.GetString("UnitPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usable.
+        /// </summary>
+        internal static string Usable {
+            get {
+                return ResourceManager.GetString("Usable", resourceCulture);
             }
         }
         

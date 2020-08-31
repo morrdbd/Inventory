@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Inventory.Models.ViewModels
 {
-    public class ReturnItemVM
+    public class DistributedItemVM
     {
 
         public int DistributionItemID { get; set; }

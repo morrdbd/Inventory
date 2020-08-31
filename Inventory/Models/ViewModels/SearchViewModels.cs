@@ -319,4 +319,34 @@ namespace Inventory.Models.ViewModels
         public int start { get; set; }
         public int length { get; set; }
     }
+
+    public class MobileCarTicket_Search
+    {
+        public int? sMobileCarTicketID { get; set; }
+        public int? sDepartmentID { get; set; }
+        public string sPersAssignedName { get; set; }
+        public string sPersAssignedOccupation { get; set; }
+        public string sVisitingPurpose { get; set; }
+        public string sVisitingPlace { get; set; }
+        public string DateFrom { get; set; }
+        public string DateTo { get; set; }
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
+
+    public class MobileCar_Search
+    {
+        public string sCarType { get; set; }
+        public string sNumberPlate { get; set; }
+        public string sDriverName { get; set; }
+        public int PageSize { get; set; }
+        public int? PageNo { get; set; }
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+    }
+
 }

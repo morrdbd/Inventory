@@ -83,11 +83,12 @@ namespace Inventory.Controllers
         [AccessControl("Search")]
         public JsonResult EmployeeItemsList(RestoreItemSearch search)
         {
+            var usableItemValueID = AdminRepo.ValueID("Reusable");
             var query = (from d in db.Distributions
                          join di in db.DistributionItems on d.DistributionID equals di.DistributionID
                          join s in db.StockInItems on di.StockInItemID equals s.StockInItemID
                          where di.IsReturned == false && d.IsActive == true && s.IsExpired == false
-                         && d.EmployeeID == search.EmployeeID
+                         && d.EmployeeID == search.EmployeeID && s.UsageTypeID == usableItemValueID
                          select new
                          {
                              s.BarCode,
@@ -107,9 +108,10 @@ namespace Inventory.Controllers
                              s.IsSecondHand,
                              s.SecondHandPrice,
                              s.ItemCode,
-                             di.DealWithAccount
+                             di.DealWithAccount,
+                             s.UsageTypeID
                          });
-
+            var test = query.ToList();
             if (!string.IsNullOrWhiteSpace(search.BarCode))
             {
                 query = query.Where(c => c.BarCode.Contains(search.BarCode));
@@ -181,62 +183,6 @@ namespace Inventory.Controllers
             });
         }
 
-        [AccessControl("Search")]
-        public JsonResult SelectItem(int id = 0)
-        {
-            try
-            {
-                var obj = (from d in db.Distributions
-                           join di in db.DistributionItems on d.DistributionID equals di.DistributionID
-                           join si in db.StockInItems on di.StockInItemID equals si.StockInItemID
-                           where di.DistributionItemID == id && d.IsActive == true && di.IsReturned == false &&
-                           si.IsActive == true && si.IsExpired == false
-                           select new
-                           {
-                               di.DistributionItemID,
-                               si.Quantity,
-                               si.StockInItemID,
-                               si.BarCode,
-                               si.ItemName,
-                               si.ItemCode,
-                               si.UnitPrice,
-                               di.DealWithAccount,
-                               si.UnitID,
-                               si.GroupID,
-                               si.CategoryID,
-                               si.SizeID,
-                               si.OriginID,
-                               si.BrandID,
-                           }).FirstOrDefault();
-                if (obj != null)
-                {
-                    var item = new
-                    {
-                        obj.DistributionItemID,
-                        obj.Quantity,
-                        obj.StockInItemID,
-                        obj.BarCode,
-                        obj.ItemName,
-                        obj.ItemCode,
-                        obj.UnitPrice,
-                        obj.DealWithAccount,
-                        UnitName = AdminRepo.LookupName(Language, obj.UnitID),
-                        GroupName = AdminRepo.LookupName(Language, obj.GroupID),
-                        CategoryName = AdminRepo.LookupName(Language, obj.CategoryID),
-                        SizeName = AdminRepo.LookupName(Language, obj.SizeID),
-                        OriginName = AdminRepo.LookupName(Language, obj.OriginID),
-                        BrandName = AdminRepo.LookupName(Language, obj.BrandID),
-                    };
-                    return Json(item, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception e)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-            }
-            return Json(false, JsonRequestBehavior.AllowGet);
-        }
-
         [HttpPost]
         [AccessControl("Add")]
         public JsonResult Insert(RestoreVM model)
@@ -258,7 +204,6 @@ namespace Inventory.Controllers
                         EmployeeID = model.EmployeeID,
                         DocumentIssuedNo = model.DocumentIssuedNo,
                         DocumentIssuedDate = _docIssucedDate,
-                        ItemInCondition = model.ItemInCondition,
                         Details = model.Details,
                         InsertedBy = AppUser.Id,
                         InsertedDate = DateTime.Now,
@@ -283,54 +228,49 @@ namespace Inventory.Controllers
                     {
                         foreach (var row in model.RestoreItems)
                         { 
-                            var distributionObj = (from d in db.Distributions
-                                                   join dItem in db.DistributionItems on d.DistributionID equals dItem.DistributionID
-                                                   where d.EmployeeID == _restore.EmployeeID && row.StockInItemID == dItem.StockInItemID
-                                                   select new {
-                                                       dItem.DistributionItemID,
-                                                       dItem.StockInItemID
-                                                   }).FirstOrDefault();
-
-                            if (row != null && distributionObj != null)
+                            var distributionItem = db.DistributionItems.Find(row.DistributionItemID);
+                            if (row == null || distributionItem == null)
                             {
-                                var distributionItem = db.DistributionItems.Find(distributionObj.DistributionItemID);
-                                distributionItem.IsReturned = true;
-                                distributionItem.ReturnDate = DateTime.Now;
-                                var _item = new RestoreItem()
-                                {
-                                    StockInItemID = row.StockInItemID,
-                                    RestoreID = _restore.RestoreID
-                                };
-                                db.RestoreItems.Add(_item);
-                                var stockinItem = db.StockInItems.Where(i => i.StockInItemID == row.StockInItemID).FirstOrDefault();
-                                if (model.ItemInCondition == "Usable")
-                                {
-                                    stockinItem.IsExpired = false;
-                                    stockinItem.IsSecondHand = true;
-                                    stockinItem.AvailableQuantity += 1;
-                                }
-                                else if (model.ItemInCondition == "Expired")
-                                {
-                                    stockinItem.IsExpired = true;
-                                    stockinItem.DateExpired = DateTime.Now;
-                                    stockinItem.IsSecondHand = true;
-                                }
-                                else
-                                {
-                                    return Json(false);
-                                }
-                                db.SaveChanges();
-                                db.ActivityLogs.Add(new ActivityLog
-                                {
-                                    ModifiedTable = "RestoreItems",
-                                    ModfiedId = row.RestoreItemID,
-                                    Action = "Insert",
-                                    UserId = AppUser.Id,
-                                    ModifiedTime = DateTime.Now,
-                                    ModifiedData = JsonConvert.SerializeObject(row),
-                                });
-                                db.SaveChanges();
+                                return Json(false);
                             }
+                            distributionItem.IsReturned = true;
+                            distributionItem.ReturnDate = DateTime.Now;
+                            var _item = new RestoreItem()
+                            {
+                                StockInItemID = row.StockInItemID,
+                                RestoreID = _restore.RestoreID,
+                                DistributionItemID = row.DistributionItemID,
+                                ItemInCondition = row.ItemInCondition
+                            };
+                            db.RestoreItems.Add(_item);
+                            var stockinItem = db.StockInItems.Where(i => i.StockInItemID == row.StockInItemID).FirstOrDefault();
+                            if (row.ItemInCondition == "Usable")
+                            {
+                                stockinItem.IsExpired = false;
+                                stockinItem.IsSecondHand = true;
+                                stockinItem.AvailableQuantity += row.Quantity;
+                            }
+                            else if (row.ItemInCondition == "Expired")
+                            {
+                                stockinItem.IsExpired = true;
+                                stockinItem.DateExpired = DateTime.Now;
+                                stockinItem.IsSecondHand = true;
+                            }
+                            else
+                            {
+                                return Json(false);
+                            }
+                            db.SaveChanges();
+                            db.ActivityLogs.Add(new ActivityLog
+                            {
+                                ModifiedTable = "RestoreItems",
+                                ModfiedId = _item.RestoreItemID,
+                                Action = "Insert",
+                                UserId = AppUser.Id,
+                                ModifiedTime = DateTime.Now,
+                                ModifiedData = JsonConvert.SerializeObject(row),
+                            });
+                            db.SaveChanges();
                         }
                     }
                     trans.Commit();
@@ -362,7 +302,6 @@ namespace Inventory.Controllers
                     if (_Restore == null) return Json(false);
                     _Restore.EmployeeID = model.EmployeeID;
                     _Restore.DocumentIssuedDate = model.DocumentIssuedDateForm.ToDate(Language);
-                    _Restore.ItemInCondition = model.ItemInCondition;
                     _Restore.Details = model.Details;
                     _Restore.IsActive = true;
                     _Restore.LastUpdatedBy = AppUser.Id;
@@ -381,7 +320,7 @@ namespace Inventory.Controllers
                     db.SaveChanges();
                     db.RestoreItems.Where(x => x.RestoreID == _Restore.RestoreID).ToList().ForEach(x =>
                     {
-                        var distributionItem = db.DistributionItems.Where(i => i.StockInItemID == x.StockInItemID).FirstOrDefault();
+                        var distributionItem = db.DistributionItems.Find(x.DistributionItemID);
                         if (distributionItem != null)
                         {
                             distributionItem.IsReturned = false;
@@ -405,19 +344,21 @@ namespace Inventory.Controllers
                                 distributionItem.ReturnDate = DateTime.Now;
                             }
                             var stockinItem = db.StockInItems.Where(i => i.StockInItemID == x.StockInItemID).FirstOrDefault();
-                            if (model.ItemInCondition == "Usable")
+                            if (x.ItemInCondition == "Usable")
                             {
                                 stockinItem.IsExpired = false;
                                 stockinItem.IsSecondHand = true;
-                                stockinItem.AvailableQuantity += 1;
-                            }else if (model.ItemInCondition == "Expired") {
+                                stockinItem.AvailableQuantity += x.Quantity;
+                            }else if (x.ItemInCondition == "Expired") {
                                 stockinItem.IsExpired = true;
                                 stockinItem.DateExpired = DateTime.Now;
                                 stockinItem.IsSecondHand = true;
                             }
                             var restoreItem = new RestoreItem() {
                                 RestoreID = _Restore.RestoreID,
-                                StockInItemID = x.StockInItemID
+                                StockInItemID = x.StockInItemID,
+                                DistributionItemID = x.DistributionItemID,
+                                ItemInCondition = x.ItemInCondition
                             };
 
                             db.RestoreItems.Add(restoreItem);
@@ -461,6 +402,71 @@ namespace Inventory.Controllers
             return View("View", model);
         }
 
+        [AccessControl("Search")]
+        public JsonResult GetItem(RestoredItemVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+                var _item = (from d in db.Distributions
+                             join dItem in db.DistributionItems on d.DistributionID equals dItem.DistributionID
+                             join s in db.StockInItems on dItem.StockInItemID equals s.StockInItemID
+                             where d.IsActive == true && model.DistributionItemID == dItem.DistributionItemID
+                             select new
+                             {
+                                // d.DistributionID,
+                                 s.StockInItemID,
+                                 s.BarCode,
+                                 s.ItemName,
+                                 s.ItemCode,
+                                 s.UnitPrice,
+                                 s.UsageTypeID,
+                                 s.UnitID,
+                                 s.GroupID,
+                                 s.CategoryID,
+                                 s.SizeID,
+                                 s.OriginID,
+                                 s.BrandID,
+                                 dItem.DistributionItemID,
+                                 dItem.Quantity,
+                                 dItem.QuantityConsumed,
+                                 dItem.DealWithAccount,
+                                 model.ItemInCondition
+                             }).FirstOrDefault();
+                    var itemToReturn = new
+                    {
+                        _item.StockInItemID,
+                        //_item.DistributionID,
+                         _item.Quantity,
+                        _item.QuantityConsumed,
+                        _item.DistributionItemID,
+                        _item.BarCode,
+                        _item.ItemName,
+                        _item.ItemCode,
+                        _item.UnitPrice,
+                        _item.UsageTypeID,
+                        UsageTypeName = AdminRepo.LookupName(Language, _item.UsageTypeID),
+                        UnitName = AdminRepo.LookupName(Language, _item.UnitID),
+                        GroupName = AdminRepo.LookupName(Language, _item.GroupID),
+                        CategoryName = AdminRepo.LookupName(Language, _item.CategoryID),
+                        SizeName = AdminRepo.LookupName(Language, _item.SizeID),
+                        OriginName = AdminRepo.LookupName(Language, _item.OriginID),
+                        BrandName = AdminRepo.LookupName(Language, _item.BrandID),
+                        _item.DealWithAccount,
+                        _item.ItemInCondition
+                    };
+                    return Json(itemToReturn, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+ 
         private RestoreVM CreateModel(Restore model)
         {
             var employee = db.Employees.Where(i => i.IsActive == true && i.EmployeeID == model.EmployeeID).FirstOrDefault();
@@ -475,7 +481,6 @@ namespace Inventory.Controllers
                 EmpOccupation = employee.Occupation,
                 EmpDepartmentName = db.Departments.Where(d=>d.DepartmentID == employee.DepartmentID)
                 .Select(d=> Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
-                ItemInCondition = AdminRepo.LookupNameByVlueCode(Language, model.ItemInCondition),
                 FilePath = model.FilePath,
                 Details = model.Details
             };
@@ -492,18 +497,18 @@ namespace Inventory.Controllers
                         RestoreItemID = item.RestoreItemID,
                         StockInItemID = item.StockInItemID,
                         BarCode = itemInStockIn.BarCode,
-                        RestoreID = restore.RestoreID,
                         ItemName = itemInStockIn.ItemName,
                         UnitName = AdminRepo.LookupName(Language, itemInStockIn.UnitID),
-                        GroupName = AdminRepo.LookupName(Language, itemInStockIn.GroupID),
-                        CategoryName = AdminRepo.LookupName(Language, itemInStockIn.CategoryID),
-                        SizeName = AdminRepo.LookupName(Language, itemInStockIn.SizeID),
-                        OriginName = AdminRepo.LookupName(Language, itemInStockIn.OriginID),
+                        ItemGroupName = AdminRepo.LookupName(Language, itemInStockIn.GroupID),
+                        ItemCategoryName = AdminRepo.LookupName(Language, itemInStockIn.CategoryID),
+                        ItemSizeName = AdminRepo.LookupName(Language, itemInStockIn.SizeID),
+                        ItemOriginName = AdminRepo.LookupName(Language, itemInStockIn.OriginID),
                         BrandName = AdminRepo.LookupName(Language, itemInStockIn.BrandID),
                         UnitPrice = itemInStockIn.UnitPrice,
                         Quantity = itemInStockIn.Quantity,
                         ItemCode = itemInStockIn.ItemCode,
-                        DealWithAccount = db.DistributionItems.Where(i=>i.StockInItemID == item.StockInItemID).Select(i=>i.DealWithAccount).FirstOrDefault()
+                        DealWithAccount = db.DistributionItems.Where(i=>i.StockInItemID == item.StockInItemID).Select(i=>i.DealWithAccount).FirstOrDefault(),
+                        ItemInCondition = AdminRepo.LookupNameByVlueCode(Language, item.ItemInCondition),
                     };
                     restore.RestoreItems.Add(restoreItem);
                 }
@@ -517,7 +522,6 @@ namespace Inventory.Controllers
         {
             var restoredDateFrom = model.DateFrom.ToDate(Language);
             var restoredDateTo = model.DateTo.ToDate(Language);
-            var test = db.Restores.ToList();
             var query = (from r in db.Restores
                          join rItem in db.RestoreItems on r.RestoreID equals rItem.RestoreID
                          join sItem in db.StockInItems on rItem.StockInItemID equals sItem.StockInItemID
@@ -531,8 +535,8 @@ namespace Inventory.Controllers
                              r.RestoreID,
                              RestoreDate = r.DocumentIssuedDate,
                              r.DocumentIssuedNo,
-                             r.ItemInCondition,
-                             RestoreItemID = rItem.RestoreItemID,
+                             rItem.ItemInCondition,
+                             rItem.RestoreItemID,
                              sItem.StockInItemID,
                              emp.DepartmentID,
                              r.EmployeeID,

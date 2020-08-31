@@ -263,6 +263,7 @@
     <Compile Include="Attributes\MyFilter.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\MobileCarTicketController.cs" />
     <Compile Include="Controllers\RestoreController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -281,6 +282,8 @@
     <Compile Include="Models\Procedures\Ticket_Item.cs" />
     <Compile Include="Models\Tables\Category.cs" />
     <Compile Include="Models\Tables\Group.cs" />
+    <Compile Include="Models\Tables\MobileCar.cs" />
+    <Compile Include="Models\Tables\MobileCarTicket.cs" />
     <Compile Include="Models\Tables\Restore.cs" />
     <Compile Include="Models\Tables\RestoreItem.cs" />
     <Compile Include="Models\Tables\Employee.cs" />
@@ -293,16 +296,15 @@
     <Compile Include="Models\ViewModels\ItemConsumedVM.cs" />
     <Compile Include="Models\ViewModels\LookupCategoryVM.cs" />
     <Compile Include="Models\ViewModels\PrintLabelVM.cs" />
+    <Compile Include="Models\ViewModels\RestoredItemVM.cs" />
     <Compile Include="Models\ViewModels\RestoreItemVM.cs" />
     <Compile Include="Models\ViewModels\RestoreVM.cs" />
     <Compile Include="Models\ViewModels\GetItemVM.cs" />
-    <Compile Include="Models\ViewModels\ReturnItemVM.cs" />
+    <Compile Include="Models\ViewModels\DistributedItemVM.cs" />
     <Compile Include="Models\ViewModels\DistributionItemVM.cs" />
     <Compile Include="Models\ViewModels\Distribution_Form_VM.cs" />
     <Compile Include="Models\ViewModels\StockInItemVM.cs" />
-    <Compile Include="Models\Tables\Product.cs" />
     <Compile Include="Models\Tables\Department.cs" />
-    <Compile Include="Models\Tables\InHandStock.cs" />
     <Compile Include="Models\Tables\Distribution.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InventoryContext.cs" />
@@ -2943,6 +2945,8 @@
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
     <Content Include="Views\Employee\_SelectEmployee.cshtml" />
+    <Content Include="Views\MobileCarTicket\Search.cshtml" />
+    <Content Include="Views\Lookups\MobileCar.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />

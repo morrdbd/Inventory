@@ -12,9 +12,17 @@ namespace Inventory.Models.Tables
         [Key]
         public int RestoreItemID { get; set; }
 
+        [Required]
         public int RestoreID { get; set; }
 
+        [Required]
         public int StockInItemID { get; set; }
+
+        [Required]
+        public int DistributionItemID { get; set; }
+
+        [Required]
+        public string ItemInCondition { get; set; }
 
     }
 }

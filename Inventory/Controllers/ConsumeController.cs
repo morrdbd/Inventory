@@ -85,7 +85,7 @@ namespace Inventory.Controllers
                 {
                     ConsumeItemID = i.ConsumeItemID,
                     StockInItemID = i.StockInItemID,
-                    DistributionID = i.DistributionID,
+                    DistributionItemID = i.DistributionItemID,
                     BarCode = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.BarCode).FirstOrDefault(),
                     ConsumeID = i.ConsumeID,
                     ItemCode = db.StockInItems.Where(item => item.IsActive == true && item.StockInItemID == i.StockInItemID).Select(item => item.ItemCode).FirstOrDefault(),
@@ -255,7 +255,7 @@ namespace Inventory.Controllers
                                     ConsumeID = _consume.ConsumeID,
                                     StockInItemID = row.StockInItemID,
                                     Quantity = row.Quantity,
-                                    DistributionID = row.DistributionID
+                                    DistributionItemID = row.DistributionItemID
                                 };
 
                                 db.ConsumesItems.Add(_item);
@@ -272,7 +272,7 @@ namespace Inventory.Controllers
                                 });
                                 db.SaveChanges();
                                 //minus item from item in hand
-                                var _distributionItem = db.DistributionItems.Where(s => s.StockInItemID == row.StockInItemID && s.DistributionID == row.DistributionID).FirstOrDefault();
+                                var _distributionItem = db.DistributionItems.Where(s => s.StockInItemID == row.StockInItemID && s.DistributionItemID == row.DistributionItemID).FirstOrDefault();
                                 if (_distributionItem.Quantity < (row.Quantity + _distributionItem.QuantityConsumed))
                                 {
                                     return Json(false);
@@ -357,7 +357,7 @@ namespace Inventory.Controllers
                     var consumedItems = db.ConsumesItems.Where(d => d.ConsumeID == _consume.ConsumeID).ToList();
                     foreach(var cItem in consumedItems)
                     {
-                        var _distributedItem = db.DistributionItems.Where(di=>di.DistributionID == cItem.DistributionID && di.StockInItemID == cItem.StockInItemID).FirstOrDefault();
+                        var _distributedItem = db.DistributionItems.Where(di=>di.DistributionItemID == cItem.DistributionItemID && di.StockInItemID == cItem.StockInItemID).FirstOrDefault();
                         if(_distributedItem != null)
                         {
                             _distributedItem.QuantityConsumed -= cItem.Quantity;
@@ -366,7 +366,7 @@ namespace Inventory.Controllers
                     }
                     foreach (var cItem in model.ConsumeItems)
                     {
-                        var distributedItem = db.DistributionItems.Where(di=>di.StockInItemID == cItem.StockInItemID && di.DistributionID == cItem.DistributionID).FirstOrDefault();
+                        var distributedItem = db.DistributionItems.Where(di=>di.StockInItemID == cItem.StockInItemID && di.DistributionItemID == cItem.DistributionItemID).FirstOrDefault();
                         if (distributedItem == null && distributedItem.Quantity < (distributedItem.QuantityConsumed + cItem.Quantity))
                         {
                             return Json(false);
@@ -377,7 +377,7 @@ namespace Inventory.Controllers
                             ConsumeID = _consume.ConsumeID,
                             Quantity = cItem.Quantity,
                             StockInItemID = cItem.StockInItemID,
-                            DistributionID = distributedItem.DistributionID
+                            DistributionItemID = distributedItem.DistributionItemID
                         };
                         db.ConsumesItems.Add(cItemTableObj);
                         
@@ -423,7 +423,7 @@ namespace Inventory.Controllers
                     var consumeItems = db.ConsumesItems.Where(d => d.ConsumeID == _consume.ConsumeID).ToList();
                     foreach (var cItem in consumeItems)
                     {
-                        var _distributedItem = db.DistributionItems.Where(di=>di.StockInItemID == cItem.StockInItemID && di.DistributionID == cItem.DistributionID).FirstOrDefault();
+                        var _distributedItem = db.DistributionItems.Where(di=>di.StockInItemID == cItem.StockInItemID && di.DistributionItemID == cItem.DistributionItemID).FirstOrDefault();
                         if (_distributedItem != null)
                         {
                             _distributedItem.QuantityConsumed -= cItem.Quantity;

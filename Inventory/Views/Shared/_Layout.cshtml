@@ -235,7 +235,7 @@
     <!-- BEGIN FOOTER -->
     <div class="page-footer">
         <div class="page-footer-inner">
-            2019 © @Labels.Inventory
+            <span id="CPRDate"></span> © @Labels.Inventory
         </div>
         <div class="scroll-to-top">
             <i class="icon-arrow-up"></i>
@@ -306,6 +306,10 @@
 
     <script src="~/Scripts/select2.full.js"></script>
     <script>
+        var date = new Date();
+        var y = date.getFullYear();
+        document.getElementById("CPRDate").innerHTML = y;
+        //$("CPRDate").
             @*User in select_emplyee js file*@
         var searchEmployeeUrl = '@Url.Action("SearchEmployee", "Employee")'
         var lblPleaseSelect = '@Labels.please_select';

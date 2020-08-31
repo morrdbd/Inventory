@@ -133,6 +133,7 @@ namespace Inventory.Controllers
             }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
+
         [HttpGet]
         public JsonResult loadDepartmentEmployee(int id = 0)
         {
@@ -195,7 +196,6 @@ namespace Inventory.Controllers
 
         private void CreateDropDown()
         {
-
             var departmentList = db.Departments.Where(d => d.IsActive == true).Select(d =>
                 new { d.DepartmentID, DepartmentName = Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName }).ToList();
             ViewBag.DepartmentDrp = new SelectList(departmentList, "DepartmentID", "DepartmentName");

@@ -28,8 +28,8 @@
         <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%;">
             <thead>
                 <tr>
-                    <th  style="text-align:right; border-right:none;">@Labels.PC5Form</th>
-                    <th  style="text-align:right; border-right:none;">@Labels.DistributionTicket</th>
+                    <th style="text-align:right; border-right:none;">@Labels.PC5Form</th>
+                    <th style="text-align:right; border-right:none;">@Labels.DistributionTicket</th>
                 </tr>
             </thead>
         </table>
@@ -47,7 +47,6 @@
                     <th style="text-align:right; word-wrap:normal;">@Model.TicketIssuedDateForm</th>
                     <th style="text-align:right; word-wrap:normal;">@Labels.RequestDate</th>
                     <th style="text-align:right; word-wrap:normal;">@Model.RequestDateForm</th>
-
                 </tr>
                 <tr>
                     <th style="text-align:right; word-wrap:normal; width:20%">@Labels.Warehouse </th>
@@ -55,8 +54,26 @@
                     <th style="text-align:right; word-wrap:normal;">@Labels.Requester</th>
                     <th style="text-align:right; word-wrap:normal;">@Model.EmpDepartmentName</th>
                 </tr>
-                </thead>
+            </thead>
         </table>
+        <p>@Labels.Requester_Information</p>
+        <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%;">
+            <thead>
+                <tr>
+                    <th style="text-align:right; word-wrap:normal;">@Labels.Name</th>
+                    <th style="text-align:right; word-wrap:normal;">@Labels.FatherName</th>
+                    <th style="text-align:right; word-wrap:normal;">@Labels.Department</th>
+                    <th style="text-align:right; word-wrap:normal;">@Labels.Occupation</th>
+                </tr>
+                <tr>
+                    <th style="text-align:right; word-wrap:normal;">@Model.EmpName</th>
+                    <th style="text-align:right; word-wrap:normal;">@Model.EmpFatherName</th>
+                    <th style="text-align:right; word-wrap:normal;">@Model.EmpDepartmentName</th>
+                    <th style="text-align:right; word-wrap:normal;">@Model.EmpOccupation</th>
+                </tr>
+            </thead>
+        </table>
+        
         <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%;">
                     <thead>
                         <tr>
@@ -102,14 +119,13 @@
                             index++;
 
                         }
-                            <tr>
-                                <td colspan="15" style="text-align:center; word-wrap:normal;">@Model.Details</td>
-                            </tr>
                         <tr>
-                            <th colspan="10" style="text-align:center;"> مجموع قیمت</th>
+                            <td colspan="15" style="text-align:center; word-wrap:normal;">@Model.Details</td>
+                        </tr>
+                        <tr>
+                            <th colspan="11" style="text-align:center;"> مجموع قیمت</th>
                             <th style="text-align:center;"> @Model.DistributionItems.Sum(i => i.UnitPrice * i.Quantity)</th>
                             <th style="text-align:center;">افغانی </th>
-                            <th style="text-align:center;">&nbsp;</th>
                             <th style="text-align:center;">&nbsp;</th>
                             <th style="text-align:center;">&nbsp;</th>
                         </tr>

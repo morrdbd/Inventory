@@ -12,7 +12,7 @@ namespace Inventory.Models.Tables
 
         public int ConsumeID { get; set; }
 
-        public int DistributionID { get; set; }
+        public int DistributionItemID { get; set; }
 
         public int Quantity { get; set; }
 

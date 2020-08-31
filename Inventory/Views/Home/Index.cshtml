@@ -161,7 +161,7 @@
             <div class="row">
                 <!-- BEGIN COPYRIGHT -->
                 <div class="col-md-6 col-sm-6 padding-top-10">
-                    2019 © Inventory
+                    <span id="CPRDate"></span> © @Labels.Inventory
                 </div>
                 <!-- END COPYRIGHT -->
                 <!-- BEGIN PAYMENTS -->
@@ -182,7 +182,11 @@
 
     @Scripts.Render("~/bundles/homejs")
     @Scripts.Render("~/bundles/highcharts")
-
+    <script>
+        var date = new Date();
+        var y = date.getFullYear();
+        document.getElementById("CPRDate").innerHTML = y;
+    </script>
     <!-- Charts JS -->
     <script type="text/javascript">
         var dashboard_url = "@Url.Action("Dashboard", "Home")";

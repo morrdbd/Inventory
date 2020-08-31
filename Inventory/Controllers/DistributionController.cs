@@ -856,7 +856,7 @@ namespace Inventory.Controllers
             {
                 return HttpNotFound();
             }
-            var model = new ReturnItemVM {
+            var model = new DistributedItemVM {
                 DistributionItemID = itemInUse.distributionItemID,
                 EmpDepartmentName = itemInUse.DepartmentName,
                 EmpName = itemInUse.EmployeeName,

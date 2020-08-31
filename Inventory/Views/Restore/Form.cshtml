@@ -58,10 +58,10 @@
                     <label>@Labels.IssueDate</label>
                     <input type="text" name="DocumentIssuedDateForm" id="DocumentIssuedDateForm" value="@Model.DocumentIssuedDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
                 </div>
-                <div class=" col-md-3 form-group">
+                @*<div class=" col-md-3 form-group">
                     <label>@Labels.ItemCodition</label>
                     @Html.DropDownList("ItemInCondition", ViewBag.ItemInConditionDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "ItemInCondition" })
-                </div>
+                </div>*@
                 <div class="col-md-3 form-group">
                     <label>@Labels.Attachment</label>
                     <input type="file" id="FileContent" name="FileContent" @(Model.RestoreID == 0 ? "required" : "") accept="image/*,.pdf" />
@@ -96,6 +96,7 @@
                         <th>@Labels.UnitPrice</th>
                         <th>@Labels.TotalPrice</th>
                         <th>@Labels.DealWithAccount</th>
+                        <th>@Labels.ItemCondition</th>
                         <th></th>
                         @* <th></th>*@
                     </tr>
@@ -108,19 +109,20 @@
                             <tr>
                                 <td>@item.UnitName</td>
                                 <td>@item.Quantity</td>
-                                <td>@item.GroupName</td>
-                                <td>@item.CategoryName</td>
+                                <td>@item.ItemGroupName</td>
+                                <td>@item.ItemCategoryName</td>
                                 <td>@item.ItemName</td>
                                 <td>@item.ItemCode</td>
-                                <td>@item.SizeName</td>
-                                <td>@item.OriginName</td>
+                                <td>@item.ItemSizeName</td>
+                                <td>@item.ItemOriginName</td>
                                 <td>@item.BrandName</td>
                                 <td>@item.UnitPrice</td>
                                 <td>@(item.UnitPrice * item.Quantity)</td>
                                 <td>@item.DealWithAccount</td>
+                                <td>@item.ItemInCondition</td>
                                 <td>
                                     @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>*@
-                                    <button data-toggle="modal" class="btn btn-xs btn-danger delete_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                                    <button data-toggle="modal" type="button" class="btn btn-xs btn-danger delete_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             index++;
@@ -242,6 +244,7 @@
                                     <th>@Labels.Brand</th>
                                     <th>@Labels.UnitPrice</th>
                                     <th>@Labels.TotalPrice</th>
+                                    <th>@Labels.DealWithAccount</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -249,6 +252,20 @@
                         </table>
                     </div>
                 </section>
+                <form id="add_item_form" action="@Url.Action("GetItem", "Restore")" autocomplete="off" class="margin-top-10">
+                    <section class="row" style="margin: 10px auto;">
+                        <div class=" col-md-3 form-group">
+                            <label>@Labels.ItemCondition</label>
+                            @Html.DropDownList("ItemInCondition", ViewBag.ItemInConditionDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "ItemInCondition", @required="required" })
+                        </div>
+                    </section>
+                    <div class="margin-right-10 margin-left-20 pull-right">
+                        <button type="submit" class="btn green btn-sm">@Labels.save</button>
+                        <button type="button" class="btn default btn-sm" data-dismiss="modal">@Labels.cancel</button>
+                        <button type="reset" id="btnResetModal" class="btn btn-sm">@Labels.reset</button>
+                        <input type="hidden" name="DistributionItemID" id="DistributionItemID" />
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
             </div>
@@ -265,7 +282,6 @@
             </div>
             <div class="portlet-body">
                 @{Html.RenderAction("SelectEmployee", "Employee");}
-
             </div>
         </div>
     </div>
@@ -288,8 +304,9 @@
             <td>{{UnitPrice}}</td>
             <td>{{TotalPrice}}</td>
             <td>{{DealWithAccount}}</td>
+            <td>{{ItemInCondition}}</td>
             <td>
-                <button data-toggle="modal" class="btn btn-xs btn-danger delete_item" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                <button data-toggle="modal" type="button" class="btn btn-xs btn-danger delete_item" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
                 @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="{{index}}"><i class="fa fa-edit"></i></a>
                     <a href="javascript:;" class="btn btn-xs btn-danger item_delete" data-index="{{index}}" data-title="@Labels.are_you_sure" data-btn-ok-label="@Labels.yes" data-btn-cancel-label="@Labels.no"><i class="fa fa-trash"></i></a>*@
             </td>
@@ -346,7 +363,84 @@
                     return;
                 }
                 $('#restore_item_modal').modal('show');
+                $('#add_item_form').clearForm();
                 data_table.ajax.reload();
+                $('#add_item_form [name=DistributionItemID]').val('0');
+                $('#add_item_form [name=index]').val('-1');
+
+            })
+            $('#add_item_form').validate({
+                submitHandler: function (form) {
+                    if($('#add_item_form [name=DistributionItemID]').val() == '0'){
+                        toastr.error('@Labels.please_select_item');
+                        return;
+                    }
+                    var data = $('#add_item_form').serializeJSON({
+                        parseAll: true,
+                        useIntKeysAsArrayIndex: true,
+                    });
+                    console.log($('#add_item_form').attr('action'));
+                    var formData = ObjectToFormData(data);
+                    //******************
+                    Metronic.blockUI({ animate: true });
+                    console.log("Inside the add item form >>>>>>>>>>>>>>>>>>>");
+                    $.ajax({
+                        url: $('#add_item_form').attr('action'),
+                        type: 'POST',
+                        data: formData,//$('#add_item_form').serialize()(),
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            console.log(response);
+                            if (response != false) {
+                                var isDuplicate = false;
+                                RestoreItems.forEach(function(i){
+                                    if(i.ID == response.ID){
+                                        isDuplicate = true;
+                                        return;
+                                    }
+                                })
+                                if(isDuplicate){
+                                    toastr.error('@Labels.Item_already_exist');
+                                    return;
+                                }
+                                var _index = RestoreItems.length
+                                var tr = $('#temp_item').clone().html()
+                                .replace("{{BarCode}}", response.BarCode)
+                                .replace("{{UnitName}}", response.UnitName)
+                                .replace("{{Quantity}}", response.Quantity)
+                                .replace("{{UsageTypeName}}", response.UsageTypeName)
+                                .replace("{{GroupName}}", response.GroupName)
+                                .replace("{{CategoryName}}", response.CategoryName)
+                                .replace("{{ItemName}}", response.ItemName)
+                                .replace("{{ItemCode}}", response.ItemCode ? response.ItemCode : '')
+                                .replace("{{SizeName}}", response.SizeName ? response.SizeName : '')
+                                .replace("{{OriginName}}", response.OriginName ? response.OriginName : '')
+                                .replace("{{BrandName}}", response.BrandName ? response.BrandName : '')
+                                .replace("{{UnitPrice}}", response.UnitPrice)
+                                .replace("{{TotalPrice}}", response.Quantity * response.UnitPrice)
+                                .replace("{{DealWithAccount}}", response.DealWithAccount)
+                                .replace("{{ItemInCondition}}", response.ItemInCondition == "Usable" ? "@Labels.Usable" : (response.ItemInCondition == "Expired" ? "@Labels.Expired" : undefined))
+                                .replace("{{index}}", _index);
+                                //if (row.index == -1) {
+
+                                $('#tbody_item').append(tr);
+                                $('#add_item_form').clearForm();
+                                $('#add_item_form input:first').focus();
+                                RestoreItems.push(response);
+                                $('#add_item_form [name=DistributionItemID]').val('0');
+                                //}
+
+                            } else {
+                                toastr.error('@Labels.check_available_quantity_try_again');
+                            }
+                        },
+                        complete: function () {
+                            Metronic.unblockUI();
+                            data_table.ajax.reload();
+                        }
+                    })
+                }
             })
 
                 var data_table = $('#item_table').DataTable({
@@ -376,6 +470,7 @@
                         { data: 'BrandName' },
                         { data: 'UnitPrice' },
                         { data: 'TotalPrice' },
+                        { data: 'DealWithAccount' },
                         {
                             data: null,
                             visible: true,
@@ -414,6 +509,17 @@
                     data_table.ajax.reload();
                 })
                 $("body").on("click", ".btn_select_item", function (e) {
+                    e.preventDefault();
+                    var row = $(this).parent().parent();
+                    if(!row.hasClass('selectedItem')){
+                        row.addClass('selectedItem')
+                            .siblings()
+                            .removeClass('selectedItem');
+                    }
+                    var id = $(this).data().id;
+                    $("#DistributionItemID").val(id);
+                })
+                @*$("body").on("click", ".btn_select_item", function (e) {
                     e.preventDefault();
                     var row = $(this).parent().parent();
                     if(!row.hasClass('selectedItem')){
@@ -468,7 +574,7 @@
                             Metronic.unblockUI('#item_list_div');
                         }
                     })
-                })
+                })*@
 
             })
     </script>

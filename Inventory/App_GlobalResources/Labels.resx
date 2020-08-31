@@ -769,7 +769,7 @@
     <value>Details</value>
   </data>
   <data name="DistributionTicket" xml:space="preserve">
-    <value>Distribution Ticket</value>
+    <value>Distribution Ticket (ف س 5)</value>
   </data>
   <data name="DistributionTicketList" xml:space="preserve">
     <value>Distribution Ticket List</value>
@@ -793,7 +793,7 @@
     <value>Receipt Date</value>
   </data>
   <data name="ReceiptReport" xml:space="preserve">
-    <value>Receipt Report( M7 form)</value>
+    <value>Receipt Report( فورمه م 7)</value>
   </data>
   <data name="ReceiptReportInfo" xml:space="preserve">
     <value>Receipt Report Information</value>
@@ -931,7 +931,7 @@
     <value>Add Consume Form</value>
   </data>
   <data name="add_restore_form" xml:space="preserve">
-    <value>Add Restore</value>
+    <value>Add Restore (ف س 8)</value>
   </data>
   <data name="Bar_Code" xml:space="preserve">
     <value>Bar Code</value>
@@ -948,7 +948,7 @@
   <data name="FormInfo" xml:space="preserve">
     <value>Form Information</value>
   </data>
-  <data name="ItemCodition" xml:space="preserve">
+  <data name="ItemCondition" xml:space="preserve">
     <value>Item Condition</value>
   </data>
   <data name="ItemsTobeRestored" xml:space="preserve">
@@ -1028,5 +1028,11 @@
   </data>
   <data name="quantity_consumed" xml:space="preserve">
     <value>Quantity Consumed</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="Usable" xml:space="preserve">
+    <value>Usable</value>
   </data>
 </root>

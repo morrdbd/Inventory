@@ -1,25 +1,24 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
+using System.Linq;
+using System.Web;
 
-namespace Inventory.Models
+namespace Inventory.Models.Tables
 {
-    public class Restore
+    public class MobileCar
     {
         [Key]
-        public int RestoreID { get; set; }
+        public int MobileCarID { get; set; }
 
-        public int EmployeeID { get; set; }
+        public string CarType { get; set; }
 
-        public int? DocumentIssuedNo { get; set; }
+        public string NumberPlate { get; set; }
 
-        public DateTime? DocumentIssuedDate { get; set; }
+        public string DriverName { get; set; }
 
-        public string Details { get; set; }
-
-        public string FilePath { get; set; }
+        public string DriverPhoneNo { get; set; }
 
         public bool IsActive { get; set; }
 

@@ -136,7 +136,7 @@
                                     <td>@(item.Quantity * item.UnitPrice)</td>
                                     <td>
                                         @*<a href="javascript:;" class="btn btn-xs btn-info item_edit" data-index="@index"><i class="fa fa-edit"></i></a>*@
-                                        <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                                        <button data-toggle="modal" type="button" class="btn btn-xs btn-danger delete_assign_item" data-index="@index" title="@Labels.delete"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 index++;
@@ -298,7 +298,7 @@
             <td>{{UnitPrice}}</td>
             <td>{{TotalPrice}}</td>
             <td>
-                <button data-toggle="modal" class="btn btn-xs btn-danger delete_assign_item" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
+                <button data-toggle="modal" type="button" class="btn btn-xs btn-danger delete_assign_item" data-index="{{index}}" title="@Labels.delete"><i class="fa fa-trash"></i></button>
             </td>
         </tr>
     </script>

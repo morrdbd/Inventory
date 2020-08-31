@@ -28,14 +28,12 @@
         <tr>
             <th>@Labels.issue_number</th>
             <th>@Labels.IssueDate</th>
-            <th>@Labels.ItemCodition</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>@Model.DocumentIssuedNo</td>
             <td>@Model.DocumentIssuedDateForm</td>
-            <td>@Model.ItemInCondition</td>
         </tr>
     </tbody>
 
@@ -77,6 +75,7 @@
             <th>@Labels.Brand</th>
             <td>@Labels.UnitPrice</td>
             <td>@Labels.DealWithAccount</td>
+            <td>@Labels.ItemCondition</td>
         </tr>
     </thead>
     <tbody>
@@ -89,21 +88,22 @@
                     <td>@item.BarCode</td>
                     <td>@item.Quantity</td>
                     <td>@item.UnitName</td>
-                    <td>@item.GroupName</td>
-                    <td>@item.CategoryName</td>
+                    <td>@item.ItemGroupName</td>
+                    <td>@item.ItemCategoryName</td>
                     <td>@item.ItemName</td>
                     <td>@item.ItemCode</td>
-                    <td>@item.SizeName</td>
-                    <td>@item.OriginName</td>
+                    <td>@item.ItemSizeName</td>
+                    <td>@item.ItemOriginName</td>
                     <td>@item.BrandName</td>
                     <td>@item.UnitPrice</td>
                     <td>@item.DealWithAccount</td>
+                    <td>@item.ItemInCondition</td>
                 </tr>
                 index++;
             }
         }
         <tr>
-            <td colspan="13">@Model.Details</td>
+            <td colspan="14" align="center">@Model.Details</td>
         </tr>
     </tbody>
 </table>

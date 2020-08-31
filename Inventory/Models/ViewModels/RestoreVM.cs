@@ -29,8 +29,6 @@ namespace Inventory.Models.ViewModels
 
         public string EmpDepartmentName { get; set; }
 
-        public string ItemInCondition { get; set; }
-
         public string Details { get; set; }
 
         public string FilePath { get; set; }
