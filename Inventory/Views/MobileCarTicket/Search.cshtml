@@ -9,12 +9,6 @@
     ViewBag.Title = "Mobile Car Ticket";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="margin-bottom-10">
-    @if (_user.HasAccess("MobileCarTicket", "Add"))
-    {
-        <a href="#popup_record" data-toggle="modal" class="btn blue btn-sm"><i class="fa fa-plus-circle"></i>@Labels.AddNewRecord</a>
-    }
-</div>
 
 <div class="portlet box blue-hoki margin-bottom-10">
     <div class="portlet-title">
@@ -86,7 +80,7 @@
                 </div>
                 <div class="col-md-5">
                     <button type="submit" class="btn btn-sm blue"><i class="fa fa-search"></i> @Labels.search</button>
-                    <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
+                    <button type="button" id="btnReset" class="btn btn-sm">@Labels.reset</button>
                 </div>
             </section>
         </form>
@@ -109,109 +103,29 @@
                     <th>@Labels.Department</th>
                     <th>Person Assigned Name</th>
                     <th>Person Assigned Occupation</th>
+                    <th>Email Address</th>
                     <th>Visiting Date</th>
-                    <th>Visiting Purpose</th>
                     <th>Visiting Place</th>
                     <th>Visiting Time</th>
+                    <th>Visiting Purpose</th>
+                    <th>Is Approved</th>
                     <th></th>
+                    @*<th></th>
                     <th></th>
+                    <th></th>*@
                 </tr>
             </thead>
         </table>
     </div>
 </div>
 
-<form id="record_form" action="@Url.Action("Save")" method="post" autocomplete="off">
-    <div class="modal fade" id="popup_record" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog" style="width:900px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    Mobile Car Ticket
-                </div>
-                <div class="modal-body">
-                    <section class="row">
-                        <div class=" col-md-6">
-                            <div class="form-group">
-                                <label>@Labels.Department</label>
-                                @Html.DropDownList("DepartmentID", ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "DepartmentID" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Person Assigned Name</label>
-                            <input type="text" name="PersAssignedName" id="PersAssignedName" class="form-control input-sm" required data-msg="" placeholder="">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Person Assigned Occupation</label>
-                            <input type="text" name="PersAssignedOccupation" id="PersAssignedOccupation" class="form-control input-sm" required data-msg="" placeholder="">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Visiting Date</label>
-                            <input type="text" name="VisitingDateForm" id="VisitingDateForm" value="@Model.VisitingDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
-                        </div>
-                    </section>
-                    <section class="row">
-                        <div class="col-md-6 form-group">
-                            <label>Visiting Place</label>
-                            <input type="text" name="VisitingPlace" id="VisitingPlace" class="form-control input-sm" required data-msg="" placeholder="">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Visiting Time</label>
-                            <input type="text" name="VisistingTime" id="VisistingTime" class="form-control input-sm shTimepicker_f" required data-msg="" placeholder="">
-                        </div>
-                    </section>
-                    <section class="row">
-                        <div class="col-md-12 form-group">
-                            <label>Visiting Purpose</label>
-                            <textarea type="text" name="VisitingPurpose" id="VisitingPurpose" class="form-control" required data-msg="" placeholder="Visiting Purpose"></textarea>
-                        </div>
-                    </section>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>
-                    <button type="button" class="btn btn-sm default" id="btn_cancel" data-dismiss="modal">@Labels.cancel</button>
-                    <input type="hidden" name="MobileCarTicketID" id="MobileCarTicketID" value="0" />
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
 @section scripts{
 <script>
     var model = @Html.Raw(Json.Encode(Model));
     $(function () {
-            $("#record_form").validate({
-                submitHandler: function () {
-                    $("#record_form").ajaxSubmit({
-                        beforeSubmit: function(){
-                            $('#btn_submit').button('loading');
-                        },
-                        success: function (response) {
-                            if (response != false) {
-                                toastr.success("@Labels.operation_done_suc");
-                                data_table.ajax.reload();
-                            } else {
-                                toastr.error("@Labels.unable_to_update");
-                            }
-                        },
-                        error: function(){
-                            toastr.error("@Labels.unable_to_update");
-                        },
-                        complete: function () {
-                            $('#popup_record').modal('hide');
-                            $('#btn_submit').button('reset');
-                           // $('#MobileCarTicketID').button(0);
-                        }
-                    })
-                }
-            })
 
         /////////////////////////SEARCH//////////////////////////////
             var canView = @Html.Raw(Json.Encode(_canView));
-            var canEdit = @Html.Raw(Json.Encode(_canEdit));
-            var canDelete = @Html.Raw(Json.Encode(_canDelete));
-            var canPrint = @Html.Raw(Json.Encode(_canPrint));
-
             $.fn.dataTable.ext.errMode = 'none';
             var data_table = $('#data_table').DataTable({
                 ajax: {
@@ -228,25 +142,29 @@
                 },
                 columns: [
                     { data: 'MobileCarTicketID' },
+                    { data: 'DepartmentName' },
                     { data: 'PersAssignedName' },
                     { data: 'PersAssignedOccupation' },
+                    { data: 'EmailAddress' },
                     { data: 'VisitingDate' },
                     { data: 'VisitingPlace' },
                     { data: 'VisistingTime' },
                     { data: 'VisitingPurpose' },
-                    { data: 'DepartmentName' },
                     {
                         data: null,
-                        visible: canEdit,
-                        render: function (row) {
-                            return '<a href="#popup_record" data-toggle="modal" class="btn btn-xs blue edit_row" data-id="' + row.MobileCarTicketID + '" ><i class="fa fa-edit"></i></a>';
+                        render: function(row){
+                            if(row.IsSecondHand){
+                                return '@Labels.yes';
+                            }else{
+                                return '@Labels.no';
+                            }
                         }
                     },
                     {
                         data: null,
-                        visible: canDelete,
+                        visible: canView,
                         render: function (row) {
-                            return '<button data-toggle="modal" class="btn btn-xs red delete_row" data-id="' + row.MobileCarTicketID + '"><i class="fa fa-trash"></i></button>';
+                            return '<a href="@Url.Action("View")/'+row.MobileCarTicketID+'" title="@Labels.View_Form" data-id="' + row.ConsumeID + '" class="btn btn-xs blue view-item"><i class="fa fa-eye"></i>@Labels.View_Form</a>';
                         }
                     }
                 ],
@@ -295,54 +213,11 @@
                 $('#search_form').clearForm();
                 data_table.ajax.reload();
             })
-            $('#btn_cancel').click(function (e) {
-                e.preventDefault();
-                $('#CurrentDistrict').empty();
-            })
 
             $('#drpLimit').change(function () {
                 data_table.page.len($(this).val()).draw();
             })
 
-            ////////////////////////////////////////////////////
-
-            $("body").on("click", ".edit_row", function (e) {
-                e.preventDefault();
-                var id = $(this).data().id;
-                var url = "@Url.Action("MobileCarTicketRecord")/" + id;
-                $.get(url, function (response) {
-                    if (response != false) {
-                        $("#record_form").find("input,select,hidden,textarea").each(function () {
-                            var name = $(this).attr("name");
-                            $(this).val(response[name]);
-                        })
-                    } else {
-                        toastr.error("@Labels.unable_to_update");
-                    }
-                })
-            })
-            $("body").on("click", ".delete_row", function (e) {
-                e.preventDefault();
-                var id = $(this).data().id;
-                var url = "@Url.Action("DeleteTicket")/" + id;
-                bootbox.confirm("@Labels.are_you_sure", function (result) {
-                    if (result == true) {
-                        $.get(url, function (response) {
-                            if (response == true) {
-                                toastr.success("@Labels.operation_done_suc");
-                                data_table.ajax.reload();
-                            }
-                        })
-                    }
-                })
-            })
-
-            $("#popup_record").on("hide.bs.modal", function (e) {
-                $("#record_form").clearForm();
-                $("#record_form").find("[name=EmployeeID]").val(0);
-            })
-            $("#popup_record").on('show.bs.modal', function () {
-            });
     })
 </script>
 }

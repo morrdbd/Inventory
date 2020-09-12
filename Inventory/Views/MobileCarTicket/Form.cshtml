@@ -1,0 +1,121 @@
+﻿@model Inventory.Models.Tables.MobileCarTicket
+
+@{
+    ViewBag.Title = "Mobile Car Ticket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
+}
+<form action="@Url.Action("Save")" id="main_form" autocomplete="off">
+    <input type="hidden" name="MobileCarTicketID" value="@Model.MobileCarTicketID" />
+    <div class="portlet box blue-hoki margin-bottom-10">
+        <div class="portlet-title">
+            <div class="caption">
+                @Labels.Requester_Information
+            </div>
+        </div>
+        <div class="portlet-body">
+            <section class="row">
+                <div class=" col-md-4">
+                    <div class="form-group">
+                        <label>@Labels.Department</label>
+                        @Html.DropDownList("DepartmentID", ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @Required = "Required", @ID = "DepartmentID" })
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Person Assigned Name</label>
+                    <input type="text" name="PersAssignedName" value="@Model.PersAssignedName" id="PersAssignedName" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Person Assigned Occupation</label>
+                    <input type="text" name="PersAssignedOccupation" value="@Model.PersAssignedOccupation" id="PersAssignedOccupation" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+            </section>
+            <section class="row">
+                <div class="col-md-4 form-group">
+                    <label>Email</label>
+                    <input type="text" name="EmailAddress" value="@Model.EmailAddress" id="EmailAddress" class="form-control input-sm" data-msg="" placeholder="">
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="portlet box blue-hoki margin-bottom-10">
+        <div class="portlet-title">
+            <div class="caption">
+                Visit Information
+            </div>
+        </div>
+        <div class="portlet-body">
+            <section class="row">
+                <div class="col-md-4 form-group">
+                    <label>Visiting Date</label>
+                    <input type="text" name="VisitingDateForm" id="VisitingDateForm" value="@Model.VisitingDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Visiting Place</label>
+                    <input type="text" name="VisitingPlace" value="@Model.VisitingPlace" id="VisitingPlace" class="form-control input-sm" required data-msg="" placeholder="">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Visiting Time</label>
+                    <input type="text" name="VisitingTime" value="@Model.VisitingTime" id="VisitingTime" class="form-control input-sm shTimepicker_f" required data-msg="" placeholder="">
+                </div>
+            </section>
+            <section class="row">
+                <div class="col-md-12 form-group">
+                    <label>Visiting Purpose</label>
+                    <textarea type="text" name="VisitingPurpose" rows="4" id="VisitingPurpose" class="form-control" required data-msg="" placeholder="Visiting Purpose">@Model.VisitingPurpose</textarea>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <section class="row">
+        <div class="col-md-5">
+            <button type="submit" class="btn btn-sm blue" id="btn_submit">@Labels.save</button>
+            <button type="button" class="btn btn-sm default" id="btn_cancel" data-dismiss="modal">@Labels.cancel</button>
+            <input type="hidden" name="MobileCarTicketID" id="MobileCarTicketID" value="0" />
+        </div>
+    </section>
+
+</form>
+
+
+@section scripts{
+<script>
+        $(function () {
+            // FORM VALIDATION AND SUBMISSION
+            $('#main_form').validate({
+                submitHandler: function (form) {
+                    var data = $('#main_form').serializeJSON({
+                        parseAll: true,
+                        useIntKeysAsArrayIndex: true,
+                    });
+                    var formData = ObjectToFormData(data);
+                    //******************
+                    Metronic.blockUI({ animate: true });
+                    $.ajax({
+                        url: $('#main_form').attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (recordId) {
+                            if (recordId != false) {
+                                bootbox.alert('@Labels.operation_done_suc', function () {
+                                    window.location.href = '@Url.Action("View")/' + recordId;
+                                })
+                            }
+                            else{
+                                toastr.error('@Labels.unable_to_update');
+                            }
+                        },
+                        complete: function () {
+                            Metronic.unblockUI();
+                        }
+                    })
+                }
+            })
+    })
+</script>
+}

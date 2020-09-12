@@ -1098,4 +1098,31 @@
   <data name="Usable" xml:space="preserve">
     <value>قابل استعمال</value>
   </data>
+  <data name="pending" xml:space="preserve">
+    <value>درحال تعلیق</value>
+  </data>
+  <data name="Email_Address" xml:space="preserve">
+    <value>ایمل ادرس</value>
+  </data>
+  <data name="Person_Assigned" xml:space="preserve">
+    <value>شخس توظیف شده</value>
+  </data>
+  <data name="Person_Assigned_Occupation" xml:space="preserve">
+    <value>وظیفه شخص توظیفه شده</value>
+  </data>
+  <data name="Requesting_Department" xml:space="preserve">
+    <value>اداره درخواست کننده</value>
+  </data>
+  <data name="Visisting_Date" xml:space="preserve">
+    <value>تاریخ اغاز وظیفه</value>
+  </data>
+  <data name="Visiting_Place" xml:space="preserve">
+    <value>محل سفر</value>
+  </data>
+  <data name="Visiting_Purpose" xml:space="preserve">
+    <value>هدف سفر</value>
+  </data>
+  <data name="Visiting_Time" xml:space="preserve">
+    <value>ساعت اغاز سفر</value>
+  </data>
 </root>

@@ -1035,4 +1035,31 @@
   <data name="Usable" xml:space="preserve">
     <value>Usable</value>
   </data>
+  <data name="pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Email_Address" xml:space="preserve">
+    <value>Email Address</value>
+  </data>
+  <data name="Person_Assigned" xml:space="preserve">
+    <value>Persion Assigned</value>
+  </data>
+  <data name="Person_Assigned_Occupation" xml:space="preserve">
+    <value>Person Assigned Occupation</value>
+  </data>
+  <data name="Requesting_Department" xml:space="preserve">
+    <value>Requesting Department</value>
+  </data>
+  <data name="Visisting_Date" xml:space="preserve">
+    <value>Visiting Date</value>
+  </data>
+  <data name="Visiting_Place" xml:space="preserve">
+    <value>Visiting Place</value>
+  </data>
+  <data name="Visiting_Purpose" xml:space="preserve">
+    <value>Visisting Purpose</value>
+  </data>
+  <data name="Visiting_Time" xml:space="preserve">
+    <value>Visiting Time</value>
+  </data>
 </root>

@@ -20,8 +20,8 @@ namespace Inventory.Controllers
     {
         InventoryDBContext db = new InventoryDBContext();
         AdminRepository AdminRepo = new AdminRepository();
-        [AccessControl("Add")]
 
+        [AccessControl("Add")]
         public ActionResult Add()
         {
             CreateDropDown();

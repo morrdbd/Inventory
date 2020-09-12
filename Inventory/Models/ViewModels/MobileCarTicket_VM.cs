@@ -5,14 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace Inventory.Models.Tables
+namespace Inventory.Models.ViewModels
 {
-    public class MobileCarTicket
+    public class MobileCarTicket_VM
     {
-        [Key]
         public int MobileCarTicketID { get; set; }
 
         public int DepartmentID { get; set; }
+
+        public string DepartmentName { get; set; }
 
         public string PersAssignedName { get; set; }
 
@@ -20,10 +21,7 @@ namespace Inventory.Models.Tables
 
         public string EmailAddress { get; set; }
 
-        [NotMapped]
-        public string VisitingDateForm { get; set; }
-
-        public DateTime? VisitingDate { get; set; }
+        public string VisitingDate { get; set; }
 
         public string VisitingPurpose { get; set; }
 
@@ -34,6 +32,14 @@ namespace Inventory.Models.Tables
         public bool? IsApproved { get; set; }
 
         public int? MobileCarID { get; set; }
+
+        public string NumberPlate { get; set; }
+
+        public string CarType { get; set; }
+
+        public string DriverName { get; set; }
+
+        public string DriverPhoneNo { get; set; }
 
         public double? Startkm { get; set; }
 
@@ -50,6 +56,5 @@ namespace Inventory.Models.Tables
 
         [Column(TypeName = "date")]
         public DateTime? LastUpdatedDate { get; set; }
-
     }
 }

@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-md-5">
                     <button type="submit" class="btn btn-sm blue"><i class="fa fa-search"></i> @Labels.search</button>
-                    <button type="submit" id="btnReset" class="btn btn-sm">@Labels.reset</button>
+                    <button type="button" id="btnReset" class="btn btn-sm">@Labels.reset</button>
                 </div>
             </section>
         </form>
@@ -250,6 +250,12 @@
             })
             $('#search_form').submit(function (e, param) {
                 e.preventDefault();
+                data_table.ajax.reload();
+            })
+            $('#btnReset').click(function (e) {
+                e.preventDefault();
+                console.log("button reset clicked>>>>>>>>>>>>");
+                $('#search_form').clearForm();
                 data_table.ajax.reload();
             })
 

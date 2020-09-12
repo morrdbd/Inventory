@@ -136,6 +136,9 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -278,6 +281,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HelperCode\AllowFileSizeAttribute.cs" />
+    <Compile Include="HelperCode\EmailHelper.cs" />
     <Compile Include="Models\Procedures\Receipt_Report_Item.cs" />
     <Compile Include="Models\Procedures\Ticket_Item.cs" />
     <Compile Include="Models\Tables\Category.cs" />
@@ -291,11 +295,14 @@
     <Compile Include="Models\Tables\ConsumeItem.cs" />
     <Compile Include="Models\Tables\StockIn.cs" />
     <Compile Include="Models\Tables\StockInItem.cs" />
+    <Compile Include="Models\ViewModels\AssignCar.cs" />
     <Compile Include="Models\ViewModels\ConsumeItemVM.cs" />
     <Compile Include="Models\ViewModels\ConsumeVM.cs" />
     <Compile Include="Models\ViewModels\ItemConsumedVM.cs" />
     <Compile Include="Models\ViewModels\LookupCategoryVM.cs" />
+    <Compile Include="Models\ViewModels\MobileCarTicket_VM.cs" />
     <Compile Include="Models\ViewModels\PrintLabelVM.cs" />
+    <Compile Include="Models\ViewModels\RecordEndkm.cs" />
     <Compile Include="Models\ViewModels\RestoredItemVM.cs" />
     <Compile Include="Models\ViewModels\RestoreItemVM.cs" />
     <Compile Include="Models\ViewModels\RestoreVM.cs" />
@@ -2947,6 +2954,10 @@
     <Content Include="Views\Employee\_SelectEmployee.cshtml" />
     <Content Include="Views\MobileCarTicket\Search.cshtml" />
     <Content Include="Views\Lookups\MobileCar.cshtml" />
+    <Content Include="Views\MobileCarTicket\View.cshtml" />
+    <Content Include="Views\MobileCarTicket\Form.cshtml" />
+    <Content Include="Views\MobileCarTicket\_ApprovedEmailBody.cshtml" />
+    <Content Include="Views\Emails\MobileCarTicket.html" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />

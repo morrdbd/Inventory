@@ -1113,4 +1113,31 @@
   <data name="Usable" xml:space="preserve">
     <value>قابل استعمال</value>
   </data>
+  <data name="pending" xml:space="preserve">
+    <value>تعلیق حالت</value>
+  </data>
+  <data name="Email_Address" xml:space="preserve">
+    <value>ایمل ادرس</value>
+  </data>
+  <data name="Person_Assigned" xml:space="preserve">
+    <value>گمارل شوی شخص</value>
+  </data>
+  <data name="Person_Assigned_Occupation" xml:space="preserve">
+    <value>ګمارل شوی شخص وظیفه</value>
+  </data>
+  <data name="Requesting_Department" xml:space="preserve">
+    <value>غوښتونکی اداره</value>
+  </data>
+  <data name="Visisting_Date" xml:space="preserve">
+    <value>دندی شروع نیټه</value>
+  </data>
+  <data name="Visiting_Place" xml:space="preserve">
+    <value>د سفر ځای</value>
+  </data>
+  <data name="Visiting_Purpose" xml:space="preserve">
+    <value>د سفر موخه</value>
+  </data>
+  <data name="Visiting_Time" xml:space="preserve">
+    <value>د سفر شروع وخت</value>
+  </data>
 </root>

@@ -871,6 +871,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email Address.
+        /// </summary>
+        internal static string Email_Address {
+            get {
+                return ResourceManager.GetString("Email_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Employee.
         /// </summary>
         internal static string Employee {
@@ -1861,6 +1870,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        internal static string pending {
+            get {
+                return ResourceManager.GetString("pending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persion Assigned.
+        /// </summary>
+        internal static string Person_Assigned {
+            get {
+                return ResourceManager.GetString("Person_Assigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Person Assigned Occupation.
+        /// </summary>
+        internal static string Person_Assigned_Occupation {
+            get {
+                return ResourceManager.GetString("Person_Assigned_Occupation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         internal static string PhoneNumber {
@@ -2154,6 +2190,15 @@ namespace Resources {
         internal static string Requester_Information {
             get {
                 return ResourceManager.GetString("Requester_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requesting Department.
+        /// </summary>
+        internal static string Requesting_Department {
+            get {
+                return ResourceManager.GetString("Requesting_Department", resourceCulture);
             }
         }
         
@@ -2793,6 +2838,42 @@ namespace Resources {
         internal static string View_Form {
             get {
                 return ResourceManager.GetString("View_Form", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visiting Date.
+        /// </summary>
+        internal static string Visisting_Date {
+            get {
+                return ResourceManager.GetString("Visisting_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visiting Place.
+        /// </summary>
+        internal static string Visiting_Place {
+            get {
+                return ResourceManager.GetString("Visiting_Place", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visisting Purpose.
+        /// </summary>
+        internal static string Visiting_Purpose {
+            get {
+                return ResourceManager.GetString("Visiting_Purpose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visiting Time.
+        /// </summary>
+        internal static string Visiting_Time {
+            get {
+                return ResourceManager.GetString("Visiting_Time", resourceCulture);
             }
         }
         
