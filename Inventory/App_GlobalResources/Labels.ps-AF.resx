@@ -1128,7 +1128,7 @@
   <data name="Requesting_Department" xml:space="preserve">
     <value>غوښتونکی اداره</value>
   </data>
-  <data name="Visisting_Date" xml:space="preserve">
+  <data name="Visiting_Date" xml:space="preserve">
     <value>دندی شروع نیټه</value>
   </data>
   <data name="Visiting_Place" xml:space="preserve">
@@ -1139,5 +1139,74 @@
   </data>
   <data name="Visiting_Time" xml:space="preserve">
     <value>د سفر شروع وخت</value>
+  </data>
+  <data name="Add_Mobile_Car" xml:space="preserve">
+    <value>د سیار موټر اضافه کول</value>
+  </data>
+  <data name="Add_Visit_End_km" xml:space="preserve">
+    <value>در سفر د ختم کیلو متر اضافه کول</value>
+  </data>
+  <data name="Administrative_Directorate" xml:space="preserve">
+    <value>اداری ریاست</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>تائید</value>
+  </data>
+  <data name="Approve_Request" xml:space="preserve">
+    <value>درخواست تائید</value>
+  </data>
+  <data name="Assign_Car" xml:space="preserve">
+    <value>موټر ګمار</value>
+  </data>
+  <data name="Car_Number_Plate" xml:space="preserve">
+    <value>موټر نمبر پلیټ</value>
+  </data>
+  <data name="Car_Type" xml:space="preserve">
+    <value>موټر ډول</value>
+  </data>
+  <data name="Current_km" xml:space="preserve">
+    <value>اوسنی کیلومتر</value>
+  </data>
+  <data name="Driver_Name" xml:space="preserve">
+    <value>دریور نوم</value>
+  </data>
+  <data name="Driver_Phone_Number" xml:space="preserve">
+    <value>موتروان نمبر</value>
+  </data>
+  <data name="Is_Approved" xml:space="preserve">
+    <value>ایا تائید شده</value>
+  </data>
+  <data name="Mobile_Car" xml:space="preserve">
+    <value>سیار موټر</value>
+  </data>
+  <data name="Mobile_Cars" xml:space="preserve">
+    <value>سیار موټرونه</value>
+  </data>
+  <data name="Mobile_Car_Exit_Ticket" xml:space="preserve">
+    <value>د سیارو موټرو خروجی ټکټ</value>
+  </data>
+  <data name="Mobile_Car_Ticket" xml:space="preserve">
+    <value>سیار موتر تکت</value>
+  </data>
+  <data name="Person_Assigned_Name" xml:space="preserve">
+    <value>ګمارل شوی کس</value>
+  </data>
+  <data name="Record_End_km" xml:space="preserve">
+    <value>د سفر د ختم کیلو متر اضافه کول</value>
+  </data>
+  <data name="Reject_Request" xml:space="preserve">
+    <value>رد درخواست</value>
+  </data>
+  <data name="Ticket_ID" xml:space="preserve">
+    <value>ای دی تکت</value>
+  </data>
+  <data name="Visit_End_km" xml:space="preserve">
+    <value>ختم کیلو متر</value>
+  </data>
+  <data name="Visit_Information" xml:space="preserve">
+    <value>سفر معلومات</value>
+  </data>
+  <data name="Visit_Start_km" xml:space="preserve">
+    <value>شروع کیلو متر</value>
   </data>
 </root>

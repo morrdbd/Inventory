@@ -19,8 +19,6 @@ namespace Inventory.Models.ViewModels
 
         public string PersAssignedOccupation { get; set; }
 
-        public string EmailAddress { get; set; }
-
         public string VisitingDate { get; set; }
 
         public string VisitingPurpose { get; set; }

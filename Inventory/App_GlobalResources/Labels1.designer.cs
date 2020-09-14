@@ -187,6 +187,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Mobile Car.
+        /// </summary>
+        internal static string Add_Mobile_Car {
+            get {
+                return ResourceManager.GetString("Add_Mobile_Car", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Province.
         /// </summary>
         internal static string add_province {
@@ -223,6 +232,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Visit End kilometre.
+        /// </summary>
+        internal static string Add_Visit_End_km {
+            get {
+                return ResourceManager.GetString("Add_Visit_End_km", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Administrator.
         /// </summary>
         internal static string ADMIN {
@@ -237,6 +255,15 @@ namespace Resources {
         internal static string administration {
             get {
                 return ResourceManager.GetString("administration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Administrative Directorate.
+        /// </summary>
+        internal static string Administrative_Directorate {
+            get {
+                return ResourceManager.GetString("Administrative_Directorate", resourceCulture);
             }
         }
         
@@ -268,11 +295,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Approve.
+        /// </summary>
+        internal static string Approve {
+            get {
+                return ResourceManager.GetString("Approve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approve Request.
+        /// </summary>
+        internal static string Approve_Request {
+            get {
+                return ResourceManager.GetString("Approve_Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure?.
         /// </summary>
         internal static string are_you_sure {
             get {
                 return ResourceManager.GetString("are_you_sure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assign Car.
+        /// </summary>
+        internal static string Assign_Car {
+            get {
+                return ResourceManager.GetString("Assign_Car", resourceCulture);
             }
         }
         
@@ -381,6 +435,24 @@ namespace Resources {
         internal static string cancel {
             get {
                 return ResourceManager.GetString("cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Car Number Plate.
+        /// </summary>
+        internal static string Car_Number_Plate {
+            get {
+                return ResourceManager.GetString("Car_Number_Plate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Car Type.
+        /// </summary>
+        internal static string Car_Type {
+            get {
+                return ResourceManager.GetString("Car_Type", resourceCulture);
             }
         }
         
@@ -534,6 +606,15 @@ namespace Resources {
         internal static string CurrentProvince {
             get {
                 return ResourceManager.GetString("CurrentProvince", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Kilometre.
+        /// </summary>
+        internal static string Current_km {
+            get {
+                return ResourceManager.GetString("Current_km", resourceCulture);
             }
         }
         
@@ -804,6 +885,24 @@ namespace Resources {
         internal static string Download {
             get {
                 return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Driver Name.
+        /// </summary>
+        internal static string Driver_Name {
+            get {
+                return ResourceManager.GetString("Driver_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Driver Phone Number.
+        /// </summary>
+        internal static string Driver_Phone_Number {
+            get {
+                return ResourceManager.GetString("Driver_Phone_Number", resourceCulture);
             }
         }
         
@@ -1276,6 +1375,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Approved.
+        /// </summary>
+        internal static string Is_Approved {
+            get {
+                return ResourceManager.GetString("Is_Approved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Expired.
         /// </summary>
         internal static string is_expired {
@@ -1569,6 +1677,42 @@ namespace Resources {
         internal static string Minister {
             get {
                 return ResourceManager.GetString("Minister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Car.
+        /// </summary>
+        internal static string Mobile_Car {
+            get {
+                return ResourceManager.GetString("Mobile_Car", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Cars.
+        /// </summary>
+        internal static string Mobile_Cars {
+            get {
+                return ResourceManager.GetString("Mobile_Cars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Car Exit Ticket.
+        /// </summary>
+        internal static string Mobile_Car_Exit_Ticket {
+            get {
+                return ResourceManager.GetString("Mobile_Car_Exit_Ticket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Car Ticket.
+        /// </summary>
+        internal static string Mobile_Car_Ticket {
+            get {
+                return ResourceManager.GetString("Mobile_Car_Ticket", resourceCulture);
             }
         }
         
@@ -1888,6 +2032,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Person Assigned Name.
+        /// </summary>
+        internal static string Person_Assigned_Name {
+            get {
+                return ResourceManager.GetString("Person_Assigned_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Person Assigned Occupation.
         /// </summary>
         internal static string Person_Assigned_Occupation {
@@ -2095,6 +2248,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Record End Kilometre.
+        /// </summary>
+        internal static string Record_End_km {
+            get {
+                return ResourceManager.GetString("Record_End_km", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registration Type.
         /// </summary>
         internal static string RegistrationType {
@@ -2109,6 +2271,15 @@ namespace Resources {
         internal static string registration_info {
             get {
                 return ResourceManager.GetString("registration_info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reject Request.
+        /// </summary>
+        internal static string Reject_Request {
+            get {
+                return ResourceManager.GetString("Reject_Request", resourceCulture);
             }
         }
         
@@ -2635,6 +2806,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ticket ID.
+        /// </summary>
+        internal static string Ticket_ID {
+            get {
+                return ResourceManager.GetString("Ticket_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To Date.
         /// </summary>
         internal static string ToDate {
@@ -2844,9 +3024,9 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Visiting Date.
         /// </summary>
-        internal static string Visisting_Date {
+        internal static string Visiting_Date {
             get {
-                return ResourceManager.GetString("Visisting_Date", resourceCulture);
+                return ResourceManager.GetString("Visiting_Date", resourceCulture);
             }
         }
         
@@ -2874,6 +3054,33 @@ namespace Resources {
         internal static string Visiting_Time {
             get {
                 return ResourceManager.GetString("Visiting_Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visit End Kilometre.
+        /// </summary>
+        internal static string Visit_End_km {
+            get {
+                return ResourceManager.GetString("Visit_End_km", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visit Information.
+        /// </summary>
+        internal static string Visit_Information {
+            get {
+                return ResourceManager.GetString("Visit_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visit Start Kilometre.
+        /// </summary>
+        internal static string Visit_Start_km {
+            get {
+                return ResourceManager.GetString("Visit_Start_km", resourceCulture);
             }
         }
         

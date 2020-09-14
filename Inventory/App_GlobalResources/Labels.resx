@@ -1050,7 +1050,7 @@
   <data name="Requesting_Department" xml:space="preserve">
     <value>Requesting Department</value>
   </data>
-  <data name="Visisting_Date" xml:space="preserve">
+  <data name="Visiting_Date" xml:space="preserve">
     <value>Visiting Date</value>
   </data>
   <data name="Visiting_Place" xml:space="preserve">
@@ -1061,5 +1061,74 @@
   </data>
   <data name="Visiting_Time" xml:space="preserve">
     <value>Visiting Time</value>
+  </data>
+  <data name="Add_Mobile_Car" xml:space="preserve">
+    <value>Add Mobile Car</value>
+  </data>
+  <data name="Add_Visit_End_km" xml:space="preserve">
+    <value>Add Visit End kilometre</value>
+  </data>
+  <data name="Administrative_Directorate" xml:space="preserve">
+    <value>Administrative Directorate</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="Approve_Request" xml:space="preserve">
+    <value>Approve Request</value>
+  </data>
+  <data name="Assign_Car" xml:space="preserve">
+    <value>Assign Car</value>
+  </data>
+  <data name="Car_Number_Plate" xml:space="preserve">
+    <value>Car Number Plate</value>
+  </data>
+  <data name="Car_Type" xml:space="preserve">
+    <value>Car Type</value>
+  </data>
+  <data name="Current_km" xml:space="preserve">
+    <value>Current Kilometre</value>
+  </data>
+  <data name="Driver_Name" xml:space="preserve">
+    <value>Driver Name</value>
+  </data>
+  <data name="Driver_Phone_Number" xml:space="preserve">
+    <value>Driver Phone Number</value>
+  </data>
+  <data name="Is_Approved" xml:space="preserve">
+    <value>Is Approved</value>
+  </data>
+  <data name="Mobile_Car" xml:space="preserve">
+    <value>Mobile Car</value>
+  </data>
+  <data name="Mobile_Cars" xml:space="preserve">
+    <value>Mobile Cars</value>
+  </data>
+  <data name="Mobile_Car_Exit_Ticket" xml:space="preserve">
+    <value>Mobile Car Exit Ticket</value>
+  </data>
+  <data name="Mobile_Car_Ticket" xml:space="preserve">
+    <value>Mobile Car Ticket</value>
+  </data>
+  <data name="Person_Assigned_Name" xml:space="preserve">
+    <value>Person Assigned Name</value>
+  </data>
+  <data name="Record_End_km" xml:space="preserve">
+    <value>Record End Kilometre</value>
+  </data>
+  <data name="Reject_Request" xml:space="preserve">
+    <value>Reject Request</value>
+  </data>
+  <data name="Ticket_ID" xml:space="preserve">
+    <value>Ticket ID</value>
+  </data>
+  <data name="Visit_End_km" xml:space="preserve">
+    <value>Visit End Kilometre</value>
+  </data>
+  <data name="Visit_Information" xml:space="preserve">
+    <value>Visit Information</value>
+  </data>
+  <data name="Visit_Start_km" xml:space="preserve">
+    <value>Visit Start Kilometre</value>
   </data>
 </root>

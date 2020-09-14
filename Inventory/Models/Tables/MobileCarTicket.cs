@@ -18,8 +18,6 @@ namespace Inventory.Models.Tables
 
         public string PersAssignedOccupation { get; set; }
 
-        public string EmailAddress { get; set; }
-
         [NotMapped]
         public string VisitingDateForm { get; set; }
 

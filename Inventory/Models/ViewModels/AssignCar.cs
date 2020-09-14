@@ -6,16 +6,13 @@ using System.Web;
 
 namespace Inventory.Models.ViewModels
 {
-    public class AssignCar
+    public class ApproveAndAssignCar
     {
 
         [Required]
         public int MobileCarTicketID { get; set; }
 
         [Required]
-        public int MobileCarID { get; set; }
-
-        [Required]
-        public int Startkm { get; set; }
+        public int? MobileCarID { get; set; }
     }
 }

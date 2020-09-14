@@ -368,6 +368,7 @@ namespace Inventory.Controllers
                              d.EnName,
                              d.DrName,
                              d.PaName,
+                             d.EmailAddress,
                              d.IsActive
                          }
                           ).ToList();
@@ -383,8 +384,9 @@ namespace Inventory.Controllers
                 e.EnName,
                 e.DrName,
                 e.PaName,
-                e.IsActive
-            }).ToList();
+                e.EmailAddress,
+                e.IsActive,
+            }).OrderByDescending(e=>e.EnName).ToList();
 
             ViewBag.search = model;
             return Json(new
@@ -469,6 +471,7 @@ namespace Inventory.Controllers
                              d.MobileCarID,
                              d.CarType,
                              d.NumberPlate,
+                             d.Currentkm,
                              d.DriverName,
                              d.DriverPhoneNo,
                              d.IsActive
@@ -492,6 +495,7 @@ namespace Inventory.Controllers
                 e.MobileCarID,
                 CarType = AdminRepo.LookupNameByVlueCode(Language, e.CarType),
                 e.NumberPlate,
+                e.Currentkm,
                 e.DriverName,
                 e.DriverPhoneNo,
                 e.IsActive

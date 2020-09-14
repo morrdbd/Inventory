@@ -324,6 +324,7 @@ namespace Inventory.Models.ViewModels
     {
         public int? sMobileCarTicketID { get; set; }
         public int? sDepartmentID { get; set; }
+        public int? sMobileCarID { get; set; }
         public string sPersAssignedName { get; set; }
         public string sPersAssignedOccupation { get; set; }
         public string sVisitingPurpose { get; set; }

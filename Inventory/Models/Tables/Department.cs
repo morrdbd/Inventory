@@ -18,6 +18,10 @@ namespace Inventory.Models.Tables
         [Required]
         public string PaName { get; set; }
 
+        [Required]
+        [EmailAddress]
+        public string EmailAddress { get; set; }
+
         public bool IsActive { get; set; }
 
         public int InsertedBy { get; set; }

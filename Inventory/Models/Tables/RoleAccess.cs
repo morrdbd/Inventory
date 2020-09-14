@@ -21,6 +21,8 @@ namespace Inventory.Models.Tables
         public bool View { get; set; }
         public bool Delete { get; set; }
         public bool Print { get; set; }
+        public bool Approve { get; set; }
+        public bool Recordkm { get; set; }
         public bool Download { get; set; }
     }
 }

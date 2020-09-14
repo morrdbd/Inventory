@@ -16,9 +16,13 @@ namespace Inventory.Models.Tables
 
         public string NumberPlate { get; set; }
 
+        public double Currentkm { get; set; }
+
         public string DriverName { get; set; }
 
         public string DriverPhoneNo { get; set; }
+
+        public bool IsAvailable { get; set; }
 
         public bool IsActive { get; set; }
 

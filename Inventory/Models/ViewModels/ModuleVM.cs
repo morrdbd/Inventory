@@ -30,6 +30,8 @@ namespace Inventory.Models.ViewModels
         public bool View { get; set; }
         public bool Delete { get; set; }
         public bool Print { get; set; }
+        public bool Approve { get; set; }
+        public bool Recordkm { get; set; }
         public bool Download { get; set; }
         public string Controller { get; set; }
     }

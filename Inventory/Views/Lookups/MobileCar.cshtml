@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Mobile Car";
+    ViewBag.Title = Labels.Mobile_Cars;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.search as Inventory.Models.ViewModels.MobileCar_Search;
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
@@ -24,22 +24,22 @@
     <div class="portlet-body">
         <form id="search_form" autocomplete="off">
             <section class="row">
-                <div class=" col-md-3">
+                <div class=" col-md-4">
                     <div class="form-group">
-                        <label>Car Type</label>
+                        <label>@Labels.Car_Type</label>
                         @Html.DropDownList("sCarType", ViewBag.CarTypeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "sCarType" })
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label>Number Plate</label>
-                        <input type="text" class="form-control input-sm" name="sNumberPlate" value="@search.sNumberPlate" placeholder="Number Plate" id="sNumberPlate" />
+                        <label>@Labels.Car_Number_Plate</label>
+                        <input type="text" class="form-control input-sm" name="sNumberPlate" value="@search.sNumberPlate" placeholder="@Labels.Car_Number_Plate" id="sNumberPlate" />
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label>Driver Name</label>
-                        <input type="text" class="form-control input-sm" name="sDriverName" value="@search.sDriverName" placeholder="Driver Name" id="sDriverName" />
+                        <label>@Labels.Driver_Name</label>
+                        <input type="text" class="form-control input-sm" name="sDriverName" value="@search.sDriverName" placeholder="@Labels.Driver_Name" id="sDriverName" />
                     </div>
                 </div>
             </section>
@@ -71,7 +71,7 @@
         <div class="portlet box blue-hoki">
             <div class="portlet-title">
                 <div class="caption">
-                   Car Types
+                   @Labels.Mobile_Cars
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
@@ -83,10 +83,11 @@
                     <table class="table table-striped table-hover table-condensed" id="data_table">
                         <thead>
                             <tr>
-                                <th>Car Type</th>
-                                <th>Number-Plate</th>
-                                <th>Driver Name</th>
-                                <th>Driver Phone Number</th>
+                                <th>@Labels.Car_Type</th>
+                                <th>@Labels.Car_Number_Plate</th>
+                                <th>@Labels.Current_km</th>
+                                <th>@Labels.Driver_Name</th>
+                                <th>@Labels.Driver_Phone_Number</th>
                                 <th>@Labels.active</th>
                                 <th></th>
                                 <th></th>
@@ -108,24 +109,28 @@
         <section class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Add Car Type</h4>
+                <h4 class="modal-title">@Labels.Add_Mobile_Car</h4>
             </div>
             <div class="modal-body">
                 <form method="post" id="value_form" action="@Url.Action("SaveMobileCar")">
                     <div class="form-group">
-                        <label>Car Type</label>
+                        <label>@Labels.Car_Type</label>
                         @Html.DropDownList("CarType", ViewBag.CarTypeDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @ID = "CarType" })
                     </div>
                     <div class="form-group">
-                        <label>Number Plate</label>
+                        <label>@Labels.Car_Number_Plate</label>
                         <input type="text" name="NumberPlate" id="NumberPlate" class="form-control input-sm" required data-msg="" placeholder="">
+                    </div> 
+                    <div class="form-group">
+                        <label>@Labels.Current_km</label>
+                        <input type="number" name="Currentkm" id="Currentkm" class="form-control input-sm" required data-msg="" placeholder="@Labels.Current_km">
                     </div>
                     <div class="form-group">
-                        <label>Driver Name</label>
+                        <label>@Labels.Driver_Name</label>
                         <input type="text" name="DriverName" id="DriverName" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label>Driver Phone No</label>
+                        <label>@Labels.Driver_Phone_Number</label>
                         <input type="text" name="DriverPhoneNo" id="DriverPhoneNo" class="form-control input-sm" required data-msg="" placeholder="">
                     </div>
                     <div class="form-actions right">
@@ -193,6 +198,7 @@
                 columns: [
                     { data: 'CarType' },
                     { data: 'NumberPlate' },
+                    { data: 'Currentkm' },
                     { data: 'DriverName' },
                     { data: 'DriverPhoneNo' },
                     {

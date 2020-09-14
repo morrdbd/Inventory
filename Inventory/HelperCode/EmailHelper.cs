@@ -16,14 +16,15 @@ namespace Inventory.HelperCode
         static bool enableSSL = true;
         static string emailFromAddress = ConfigurationManager.AppSettings["senderEmail"].ToString(); //Sender Email Address  
         static string password = ConfigurationManager.AppSettings["senderEmailPass"].ToString(); //Sender Password  
-        static string subject =  "تایید درخواست موتر سیار"; 
+        static string subject = "Inventory mobile car request notification";
         static string body =  "Your request to mobile car has been approved."; 
 
-        public static void SendEmail(string emailTo = "info.inventory.morr@gmail.com", 
-            string _body = "Out side ministry")
+        public static void SendEmail(string emailTo = "info.inventory.morr@gmail.com",string _subject = "test", 
+            string _body = "test")
         {
             var mobileCarTicketCtrl = new MobileCarTicketController();
             body = _body;
+            subject = _subject;
                 //"<p>Your request approved to visit " + destination +"</p>"+"<p>Please contact to transport.</p>";
             using (MailMessage mail = new MailMessage())
             {

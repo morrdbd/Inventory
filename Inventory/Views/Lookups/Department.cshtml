@@ -67,6 +67,7 @@
                                 <th>@Labels.english_name</th>
                                 <th>@Labels.dari_name</th>
                                 <th>@Labels.pashtu_name</th>
+                                <th>@Labels.Email_Address</th>
                                 <th>@Labels.active</th>
                                 <th></th>
                                 <th></th>
@@ -106,6 +107,10 @@
                                 <div class="form-group">
                                     <label>@Labels.pashtu_name</label>
                                     <input type="text" name="PaName" id="pa_name" class="form-control" required data-msg="" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>@Labels.Email_Address</label>
+                                    <input type="text" name="EmailAddress" id="EmailAddress" class="form-control" required data-msg="" placeholder="@Labels.Email_Address">
                                 </div>
                                 <div class="form-actions right">
                                     <button type="reset" class="btn default" data-dismiss="modal">@Labels.cancel</button>
@@ -176,6 +181,7 @@
                     { data: 'EnName' },
                     { data: 'DrName' },
                     { data: 'PaName' },
+                    { data: 'EmailAddress' },
                     {
                         data: null,
                         visible: true,

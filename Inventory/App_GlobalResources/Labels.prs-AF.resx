@@ -1101,19 +1101,79 @@
   <data name="pending" xml:space="preserve">
     <value>درحال تعلیق</value>
   </data>
+  <data name="Add_Mobile_Car" xml:space="preserve">
+    <value>ازدیاد موتر سیار</value>
+  </data>
+  <data name="Add_Visit_End_km" xml:space="preserve">
+    <value>ازدیاد کیلو متر ختم سفر</value>
+  </data>
+  <data name="Administrative_Directorate" xml:space="preserve">
+    <value>ریاست اداری</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>تائید</value>
+  </data>
+  <data name="Approve_Request" xml:space="preserve">
+    <value>تائید درخواست</value>
+  </data>
+  <data name="Assign_Car" xml:space="preserve">
+    <value>مشخص نمودن موتر</value>
+  </data>
+  <data name="Car_Number_Plate" xml:space="preserve">
+    <value>نمبر پلیت موتر</value>
+  </data>
+  <data name="Car_Type" xml:space="preserve">
+    <value>نوع موتر</value>
+  </data>
+  <data name="Current_km" xml:space="preserve">
+    <value>کیلو متر فعلی</value>
+  </data>
+  <data name="Driver_Name" xml:space="preserve">
+    <value>نام درایور</value>
+  </data>
+  <data name="Driver_Phone_Number" xml:space="preserve">
+    <value>نمبر راننده</value>
+  </data>
   <data name="Email_Address" xml:space="preserve">
     <value>ایمل ادرس</value>
+  </data>
+  <data name="Is_Approved" xml:space="preserve">
+    <value>ایا تاید شده</value>
+  </data>
+  <data name="Mobile_Car" xml:space="preserve">
+    <value>موتر سیار</value>
+  </data>
+  <data name="Mobile_Cars" xml:space="preserve">
+    <value>موتر های سیار</value>
+  </data>
+  <data name="Mobile_Car_Exit_Ticket" xml:space="preserve">
+    <value>تکت خروجی موتر های سیار</value>
+  </data>
+  <data name="Mobile_Car_Ticket" xml:space="preserve">
+    <value>تکت موتر سیار</value>
   </data>
   <data name="Person_Assigned" xml:space="preserve">
     <value>شخس توظیف شده</value>
   </data>
+  <data name="Person_Assigned_Name" xml:space="preserve">
+    <value>شخص توظیف شده</value>
+  </data>
   <data name="Person_Assigned_Occupation" xml:space="preserve">
     <value>وظیفه شخص توظیفه شده</value>
+  </data>
+  <data name="Record_End_km" xml:space="preserve">
+    <value>درج کیلو متر پایان سفر </value>
+  </data>
+  <data name="Reject_Request" xml:space="preserve">
+    <value>رد درخواست</value>
   </data>
   <data name="Requesting_Department" xml:space="preserve">
     <value>اداره درخواست کننده</value>
   </data>
-  <data name="Visisting_Date" xml:space="preserve">
+  <data name="Ticket_ID" xml:space="preserve">
+    <value>تکت ای دی</value>
+  </data>
+  <data name="Visiting_Date" xml:space="preserve">
     <value>تاریخ اغاز وظیفه</value>
   </data>
   <data name="Visiting_Place" xml:space="preserve">
@@ -1124,5 +1184,14 @@
   </data>
   <data name="Visiting_Time" xml:space="preserve">
     <value>ساعت اغاز سفر</value>
+  </data>
+  <data name="Visit_End_km" xml:space="preserve">
+    <value>کیلو متر ختم سفر</value>
+  </data>
+  <data name="Visit_Information" xml:space="preserve">
+    <value>معلومات سفر</value>
+  </data>
+  <data name="Visit_Start_km" xml:space="preserve">
+    <value>کیلو متر شروع</value>
   </data>
 </root>
