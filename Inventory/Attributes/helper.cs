@@ -5,9 +5,9 @@ using System.Web;
 
 namespace Inventory.Attributes
 {
-    public class helper
+    public class Helper
     {
-        public string[] monthName(string lang)
+        public static string[] monthName(string lang)
         {
             if(lang != "en")
             {

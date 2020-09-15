@@ -193,6 +193,7 @@ namespace Inventory.Controllers
             var obj = db.MobileCarTickets.Find(id);
             if (obj != null)
             {
+                ReleasePreviousAssignedCar(obj);
                 obj.IsActive = false;
                 db.SaveChanges();
                 return Json(true, JsonRequestBehavior.AllowGet);
@@ -233,11 +234,7 @@ namespace Inventory.Controllers
                     {
                         return Json(false);
                     }
-                    string body = "<p>درخواست شما برای موتر سیار تایید شود</p>" +
-                        "<p>"+ view_model.VisitingPlace + " : محل سفر</p>"+
-                        "<p>"+ view_model.CarType +" "+ view_model.NumberPlate + " : نوع موتر</p>"+
-                        "<p>"+ view_model.DriverName + " : نام دریور</p>"
-                        +"<h3>از طرف ریاست اداری</h3>";
+                    string body = EmailHelper.CreatMobileCarTicketApproveEmailBody(view_model);
                     string subject = "تایید درخواست موتر سیار";
                     string depEmailAddress = db.Departments.Where(d => d.DepartmentID == row.DepartmentID).Select(d => d.EmailAddress).FirstOrDefault();
                 EmailHelper.SendEmail(depEmailAddress, subject,body);
@@ -303,6 +300,7 @@ namespace Inventory.Controllers
                         {
                             return Json(false);
                         }
+                        ReleasePreviousAssignedCar(record);
                         record.IsApproved = true;
                         record.MobileCarID = model.MobileCarID;
                         record.Startkm = mobileCar.Currentkm;
@@ -322,7 +320,7 @@ namespace Inventory.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
-        [AccessControl("Delete")]
+        [AccessControl("Recordkm")]
         public JsonResult RecordEndkm(RecordEndkm model)
         {
             var record = db.MobileCarTickets.Find(model.MobileCarTicketID);
@@ -332,7 +330,7 @@ namespace Inventory.Controllers
                 {
                     try
                     {
-                        var mobileCar = db.MobileCars.Where(c => c.MobileCarID == record.MobileCarID && c.IsActive == true && c.IsAvailable == true).FirstOrDefault();
+                        var mobileCar = db.MobileCars.Where(c => c.MobileCarID == record.MobileCarID && c.IsActive == true).FirstOrDefault();
                         if (mobileCar == null)
                         {
                             return Json(false);
@@ -373,6 +371,22 @@ namespace Inventory.Controllers
             var availableCartList = availableCartListQuery.Select(c=>
             new {c.MobileCarID, CarType = (c.NumberPlate +" "+ AdminRepo.LookupNameByVlueCode(Language,c.CarType))}).ToList();
             ViewBag.AvailableCarDrp = new SelectList(availableCartList, "MobileCarID", "CarType");
+        }
+
+        private void ReleasePreviousAssignedCar(MobileCarTicket model)
+        {
+            //Relase the previous car if assigned
+            if (model.MobileCarID != null)
+            {
+                var previousAssignedCar = db.MobileCars.Where(c => c.MobileCarID == model.MobileCarID).FirstOrDefault();
+                if (previousAssignedCar != null)
+                {
+                    previousAssignedCar.IsAvailable = true;
+                    model.MobileCarID = null;
+                    model.Startkm = null;
+                    db.SaveChanges();
+                }
+            }
         }
 
         private MobileCarTicket_VM CreateModel(MobileCarTicket model)

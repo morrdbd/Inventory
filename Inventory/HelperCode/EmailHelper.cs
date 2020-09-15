@@ -1,4 +1,5 @@
 ﻿using Inventory.Controllers;
+using Inventory.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -41,6 +42,22 @@ namespace Inventory.HelperCode
                     smtp.Send(mail);
                 }
             }
+        }
+
+        public static string CreatMobileCarTicketApproveEmailBody(MobileCarTicket_VM model)
+        {
+            var body = "<p>درخواست شما برای موتر سیار تایید شود</p>"+
+                "<table style='border: 1px solid black; border-collapse: collapse; '>" +
+                    "<tr><td style='border:1px solid black; padding: 10px;'>" + model.VisitingPlace+ "</td>" +
+                    "<td style='border:1px solid black; padding: 10px;'>محل سفر</td></tr>" +
+                    "<tr><td style='border:1px solid black; padding: 10px;'>" + model.CarType + "</td>" +
+                    "<td style='border:1px solid black; padding: 10px;'>نوع موتر</td></tr>" +
+                    "<tr><td style='border:1px solid black; padding: 10px;'>" + model.DriverName + "</td>" +
+                    "<td style='border:1px solid black; padding: 10px;'>نام دریور</td></tr>" +
+                "</table>"+
+                "<h3>از طرف ریاست اداری</h3>";
+
+            return body;
         }
     }
 }

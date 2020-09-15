@@ -29,9 +29,6 @@ namespace Inventory.Controllers
                 model._DateFrom = model.DateFrom.ToDate("en");
                 model._DateTo = model.DateTo.ToDate("en");
                 model.Lang = Language;
-               
-               
-               
                 var json = new
                 {
                    
@@ -56,7 +53,7 @@ namespace Inventory.Controllers
         public JsonResult DashboardAjax()
         {
             DashboardCharts model = new DashboardCharts();
-
+            model.Requisition = repo.AllMobileCarRequestChart(Language);
             return Json(model, JsonRequestBehavior.AllowGet);
         }
     }

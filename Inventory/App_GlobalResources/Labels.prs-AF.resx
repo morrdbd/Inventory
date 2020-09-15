@@ -1194,4 +1194,7 @@
   <data name="Visit_Start_km" xml:space="preserve">
     <value>کیلو متر شروع</value>
   </data>
+  <data name="All_Mobile_Car_Requests" xml:space="preserve">
+    <value>درخواست های موتر سیار</value>
+  </data>
 </root>

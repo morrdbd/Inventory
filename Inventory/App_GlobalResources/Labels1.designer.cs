@@ -268,6 +268,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Mobile Car Requests.
+        /// </summary>
+        internal static string All_Mobile_Car_Requests {
+            get {
+                return ResourceManager.GetString("All_Mobile_Car_Requests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Stockin.
         /// </summary>
         internal static string all_stockin {

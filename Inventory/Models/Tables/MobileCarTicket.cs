@@ -42,7 +42,7 @@ namespace Inventory.Models.Tables
         public int InsertedBy { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? InsertedDate { get; set; }
+        public DateTime InsertedDate { get; set; }
 
         public int? LastUpdatedBy { get; set; }
 

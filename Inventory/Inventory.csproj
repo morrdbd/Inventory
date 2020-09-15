@@ -260,7 +260,7 @@
     <Compile Include="Attributes\AccessControlAttribute.cs" />
     <Compile Include="Attributes\CustomValidation.cs" />
     <Compile Include="Attributes\Funcs.cs" />
-    <Compile Include="Attributes\helper.cs" />
+    <Compile Include="Attributes\Helper.cs" />
     <Compile Include="Attributes\JsonNetResult.cs" />
     <Compile Include="Attributes\MyDateConverter.cs" />
     <Compile Include="Attributes\MyFilter.cs" />
