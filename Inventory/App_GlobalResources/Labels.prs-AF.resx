@@ -1197,4 +1197,10 @@
   <data name="All_Mobile_Car_Requests" xml:space="preserve">
     <value>درخواست های موتر سیار</value>
   </data>
+  <data name="Print_Mobile_Car_Ticket" xml:space="preserve">
+    <value>د سیارو موټرو ټکټ چاپ</value>
+  </data>
+  <data name="Approve_And_Assign_Share_Car" xml:space="preserve">
+    <value>تائید و مشخص نمود موتر شریکی</value>
+  </data>
 </root>

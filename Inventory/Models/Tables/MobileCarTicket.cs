@@ -12,21 +12,29 @@ namespace Inventory.Models.Tables
         [Key]
         public int MobileCarTicketID { get; set; }
 
+        [Required]
         public int DepartmentID { get; set; }
 
+        [Required]
         public string PersAssignedName { get; set; }
 
+        [Required]
         public string PersAssignedOccupation { get; set; }
+
+        public string PhoneNumber { get; set; }
 
         [NotMapped]
         public string VisitingDateForm { get; set; }
 
         public DateTime? VisitingDate { get; set; }
 
+        [Required]
         public string VisitingPurpose { get; set; }
 
+        [Required]
         public string VisitingPlace { get; set; }
 
+        [Required]
         public string VisitingTime { get; set; }
 
         public bool? IsApproved { get; set; }

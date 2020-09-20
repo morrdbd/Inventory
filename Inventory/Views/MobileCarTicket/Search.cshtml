@@ -109,6 +109,7 @@
                     <th>@Labels.Department</th>
                     <th>@Labels.Person_Assigned_Name</th>
                     <th>@Labels.Person_Assigned_Occupation</th>
+                    <th>@Labels.PhoneNumber</th>
                     @*<th>@Labels.Email_Address</th>*@
                     <th>@Labels.Visiting_Date</th>
                     <th>@Labels.Visiting_Place</th>
@@ -131,7 +132,6 @@
 <script>
     var model = @Html.Raw(Json.Encode(Model));
     $(function () {
-
         /////////////////////////SEARCH//////////////////////////////
             var canView = @Html.Raw(Json.Encode(_canView));
             $.fn.dataTable.ext.errMode = 'none';
@@ -149,10 +149,22 @@
                     },
                 },
                 columns: [
-                    { data: 'MobileCarTicketID' },
+                       {
+                           data: null,
+                           //visible: canView,
+                           render: function (row) {
+                               if(canView){
+                                   return '<a href="@Url.Action("View")/'+row.MobileCarTicketID+'" title="@Labels.View_Form" data-id="' + row.ConsumeID + '" class=" blue view-item">'+row.MobileCarTicketID+'</a>';
+                               }else{
+                                   return row.MobileCarTicketID;
+                               }
+                           }
+                       },
+                    //{ data: 'MobileCarTicketID' },
                     { data: 'DepartmentName' },
                     { data: 'PersAssignedName' },
                     { data: 'PersAssignedOccupation' },
+                    { data: 'PhoneNumber' },
                     //{ data: 'EmailAddress' },
                     { data: 'VisitingDate' },
                     { data: 'VisitingPlace' },

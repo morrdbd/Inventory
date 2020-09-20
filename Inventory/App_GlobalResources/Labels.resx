@@ -1134,4 +1134,10 @@
   <data name="All_Mobile_Car_Requests" xml:space="preserve">
     <value>All Mobile Car Requests</value>
   </data>
+  <data name="Print_Mobile_Car_Ticket" xml:space="preserve">
+    <value>Print Mobile Car Ticket</value>
+  </data>
+  <data name="Approve_And_Assign_Share_Car" xml:space="preserve">
+    <value>Approve And Assign Share Car</value>
+  </data>
 </root>

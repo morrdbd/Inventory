@@ -1,0 +1,128 @@
+﻿@model Inventory.Models.ViewModels.MobileCarTicket_VM
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@Labels.Print_Mobile_Car_Ticket</title>
+    <link rel="shortcut icon" href="@Url.Content("~/Content/resources/img/favicon.ico")" />
+    <link href="@Url.Content("~/Content/resources/fontcss/barcode.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/resources/fontcss/fonts.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/resources/fontcss/noto.css")" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    @@media print
+        {
+        @@page {
+          size: A4; /* DIN A4 standard, Europe */
+          margin:0;
+        }
+        html, body {
+            width: 210mm;
+            /* height: 297mm; */
+            height: auto;
+            font-size: 11px;
+            background: #FFF;
+            overflow:visible;
+        }
+        body {
+            padding-top:15mm;
+        }
+}
+    </style>
+</head>
+<body>
+    <div id="print_area" class="margin-top-20">
+        <table class="table table-condensed margin-bottom-30" style="border-collapse: collapse; width:100%;">
+            <tr>
+                <td style="text-align:center; padding-top:30px; width:40%">
+                    <p style="padding-top:0px;  margin-bottom:0px;">وزارت امور مهاجرین و عودت کنندگان</p>
+                    <p>ریاست اداری</p>
+                </td>
+                <td style="text-align:center;">
+                    <p>@Labels.Mobile_Car_Exit_Ticket</p>
+                    <img width="70" height="70" src="~/Content/resources/img/morr.png" />
+                </td>
+                <td style="text-align:center; padding-top:30px; width:40%">
+                    <p style="padding-top:0px;  margin-bottom:0px;">د کډوالو او راستنیدونکو  چارو وزارت</p>
+                    <p>اداری ریاست</p>
+                </td>
+            </tr>
+        </table>
+        <div style="direction:rtl;">
+            <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%; margin-top:20px;">
+                <thead>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal; width:20%;">@Labels.Is_Approved</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">
+                            @(Model.IsApproved == true ? Labels.yes : Model.IsApproved == false ? Labels.no : Labels.pending)
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Department</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.DepartmentName</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Person_Assigned_Name</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.PersAssignedName</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Person_Assigned_Occupation</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.PersAssignedOccupation</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.PhoneNumber</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.PhoneNumber</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Visiting_Date</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.VisitingDate</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Visiting_Time</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.VisitingTime</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Visiting_Purpose</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.VisitingPurpose</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Car_Number_Plate</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.NumberPlate</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Driver_Name</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.DriverName</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Car_Type</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.CarType</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Driver_Phone_Number</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.DriverPhoneNo</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Visit_Start_km</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.Startkm</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Visit_End_km</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">@(Model.Endkm == 0 ? ' ' : @Model.Endkm)</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;padding:10px; word-wrap:normal; align-items:center;">@Labels.Bar_Code</th>
+                        <th style="text-align:right;padding:10px; word-wrap:normal;">
+                            <p style="text-align:center; font-family:Barcode;font-size:34px;padding:0px; margin:0px;" id="lblBarcode">*@Model.MobileCarTicketID*</p>
+                            <p style="text-align:center; margin-top:0px; padding-top:0px;" id="lblBarcodeText">@Model.MobileCarTicketID</p>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+

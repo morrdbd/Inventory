@@ -313,6 +313,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Approve And Assign Share Car.
+        /// </summary>
+        internal static string Approve_And_Assign_Share_Car {
+            get {
+                return ResourceManager.GetString("Approve_And_Assign_Share_Car", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Approve Request.
         /// </summary>
         internal static string Approve_Request {
@@ -2118,6 +2127,15 @@ namespace Resources {
         internal static string Previous {
             get {
                 return ResourceManager.GetString("Previous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print Mobile Car Ticket.
+        /// </summary>
+        internal static string Print_Mobile_Car_Ticket {
+            get {
+                return ResourceManager.GetString("Print_Mobile_Car_Ticket", resourceCulture);
             }
         }
         

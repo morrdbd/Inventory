@@ -303,6 +303,7 @@
     <Compile Include="Models\ViewModels\MobileCarTicket_VM.cs" />
     <Compile Include="Models\ViewModels\PrintLabelVM.cs" />
     <Compile Include="Models\ViewModels\RecordEndkm.cs" />
+    <Compile Include="Models\ViewModels\RejectMobileCarRequest.cs" />
     <Compile Include="Models\ViewModels\RestoredItemVM.cs" />
     <Compile Include="Models\ViewModels\RestoreItemVM.cs" />
     <Compile Include="Models\ViewModels\RestoreVM.cs" />
@@ -2956,6 +2957,7 @@
     <Content Include="Views\Lookups\MobileCar.cshtml" />
     <Content Include="Views\MobileCarTicket\View.cshtml" />
     <Content Include="Views\MobileCarTicket\Form.cshtml" />
+    <Content Include="Views\MobileCarTicket\PrintMobileCarTicket.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />

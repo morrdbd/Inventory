@@ -45,9 +45,6 @@
 
     <link href="~/Content/resources/select2/select2-bootstrap.css" rel="stylesheet" />
 
-    <link href="@Url.Content("~/Content/resources/fontcss/barcode.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/resources/fontcss/fonts.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/resources/fontcss/noto.css")" rel="stylesheet" type="text/css" />
     <style>
         span.select2-container {
             z-index: 11000;
@@ -375,13 +372,13 @@
             dateFormat: 'yy-mm-dd',
             regional: mainvars.lang == 'en' ? '' : 'fa',
         });
-        ui('.shTimepicker_f').timepicker({
-            dateFormat: '',
-            format: 'LT',
-            showDate: false,
-            showSecond: true,
-            timeFormat: 'hh:mm',
-            regional: mainvars.lang == 'en' ? '' : 'fa',
+        ui('.shDateTimepicker_f').datetimepicker({
+            //dateFormat: '',
+            //format: 'LT',
+            //showDate: true,
+            //showSecond: true,
+            //timeFormat: 'hh:mm',
+            //regional: mainvars.lang == 'en' ? '' : 'fa',
         });
 
     </script>

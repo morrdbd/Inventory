@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 
@@ -18,6 +19,8 @@ namespace Inventory.Models.ViewModels
         public string PersAssignedName { get; set; }
 
         public string PersAssignedOccupation { get; set; }
+
+        public string PhoneNumber { get; set; }
 
         public string VisitingDate { get; set; }
 

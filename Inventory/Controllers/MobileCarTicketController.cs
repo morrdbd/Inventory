@@ -93,6 +93,7 @@ namespace Inventory.Controllers
                               t.IsApproved,
                               t.PersAssignedName,
                               t.PersAssignedOccupation,
+                              t.PhoneNumber,
                               t.VisitingDate,
                               t.VisitingTime,
                               t.VisitingPlace,
@@ -151,6 +152,7 @@ namespace Inventory.Controllers
                 e.MobileCarTicketID,
                 e.PersAssignedName,
                 e.PersAssignedOccupation,
+                e.PhoneNumber,
                 //e.EmailAddress,
                 VisitingDate = e.VisitingDate.ToDateString(Language),
                 e.VisitingPlace,
@@ -247,6 +249,7 @@ namespace Inventory.Controllers
         }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
+
         [AccessControl("Approve")]
         public JsonResult SendTicketRejectionEmail(int id = 0)
         {
@@ -320,6 +323,32 @@ namespace Inventory.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
+        [AccessControl("Approve")]
+        public JsonResult RejectMobileCarRequest(RejectMobileCarRequest model)
+        {
+            var record = db.MobileCarTickets.Find(model.MobileCarTicketID);
+            if (record != null)
+            {
+                using (var trans = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        record.IsApproved = false;
+                        ////////////////////change the availability of mobile car /////////////////////
+                        db.SaveChanges();
+                        trans.Commit();
+                        return Json(true, JsonRequestBehavior.AllowGet);
+                    }
+                    catch (Exception e)
+                    {
+                        trans.Rollback();
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                    }
+                }
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
         [AccessControl("Recordkm")]
         public JsonResult RecordEndkm(RecordEndkm model)
         {
@@ -352,7 +381,6 @@ namespace Inventory.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
-
         private void CreateDropDown()
         {
 
@@ -371,6 +399,13 @@ namespace Inventory.Controllers
             var availableCartList = availableCartListQuery.Select(c=>
             new {c.MobileCarID, CarType = (c.NumberPlate +" "+ AdminRepo.LookupNameByVlueCode(Language,c.CarType))}).ToList();
             ViewBag.AvailableCarDrp = new SelectList(availableCartList, "MobileCarID", "CarType");
+
+            //List of car which are already assigned, but due to the same visit path can be assign to other visitor on the same path 
+            var shareCartListQuery = db.MobileCars.Where(d => d.IsActive == true && d.IsAvailable == false).Select(d =>
+               new { d.MobileCarID, d.CarType, d.NumberPlate }).ToList();
+            var shareCartList = shareCartListQuery.Select(c=>
+            new {c.MobileCarID, CarType = (c.NumberPlate +" "+ AdminRepo.LookupNameByVlueCode(Language,c.CarType))}).ToList();
+            ViewBag.ShareCarDrp = new SelectList(shareCartList, "MobileCarID", "CarType");
         }
 
         private void ReleasePreviousAssignedCar(MobileCarTicket model)
@@ -391,12 +426,14 @@ namespace Inventory.Controllers
 
         private MobileCarTicket_VM CreateModel(MobileCarTicket model)
         {
+             
             var ticket = new MobileCarTicket_VM()
             {
                 MobileCarTicketID = model.MobileCarTicketID,
                 DepartmentName = db.Departments.Where(d => d.DepartmentID == model.DepartmentID).Select(d => Language == "prs" ? d.DrName : Language == "ps" ? d.PaName : d.EnName).FirstOrDefault(),
                 PersAssignedName = model.PersAssignedName,
                 PersAssignedOccupation = model.PersAssignedOccupation,
+                PhoneNumber = model.PhoneNumber,
                 VisitingDate = model.VisitingDate.ToDateString(Language),
                 VisitingPurpose = model.VisitingPurpose,
                 VisitingPlace = model.VisitingPlace,
@@ -416,7 +453,17 @@ namespace Inventory.Controllers
             }
             return ticket;
         }
-        
 
+        [AccessControl("Print")]
+        public ActionResult PrintMobileCarTicket(int id = 0)
+        {
+            var _record = db.MobileCarTickets.Where(t => t.IsActive == true && t.MobileCarTicketID == id).FirstOrDefault();
+            if (_record == null)
+            {
+                return HttpNotFound();
+            }
+            var model = CreateModel(_record);
+            return View(model);
+        }
     }
 }
