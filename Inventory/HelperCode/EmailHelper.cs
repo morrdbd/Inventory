@@ -3,10 +3,13 @@ using Inventory.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Inventory.HelperCode
 {
@@ -44,20 +47,24 @@ namespace Inventory.HelperCode
             }
         }
 
-        public static string CreatMobileCarTicketApproveEmailBody(MobileCarTicket_VM model)
+        public static string RenderPartialToString(string viewName, object model, ControllerContext ControllerContext)
         {
-            var body = "<p>درخواست شما برای موتر سیار تایید شود</p>"+
-                "<table style='border: 1px solid black; border-collapse: collapse; '>" +
-                    "<tr><td style='border:1px solid black; padding: 10px;'>" + model.VisitingPlace+ "</td>" +
-                    "<td style='border:1px solid black; padding: 10px;'>محل سفر</td></tr>" +
-                    "<tr><td style='border:1px solid black; padding: 10px;'>" + model.CarType + "</td>" +
-                    "<td style='border:1px solid black; padding: 10px;'>نوع موتر</td></tr>" +
-                    "<tr><td style='border:1px solid black; padding: 10px;'>" + model.DriverName + "</td>" +
-                    "<td style='border:1px solid black; padding: 10px;'>نام دریور</td></tr>" +
-                "</table>"+
-                "<h3>از طرف ریاست اداری</h3>";
+            if (string.IsNullOrEmpty(viewName))
+                viewName = ControllerContext.RouteData.GetRequiredString("action");
+            ViewDataDictionary ViewData = new ViewDataDictionary();
+            TempDataDictionary TempData = new TempDataDictionary();
+            ViewData.Model = model;
 
-            return body;
+            using (StringWriter sw = new StringWriter())
+            {
+                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+
+                return sw.GetStringBuilder().ToString();
+            }
+
         }
+
     }
 }

@@ -8,7 +8,6 @@
     <link href="@Url.Content("~/Content/resources/fontcss/barcode.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/resources/fontcss/fonts.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/resources/fontcss/noto.css")" rel="stylesheet" type="text/css" />
-
 }
 <div class="margin-bottom-10">
     @if (_user.HasAccess("MobileCarTicket", "Search"))
@@ -33,10 +32,9 @@
     }
     @if (_user.HasAccess("MobileCarTicket", "Approve") && Model.IsApproved == null)
     {
-        <button class="btn btn-sm btn-warning" id="btn_reject" data-id="@Model.MobileCarTicketID" title="@Labels.Reject_Request"><i class="fa fa-ban"></i>@Labels.Reject_Request</button>
+        @*<button class="btn btn-sm btn-warning" id="btn_reject" data-id="@Model.MobileCarTicketID" title="@Labels.Reject_Request"><i class="fa fa-ban"></i>@Labels.Reject_Request</button>*@
 
-        <a href="#popup_rejection_reason" data-toggle="modal" class="btn btn-sm btn-warning" id="btn_Rejection_Reason" data-id="@Model.MobileCarTicketID" title="Rejection Reason"><i class="fa fa-ban"></i>Rejection Reason</a>
-
+        <a href="#popup_rejection_request" data-toggle="modal" class="btn btn-sm btn-warning" id="btn_reject_request" data-id="@Model.MobileCarTicketID" title="Rejection Reason"><i class="fa fa-ban"></i>@Labels.Reject_Request</a>
     }
     @if (_user.HasAccess("MobileCarTicket", "Recordkm") && Model.MobileCarID != null && Model.IsApproved != false)
     {
@@ -49,6 +47,22 @@
 </div>
 
 <div id="print_area" class="margin-top-20">
+    @*<table class="table table-condensed margin-bottom-30" style="border-collapse: collapse; width:100%;">
+        <tr>
+            <td style="text-align:center; padding-top:30px; width:40%">
+                <p style="padding-top:0px;  margin-bottom:0px;">وزارت امور مهاجرین و عودت کنندگان</p>
+                <p>ریاست اداری</p>
+            </td>
+            <td style="text-align:center;">
+                <p>@Labels.Mobile_Car_Exit_Ticket</p>
+                <img width="70" height="70" src="~/Content/resources/img/morr.png" />
+            </td>
+            <td style="text-align:center; padding-top:30px; width:40%">
+                <p style="padding-top:0px;  margin-bottom:0px;">د کډوالو او راستنیدونکو  چارو وزارت</p>
+                <p>اداری ریاست</p>
+            </td>
+        </tr>
+    </table>*@
     <div style="direction:rtl;">
         <table border="1" class="table table-striped table-condensed table-bordered" style="border-collapse: collapse; width:100%; margin-top:20px;">
             <thead>
@@ -75,12 +89,8 @@
                     <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.PhoneNumber</th>
                 </tr>
                 <tr>
-                    <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Visiting_Date</th>
-                    <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.VisitingDate</th>
-                </tr>
-                <tr>
-                    <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Visiting_Time</th>
-                    <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.VisitingTime</th>
+                    <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Visiting_Date_Time</th>
+                    <th style="text-align:right;padding:10px; word-wrap:normal;">@Model.VisitingDateTime</th>
                 </tr>
                 <tr>
                     <th style="text-align:right;padding:10px; word-wrap:normal;">@Labels.Visiting_Purpose</th>
@@ -142,7 +152,7 @@
                     <section class="row">
                         <div class="col-md-12 form-group" style="margin-left:10px; margin-right:10px;">
                             <button type="reset" class="btn default" data-dismiss="modal">@Labels.cancel</button>
-                            <button type="submit" class="btn btn-sm blue ">@Labels.save</button>
+                            <button type="submit" class="btn btn-sm blue" >@Labels.save</button>
                             <input type="hidden" name="MobileCarTicketID" id="MobileCarTicketID" value="@Model.MobileCarTicketID" />
                         </div>
                     </section>
@@ -159,7 +169,7 @@
             <div class="modal-header blue">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <label>
-                    Assign Share Car
+                    @Labels.Assign_Share_Car
                 </label>
             </div>
             <div class="portlet-body" style="padding: 0 15px;">
@@ -203,7 +213,7 @@
                     </section>
                     <section class="row">
                         <div class="col-md-12 form-group" style="margin-left:10px; margin-right:10px;">
-                            <button type="submit" class="btn btn-sm blue ">@Labels.save</button>
+                            <button type="submit" class="btn btn-sm blue " data-dismiss="modal">@Labels.save</button>
                             <button type="reset" id="btnReset" class="btn btn-sm ">@Labels.reset</button>
                             <input type="hidden" name="MobileCarTicketID" id="MobileCarTicketID" value="@Model.MobileCarTicketID" />
                         </div>
@@ -215,26 +225,26 @@
     </div>
 </div>
 
-<div class="modal fade" id="popup_rejection_reason" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" id="popup_rejection_request" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" style="width:500px;">
         <div class="modal-content">
             <div class="modal-header blue">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <label>
-                    Reject Mobile Car Request
+                    @Labels.Reject_Mobile_Car_Request
                 </label>
             </div>
             <div class="portlet-body" style="padding: 0 15px;">
                 <form id="reject_request_form" autocomplete="off" class="margin-top-10">
                     <section class="row">
                         <div class="col-md-12 form-group">
-                            <label>Rejection Reason</label>
-                            <textarea type="text" name="RejectionReason" rows="4" id="RejectionReason" class="form-control" required data-msg="" placeholder="Please Specify Rejection Reason"></textarea>
+                            <label>@Labels.Rejection_Reason</label>
+                            <textarea type="text" name="RejectionReason" rows="4" id="RejectionReason" class="form-control" required data-msg="" placeholder="@Labels.Please_Specify_Rejection_Reason"></textarea>
                         </div>
                     </section>
                     <section class="row">
                         <div class="col-md-12 form-group" style="margin-left:10px; margin-right:10px;">
-                            <button type="submit" class="btn btn-sm blue ">@Labels.save</button>
+                            <button type="submit" class="btn btn-sm blue data-dismiss="modal"">@Labels.save</button>
                             <button type="reset" id="btnReset" class="btn btn-sm ">@Labels.reset</button>
                             <input type="hidden" name="MobileCarTicketID" id="MobileCarTicketID" value="@Model.MobileCarTicketID" />
                         </div>
@@ -269,14 +279,8 @@
                             toastr.success("@Labels.operation_done_suc");
                             var id = $("#MobileCarTicketID").val();
                             var sendApprovedMailUrl = "@Url.Action("SendTicketApproveEmail")/"+id;
-                            $.get(sendApprovedMailUrl, function (response) {
-                                if (response == false) {
-                                    toastr.error('Un able to send approve notification email to requester.');
-                                }
-                            });
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 2000);
+                            SendEmailNotification(sendApprovedMailUrl);
+
                         } else {
                             toastr.error('@Labels.unable_to_update');
                         }
@@ -298,7 +302,7 @@
                 //******************
                 Metronic.blockUI({ animate: true });
                 $.ajax({
-                    url: '@Url.Action("ApproveAndAssignCar")',
+                    url: '@Url.Action("ApproveAndAssignShareCar")',
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -307,15 +311,8 @@
                         if (response != false) {
                             toastr.success("@Labels.operation_done_suc");
                             var id = $("#MobileCarTicketID").val();
-                            var sendApprovedMailUrl = "@Url.Action("SendTicketApproveEmail")/"+id;
-                            $.get(sendApprovedMailUrl, function (response) {
-                                if (response == false) {
-                                    toastr.error('Un able to send approve notification email to requester.');
-                                }
-                            });
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 2000);
+                            var sendApprovedMailUrl = "@Url.Action("SendShareCarTicketApproveEmail")/"+id;
+                            SendEmailNotification(sendApprovedMailUrl);
                         } else {
                             toastr.error('@Labels.unable_to_update');
                         }
@@ -367,25 +364,68 @@
                 //******************
                 Metronic.blockUI({ animate: true });
                 $.ajax({
-                    url: '@Url.Action("RecordEndkm")',
+                    url: '@Url.Action("RejectMobileCarRequest")',
                     type: 'POST',
                     data: formData,
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        if (response != false) {
+                       if (response != false) {
                             toastr.success("@Labels.operation_done_suc");
-                            window.location.reload();
+                            var sendRejectionEmailUrl = "@Url.Action("SendShareCarTicketApproveEmail")";
+                            SendEmailNotificationWithData(sendRejectionEmailUrl, formData);
+                            
                         } else {
                             toastr.error('@Labels.unable_to_update');
                         }
-                    },
+                    }
+                    ,
                     complete: function () {
                         Metronic.unblockUI();
                     }
                 })
             }
         })
+        function SendEmailNotification(url) {
+            //******************
+            Metronic.blockUI({ animate: true });
+
+            $.get(url, function (response) {
+                if (response == false) {
+                    toastr.error('@Labels.Unable_To_Send_Approval_Email');
+                }
+                Metronic.unblockUI();
+                setTimeout(function () {
+                    window.location.reload();
+                }, 2000);
+            });
+        }
+        function SendEmailNotificationWithData(url, formData) {
+            //******************
+            Metronic.blockUI({ animate: true });
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response != false) {
+                        toastr.success("@Labels.operation_done_suc"); 
+                    } else {
+                        toastr.error('@Labels.unable_to_update');
+                    }
+                }
+                 ,
+                complete: function () {
+                    Metronic.unblockUI();
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+                }
+            })
+
+        };
             $('body').on('click', '#btn_delete', function (e) {
                 e.preventDefault();
                 var url = $(this).attr('href');
@@ -398,7 +438,7 @@
                             }
                         })
                     } else {
-                        toastr.error('Unable to delete');
+                        toastr.error('@Labels.Unable_To_Delete');
                     }
                 })
             })
@@ -410,59 +450,6 @@
             //    newWin.close();
             //})
 
-            $("#btn_approve").click(function (e) {
-                e.preventDefault();
-                var id = $(this).data().id;
-                var url = "@Url.Action("ApproveRejectTicket")/" + id + '?value=true';
-                bootbox.confirm("@Labels.are_you_sure", function (result) {
-                    if (result == true) {
-                        $.get(url, function (response) {
-                            if (response == true) {
-                                console.log("ticket approved successfuly >>>>>>>>>>>>>>");
-                                toastr.success("@Labels.operation_done_suc");
-                                var sendApprovedMailUrl = "@Url.Action("SendTicketApproveEmail")/"+id;
-                                $.get(sendApprovedMailUrl, function (response) {
-                                    console.log("Inside sending the approval notification >>>>>>>>>>>>>>>");
-                                    if (response == false) {
-                                        toastr.error('Un able to send approve notification email to requester.');
-                                    }
-                                });
-                                setTimeout(function () {
-                                    window.location.reload();
-                                }, 2000);
-                            } else {
-                                toastr.error('Unable to approve ticket');
-                            }
-                        })
-                    }
-                })
-            })
-
-        $("#btn_reject").click(function (e) {
-            e.preventDefault();
-            var id = $(this).data().id;
-            var url = "@Url.Action("ApproveRejectTicket")/" + id + '?value=false';
-            bootbox.confirm("@Labels.are_you_sure", function (result) {
-                if (result == true) {
-                    $.get(url, function (response) {
-                        if (response == true) {
-                            toastr.success("@Labels.operation_done_suc");
-                            var sendApprovedMailUrl = "@Url.Action("SendTicketRejectionEmail")/"+id;
-                            $.get(sendApprovedMailUrl, function (response) {
-                                if (response == false) {
-                                    toastr.error('Un able to send rejct notification email to requester.');
-                                }
-                            });
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 2000);
-                        } else {
-                            toastr.error('Unable to reject ticket');
-                        }
-                    })
-                }
-            })
-        })
         })
     </script>
 }

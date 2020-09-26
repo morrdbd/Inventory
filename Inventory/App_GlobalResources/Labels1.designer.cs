@@ -349,6 +349,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign Share Car.
+        /// </summary>
+        internal static string Assign_Share_Car {
+            get {
+                return ResourceManager.GetString("Assign_Share_Car", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attachment.
         /// </summary>
         internal static string Attachment {
@@ -520,6 +529,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Colose.
+        /// </summary>
+        internal static string closeText {
+            get {
+                return ResourceManager.GetString("closeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code.
         /// </summary>
         internal static string code {
@@ -624,6 +642,15 @@ namespace Resources {
         internal static string CurrentProvince {
             get {
                 return ResourceManager.GetString("CurrentProvince", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current.
+        /// </summary>
+        internal static string currentText {
+            get {
+                return ResourceManager.GetString("currentText", resourceCulture);
             }
         }
         
@@ -1222,6 +1249,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From Administrative Directorate.
+        /// </summary>
+        internal static string From_Administrative_Directorate {
+            get {
+                return ResourceManager.GetString("From_Administrative_Directorate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Full Control.
         /// </summary>
         internal static string FullControl {
@@ -1245,6 +1281,15 @@ namespace Resources {
         internal static string general_lookups {
             get {
                 return ResourceManager.GetString("general_lookups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hour.
+        /// </summary>
+        internal static string hourText {
+            get {
+                return ResourceManager.GetString("hourText", resourceCulture);
             }
         }
         
@@ -1699,6 +1744,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minute.
+        /// </summary>
+        internal static string minuteText {
+            get {
+                return ResourceManager.GetString("minuteText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mobile Car.
         /// </summary>
         internal static string Mobile_Car {
@@ -2122,6 +2176,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please Specify Rejection Reason.
+        /// </summary>
+        internal static string Please_Specify_Rejection_Reason {
+            get {
+                return ResourceManager.GetString("Please_Specify_Rejection_Reason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Previous.
         /// </summary>
         internal static string Previous {
@@ -2298,6 +2361,24 @@ namespace Resources {
         internal static string registration_info {
             get {
                 return ResourceManager.GetString("registration_info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rejection Reason.
+        /// </summary>
+        internal static string Rejection_Reason {
+            get {
+                return ResourceManager.GetString("Rejection_Reason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reject Mobile Car Request.
+        /// </summary>
+        internal static string Reject_Mobile_Car_Request {
+            get {
+                return ResourceManager.GetString("Reject_Mobile_Car_Request", resourceCulture);
             }
         }
         
@@ -2842,6 +2923,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        internal static string timeText {
+            get {
+                return ResourceManager.GetString("timeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To Date.
         /// </summary>
         internal static string ToDate {
@@ -2896,11 +2986,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to Delete.
+        /// </summary>
+        internal static string Unable_To_Delete {
+            get {
+                return ResourceManager.GetString("Unable_To_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to insert information!.
         /// </summary>
         internal static string unable_to_insert {
             get {
                 return ResourceManager.GetString("unable_to_insert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to send approval notification email to requester..
+        /// </summary>
+        internal static string Unable_To_Send_Approval_Email {
+            get {
+                return ResourceManager.GetString("Unable_To_Send_Approval_Email", resourceCulture);
             }
         }
         
@@ -3022,6 +3130,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to But you will use the following share Car, which will use the smae path you use.
+        /// </summary>
+        internal static string UseShareCarInfoText {
+            get {
+                return ResourceManager.GetString("UseShareCarInfoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Values.
         /// </summary>
         internal static string values {
@@ -3049,11 +3166,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visiting Date.
+        ///   Looks up a localized string similar to Visiting Date Time.
         /// </summary>
-        internal static string Visiting_Date {
+        internal static string Visiting_Date_Time {
             get {
-                return ResourceManager.GetString("Visiting_Date", resourceCulture);
+                return ResourceManager.GetString("Visiting_Date_Time", resourceCulture);
             }
         }
         
@@ -3126,6 +3243,24 @@ namespace Resources {
         internal static string yes {
             get {
                 return ResourceManager.GetString("yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Request to Mobile Car Approved.
+        /// </summary>
+        internal static string Your_Request_To_Mobile_Car_Approved {
+            get {
+                return ResourceManager.GetString("Your_Request_To_Mobile_Car_Approved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Request to Mobile Car Has Rejected.
+        /// </summary>
+        internal static string Your_Request_To_Mobile_Car_Rejected {
+            get {
+                return ResourceManager.GetString("Your_Request_To_Mobile_Car_Rejected", resourceCulture);
             }
         }
     }

@@ -9,7 +9,6 @@
     var _canView = _user.HasAccess("MobileCarTicket", "View");
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="portlet box blue-hoki margin-bottom-10">
     <div class="portlet-title">
         <div class="caption">
@@ -64,7 +63,7 @@
             </div>
         </div>*@
                 <div class="col-md-6 form-group">
-                    <label>@Labels.Visiting_Date</label>
+                    <label>@Labels.Visiting_Date_Time</label>
                     <div class="input-group">
                         <input type="text" class="form-control input-sm shpicker" name="DateFrom" value="@search.DateFrom" placeholder="@Labels.FromDate" data-rule-date="true" data-msg="" />
                         <span class="input-group-addon input-sm">@Labels.ToDate</span>
@@ -111,9 +110,8 @@
                     <th>@Labels.Person_Assigned_Occupation</th>
                     <th>@Labels.PhoneNumber</th>
                     @*<th>@Labels.Email_Address</th>*@
-                    <th>@Labels.Visiting_Date</th>
+                    <th>@Labels.Visiting_Date_Time</th>
                     <th>@Labels.Visiting_Place</th>
-                    <th>@Labels.Visiting_Time</th>
                     @*<th>@Labels.Visiting_Purpose</th>*@
                     <th>@Labels.Is_Approved</th>
                     <th>@Labels.Mobile_Car</th>
@@ -166,16 +164,15 @@
                     { data: 'PersAssignedOccupation' },
                     { data: 'PhoneNumber' },
                     //{ data: 'EmailAddress' },
-                    { data: 'VisitingDate' },
+                    { data: 'VisitingDateTime' },
                     { data: 'VisitingPlace' },
-                    { data: 'VisitingTime' },
                     //{ data: 'VisitingPurpose' },
                     {
                         data: null,
                         render: function(row){
                             if(row.IsApproved){
                                 return '@Labels.yes';
-                            }else if(row.IsApproved){
+                            }else if(row.IsApproved == false){
                                 return '@Labels.no';
                             }else{
                                 return '@Labels.pending';

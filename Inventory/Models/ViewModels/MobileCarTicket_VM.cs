@@ -22,15 +22,15 @@ namespace Inventory.Models.ViewModels
 
         public string PhoneNumber { get; set; }
 
-        public string VisitingDate { get; set; }
+        public string VisitingDateTime { get; set; }
 
         public string VisitingPurpose { get; set; }
 
         public string VisitingPlace { get; set; }
 
-        public string VisitingTime { get; set; }
-
         public bool? IsApproved { get; set; }
+
+        public string RejectionReason { get; set; }
 
         public int? MobileCarID { get; set; }
 

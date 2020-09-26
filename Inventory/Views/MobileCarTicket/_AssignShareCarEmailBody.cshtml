@@ -1,0 +1,40 @@
+﻿@model Inventory.Models.ViewModels.AssignSharedCarEmailBody_VM
+<p>@Labels.Your_Request_To_Mobile_Car_Approved</p>
+<table style='border: 1px solid black; border-collapse: collapse; direction:rtl;'>
+    <tr>
+        <td style='border:1px solid black; padding: 10px;'>@Labels.Visiting_Place</td>
+        <td style='border:1px solid black; padding: 10px;'>@Model.SecondPassVisitingPlace</td>
+    </tr>
+    <tr>
+        <td style='border:1px solid black; padding: 10px;'>@Labels.Visiting_Date_Time</td>
+        <td style='border:1px solid black; padding: 10px;'>@Model.SecondPassVisitingDateTime</td>
+    </tr>
+</table>
+<p>@Labels.UseShareCarInfoText</p>
+<table style='border: 1px solid black; border-collapse: collapse; direction:rtl;'>
+    <tr>
+        <td style='border:1px solid black; padding: 10px;'>@Labels.Car_Type</td>
+        <td style='border:1px solid black; padding: 10px;'>@Model.CarType</td>
+    </tr> 
+    <tr>
+        <td style='border:1px solid black; padding: 10px;'>@Labels.Car_Number_Plate</td>
+        <td style='border:1px solid black; padding: 10px;'>@Model.NumberPlate</td>
+    </tr>
+    <tr>
+        <td style='border:1px solid black; padding: 10px;'>@Labels.Driver_Name</td>
+        <td style='border:1px solid black; padding: 10px;'>@Model.DriverName</td>
+    </tr>
+    <tr>
+        <td style='border:1px solid black; padding: 10px;'>@Labels.Requesting_Department</td>
+        <td style='border:1px solid black; padding: 10px;'>FirstPassDepartment</td>
+    </tr>
+    <tr>
+        <td style='border:1px solid black; padding: 10px;'>@Labels.Visiting_Place</td>
+        <td style='border:1px solid black; padding: 10px;'>@Model.FirstPassVisitingPlace</td>
+    </tr>
+    <tr>
+        <td style='border:1px solid black; padding: 10px;'>@Labels.Visiting_Date_Time</td>
+        <td style='border:1px solid black; padding: 10px;'>@Model.FirstPassVisitingDateTime</td>
+    </tr>
+</table>
+<h3>@Labels.From_Administrative_Directorate</h3>

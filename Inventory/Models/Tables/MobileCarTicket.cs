@@ -24,9 +24,9 @@ namespace Inventory.Models.Tables
         public string PhoneNumber { get; set; }
 
         [NotMapped]
-        public string VisitingDateForm { get; set; }
+        public string VisitingDateTimeForm { get; set; }
 
-        public DateTime? VisitingDate { get; set; }
+        public DateTime? VisitingDateTime { get; set; }
 
         [Required]
         public string VisitingPurpose { get; set; }
@@ -34,10 +34,9 @@ namespace Inventory.Models.Tables
         [Required]
         public string VisitingPlace { get; set; }
 
-        [Required]
-        public string VisitingTime { get; set; }
-
         public bool? IsApproved { get; set; }
+
+        public string RejectionReason { get; set; }
 
         public int? MobileCarID { get; set; }
 

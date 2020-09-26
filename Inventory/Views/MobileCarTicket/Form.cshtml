@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _user = ViewBag.AppUser as Inventory.Models.ViewModels.UserWithRole;
 }
+
 <form action="@Url.Action("Save")" id="main_form" autocomplete="off">
     <input type="hidden" name="MobileCarTicketID" value="@Model.MobileCarTicketID" />
     <div class="portlet box blue-hoki margin-bottom-10">
@@ -15,23 +16,23 @@
         </div>
         <div class="portlet-body">
             <section class="row">
-                <div class=" col-md-4">
+                <div class=" col-md-6">
                     <div class="form-group">
                         <label>@Labels.Department</label>
                         @Html.DropDownList("DepartmentID", ViewBag.DepartmentDrp as SelectList, Labels.please_select, new { @class = "form-control input-sm", @Required = "Required", @ID = "DepartmentID" })
                     </div>
                 </div>
-                <div class="col-md-4 form-group">
+                <div class="col-md-6 form-group">
                     <label>@Labels.Person_Assigned_Name</label>
                     <input type="text" name="PersAssignedName" value="@Model.PersAssignedName" id="PersAssignedName" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
-                <div class="col-md-4 form-group">
+            </section>
+            <section class="row">
+                <div class="col-md-6 form-group">
                     <label>@Labels.Person_Assigned_Occupation</label>
                     <input type="text" name="PersAssignedOccupation" value="@Model.PersAssignedOccupation" id="PersAssignedOccupation" class="form-control input-sm" required data-msg="" placeholder="">
                 </div>
-            </section>
-            <section class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-6 form-group">
                     <label>@Labels.PhoneNumber</label>
                     <input type="text" name="PhoneNumber" value="@Model.PhoneNumber" id="PhoneNumber" class="form-control input-sm" required data-msg="" placeholder="@Labels.PhoneNumber">
                 </div>
@@ -47,17 +48,13 @@
         </div>
         <div class="portlet-body">
             <section class="row">
-                <div class="col-md-4 form-group">
-                    <label>@Labels.Visiting_Date</label>
-                    <input type="text" name="VisitingDateForm" id="VisitingDateForm" value="@Model.VisitingDateForm" class="form-control input-sm shpicker_f" required data-msg="" placeholder="">
+                <div class="col-md-6 form-group">
+                    <label>@Labels.Visiting_Date_Time</label>
+                    <input type="text" name="VisitingDateTimeForm" id="VisitingDateTimeForm" value="@Model.VisitingDateTimeForm" class="form-control input-sm shDateTimepicker_f" required data-msg="" placeholder="">
                 </div>
-                <div class="col-md-4 form-group">
+                <div class="col-md-6 form-group">
                     <label>@Labels.Visiting_Place</label>
                     <input type="text" name="VisitingPlace" value="@Model.VisitingPlace" id="VisitingPlace" class="form-control input-sm" required data-msg="" placeholder="">
-                </div>
-                <div class="col-md-4 form-group">
-                    <label>@Labels.Visiting_Time</label>
-                    <input type="text" name="VisitingTime" value="@Model.VisitingTime" id="VisitingTime" class="form-control input-sm shDateTimepicker_f" required data-msg="" placeholder="">
                 </div>
             </section>
             <section class="row">
@@ -82,7 +79,7 @@
 
 
 @section scripts{
-<script>
+    <script>
         $(function () {
             // FORM VALIDATION AND SUBMISSION
             $('#main_form').validate({
@@ -117,5 +114,5 @@
                 }
             })
     })
-</script>
+    </script>
 }

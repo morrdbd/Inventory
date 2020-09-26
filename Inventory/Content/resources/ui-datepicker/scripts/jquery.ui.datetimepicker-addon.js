@@ -51,6 +51,7 @@
             timezoneText: 'Time Zone',
             isRTL: false
         };
+ 
         this._defaults = { // Global defaults for all the datetime picker instances
             showButtonPanel: true,
             timeOnly: false,

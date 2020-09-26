@@ -373,14 +373,19 @@
             regional: mainvars.lang == 'en' ? '' : 'fa',
         });
         ui('.shDateTimepicker_f').datetimepicker({
-            //dateFormat: '',
-            //format: 'LT',
-            //showDate: true,
-            //showSecond: true,
-            //timeFormat: 'hh:mm',
-            //regional: mainvars.lang == 'en' ? '' : 'fa',
+            currentText: '@Labels.currentText',
+            closeText: "@Labels.closeText",
+            //amNames: ['AM', 'A'],
+            //pmNames: ['PM', 'P'],
+            //timeOnlyTitle: 'Choose Time',
+            timeText: '@Labels.timeText',
+            hourText: '@Labels.hourText',
+            minuteText: '@Labels.minuteText',
+            dateFormat: 'yy-mm-dd',
+            timeFormat: 'HH:mm',
+            regional:mainvars.lang == 'en' ? '' : 'fa',
         });
-
+       
     </script>
 
 </body>

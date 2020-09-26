@@ -61,6 +61,7 @@ namespace Inventory.Attributes
                 }
                 else
                 {
+                    var t = PersianDateTime.Parse(Date);
                     return PersianDateTime.Parse(Date).ToDateTime();
                 }
             }
@@ -81,6 +82,24 @@ namespace Inventory.Attributes
                    
                     pDate.EnglishNumber = true;
                     return pDate.ToString("yyyy-MM-dd");
+                }
+            }
+            return string.Empty;
+        }
+        public static string ToDateTimeString(this DateTime? Date, string Lang)
+        {
+            if (Date != null)
+            {
+                if (Lang == "en")
+                {
+                    return Convert.ToDateTime(Date).ToString("yyyy-MM-dd hh:mm");
+                }
+                else
+                {
+                    var pDate = new PersianDateTime(Date);
+                   
+                    pDate.EnglishNumber = true;
+                    return pDate.ToString("yyyy-MM-dd hh:mm");
                 }
             }
             return string.Empty;

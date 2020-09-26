@@ -1128,8 +1128,8 @@
   <data name="Requesting_Department" xml:space="preserve">
     <value>غوښتونکی اداره</value>
   </data>
-  <data name="Visiting_Date" xml:space="preserve">
-    <value>دندی شروع نیټه</value>
+  <data name="Visiting_Date_Time" xml:space="preserve">
+    <value>دندی شروع نیټه او وخت</value>
   </data>
   <data name="Visiting_Place" xml:space="preserve">
     <value>د سفر ځای</value>
@@ -1217,5 +1217,50 @@
   </data>
   <data name="Approve_And_Assign_Share_Car" xml:space="preserve">
     <value>تائید او د شریک موټر ګمارل</value>
+  </data>
+  <data name="closeText" xml:space="preserve">
+    <value>تړل</value>
+  </data>
+  <data name="currentText" xml:space="preserve">
+    <value>اوسنی وخت</value>
+  </data>
+  <data name="hourText" xml:space="preserve">
+    <value>ساعت</value>
+  </data>
+  <data name="minuteText" xml:space="preserve">
+    <value>دقیقه</value>
+  </data>
+  <data name="timeText" xml:space="preserve">
+    <value>وخت</value>
+  </data>
+  <data name="Assign_Share_Car" xml:space="preserve">
+    <value>د شریک موټر ګمارل</value>
+  </data>
+  <data name="From_Administrative_Directorate" xml:space="preserve">
+    <value>د اداری ریاست لخوا</value>
+  </data>
+  <data name="Please_Specify_Rejection_Reason" xml:space="preserve">
+    <value>مهربانی وکړی د رد علت واضح کړی</value>
+  </data>
+  <data name="Rejection_Reason" xml:space="preserve">
+    <value>د غوښتنی د رد دلیل</value>
+  </data>
+  <data name="Reject_Mobile_Car_Request" xml:space="preserve">
+    <value>د سیار موتر غوښتنه رد</value>
+  </data>
+  <data name="Unable_To_Delete" xml:space="preserve">
+    <value>د حذف کولو توان نلري</value>
+  </data>
+  <data name="Unable_To_Send_Approval_Email" xml:space="preserve">
+    <value>د موافقی ایمل ونه لیګل شو</value>
+  </data>
+  <data name="UseShareCarInfoText" xml:space="preserve">
+    <value>تاسو به لاندی نفر سره چی د تکت معلومات یی په لاندی ډول دی او مسیر یی ستاسو سره یو شان دی شریک موتر کی سفر کوی</value>
+  </data>
+  <data name="Your_Request_To_Mobile_Car_Approved" xml:space="preserve">
+    <value>ستاسو غوښتنه سیار موتر لپاره تائید شوه</value>
+  </data>
+  <data name="Your_Request_To_Mobile_Car_Rejected" xml:space="preserve">
+    <value>ستاسی غوښتنه سیار موټر لپاره رد شوه</value>
   </data>
 </root>

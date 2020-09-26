@@ -1050,8 +1050,8 @@
   <data name="Requesting_Department" xml:space="preserve">
     <value>Requesting Department</value>
   </data>
-  <data name="Visiting_Date" xml:space="preserve">
-    <value>Visiting Date</value>
+  <data name="Visiting_Date_Time" xml:space="preserve">
+    <value>Visiting Date Time</value>
   </data>
   <data name="Visiting_Place" xml:space="preserve">
     <value>Visiting Place</value>
@@ -1139,5 +1139,50 @@
   </data>
   <data name="Approve_And_Assign_Share_Car" xml:space="preserve">
     <value>Approve And Assign Share Car</value>
+  </data>
+  <data name="closeText" xml:space="preserve">
+    <value>Colose</value>
+  </data>
+  <data name="currentText" xml:space="preserve">
+    <value>Current</value>
+  </data>
+  <data name="hourText" xml:space="preserve">
+    <value>Hour</value>
+  </data>
+  <data name="minuteText" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="timeText" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Assign_Share_Car" xml:space="preserve">
+    <value>Assign Share Car</value>
+  </data>
+  <data name="From_Administrative_Directorate" xml:space="preserve">
+    <value>From Administrative Directorate</value>
+  </data>
+  <data name="Please_Specify_Rejection_Reason" xml:space="preserve">
+    <value>Please Specify Rejection Reason</value>
+  </data>
+  <data name="Rejection_Reason" xml:space="preserve">
+    <value>Rejection Reason</value>
+  </data>
+  <data name="Reject_Mobile_Car_Request" xml:space="preserve">
+    <value>Reject Mobile Car Request</value>
+  </data>
+  <data name="Unable_To_Delete" xml:space="preserve">
+    <value>Unable to Delete</value>
+  </data>
+  <data name="Unable_To_Send_Approval_Email" xml:space="preserve">
+    <value>Unable to send approval notification email to requester.</value>
+  </data>
+  <data name="UseShareCarInfoText" xml:space="preserve">
+    <value>But you will use the following share Car, which will use the smae path you use</value>
+  </data>
+  <data name="Your_Request_To_Mobile_Car_Approved" xml:space="preserve">
+    <value>Your Request to Mobile Car Approved</value>
+  </data>
+  <data name="Your_Request_To_Mobile_Car_Rejected" xml:space="preserve">
+    <value>Your Request to Mobile Car Has Rejected</value>
   </data>
 </root>
