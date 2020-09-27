@@ -21,7 +21,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.Ticket_ID</label>
-                        <input type="number" class="form-control input-sm" name="sMobileCarTicketID" value="@search.sMobileCarTicketID" placeholder="Mobile Car Ticket ID" id="sMobileCarTicketID" />
+                        <input type="number" class="form-control input-sm" name="sMobileCarTicketID" value="@search.sMobileCarTicketID" placeholder="" id="sMobileCarTicketID" />
                     </div>
                 </div>
                 <div class=" col-md-3">
@@ -39,7 +39,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.Person_Assigned_Name</label>
-                        <input type="text" class="form-control input-sm" name="sPersAssignedName" value="@search.sPersAssignedName" placeholder="Person Assigned Name" id="sPersAssignedName" />
+                        <input type="text" class="form-control input-sm" name="sPersAssignedName" value="@search.sPersAssignedName" placeholder="" id="sPersAssignedName" />
                     </div>
                 </div>
             </section>
@@ -47,13 +47,13 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.Person_Assigned_Occupation</label>
-                        <input type="text" class="form-control input-sm" name="sPersAssignedOccupation" value="@search.sPersAssignedOccupation" placeholder="Person Assign For" id="sPersAssignedFor" />
+                        <input type="text" class="form-control input-sm" name="sPersAssignedOccupation" value="@search.sPersAssignedOccupation" placeholder="" id="sPersAssignedFor" />
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>@Labels.Visiting_Place</label>
-                        <input type="text" class="form-control input-sm" name="sVisitingPlace" value="@search.sVisitingPlace" placeholder="Visiting Place" id="sVisitingPlace" />
+                        <input type="text" class="form-control input-sm" name="sVisitingPlace" value="@search.sVisitingPlace" placeholder="" id="sVisitingPlace" />
                     </div>
                 </div>
                 @*<div class="col-md-3">
@@ -116,6 +116,8 @@
                     <th>@Labels.Is_Approved</th>
                     <th>@Labels.Mobile_Car</th>
                     <th>@Labels.Driver_Name</th>
+                    <th>@Labels.Visit_Start_km</th>
+                    <th>@Labels.Visit_End_km</th>
                     <th></th>
                     @*<th></th>
                     <th></th>
@@ -180,7 +182,9 @@
                         }
                     },
                     { data: 'MobileCar' },
-                    { data: 'DriverName' },
+                    { data: 'DriverName' }, 
+                    { data: 'Startkm' },
+                    { data: 'Endkm' },
                     {
                         data: null,
                         visible: canView,

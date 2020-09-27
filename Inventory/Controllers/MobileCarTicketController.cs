@@ -43,7 +43,7 @@ namespace Inventory.Controllers
         {
             ViewBag.search = new MobileCarTicket_Search();
             model.VisitingDateTime = model.VisitingDateTimeForm.ToDate(Language);
-            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            //var errors = ModelState.Values.SelectMany(v => v.Errors);
             try
             {
                 if (ModelState.IsValid == true)
@@ -290,12 +290,12 @@ namespace Inventory.Controllers
                     string body = EmailHelper.RenderPartialToString("_TicketRejectionEmail", model, ControllerContext);
                     EmailHelper.SendEmail(depEmailAddress, subject,body);
                     return Json(true, JsonRequestBehavior.AllowGet);
-            }
+                }
                 catch (Exception e)
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
+                {
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
             }
-        }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 

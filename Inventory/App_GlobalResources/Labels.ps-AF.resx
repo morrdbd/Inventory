@@ -1263,4 +1263,7 @@
   <data name="Your_Request_To_Mobile_Car_Rejected" xml:space="preserve">
     <value>ستاسی غوښتنه سیار موټر لپاره رد شوه</value>
   </data>
+  <data name="Email_Notification_Sent_Succ" xml:space="preserve">
+    <value>ایمل خبرداری ولیږل شو</value>
+  </data>
 </root>

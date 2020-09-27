@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-md-6 form-group">
                     <label>@Labels.PhoneNumber</label>
-                    <input type="text" name="PhoneNumber" value="@Model.PhoneNumber" id="PhoneNumber" class="form-control input-sm" required data-msg="" placeholder="@Labels.PhoneNumber">
+                    <input type="text" name="PhoneNumber" value="@Model.PhoneNumber" id="PhoneNumber" class="form-control input-sm" data-rule-digits="true" data-rule-rangelength="[9, 15]" required data-msg="" placeholder="@Labels.PhoneNumber">
                 </div>
             </section>
         </div>

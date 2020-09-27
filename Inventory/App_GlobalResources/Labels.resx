@@ -1185,4 +1185,7 @@
   <data name="Your_Request_To_Mobile_Car_Rejected" xml:space="preserve">
     <value>Your Request to Mobile Car Has Rejected</value>
   </data>
+  <data name="Email_Notification_Sent_Succ" xml:space="preserve">
+    <value>Email Notification Sent Successfully</value>
+  </data>
 </root>

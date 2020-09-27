@@ -1248,4 +1248,7 @@
   <data name="Your_Request_To_Mobile_Car_Rejected" xml:space="preserve">
     <value>درخواست شما برای موتر سیار رد شود</value>
   </data>
+  <data name="Email_Notification_Sent_Succ" xml:space="preserve">
+    <value>اگاهی ایمل فرستاده شود</value>
+  </data>
 </root>

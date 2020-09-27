@@ -372,7 +372,7 @@
                     success: function (response) {
                        if (response != false) {
                             toastr.success("@Labels.operation_done_suc");
-                            var sendRejectionEmailUrl = "@Url.Action("SendShareCarTicketApproveEmail")";
+                            var sendRejectionEmailUrl = "@Url.Action("SendTicketRejectionEmail")";
                             SendEmailNotificationWithData(sendRejectionEmailUrl, formData);
                             
                         } else {
@@ -411,7 +411,7 @@
                 contentType: false,
                 success: function (response) {
                     if (response != false) {
-                        toastr.success("@Labels.operation_done_suc"); 
+                        toastr.success("@Labels.Email_Notification_Sent_Succ"); 
                     } else {
                         toastr.error('@Labels.unable_to_update');
                     }

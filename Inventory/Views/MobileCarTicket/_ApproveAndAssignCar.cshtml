@@ -1,19 +1,18 @@
 ﻿@model Inventory.Models.ViewModels.MobileCarTicket_VM
-    <p>@Labels.Your_Request_To_Mobile_Car_Approved</p>
+    <h2>@Labels.Your_Request_To_Mobile_Car_Approved</h2>
 
-    <table style='border: 1px solid black; border-collapse: collapse;'>
+    <table style="border: 1px solid black; border-collapse: collapse; direction:rtl;">
         <tr>
-            <td style='border:1px solid black; padding: 10px;'>@Model.VisitingPlace</td> 
             <td style='border:1px solid black; padding: 10px;'>@Labels.Visiting_Place</td>
+            <td style='border:1px solid black; padding: 10px;'>@Model.VisitingPlace</td>
         </tr>
         <tr>
-            <td style='border:1px solid black; padding: 10px;'>@Model.CarType</td>
             <td style='border:1px solid black; padding: 10px;'>@Labels.Car_Type</td>
+            <td style='border:1px solid black; padding: 10px;'>@Model.CarType</td>
         </tr>
         <tr>
-            <td style='border:1px solid black; padding: 10px;'>@Model.DriverName</td>
-        
             <td style='border:1px solid black; padding: 10px;'>@Labels.Driver_Name</td>
+            <td style='border:1px solid black; padding: 10px;'>@Model.DriverName</td>
         </tr> 
     </table>
 <h3>@Labels.From_Administrative_Directorate</h3>

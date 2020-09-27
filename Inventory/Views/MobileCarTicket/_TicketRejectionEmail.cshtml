@@ -1,13 +1,13 @@
 ﻿@model Inventory.Models.ViewModels.RejectMobileCarRequest_VM
-<p>@Labels.Your_Request_To_Mobile_Car_Rejected</p>
-<table>
+<h2>@Labels.Your_Request_To_Mobile_Car_Rejected</h2>
+<table style="border: 1px solid black; border-collapse: collapse; direction:rtl;">
     <tr>
-        <td>@Labels.Visiting_Place</td>
-        <td>@Model.</td>
+        <td style='border:1px solid black; padding: 10px;'>@Labels.Visiting_Place</td>
+        <td style='border:1px solid black; padding: 10px;'>@Model.VisitingPlace</td>
     </tr>
     <tr>
-    <td colspan="2">
-        @Model.RejectionReason</td>
+        <td style='border:1px solid black; padding: 10px;'>@Labels.Rejection_Reason</td>
+        <td style='border:1px solid black; padding: 10px;'>@Model.RejectionReason</td>
     </tr>
 </table>
 <h3>@Labels.From_Administrative_Directorate</h3>

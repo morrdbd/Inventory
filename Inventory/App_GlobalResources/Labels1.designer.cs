@@ -1024,6 +1024,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email Notification Sent Successfully.
+        /// </summary>
+        internal static string Email_Notification_Sent_Succ {
+            get {
+                return ResourceManager.GetString("Email_Notification_Sent_Succ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Employee.
         /// </summary>
         internal static string Employee {
