@@ -146,7 +146,7 @@ namespace Inventory.Controllers
             {
                 query = query.Where(c => c.VisitingDateTime <= _dateTo);
             }
-            var records = query.OrderByDescending(e => e.InsertedDate).ToList();
+            var records = query.OrderByDescending(e => e.InsertedDate).ThenByDescending(t=>t.MobileCarTicketID).ToList();
             var data = records.Select(e => new
             {
                 e.IsApproved,
@@ -161,7 +161,7 @@ namespace Inventory.Controllers
                 DepartmentName = db.Departments.Where(r => r.IsActive == true && r.DepartmentID == e.DepartmentID).Select(r => Language == "prs" ? r.DrName : Language == "ps" ? r.PaName : r.EnName).FirstOrDefault(),
                 e.Startkm,
                 e.Endkm,
-                MobileCar = AdminRepo.LookupNameByVlueCode(Language, e.CarType) + e.NumberPlate,
+                MobileCar = AdminRepo.LookupNameByVlueCode(Language, e.CarType) +" "+ e.NumberPlate,
                 e.DriverName,
             }).ToList();
 

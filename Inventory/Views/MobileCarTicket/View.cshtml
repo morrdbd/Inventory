@@ -213,7 +213,7 @@
                     </section>
                     <section class="row">
                         <div class="col-md-12 form-group" style="margin-left:10px; margin-right:10px;">
-                            <button type="submit" class="btn btn-sm blue " data-dismiss="modal">@Labels.save</button>
+                            <button type="submit" class="btn btn-sm blue">@Labels.save</button>
                             <button type="reset" id="btnReset" class="btn btn-sm ">@Labels.reset</button>
                             <input type="hidden" name="MobileCarTicketID" id="MobileCarTicketID" value="@Model.MobileCarTicketID" />
                         </div>
@@ -330,6 +330,7 @@
                     parseAll: true,
                     useIntKeysAsArrayIndex: true,
                 });
+                console.log("ddddddddddddddddddddd");
                 var formData = ObjectToFormData(data);
                 //******************
                 Metronic.blockUI({ animate: true });
