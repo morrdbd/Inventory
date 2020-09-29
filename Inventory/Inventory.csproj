@@ -2962,6 +2962,7 @@
     <Content Include="Views\MobileCarTicket\_AssignShareCarEmailBody.cshtml" />
     <Content Include="Views\MobileCarTicket\_ApproveAndAssignCar.cshtml" />
     <Content Include="Views\MobileCarTicket\_TicketRejectionEmail.cshtml" />
+    <None Include="Properties\PublishProfiles\Inventory.pubxml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />
@@ -2981,13 +2982,6 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\select2.full.js" />
-    <Content Include="Uploads\ProductsImages\13.jpeg" />
-    <Content Include="Uploads\ProductsImages\13.jpg" />
-    <Content Include="Uploads\ProductsImages\14.jpeg" />
-    <Content Include="Uploads\ProductsImages\15.jpeg" />
-    <Content Include="Uploads\ProductsImages\16.jpeg" />
-    <Content Include="Uploads\ProductsImages\16.jpg" />
-    <Content Include="Uploads\ProductsImages\24.jpg" />
     <Content Include="Templates\DistributionTicketPC5.xlsx" />
     <Content Include="Templates\ReceiptReportMem7.xlsx" />
     <Content Include="Views\Distribution\Form.cshtml" />
